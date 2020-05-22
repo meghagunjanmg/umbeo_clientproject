@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signup">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/r1">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/logo"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/r1"
+            android:id="@+id/r2">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="222dp"
+
+                android:layout_height="88dp"
+                android:fontFamily="cursive"
+                android:layout_marginTop="64dp"
+                android:text="Umbeo Sign Up "
+                android:textColor="#2616cb"
+                android:textSize="42dp"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.338"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/r2"
+            android:id="@+id/r3">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                app:layout_constraintVertical_bias="1.0">
+
+
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="208dp"
+                    android:layout_height="57dp"
+                    android:hint="Enter Name"
+                    app:layout_constraintHorizontal_bias="0.315"
+                    app:layout_constraintVertical_bias="0.309"/>
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="208dp"
+                    android:layout_height="57dp"
+                    android:hint="Enter Phone Number"
+                    android:inputType="number"
+                    app:layout_constraintHorizontal_bias="0.315"
+                    app:layout_constraintVertical_bias="0.14"/>
+                <EditText
+                    android:id="@+id/mail"
+                    android:layout_width="208dp"
+                    android:layout_height="57dp"
+                    android:hint="Enter E-mail Address"
+                    app:layout_constraintHorizontal_bias="0.315"
+                    app:layout_constraintVertical_bias="0.309"/>
+                <EditText
+                    android:id="@+id/pass"
+                    android:layout_width="208dp"
+                    android:inputType="textPassword"
+                    android:layout_height="57dp"
+                    android:hint="Enter Password"
+                    app:layout_constraintHorizontal_bias="0.315"
+                    app:layout_constraintVertical_bias="0.309"/>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="119dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginLeft="64dp"
+            android:text="Sign-Up"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/r3"
+            app:layout_constraintVertical_bias="0.502"
+            />
+
+
+    </RelativeLayout>
+</ScrollView>
