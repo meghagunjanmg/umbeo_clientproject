@@ -45,6 +45,7 @@ public class signup extends AppCompatActivity {
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     EditText nam, pno, mail, pass, add;
     Button sign, imageset;
     ImageView dp;
@@ -187,6 +188,37 @@ public class signup extends AppCompatActivity {
         String email = mail.getText().toString().trim();
         String password = pass.getText().toString();
         String address = add.getText().toString();
+
+        if(name.isEmpty()){
+            Toast.makeText(signup.this,"Please enter a user name",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(number.isEmpty()){
+            Toast.makeText(signup.this,"Please enter a Number",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(email.isEmpty()){
+            Toast.makeText(signup.this,"Please enter a email address",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(!(email.matches(emailPattern))) {
+            Toast.makeText(signup.this, "Please enter a valid email address", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(password.isEmpty()){
+            Toast.makeText(signup.this,"Please enter a password",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if(address.isEmpty()){
+            Toast.makeText(signup.this,"Please enter a user address",Toast.LENGTH_LONG).show();
+            return;
+        }
+
 
         if (encodedImage == null) {
             // that is user has not selected a display image then we show the error and return so that he/she can try again...

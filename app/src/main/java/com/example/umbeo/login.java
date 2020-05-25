@@ -113,17 +113,24 @@ public class login extends AppCompatActivity {
                                 if (loginResponse.getStatus().toString().matches("success")) {
                                     SharedprefManager.getInstance(com.example.umbeo.login.this)
                                             .saveToken(loginResponse.getToken());
-
+                                    Toast.makeText(com.example.umbeo.login.this,"Login Successful",Toast.LENGTH_LONG).show();
+                                    login.setEnabled(true);
                                     startActivity(new Intent(login.this, shopscreen.class));
+                                }
+                                else{
+                                    login.setEnabled(true);
                                 }
 
                             } else {
                                 String s = response.errorBody().string();
                                 JSONObject temp = new JSONObject(s);
                                 Toast.makeText(getApplicationContext(), "Error: " + temp.get("message"), Toast.LENGTH_LONG).show();
+                                login.setEnabled(true);
+
                             }
                         } catch (IOException | JSONException e) {
                             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                            login.setEnabled(true);
                         }
                     }
                 });
@@ -132,6 +139,7 @@ public class login extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
 
+                login.setEnabled(true);
             }
         });
     }
