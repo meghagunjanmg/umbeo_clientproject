@@ -158,7 +158,6 @@
             android:layout_below="@+id/r4"
             android:orientation="vertical"
             android:paddingTop="45dp"
-
             android:layout_centerInParent="true">
 
 
@@ -191,8 +190,6 @@
                 app:iconSize="20dp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon" />
 
-
-
         </LinearLayout>
 
 
@@ -222,3 +219,4 @@
 
 
 </RelativeLayout>
+
