@@ -1,6 +1,7 @@
 package com.example.umbeo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.umbeo.Storage.SharedprefManager;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.LoginResponse;
 
@@ -25,25 +27,27 @@ import retrofit2.Response;
 
 public class login extends AppCompatActivity {
 
-    Button signup,login;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    Button signup, login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        signup=(Button)findViewById(R.id.button2);
-        login=(Button)findViewById(R.id.button);
+        signup = (Button) findViewById(R.id.button2);
+        login = (Button) findViewById(R.id.button);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(login.this, com.example.umbeo.signup.class));
             }
         });
-        final TextView forgotpassword=(TextView)findViewById(R.id.forget);
+        final TextView forgotpassword = (TextView) findViewById(R.id.forget);
         forgotpassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(login.this,forget_password.class));
+                startActivity(new Intent(login.this, forget_password.class));
             }
         });
 
@@ -54,16 +58,47 @@ public class login extends AppCompatActivity {
             }
         });
     }
-    private void userlogin(){
-        EditText uname=(EditText)findViewById(R.id.username);
-        EditText pass=(EditText)findViewById(R.id.pass);
+
+    private void userlogin() {
+        EditText uname = (EditText) findViewById(R.id.username);
+        EditText pass = (EditText) findViewById(R.id.pass);
+        TextView err = (TextView) findViewById(R.id.status);
 
         String email = uname.getText().toString();
-        String password= pass.getText().toString();
-        Call<LoginResponse>call= RetrofitClient
+        String password = pass.getText().toString();
+
+        login.setEnabled(false);
+
+        if (email.isEmpty() && password.isEmpty()) {
+            err.setBackgroundColor(Color.parseColor("#f0f8ff"));
+            err.setText("Please Enter Email and password");
+            login.setEnabled(true);
+            return;
+        }
+
+        if (email.isEmpty()) {
+            err.setBackgroundColor(Color.parseColor("#f0f8ff"));
+            err.setText("Please Enter Email");
+            login.setEnabled(true);
+            return;
+        }
+        if (!(email.matches(emailPattern))) {
+            err.setBackgroundColor(Color.parseColor("#f0f8ff"));
+            err.setText("Please Enter valid Email");
+            login.setEnabled(true);
+            return;
+        }
+        if (password.isEmpty()) {
+            err.setBackgroundColor(Color.parseColor("#f0f8ff"));
+            login.setEnabled(true);
+            err.setText("Please Enter a Password");
+            return;
+        }
+
+        Call<LoginResponse> call = RetrofitClient
                 .getmInstance()
                 .getApi()
-                .userLogin(email,password);
+                .userLogin(email, password);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, final Response<LoginResponse> response) {
@@ -74,20 +109,28 @@ public class login extends AppCompatActivity {
                         try {
                             if (response.code() == 200) {
 
-                                LoginResponse loginResponse= response.body();
-                                if(loginResponse.getStatus().toString().matches("success"))
-                                    startActivity(new Intent(login.this,shopscreen.class));
+                                LoginResponse loginResponse = response.body();
+                                if (loginResponse.getStatus().toString().matches("success")) {
+                                    SharedprefManager.getInstance(com.example.umbeo.login.this)
+                                            .saveToken(loginResponse.getToken());
+                                    Toast.makeText(com.example.umbeo.login.this,"Login Successful",Toast.LENGTH_LONG).show();
+                                    login.setEnabled(true);
+                                    startActivity(new Intent(login.this, shopscreen.class));
+                                }
+                                else{
+                                    login.setEnabled(true);
+                                }
 
-
-                            }
-                            else {
+                            } else {
                                 String s = response.errorBody().string();
-                                JSONObject temp=new JSONObject(s);
-                                Toast.makeText(getApplicationContext(),"Error: "+temp.get("message"),Toast.LENGTH_LONG).show();
+                                JSONObject temp = new JSONObject(s);
+                                Toast.makeText(getApplicationContext(), "Error: " + temp.get("message"), Toast.LENGTH_LONG).show();
+                                login.setEnabled(true);
+
                             }
-                        }
-                        catch (IOException | JSONException e) {
+                        } catch (IOException | JSONException e) {
                             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                            login.setEnabled(true);
                         }
                     }
                 });
@@ -96,6 +139,7 @@ public class login extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
 
+                login.setEnabled(true);
             }
         });
     }

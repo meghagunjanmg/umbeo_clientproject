@@ -1,5 +1,6 @@
 package com.example.umbeo;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,9 @@ public class homescreen extends AppCompatActivity implements View.OnClickListene
 
         picCard1 = (CardView) findViewById(R.id.cardPic1);
         picCard1.setOnClickListener(this);
+
+
+
     }
 
     @Override

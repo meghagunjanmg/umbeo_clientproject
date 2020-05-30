@@ -17,7 +17,12 @@ public interface Api {
             @Field("name") String name,
             @Field("phone") String number,
             @Field("email") String mail,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("GPSLocation") String gps,
+            @Field("latLng") String latlong,
+            @Field("deliveryAddresses") String address,
+            @Field("shop") String shop,
+            @Field("profilePic") String profilePic
     );
 
     @FormUrlEncoded
