@@ -18,11 +18,11 @@ public interface Api {
             @Field("phone") String number,
             @Field("email") String mail,
             @Field("password") String password,
-            @Field("GPSLocation") String gps,
-            @Field("latLng") String latlong,
-            @Field("deliveryAddresses") String address,
+            @Field("gps") String gps,
+            @Field("latlng") String latlong,
+            @Field("delivery_addresses") String[] address,
             @Field("shop") String shop,
-            @Field("profilePic") String profilePic
+            @Field("profile_pic") String profilePic
     );
 
     @FormUrlEncoded
@@ -32,13 +32,13 @@ public interface Api {
             @Field("password") String password
     );
     @FormUrlEncoded
-    @POST("forgotPassword")
+    @POST("forgot-password")
     Call<forgetpassword_response> forgetPassword(
             @Field("email") String email
     );
 
     @FormUrlEncoded
-    @POST("resetPassword")
+    @POST("reset-password")
     Call<forgetpassword_response> resetPassword(
             @Field("email") String email,
             @Field("password") String password

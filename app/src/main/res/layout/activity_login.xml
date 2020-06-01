@@ -29,7 +29,7 @@
 
                     android:layout_height="48dp"
                     android:layout_centerInParent="true"
-                    android:layout_marginTop="64dp"
+                    android:layout_marginTop="104dp"
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="Welcome Back "
@@ -77,18 +77,33 @@
                 android:paddingTop="60dp"
                 app:layout_constraintVertical_bias="1.0">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile No./Email Address*"
+                    android:layout_marginRight="92dp"
+                    android:textStyle="bold"
+                    />
 
                 <EditText
                     android:id="@+id/username"
-                    android:layout_width="208dp"
+                    android:layout_width="358dp"
                     android:layout_height="57dp"
                     android:hint="Enter E-mail Address*"
                     app:layout_constraintHorizontal_bias="0.315"
                     app:layout_constraintVertical_bias="0.309" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:layout_marginRight="148dp"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"/>
+
                 <EditText
                     android:id="@+id/pass"
-                    android:layout_width="208dp"
+                    android:layout_width="358dp"
                     android:layout_height="57dp"
                     android:hint="Password"
                     android:inputType="textPassword"
@@ -157,7 +172,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/r4"
             android:orientation="vertical"
-            android:paddingTop="45dp"
+            android:paddingTop="4dp"
 
             android:layout_centerInParent="true">
 
@@ -202,7 +217,7 @@
             android:layout_below="@+id/belowme"
             android:layout_centerInParent="true"
             android:orientation="horizontal"
-            android:paddingTop="69dp">
+            android:paddingTop="44dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -214,7 +229,7 @@
                 android:id="@+id/signin"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:text="Sign In"
+                android:text="Sign Up"
                 android:textColor="@color/active" />
 
         </LinearLayout>

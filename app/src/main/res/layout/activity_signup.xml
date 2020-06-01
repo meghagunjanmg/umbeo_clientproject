@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="94dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="Create An Account"
@@ -97,7 +97,7 @@
                 <EditText
                     android:paddingTop="18dp"
                     android:id="@+id/name"
-                    android:layout_width="208dp"
+                    android:layout_width="358dp"
                     android:layout_height="57dp"
                     android:hint="Enter Name"
                     app:layout_constraintHorizontal_bias="0.315"
@@ -106,7 +106,7 @@
                 <EditText
                     android:paddingTop="18dp"
                     android:id="@+id/phone"
-                    android:layout_width="208dp"
+                    android:layout_width="358dp"
                     android:layout_height="57dp"
                     android:hint="Enter Phone Number"
                     android:inputType="number"
@@ -116,7 +116,7 @@
                 <EditText
                     android:paddingTop="18dp"
                     android:id="@+id/mail"
-                    android:layout_width="208dp"
+                    android:layout_width="358dp"
                     android:layout_height="57dp"
                     android:hint="Enter E-mail Address"
                     app:layout_constraintHorizontal_bias="0.315"
@@ -125,7 +125,7 @@
                 <EditText
                     android:paddingTop="18dp"
                     android:id="@+id/pass"
-                    android:layout_width="208dp"
+                    android:layout_width="358dp"
                     android:layout_height="57dp"
                     android:hint="Enter Password"
                     android:inputType="textPassword"
@@ -135,7 +135,7 @@
                 <EditText
                     android:paddingTop="18dp"
                     android:id="@+id/address"
-                    android:layout_width="208dp"
+                    android:layout_width="358dp"
                     android:layout_height="57dp"
                     android:hint="Enter Your Address"
                     app:layout_constraintHorizontal_bias="0.315"
@@ -161,17 +161,7 @@
             android:gravity="center"
             android:layout_centerInParent="true">
 
-            <Button
-                android:id="@+id/selectimage"
-                app:cornerRadius="20dp"
-                android:backgroundTint="@color/active"
-                android:layout_width="139dp"
-                android:layout_height="78dp"
-                android:layout_marginStart="34dp"
-                android:layout_marginLeft="4dp"
-                android:textSize="8dp"
-                android:textStyle="bold"
-                android:text="Select Profile Picture"/>
+
 
 
             <Button
@@ -183,7 +173,7 @@
                 android:textStyle="bold"
                 android:backgroundTint="@color/active"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="34dp"
+                android:layout_marginLeft="0dp"
                 android:text="Sign-Up"
                 app:layout_constraintVertical_bias="0.502" />
         </LinearLayout>

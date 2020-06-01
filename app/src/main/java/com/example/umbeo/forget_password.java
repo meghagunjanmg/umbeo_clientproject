@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.umbeo.api.RetrofitClient;
@@ -24,10 +25,20 @@ import retrofit2.Response;
 public class forget_password extends AppCompatActivity {
 
     Button send;
+    TextView signu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
+
+        signu=(TextView)findViewById(R.id.signin);
+
+        signu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(forget_password.this, com.example.umbeo.signup.class));
+            }
+        });
 
         send=(Button)findViewById(R.id.send);
         send.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +52,7 @@ public class forget_password extends AppCompatActivity {
     private void operation(){
         EditText em=(EditText)findViewById(R.id.email);
         final String email=em.getText().toString();
-
+        send.setEnabled(false);
         Call<forgetpassword_response> call= RetrofitClient
                 .getmInstance()
                 .getApi()
@@ -58,6 +69,8 @@ public class forget_password extends AppCompatActivity {
                                 if (rep.getStatus().matches("success")){
                                     Intent i = new Intent(forget_password.this,resetpassword.class);
                                     i.putExtra("mail",email);
+                                    send.setEnabled(true);
+                                    Toast.makeText(getApplicationContext(),"Email Sent for password reset",Toast.LENGTH_LONG).show();
                                     startActivity(i);
 
                                 }
@@ -66,9 +79,11 @@ public class forget_password extends AppCompatActivity {
                                 String s=response.errorBody().string();
                                 JSONObject temp=new JSONObject(s);
                                 Toast.makeText(getApplicationContext(),"Error: "+temp.get("message"),Toast.LENGTH_LONG).show();
+                                send.setEnabled(true);
                             }
                         }  catch (IOException | JSONException e) {
                             Toast.makeText(getApplicationContext(), "Error: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                            send.setEnabled(true);
                         }
 
                     }
@@ -77,7 +92,7 @@ public class forget_password extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<forgetpassword_response> call, Throwable t) {
-
+                send.setEnabled(true);
             }
         });
 

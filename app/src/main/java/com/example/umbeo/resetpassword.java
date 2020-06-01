@@ -42,6 +42,7 @@ public class resetpassword extends AppCompatActivity {
         EditText pass1=(EditText)findViewById(R.id.pass1);
         EditText pass2=(EditText)findViewById(R.id.pass2);
 
+        send.setEnabled(false);
         String password1=pass1.getText().toString();
         String password2=pass2.getText().toString();
         Intent i= getIntent();
@@ -62,7 +63,9 @@ public class resetpassword extends AppCompatActivity {
                                     forgetpassword_response rep=response.body();
                                     if (rep.getStatus().matches("success")){
                                         Toast.makeText(resetpassword.this,"Password Reset Successfully",Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(resetpassword.this,login.class));
+                                        send.setEnabled(true);
+                                        startActivity(new Intent(resetpassword.this,pop.class));
+
 
                                     }
                                 }
@@ -70,9 +73,11 @@ public class resetpassword extends AppCompatActivity {
                                     String s=response.errorBody().string();
                                     JSONObject temp=new JSONObject(s);
                                     Toast.makeText(getApplicationContext(),"Error: "+temp.get("message"),Toast.LENGTH_LONG).show();
+                                    send.setEnabled(true);
                                 }
                             }  catch (IOException | JSONException e) {
                                 Toast.makeText(getApplicationContext(), "Error: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                send.setEnabled(true);
                             }
                         }
                     });
@@ -80,12 +85,13 @@ public class resetpassword extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<forgetpassword_response> call, Throwable t) {
-
+                    send.setEnabled(true);
                 }
             });
         }
         else{
             Toast.makeText(getApplicationContext(),"Password does not match",Toast.LENGTH_LONG).show();
+            send.setEnabled(true);
         }
 
     }
