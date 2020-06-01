@@ -68,11 +68,10 @@ public class signup extends AppCompatActivity {
 
             }
         });
-        imageset = (Button) findViewById(R.id.selectimage);
-        imageset.setOnClickListener(new View.OnClickListener() {
+
+        dp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (ContextCompat.checkSelfPermission(
                         getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE
                 ) != PackageManager.PERMISSION_GRANTED) {
@@ -81,6 +80,8 @@ public class signup extends AppCompatActivity {
                     selectImage();
             }
         });
+
+
 
 
     }
@@ -187,8 +188,10 @@ public class signup extends AppCompatActivity {
         String number = pno.getText().toString();
         String email = mail.getText().toString().trim();
         String password = pass.getText().toString();
-        String address = add.getText().toString();
+        String add1 = add.getText().toString();
 
+        String add2="new address";
+        String[] address= {add1, "new address"};
         if(name.isEmpty()){
             Toast.makeText(signup.this,"Please enter a user name",Toast.LENGTH_LONG).show();
             return;
@@ -214,7 +217,7 @@ public class signup extends AppCompatActivity {
             return;
         }
 
-        if(address.isEmpty()){
+        if(add1.isEmpty()){
             Toast.makeText(signup.this,"Please enter a user address",Toast.LENGTH_LONG).show();
             return;
         }

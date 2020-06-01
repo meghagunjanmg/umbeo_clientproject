@@ -28,21 +28,25 @@ import retrofit2.Response;
 public class login extends AppCompatActivity {
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-    Button signup, login;
+    Button  login;
+    TextView signu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        signup = (Button) findViewById(R.id.button2);
-        login = (Button) findViewById(R.id.button);
-        signup.setOnClickListener(new View.OnClickListener() {
+
+        signu=(TextView)findViewById(R.id.signin);
+
+        signu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(login.this, com.example.umbeo.signup.class));
             }
         });
+        login = (Button) findViewById(R.id.button);
+
         final TextView forgotpassword = (TextView) findViewById(R.id.forget);
         forgotpassword.setOnClickListener(new View.OnClickListener() {
             @Override

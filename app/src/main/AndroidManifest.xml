@@ -21,7 +21,12 @@
         <activity android:name=".forget_password" />
         <activity android:name=".signup" />
         <activity android:name=".login" />
+        <activity android:name=".pop"
+            android:theme="@style/AppTheme.CustomTheme"/>
+        
         <activity android:name=".MainActivity">
+            
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

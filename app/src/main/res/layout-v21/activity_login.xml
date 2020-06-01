@@ -77,6 +77,7 @@
                 android:paddingTop="60dp"
                 app:layout_constraintVertical_bias="1.0">
 
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -172,8 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/r4"
             android:orientation="vertical"
-            android:paddingTop="4dp"
-
+            android:paddingTop="30dp"
             android:layout_centerInParent="true">
 
 
@@ -206,8 +206,6 @@
                 app:iconSize="20dp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon" />
 
-
-
         </LinearLayout>
 
 
@@ -237,3 +235,4 @@
 
 
 </RelativeLayout>
+
