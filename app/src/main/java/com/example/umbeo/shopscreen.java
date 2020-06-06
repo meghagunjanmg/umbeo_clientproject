@@ -32,7 +32,7 @@ private CardView shopCard1,shopCard2,shopcard3,shopCard4;
         Intent i;
 
         switch (v.getId()){
-            case R.id.cardShop1 : i= new Intent(this, homescreen.class);
+            case R.id.cardShop1 : i= new Intent(this, Fruits.class);
             startActivity(i);
             break;
             default:break;

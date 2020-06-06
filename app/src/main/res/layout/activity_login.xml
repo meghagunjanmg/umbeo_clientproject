@@ -198,7 +198,7 @@
                 android:layout_height="57dp"
                 android:textColor="@color/colorTextSecondary"
                 android:backgroundTint="@color/colorWhite"
-                app:icon="@drawable/ui"
+                app:icon="@drawable/googlelogo"
                 app:iconPadding="4dp"
                 app:iconTint="@color/empty"
                 android:text="Connect with Google"
