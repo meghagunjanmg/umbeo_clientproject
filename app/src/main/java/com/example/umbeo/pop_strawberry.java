@@ -11,12 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.umbeo.Storage.SharedprefManager;
+
 public class pop_strawberry extends AppCompatActivity {
 
     ImageView ad, minu;
     TextView count;
     Button addtocart;
     int counter=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,10 @@ public class pop_strawberry extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(pop_strawberry.this,"Added to Cart Successfully",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getApplication(),login.class));
+
+                    startActivity(new Intent(getApplication(),login.class));
+
+
             }
         });
 

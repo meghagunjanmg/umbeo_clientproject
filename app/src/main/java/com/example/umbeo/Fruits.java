@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 public class Fruits extends AppCompatActivity {
 
-    ImageView lichi,strawbe;
+    ImageView lichi,strawbe,address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +27,13 @@ public class Fruits extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplication(),pop_strawberry.class));
+            }
+        });
+        address=(ImageView)findViewById(R.id.editAddress);
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplication(),MapActivity.class));
             }
         });
     }

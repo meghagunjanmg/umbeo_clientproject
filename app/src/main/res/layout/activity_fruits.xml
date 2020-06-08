@@ -38,7 +38,8 @@
                     android:layout_width="250dp"
                     android:layout_height="35dp"
                     android:background="@null"
-                    android:text="Search" />
+                    android:hint="Search"
+                     />
 
 
             </LinearLayout>
@@ -103,6 +104,7 @@
 
 
                     <ImageView
+                        android:id="@+id/editAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="13dp"
@@ -155,11 +157,13 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/a4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/a3"
             android:gravity="center"
             android:layout_centerInParent="true">
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -362,7 +366,7 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/plus"
                             android:paddingTop="15dp"
-                            android:paddingLeft="175dp"/>
+                            android:paddingLeft="169dp"/>
                     </LinearLayout>
                 </LinearLayout>
                 <TextView
@@ -428,10 +432,19 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/plus"
                             android:paddingTop="15dp"
-                            android:paddingLeft="175dp"/>
+                            android:paddingLeft="151dp"/>
                     </LinearLayout>
                 </LinearLayout>
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNavigationView"
+                    android:layout_below="@id/a4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:menu="@menu/menu_bottom_navigation"/>
             </LinearLayout>
+
         </RelativeLayout>
     </RelativeLayout>
 </ScrollView>
