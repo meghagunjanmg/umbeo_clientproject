@@ -12,31 +12,32 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
         <activity android:name=".payment_popUp"
-            android:theme="@style/AppTheme.CustomItem"></activity>
-        <activity android:name=".dashboard" />
-        <activity android:name=".Example" />
-        <activity android:name=".MapActivity" />
+            android:theme="@style/AppTheme.CustomItem" android:screenOrientation="portrait"></activity>
+        <activity android:name=".dashboard" android:screenOrientation="portrait" />
+        <activity android:name=".Example" android:screenOrientation="portrait" />
+        <activity android:name=".MapActivity" android:screenOrientation="portrait" />
         <activity
             android:name=".pop_strawberry"
-            android:theme="@style/AppTheme.CustomItem" />
+            android:theme="@style/AppTheme.CustomItem" android:screenOrientation="portrait" />
         <activity
             android:name=".pop_lichi"
-            android:theme="@style/AppTheme.CustomItem" />
-        <activity android:name=".Fruits" />
-        <activity android:name=".Payment" />
-        <activity android:name=".intro1" />
-        <activity android:name=".itemScreen" />
-        <activity android:name=".shopscreen" />
-        <activity android:name=".resetpassword" />
-        <activity android:name=".forget_password" />
-        <activity android:name=".signup" />
-        <activity android:name=".login" />
+            android:theme="@style/AppTheme.CustomItem" android:screenOrientation="portrait" />
+        <activity android:name=".Fruits"  android:screenOrientation="portrait"/>
+        <activity android:name=".Payment" android:screenOrientation="portrait" />
+        <activity android:name=".intro1"  android:screenOrientation="portrait"/>
+        <activity android:name=".itemScreen" android:screenOrientation="portrait" />
+        <activity android:name=".shopscreen" android:screenOrientation="portrait" />
+        <activity android:name=".resetpassword" android:screenOrientation="portrait" />
+        <activity android:name=".forget_password" android:screenOrientation="portrait" />
+        <activity android:name=".signup" android:screenOrientation="portrait"/>
+        <activity android:name=".login" android:screenOrientation="portrait"/>
         <activity
             android:name=".pop"
-            android:theme="@style/AppTheme.CustomTheme" />
-        <activity android:name=".MainActivity">
+            android:theme="@style/AppTheme.CustomTheme" android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
