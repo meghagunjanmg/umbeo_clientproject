@@ -5,32 +5,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import androidx.fragment.app.Fragment;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-public class homescreen extends Fragment {
+public class CartFragment extends Fragment {
 
-    TextView log,address,fruit;
+    ImageView address;
+    Button add,paym;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.activity_dashboard,container,false);
+        View v= inflater.inflate(R.layout.activity_cart,container , false);
 
-        log=(TextView)v.findViewById(R.id.login);
-        log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),login.class));
-            }
-        });
-        address=(TextView)v.findViewById(R.id.addre);
+        address=(ImageView)v.findViewById(R.id.editAddress);
         address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,14 +30,20 @@ public class homescreen extends Fragment {
             }
         });
 
-        fruit=(TextView)v.findViewById(R.id.fruits);
-        fruit.setOnClickListener(new View.OnClickListener() {
+        add=(Button)v.findViewById(R.id.additem);
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 FruitsFragment fruits= new FruitsFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, fruits).commit();
-                //startActivity(new Intent(getActivity(),FruitsFragment.class));
+            }
+        });
+        paym=(Button)v.findViewById(R.id.payment);
+        paym.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PaymentFragment paymentFragment = new PaymentFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,paymentFragment).commit();
             }
         });
 

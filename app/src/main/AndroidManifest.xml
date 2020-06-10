@@ -13,9 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MapActivity"></activity>
-        <activity android:name=".pop_strawberry"
-            android:theme="@style/AppTheme.CustomItem"/>
+        <activity android:name=".payment_popUp"
+            android:theme="@style/AppTheme.CustomItem"></activity>
+        <activity android:name=".dashboard" />
+        <activity android:name=".Example" />
+        <activity android:name=".MapActivity" />
+        <activity
+            android:name=".pop_strawberry"
+            android:theme="@style/AppTheme.CustomItem" />
         <activity
             android:name=".pop_lichi"
             android:theme="@style/AppTheme.CustomItem" />
@@ -24,7 +29,6 @@
         <activity android:name=".intro1" />
         <activity android:name=".itemScreen" />
         <activity android:name=".shopscreen" />
-        <activity android:name=".homescreen" />
         <activity android:name=".resetpassword" />
         <activity android:name=".forget_password" />
         <activity android:name=".signup" />

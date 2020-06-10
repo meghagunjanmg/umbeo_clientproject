@@ -12,6 +12,10 @@
     <color name="dark_blue">#3023AE</color>
     <color name="colorButton">#2196F3</color>
     <color name="active">#00ac16</color>
+    <color name="green">#00ac16</color>
+    <color name="grey">#696969</color>
+    <color name="lightgrey">#A9A9A9</color>
+    <color name="brightgreen">#44CC00</color>
     <color name="inactive">#95E06C</color>
     <color name="purple">#c86dd7</color>
     <color name="empty"></color>

@@ -118,6 +118,7 @@
                 android:layout_below="@id/imagekabaap"
                 android:layout_centerInParent="true"
                 android:paddingTop="15dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/farmers"
                 app:cornerRadius="15dp" />
 
@@ -435,14 +436,7 @@
                             android:paddingLeft="151dp"/>
                     </LinearLayout>
                 </LinearLayout>
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/bottomNavigationView"
-                    android:layout_below="@id/a4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="@color/colorWhite"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:menu="@menu/menu_bottom_navigation"/>
+
             </LinearLayout>
 
         </RelativeLayout>
