@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class CartFragment extends Fragment {
 
     ImageView address;
@@ -21,7 +23,7 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.activity_cart,container , false);
-
+        
         address=(ImageView)v.findViewById(R.id.editAddress);
         address.setOnClickListener(new View.OnClickListener() {
             @Override

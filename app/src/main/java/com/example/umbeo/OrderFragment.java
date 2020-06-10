@@ -29,11 +29,15 @@ public class OrderFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                history.setEnabled(true);
+
                 history.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.active));
                 history.setTextColor(R.color.colorWhite);
 
+                current.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorWhite));
+                current.setTextColor(R.color.active);
 
+                all.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorWhite));
+                all.setTextColor(R.color.active);
 
             }
         });
@@ -41,10 +45,15 @@ public class OrderFragment extends Fragment {
         current.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                current.setEnabled(true);
+
                 current.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.active));
                 current.setTextColor(R.color.colorWhite);
 
+                history.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorWhite));
+                history.setTextColor(R.color.active);
+
+                all.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorWhite));
+                all.setTextColor(R.color.active);
 
             }
         });
@@ -52,10 +61,15 @@ public class OrderFragment extends Fragment {
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                all.setEnabled(true);
+
                 all.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.active));
                 all.setTextColor(R.color.colorWhite);
 
+                history.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorWhite));
+                history.setTextColor(R.color.active);
+
+                current.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.colorWhite));
+                current.setTextColor(R.color.active);
 
             }
         });
