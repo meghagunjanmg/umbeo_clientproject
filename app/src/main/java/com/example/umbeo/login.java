@@ -119,7 +119,9 @@ public class login extends AppCompatActivity {
                                             .saveToken(loginResponse.getToken());
                                     Toast.makeText(com.example.umbeo.login.this,"Login Successful",Toast.LENGTH_LONG).show();
                                     login.setEnabled(true);
-                                    startActivity(new Intent(login.this, shopscreen.class));
+                                    Toast.makeText(com.example.umbeo.login.this,"Go to Cart to complete Payment",Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(getApplicationContext(),Payment.class));
+                                    // startActivity(new Intent(login.this, shopscreen.class));
                                 }
                                 else{
                                     login.setEnabled(true);

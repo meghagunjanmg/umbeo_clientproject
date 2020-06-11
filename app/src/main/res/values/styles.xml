@@ -21,6 +21,13 @@
 
 
     </style>
+
+    <style name="AppTheme.CustomItem">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+
+
+    </style>
     
     <style name="Widget.MaterialComponents.Button.OutlinedButton.Icon"></style>
 </resources>
