@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
@@ -16,13 +17,22 @@ import androidx.fragment.app.FragmentManager;
 
 public class homescreen extends Fragment {
 
-    TextView log,address,fruit;
-
+    TextView log,fruit;
+    ImageView address;
+    CardView fruits;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.activity_dashboard,container,false);
 
+        fruits = (CardView)v.findViewById(R.id.list1);
+        fruits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FruitsFragment fruits= new FruitsFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fruits).commit();
+            }
+        });
         log=(TextView)v.findViewById(R.id.login);
         log.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +40,7 @@ public class homescreen extends Fragment {
                 startActivity(new Intent(getActivity(),login.class));
             }
         });
-        address=(TextView)v.findViewById(R.id.addre);
+        address=(ImageView)v.findViewById(R.id.addre);
         address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +48,7 @@ public class homescreen extends Fragment {
             }
         });
 
+        /*
         fruit=(TextView)v.findViewById(R.id.fruits);
         fruit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +59,8 @@ public class homescreen extends Fragment {
                 //startActivity(new Intent(getActivity(),FruitsFragment.class));
             }
         });
+
+         */
 
 
         return v;

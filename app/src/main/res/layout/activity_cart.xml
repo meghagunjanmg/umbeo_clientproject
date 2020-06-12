@@ -146,10 +146,10 @@
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="180dp"
+                            android:layout_marginStart="140dp"
                             android:layout_marginTop="0dp"
                             android:src="@drawable/plusminus"
-                            android:layout_marginLeft="180dp" />
+                            android:layout_marginLeft="140dp" />
 
                     </LinearLayout>
 
@@ -179,10 +179,10 @@
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="217dp"
+                            android:layout_marginStart="180dp"
                             android:layout_marginTop="0dp"
                             android:src="@drawable/plusminus"
-                            android:layout_marginLeft="217dp" />
+                            android:layout_marginLeft="180dp" />
 
                     </LinearLayout>
 

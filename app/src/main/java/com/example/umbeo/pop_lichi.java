@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -25,14 +27,14 @@ public class pop_lichi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_lichi);
 
-        DisplayMetrics dm= new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
+     //   DisplayMetrics dm= new DisplayMetrics();
+     //   getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int width= dm.widthPixels;
-        int height= dm.heightPixels;
+      //  int width= dm.widthPixels;
+      //  int height= dm.heightPixels;
 
-        getWindow().setLayout((int)(width*0.8), (int)(height*0.8));
-        getWindow().setDimAmount(0.5f);
+       // getWindow().setLayout((int)(width*0.78), (int)(height*0.6));
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
 
         count=(TextView)findViewById(R.id.count);
         ad=(ImageView)findViewById(R.id.add);

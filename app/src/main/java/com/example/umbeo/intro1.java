@@ -54,7 +54,7 @@ public class intro1 extends AppCompatActivity {
                     onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
                 }
                 else{
-                    startActivity(new Intent(getApplicationContext(),shopscreen.class));
+                    startActivity(new Intent(getApplicationContext(),Example.class));
                     finish();
                 }
             }
