@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".signup">
-
-    <RelativeLayout
+    tools:context=".login">
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:id="@+id/r1"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/r2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/r1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="120dp"
+                android:layout_height="120dp">
+            </ImageView>
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="94dp"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="Create An Account"
@@ -42,15 +30,10 @@
                 android:textColor="@color/colorTextSecondary"
                 android:textSize="32dp"
                 android:textStyle="bold"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.338"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
+                android:visibility="visible"/>
 
                 <TextView
-                    android:paddingTop="10dp"
+                    android:paddingTop="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -64,120 +47,97 @@
                     android:gravity="center"
                     android:text="happy and healthy Community" />
 
-            </LinearLayout>
-
-        </RelativeLayout>
-
-
         <ImageView
+            android:layout_gravity="center"
             android:paddingTop="20dp"
             android:id="@+id/dp"
             android:layout_width="89dp"
             android:layout_height="89dp"
-            android:layout_below="@+id/r2"
             android:adjustViewBounds="true"
-            android:layout_centerInParent="true"
             android:src="@drawable/ic_profile_pic"/>
 
-        <RelativeLayout
-            android:id="@+id/r3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/dp">
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintVertical_bias="1.0">
-
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name"/>
 
                 <EditText
-                    android:paddingTop="18dp"
                     android:id="@+id/name"
-                    android:layout_width="358dp"
-                    android:layout_height="57dp"
-                    android:hint="Enter Name"
-                    app:layout_constraintHorizontal_bias="0.315"
-                    app:layout_constraintVertical_bias="0.309" />
-
-                <EditText
-                    android:paddingTop="18dp"
-                    android:id="@+id/phone"
-                    android:layout_width="358dp"
-                    android:layout_height="57dp"
-                    android:hint="Enter Phone Number"
-                    android:inputType="number"
-                    app:layout_constraintHorizontal_bias="0.315"
-                    app:layout_constraintVertical_bias="0.14" />
-
-                <EditText
-                    android:paddingTop="18dp"
-                    android:id="@+id/mail"
-                    android:layout_width="358dp"
-                    android:layout_height="57dp"
-                    android:hint="Enter E-mail Address"
-                    app:layout_constraintHorizontal_bias="0.315"
-                    app:layout_constraintVertical_bias="0.309" />
-
-                <EditText
-                    android:paddingTop="18dp"
-                    android:id="@+id/pass"
-                    android:layout_width="358dp"
-                    android:layout_height="57dp"
-                    android:hint="Enter Password"
-                    android:inputType="textPassword"
-                    app:layout_constraintHorizontal_bias="0.315"
-                    app:layout_constraintVertical_bias="0.309" />
-
-                <EditText
-                    android:paddingTop="18dp"
-                    android:id="@+id/address"
-                    android:layout_width="358dp"
-                    android:layout_height="57dp"
-                    android:hint="Enter Your Address"
-                    app:layout_constraintHorizontal_bias="0.315"
-                    app:layout_constraintVertical_bias="0.309" />
-
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Name*" />
 
                 <TextView
-                    android:id="@+id/imageset"
-                    android:layout_width="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
+                    android:text="Email"/>
+
+                <EditText
+                    android:id="@+id/mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Email Address*" />
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Phone"/>
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Mobile No*" />
+                <TextView
+                    android:visibility="gone"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address"/>
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Address*" />
+
+                <TextView
+                    android:layout_marginTop="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Password"/>
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:hint="Enter Password*" />
             </LinearLayout>
 
-
-        </RelativeLayout>
-
-
         <LinearLayout
-            android:layout_below="@+id/r3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_centerInParent="true">
-
-
-
-
+            android:layout_gravity="center">
             <Button
+                android:layout_margin="8dp"
                 android:id="@+id/button"
-                app:cornerRadius="20dp"
-                android:layout_width="139dp"
-                android:layout_height="78dp"
-                android:textSize="12dp"
-                android:textStyle="bold"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:backgroundTint="@color/active"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="0dp"
-                android:text="Sign-Up"
-                app:layout_constraintVertical_bias="0.502" />
+                android:fontFamily="sans-serif"
+                android:text="Sign Up"
+                android:textStyle="bold"/>
         </LinearLayout>
-
-    </RelativeLayout>
-</RelativeLayout>
-
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,239 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".login">
-
-    <RelativeLayout
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:id="@+id/r2"
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="222dp"
-
-                    android:layout_height="48dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="104dp"
-                    android:fontFamily="sans-serif"
-                    android:gravity="center"
-                    android:text="Welcome Back "
-                    android:textAlignment="center"
-                    android:textColor="@color/colorTextSecondary"
-                    android:textSize="32dp"
-                    android:textStyle="bold"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.338"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="visible" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="You are one step away from dicovering" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="the best around you" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/r3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/r2">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="60dp"
-                app:layout_constraintVertical_bias="1.0">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile No./Email Address*"
-                    android:layout_marginRight="92dp"
-                    android:textStyle="bold"
-                    />
-
-                <EditText
-                    android:id="@+id/username"
-                    android:layout_width="358dp"
-                    android:layout_height="57dp"
-                    android:hint="Enter E-mail Address*"
-                    app:layout_constraintHorizontal_bias="0.315"
-                    app:layout_constraintVertical_bias="0.309" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password"
-                    android:layout_marginRight="148dp"
-                    android:layout_marginTop="5dp"
-                    android:textStyle="bold"/>
-
-                <EditText
-                    android:id="@+id/pass"
-                    android:layout_width="358dp"
-                    android:layout_height="57dp"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    app:layout_constraintHorizontal_bias="0.315"
-                    app:layout_constraintVertical_bias="0.14" />
-
-                <TextView
-                    android:id="@+id/status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+        android:layout_height="wrap_content">
 
 
-        </RelativeLayout>
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="120dp"
+        android:layout_height="120dp">
+    </ImageView>
+    <TextView
+        android:padding="12dp"
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="Welcome Back "
+        android:textAlignment="center"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="32dp"
+        android:textStyle="bold"/>
 
-        <RelativeLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="You are one step away from dicovering" />
 
-            android:id="@+id/r4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/r3"
-            android:paddingTop="20dp">
+    <TextView
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="the best around you" />
+    <TextView
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mobile No./Email Address*"
+        android:textStyle="bold"
+        />
+    <EditText
+        android:layout_margin="8dp"
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter E-mail Address*"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+    <TextView
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textStyle="bold"/>
 
-                <Button
+    <EditText
+        android:layout_margin="8dp"
+        android:id="@+id/pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword" />
 
-                    android:id="@+id/button"
-                    android:layout_width="250dp"
-                    android:layout_height="58dp"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/active"
-                    android:fontFamily="sans-serif"
-                    android:text="Sign In"
-                    android:textStyle="bold"
-                    app:cornerRadius="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button2"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintVertical_bias="0.502" />
+    <TextView
+        android:layout_margin="8dp"
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/forget"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:gravity="center"
-                    android:text="forgot your password?" />
-            </LinearLayout>
+    <Button
+        android:layout_margin="8dp"
+        android:id="@+id/button"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/active"
+        android:fontFamily="sans-serif"
+        android:text="Sign In"
+        android:textStyle="bold"
+        app:cornerRadius="20dp"/>
 
+    <TextView
+        android:id="@+id/forget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="forgot your password?" />
+    <LinearLayout
+        android:padding="8dp"
+        android:id="@+id/belowme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:paddingTop="4dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/facebook"
+            android:layout_width="250dp"
+            android:layout_height="57dp"
+            android:textColor="@color/colorTextSecondary"
+            android:fontFamily="sans-serif"
+            android:backgroundTint="@color/colorWhite"
+            app:icon="@drawable/facebook"
+            app:iconPadding="4dp"
+            app:iconTint="@color/empty"
+            android:text="Login with Facebook"
+            app:cornerRadius="20dp"
+            app:iconSize="20dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            />
 
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="250dp"
+            android:layout_height="57dp"
+            android:textColor="@color/colorTextSecondary"
+            android:backgroundTint="@color/colorWhite"
+            app:icon="@drawable/googlelogo"
+            app:iconPadding="4dp"
+            app:iconTint="@color/empty"
+            android:text="Connect with Google"
+            app:cornerRadius="20dp"
+            app:iconSize="20dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon" />
+    </LinearLayout>
 
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Don't have an Account?  " />
 
-        </RelativeLayout>
+    <TextView
+        android:gravity="center"
+        android:id="@+id/signin"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Sign Up"
+        android:textColor="@color/active" />
 
-
-        <LinearLayout
-            android:id="@+id/belowme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/r4"
-            android:orientation="vertical"
-            android:paddingTop="4dp"
-
-            android:layout_centerInParent="true">
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/facebook"
-                android:layout_width="250dp"
-                android:layout_height="57dp"
-                android:textColor="@color/colorTextSecondary"
-                android:fontFamily="sans-serif"
-                android:backgroundTint="@color/colorWhite"
-                app:icon="@drawable/facebook"
-                app:iconPadding="4dp"
-                app:iconTint="@color/empty"
-                android:text="Login with Facebook"
-                app:cornerRadius="20dp"
-                app:iconSize="20dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="250dp"
-                android:layout_height="57dp"
-                android:textColor="@color/colorTextSecondary"
-                android:backgroundTint="@color/colorWhite"
-                app:icon="@drawable/googlelogo"
-                app:iconPadding="4dp"
-                app:iconTint="@color/empty"
-                android:text="Connect with Google"
-                app:cornerRadius="20dp"
-                app:iconSize="20dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon" />
-
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/belowme"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal"
-            android:paddingTop="44dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Don't have an Account?  " />
-
-            <TextView
-
-                android:id="@+id/signin"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Sign Up"
-                android:textColor="@color/active" />
-
-        </LinearLayout>
-    </RelativeLayout>
-
-
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>
