@@ -1,12 +1,15 @@
 package com.example.umbeo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class payment_popUp extends AppCompatActivity {
 
@@ -31,5 +34,15 @@ public class payment_popUp extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),Example.class));
             }
         });
+
+       TextView go_order = findViewById(R.id.go_order);
+       go_order.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Fragment orderFragment = new OrderFragment();
+               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,orderFragment)
+                       .commit();
+           }
+       });
     }
 }

@@ -7,16 +7,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-public class Payment extends AppCompatActivity {
+public class Payment extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
 
     private int counter=1;
+    RadioGroup radioGroup;
+
     RadioButton cas,amazonpay,applepay,paypal,amazonupi,googleupi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        addListner();
+        radioGroup = findViewById(R.id.role_radioGroup_ID);
+        radioGroup.setOnCheckedChangeListener(this);
     }
 
     private void addListner(){
@@ -129,7 +132,24 @@ public class Payment extends AppCompatActivity {
 
             }
         }
+    }
 
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        // find which radio button is selected
+        if(checkedId == R.id.cash) {
+            addListner();
+        } else if(checkedId == R.id.amazonPay) {
+           addListner();
+        } else if(checkedId == R.id.applePay){
+            addListner();
+        } else if(checkedId == R.id.payPal){
+            addListner();
+        } else if(checkedId == R.id.amazonPayUPI){
+           addListner();
+        } else if(checkedId == R.id.googleUPI){
+          addListner();
+        }
     }
 }

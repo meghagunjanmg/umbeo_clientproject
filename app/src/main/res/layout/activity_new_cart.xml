@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_margin="8dp"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/Cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Cart"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:layout_gravity="end"
+            android:id="@+id/menu"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/menu">
+        </ImageView>
+    </FrameLayout>
+    <TextView
+        android:id="@+id/Del"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delivery At"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/lightgrey"/>
+    <LinearLayout
+        android:id="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/location"
+            android:drawablePadding="12dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:hint="Address"
+            android:textStyle="bold"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/editAddress"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/pen" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/Det"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Details"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/lightgrey" />
+
+    <include layout="@layout/item_detail_cart"></include>
+
+    <TextView
+        android:drawableEnd="@drawable/pen"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Loyalty points applied"
+        android:textStyle="bold"
+        android:drawableRight="@drawable/pen" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_weight="1"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delivery Charges"
+        android:textColor="@color/lightgrey"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+        <TextView
+            android:gravity="end"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="₹ 10"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Taxes &amp; Charges"
+            android:textColor="@color/lightgrey"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:gravity="end"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="₹ 10"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Discounts"
+            android:textColor="@color/lightgrey"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:gravity="end"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="₹ 10"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Grand Total"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <TextView
+            android:gravity="end"
+            android:layout_weight="1"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="₹ 10"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/note"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Please note after placing the order on \n cancelation charges might apply"
+        android:textColor="@color/lightgrey"/>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/active"
+        app:cornerRadius="20dp"
+        android:background="@color/green"
+        android:text="Place Your Order"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

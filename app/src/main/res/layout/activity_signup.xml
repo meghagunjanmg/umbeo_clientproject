@@ -22,15 +22,14 @@
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
-                android:layout_height="68dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="Create An Account"
                 android:textAlignment="center"
                 android:textColor="@color/colorTextSecondary"
-                android:textSize="32dp"
-                android:textStyle="bold"
-                android:visibility="visible"/>
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
                 <TextView
                     android:paddingTop="8dp"
@@ -49,7 +48,6 @@
 
         <ImageView
             android:layout_gravity="center"
-            android:paddingTop="20dp"
             android:id="@+id/dp"
             android:layout_width="89dp"
             android:layout_height="89dp"
@@ -57,7 +55,8 @@
             android:src="@drawable/ic_profile_pic"/>
 
             <LinearLayout
-                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -73,7 +72,7 @@
                     android:hint="Enter Name*" />
 
                 <TextView
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Email"/>
@@ -84,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Enter Email Address*" />
                 <TextView
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Phone"/>
@@ -109,7 +108,7 @@
                     android:hint="Enter Address*" />
 
                 <TextView
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Password"/>

@@ -1,101 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapActivity">
-
-
-    <RelativeLayout
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/a1">
+        android:layout_height="match_parent">
+
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_centerInParent="true">
+            android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add Address"
-            android:textSize="26dp"
+            android:textSize="24sp"
             android:gravity="center"
-            android:layout_marginLeft="105dp"
             android:textStyle="bold"
             android:id="@+id/text"/>
         <ImageView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="95dp"
-            android:src="@drawable/sidebar"
-            android:layout_alignLeft="@id/text"/>
+            android:src="@drawable/sidebar"/>
 
         </LinearLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/a1">
         <LinearLayout
-            android:id="@+id/a2"
-            android:layout_width="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_centerInParent="true"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <ImageView
-
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="355dp"
+                android:layout_height="400dp"
                 android:src="@drawable/map"/>
 
             <EditText
-                android:layout_marginTop="15dp"
-                android:layout_width="355dp"
-                android:layout_height="58dp"
-                android:hint="address"
-
-                android:layout_marginLeft="15dp"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:hint="address line 1" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/home"/>
-                <TextView
-                    android:layout_width="wrap_content"
+            <EditText
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="address line 2" />
+
+            <EditText
+                android:padding="12dp"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="address line 3" />
+
+            <TextView
+                    android:layout_marginTop="12dp"
+                    android:drawableStart="@drawable/home"
+                    android:drawablePadding="12dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Current Address"
                     android:textStyle="bold"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="190dp"/>
-
-            </LinearLayout>
-
+                    android:textSize="16sp"
+                    android:drawableLeft="@drawable/home" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Button
-                android:layout_marginTop="52dp"
-                android:layout_below="@id/a2"
-                android:layout_width="145dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/active"
                 app:cornerRadius="20dp"
                 android:textStyle="bold"
                 android:text="add"/>
+            </RelativeLayout>
         </LinearLayout>
-
-
-
-    </RelativeLayout>
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

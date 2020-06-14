@@ -37,4 +37,5 @@ public class Fruits extends AppCompatActivity {
             }
         });
     }
+
 }

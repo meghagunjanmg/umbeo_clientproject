@@ -22,7 +22,7 @@ public class CartFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.activity_cart,container , false);
+        View v= inflater.inflate(R.layout.activity_new_cart,container , false);
 
         address=(ImageView)v.findViewById(R.id.editAddress);
         address.setOnClickListener(new View.OnClickListener() {

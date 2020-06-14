@@ -178,7 +178,7 @@
                         <ImageView
                             android:layout_width="65dp"
                             android:layout_height="95dp"
-                            android:src="@drawable/lychee"
+                            android:src="@drawable/lichi"
                             android:paddingRight="10dp"
                             android:paddingLeft="6dp"/>
                         <LinearLayout

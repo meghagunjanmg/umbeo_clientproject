@@ -3,25 +3,34 @@ package com.example.umbeo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Example extends AppCompatActivity {
+import static androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE;
 
+public class Example extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
+
+    FragmentManager fragmentManager;
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListner);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new homescreen()).commit();
-
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container,
+                new homescreen())
+                .commit();
     }
 
     private  BottomNavigationView.OnNavigationItemSelectedListener navListner =
@@ -42,12 +51,20 @@ public class Example extends AppCompatActivity {
                                 break;
                         case R.id.navigationCart:
                                 selectedFragment= new CartFragment();
+                                break;
 
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
-
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container,
+                            selectedFragment)
+                            .addToBackStack(null)
+                            .commit();
                     return true;
                 }
             };
+
+    @Override
+    public void onBackStackChanged() {
+        navListner.onNavigationItemSelected(bottomNavigationView.getMenu().getItem(0));
+        bottomNavigationView.setOnNavigationItemSelectedListener(navListner);
+    }
 }
