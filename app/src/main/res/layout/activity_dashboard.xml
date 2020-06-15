@@ -353,6 +353,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/plus"/>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/strawberry_linear"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/remove"
+                        android:layout_weight="1"
+                        android:tint="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_remove">
+                    </ImageView>
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="1">
+                    </TextView>
+                    <ImageView
+                        android:id="@+id/add"
+                        android:layout_weight="1"
+                        android:tint="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_add">
+                    </ImageView>
+
+                </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_marginBottom="12dp"
@@ -389,13 +426,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₹70"
+                            android:text="₹60"
                             android:background="@drawable/line_cross"/>
                         <TextView
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="₹60"
+                            android:text="₹50"
                             android:paddingLeft="10dp"/>
                     </LinearLayout>
                     <TextView
@@ -412,6 +449,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/plus"/>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/lichi_linear"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/remove1"
+                        android:layout_weight="1"
+                        android:tint="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_remove">
+                    </ImageView>
+                    <TextView
+                        android:id="@+id/quantity1"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="1">
+                    </TextView>
+                    <ImageView
+                        android:id="@+id/add1"
+                        android:layout_weight="1"
+                        android:tint="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_add">
+                    </ImageView>
+
+                </LinearLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_marginBottom="12dp"
@@ -455,13 +529,13 @@
                             android:layout_weight="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="₹70"
+                            android:text="₹50"
                             android:paddingLeft="10dp"/>
                     </LinearLayout>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Save ₹80"
+                        android:text="Save ₹10"
                         android:textColor="@color/active"
                         android:paddingTop="8dp"/>
                 </LinearLayout>
@@ -472,6 +546,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/plus"/>
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/orange_linear"
+                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/remove3"
+                        android:layout_weight="1"
+                        android:tint="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_remove">
+                    </ImageView>
+                    <TextView
+                        android:id="@+id/quantity3"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="1">
+                    </TextView>
+                    <ImageView
+                        android:id="@+id/add3"
+                        android:layout_weight="1"
+                        android:tint="@color/green"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_add">
+                    </ImageView>
+
+                </LinearLayout>
+
             </LinearLayout>
 
 

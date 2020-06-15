@@ -10,14 +10,22 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.room.Room;
+
+import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
 
 public class MainActivity extends AppCompatActivity {
-
+    AppDatabase db;
     private int SPLASH_TIME_OUT=1599;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db = Room.databaseBuilder(this,
+                AppDatabase.class, "database-name").build();
+        /// DeleteAllDB();
+
 
         Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
@@ -41,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent= new Intent(MainActivity.this,Example.class);
+                    Intent intent= new Intent(MainActivity.this,HomeScreenActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -75,5 +83,17 @@ public class MainActivity extends AppCompatActivity {
         if(permissionGranted){
         }else {
         }
+    }
+    private void DeleteAllDB(){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    db.cartDao().nukeTable();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

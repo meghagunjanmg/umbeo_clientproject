@@ -16,7 +16,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class OrderFragment extends Fragment {
-
+    public OrderFragment() {
+    }
     Button history,current, all;
 
     @Nullable
