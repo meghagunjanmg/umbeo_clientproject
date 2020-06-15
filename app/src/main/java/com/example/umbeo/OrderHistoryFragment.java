@@ -75,10 +75,9 @@ public class OrderHistoryFragment extends Fragment {
         repeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               FragmentManager fragmentManager = getFragmentManager();
-               Fragment cart = new CartFragment();
-                fragmentManager.beginTransaction().replace(R.id.fragment_container,cart)
-                        .commit();
+                Intent i = new Intent(getContext(),HomeScreenActivity.class);
+                i.putExtra("Id",1);
+                getContext().startActivity(i);
             }
         });
     }

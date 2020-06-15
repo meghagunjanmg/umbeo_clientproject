@@ -23,6 +23,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     ViewPager viewPager;
     LinearLayout explore,cart,order,profile;
     AppDatabase db;
+    int id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         order = findViewById(R.id.order);
         profile = findViewById(R.id.profile);
 
+
         explore.setOnClickListener(this);
         cart.setOnClickListener(this);
         order.setOnClickListener(this);
@@ -41,6 +44,11 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
 
         setupViewPager();
+
+        id = getIntent().getIntExtra("Id",0);
+        if(id==1){
+            viewPager.setCurrentItem(1);
+        }
 
         setIcons();
 
