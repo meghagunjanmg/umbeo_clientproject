@@ -1,26 +1,40 @@
 package com.example.umbeo;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     List<CartEntity> data;
-    Context context;
+    List<Integer> amount = new ArrayList<>();
 
-    public CartAdapter(List<CartEntity> data, Context context) {
+
+    Context context;
+     int quant = 0;
+    private String name ="";
+    AppDatabase db;
+     static int total = 0;
+
+    public CartAdapter(List<CartEntity> data, Context context,AppDatabase db) {
         this.data = data;
         this.context = context;
+        this.db = db;
     }
 
     @NonNull
@@ -34,9 +48,54 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        item_name.setText(data.get(position).getItem_name()+"");
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        if(data.get(position).getQuantity()<=0){
+            linearLayout.setVisibility(View.GONE);
+        }
+
         quantity.setText(data.get(position).getQuantity()+"");
+        item_name.setText(data.get(position).getItem_name()+"");
+
+
+        final int i = position;
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quant = data.get(i).getQuantity();
+                name =  data.get(i).getItem_name();
+                quant++;
+                quantity.setText(quant+"");
+                DeleteDB(name);
+                addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),50));
+                total_amount.setText(quant*50+"");
+
+            }
+        });
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quant = data.get(i).getQuantity();
+                name =  data.get(i).getItem_name();
+                quant--;
+                if(quant==0){
+                    //  orange_linear.setVisibility(View.GONE);
+                    //  orange_plus.setVisibility(View.VISIBLE);
+                    DeleteDB(name);
+                    addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),50));
+                }
+                quantity.setText(quant+"");
+                DeleteDB(name);
+                addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),50));
+                total_amount.setText(quant*50+"");
+
+            }
+        });
+
+        quantity.setText(data.get(position).getQuantity()+"");
+        total_amount.setText(data.get(position).getQuantity()*50+"");
+
+            CartMainFragment.amounts.add(Integer.parseInt(total_amount.getText().toString()));
+
     }
 
     @Override
@@ -44,12 +103,48 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         return data.size();
     }
 
-    TextView item_name,quantity;
+    TextView item_name,quantity,total_amount;
+    LinearLayout linearLayout;
+    ImageView add,remove;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             item_name = itemView.findViewById(R.id.item_name);
-            quantity = itemView.findViewById(R.id.quantity);
+            quantity = itemView.findViewById(R.id.quantity1111);
+            add = itemView.findViewById(R.id.add);
+            remove = itemView.findViewById(R.id.remove);
+            linearLayout = itemView.findViewById(R.id.linear);
+            total_amount = itemView.findViewById(R.id.total_amount);
         }
     }
+
+
+
+    private void addDB(final CartEntity entity){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    db.cartDao().insertOne(entity);
+                    Log.e("roomDB",entity.getItem_name());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    private void DeleteDB(final String name){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    db.cartDao().deleteOne(name);
+                    Log.e("roomDB",name);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }

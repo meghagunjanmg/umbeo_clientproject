@@ -259,7 +259,8 @@ public class signup extends AppCompatActivity {
                                 String res1 = temp.get("status").toString();
                                 Toast.makeText(getApplicationContext(), "" + temp.get("status").toString(), Toast.LENGTH_LONG).show();
                                 if (res1.matches("success"))
-                                    startActivity(new Intent(signup.this, homescreen.class));
+                                    
+                                    startActivity(new Intent(signup.this, DashBoardFragment.class));
                                 if (res1.matches("failure"))
                                     startActivity(new Intent(signup.this, signup.class));
 

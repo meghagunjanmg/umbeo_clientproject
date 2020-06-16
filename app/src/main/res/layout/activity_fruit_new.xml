@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_margin="8dp"
+<LinearLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent"
+    android:layout_marginTop="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
+        android:layout_marginBottom="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
+        android:layout_marginBottom="60dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -92,7 +96,7 @@
                     android:id="@+id/strawberry_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Strawberries"
+                    android:text="Strawberry"
                     android:textSize="16sp"
                     android:textColor="@color/active"/>
                 <LinearLayout
@@ -122,31 +126,30 @@
             <ImageView
                 android:id="@+id/strawberry_plus"
                 android:layout_gravity="center"
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/plus"/>
             <LinearLayout
                 android:visibility="gone"
+                android:gravity="center"
                 android:id="@+id/strawberry_linear"
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/remove"
-                    android:layout_weight="1"
                     android:tint="@color/green"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_remove">
                 </ImageView>
                 <TextView
+                    android:padding="8dp"
                     android:id="@+id/quantity"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="16sp"
+                    android:layout_height="40dp"
+                    android:textSize="18sp"
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -154,10 +157,9 @@
                 </TextView>
                 <ImageView
                     android:id="@+id/add"
-                    android:layout_weight="1"
                     android:tint="@color/green"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_add">
                 </ImageView>
 
@@ -218,31 +220,30 @@
             <ImageView
                 android:id="@+id/lichi_plus"
                 android:layout_gravity="center"
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/plus"/>
             <LinearLayout
                 android:visibility="gone"
+                android:gravity="center"
                 android:id="@+id/lichi_linear"
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/remove1"
-                    android:layout_weight="1"
                     android:tint="@color/green"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_remove">
                 </ImageView>
                 <TextView
+                    android:padding="8dp"
                     android:id="@+id/quantity1"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="16sp"
+                    android:layout_height="40dp"
+                    android:textSize="18sp"
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -250,10 +251,9 @@
                 </TextView>
                 <ImageView
                     android:id="@+id/add1"
-                    android:layout_weight="1"
                     android:tint="@color/green"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_add">
                 </ImageView>
 
@@ -315,31 +315,30 @@
             <ImageView
                 android:id="@+id/orange_plus"
                 android:layout_gravity="center"
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/plus"/>
             <LinearLayout
                 android:visibility="gone"
+                android:gravity="center"
                 android:id="@+id/orange_linear"
-                android:layout_weight="2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/remove3"
-                    android:layout_weight="1"
                     android:tint="@color/green"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_remove">
                 </ImageView>
                 <TextView
+                    android:padding="8dp"
                     android:id="@+id/quantity3"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="16sp"
+                    android:layout_height="40dp"
+                    android:textSize="18sp"
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -347,17 +346,15 @@
                 </TextView>
                 <ImageView
                     android:id="@+id/add3"
-                    android:layout_weight="1"
                     android:tint="@color/green"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/ic_add">
                 </ImageView>
 
             </LinearLayout>
 
         </LinearLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         tools:listitem="@layout/item_fruits_card"
@@ -367,4 +364,12 @@
 
     </LinearLayout>
     </ScrollView>
+    <include
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        layout="@layout/navigation_xml">
+    </include>
+
 </LinearLayout>

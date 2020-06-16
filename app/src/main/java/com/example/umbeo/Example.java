@@ -42,8 +42,9 @@ public class Example extends AppCompatActivity implements FragmentManager.OnBack
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListner);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new homescreen())
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameSelected,
+                new DashBoardFragment())
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -56,21 +57,22 @@ public class Example extends AppCompatActivity implements FragmentManager.OnBack
 
                     switch(item.getItemId()){
                         case R.id.navigationMyOrder:
-                                selectedFragment= new OrderFragment();
+                                selectedFragment= new OrderMainFragment();
                                 break;
                         case R.id.navigationHome:
-                                selectedFragment= new homescreen();
+                                selectedFragment= new DashBoardFragment();
                                 break;
                         case R.id.navigationPerson:
-                                selectedFragment= new ProfileFragment();
+                                selectedFragment= new ProfileMainFragment();
                                 break;
                         case R.id.navigationCart:
-                                selectedFragment= new CartFragment();
+                                selectedFragment= new CartMainFragment();
                                 break;
 
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameSelected,
                             selectedFragment)
+                            .addToBackStack(null)
                             .commit();
                     return true;
                 }

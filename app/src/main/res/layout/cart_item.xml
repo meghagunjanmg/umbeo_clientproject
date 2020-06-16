@@ -1,50 +1,67 @@
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
+    android:id="@+id/linear"
     xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/item_name"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:text="Strawberries"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <LinearLayout
-        android:layout_weight="3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:gravity="center"
+        android:id="@+id/strawberry_linear"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_weight="1"
+            android:id="@+id/remove"
             android:tint="@color/green"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_remove">
         </ImageView>
         <TextView
-            android:id="@+id/quantity"
-            android:layout_weight="1"
+            android:padding="8dp"
+            android:id="@+id/quantity1111"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="16sp"
+            android:layout_height="40dp"
+            android:textSize="18sp"
             android:textColor="@android:color/black"
             android:gravity="center"
             android:textStyle="bold"
             android:text="1">
         </TextView>
         <ImageView
-            android:layout_weight="1"
+            android:id="@+id/add"
             android:tint="@color/green"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_add">
         </ImageView>
 
     </LinearLayout>
+</LinearLayout>
 
-
-
+    <TextView
+        android:id="@+id/total_amount"
+        android:layout_marginTop="8dp"
+        android:gravity="end"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rs 50/-"
+        android:textStyle="bold"/>
 </LinearLayout>

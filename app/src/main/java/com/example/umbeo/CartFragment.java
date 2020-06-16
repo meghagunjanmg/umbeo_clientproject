@@ -73,8 +73,8 @@ public class CartFragment extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FruitsFragment fruits= new FruitsFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fruits).commit();
+                CategoryFragment fruits= new CategoryFragment();
+                getFragmentManager().beginTransaction().replace(R.id.frameSelected, fruits).commit();
             }
         });
         paym=(Button)v.findViewById(R.id.payment);
@@ -110,7 +110,7 @@ public class CartFragment extends Fragment {
                 try {
                     entities = new ArrayList<>();
                     entities = db.cartDao().loadAll();
-                                    cartAdapter = new CartAdapter(entities, getContext());
+                    cartAdapter = new CartAdapter(entities, getContext(),db);
                                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                     recyclerView.setAdapter(cartAdapter);
 

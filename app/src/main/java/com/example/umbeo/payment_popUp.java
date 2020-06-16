@@ -31,7 +31,7 @@ public class payment_popUp extends AppCompatActivity {
         shopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Example.class));
+                startActivity(new Intent(getApplicationContext(),HomeScreenActivity.class));
             }
         });
 
@@ -39,7 +39,7 @@ public class payment_popUp extends AppCompatActivity {
        go_order.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Fragment orderFragment = new OrderFragment();
+               Fragment orderFragment = new OrderMainFragment();
                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,orderFragment)
                        .commit();
            }

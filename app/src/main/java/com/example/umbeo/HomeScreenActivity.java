@@ -2,13 +2,19 @@ package com.example.umbeo;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,14 +23,18 @@ import android.widget.TextView;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 
+import java.util.Objects;
+
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPagerAdapter adapter;
-    ViewPager viewPager;
+     static ViewPager viewPager;
     LinearLayout explore,cart,order,profile;
     AppDatabase db;
     int id;
+    FragmentManager fragmentManager = getSupportFragmentManager();
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +45,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         order = findViewById(R.id.order);
         profile = findViewById(R.id.profile);
 
+        fragmentManager.popBackStack();
 
         explore.setOnClickListener(this);
         cart.setOnClickListener(this);
@@ -42,6 +53,13 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         profile.setOnClickListener(this);
 
 
+
+        if (db == null) {
+            db = AppDatabase.getInstance(getApplicationContext());
+        }
+
+
+        DeleteAllDB();
 
         setupViewPager();
 
@@ -51,6 +69,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         }
 
         setIcons();
+
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -69,16 +88,17 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+
     }
 
     private void setupViewPager() {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new homescreen(),"Home");
-        adapter.addFragment(new CartFragment(),"Cart");
-        adapter.addFragment(new OrderFragment(),"Order");
-        adapter.addFragment(new ProfileFragment(),"Profile");
+        adapter.addFragment(new DashBoardFragment(),"Home");
+        adapter.addFragment(new CartMainFragment(),"Cart");
+        adapter.addFragment(new OrderMainFragment(),"Order");
+        adapter.addFragment(new ProfileMainFragment(),"Profile");
+        adapter.addFragment(new CategoryFragment(),"cat");
         viewPager.setAdapter(adapter);
-
     }
 
     @Override
@@ -167,5 +187,27 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+
+        @Override
+        public void onBackPressed() {
+          if(viewPager.getCurrentItem()!=0){
+              viewPager.setCurrentItem(0);
+          }
+
+        }
+
+
+    private void DeleteAllDB(){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    db.cartDao().nukeTable();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 }

@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = Room.databaseBuilder(this,
-                AppDatabase.class, "database-name").build();
+        if (db == null) {
+            db = AppDatabase.getInstance(getApplicationContext());
+        }
         /// DeleteAllDB();
 
 

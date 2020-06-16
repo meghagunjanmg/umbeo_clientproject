@@ -1,51 +1,55 @@
 package com.example.umbeo;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.cardview.widget.CardView;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import androidx.viewpager.widget.ViewPager;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentManager;
-import androidx.room.Room;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class homescreen extends Fragment {
-
-    public homescreen() {
-    }
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link DashBoardFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class DashBoardFragment extends Fragment {
 
     LinearLayout trending, popular, feature;
 
@@ -61,17 +65,73 @@ public class homescreen extends Fragment {
     TextView trending_txt, popular_txt, feature_txt;
 
     AppDatabase db;
-    static int staw_count = 0,lichi_count=0,orange_count=0;
+    static int staw_count = 0,lichi_count=0,orange_count=0, quant = 0;
     LinearLayout straw_linear,orange_linear,lichi_linear;
     ImageView add,remove,add2,remove2,add3,remove3;
     TextView quantity,quantity3,quantity2;
+    ViewPager viewPager2;
 
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    List<CartEntity> entitiesList;
+
+
+
+    public DashBoardFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment DashBoardFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static DashBoardFragment newInstance(String param1, String param2) {
+        DashBoardFragment fragment = new DashBoardFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+            if (db == null) {
+                db = AppDatabase.getInstance(getContext());
+            }
+
+            LoadAllDB();
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.activity_dashboard, container, false);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_dashboard, container, false);
+    public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(v, savedInstanceState);
+
         trending = v.findViewById(R.id.trending);
         popular = v.findViewById(R.id.popular);
         feature = v.findViewById(R.id.feature);
@@ -93,51 +153,49 @@ public class homescreen extends Fragment {
         add2 = v.findViewById(R.id.add1);
         remove2 = v.findViewById(R.id.remove1);
         quantity2 = v.findViewById(R.id.quantity1);
-
+        entitiesList = new ArrayList<>();
 
 
         if (db == null) {
             db = AppDatabase.getInstance(getContext());
         }
-       // DeleteAllDB();
+
+        LoadAllDB();
+
+
 
         lichi = v.findViewById(R.id.lichi);
         strawberry = v.findViewById(R.id.strawberry);
 
+
         cat1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryFragment fruits = new CategoryFragment();
-                getFragmentManager().beginTransaction().replace(R.id.frameSelected, fruits)
-                        .addToBackStack(null).commit();
+               HomeScreenActivity.viewPager.setCurrentItem(4);
             }
         });
         cat2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryFragment fruits = new CategoryFragment();
-                getFragmentManager().beginTransaction().replace(R.id.frameSelected, fruits)
-                        .addToBackStack(null).commit();
+                HomeScreenActivity.viewPager.setCurrentItem(4);
             }
         });
 
         cat3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryFragment fruits = new CategoryFragment();
-                getFragmentManager().beginTransaction().replace(R.id.frameSelected, fruits)
-                        .addToBackStack(null).commit();
+                HomeScreenActivity.viewPager.setCurrentItem(4);
             }
         });
 
         cat4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoryFragment fruits = new CategoryFragment();
-                getFragmentManager().beginTransaction().replace(R.id.frameSelected, fruits)
-                        .addToBackStack(null).commit();
+                HomeScreenActivity.viewPager.setCurrentItem(4);
             }
         });
+
+
 
         trending_txt = v.findViewById(R.id.trending_txt);
         feature_txt = v.findViewById(R.id.feature_txt);
@@ -293,7 +351,7 @@ public class homescreen extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                dailog("strawberry");
+                dailog("strawberry",staw_count);
             }
         });
 
@@ -303,7 +361,7 @@ public class homescreen extends Fragment {
             @Override
             public void onClick(View v) {
 
-                dailog("lichi");
+                dailog("lichi",lichi_count);
             }
         });
 
@@ -312,7 +370,7 @@ public class homescreen extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                dailog("orange");
+                dailog("orange",orange_count);
             }
         });
 
@@ -454,17 +512,24 @@ public class homescreen extends Fragment {
         });
 
          */
-
-        return v;
     }
     @Override
     public void onResume() {
         Log.e("DEBUG", "onResume of HomeFragment");
         super.onResume();
+
+        if (db == null) {
+            db = AppDatabase.getInstance(getContext());
+        }
+
+        LoadAllDB();
+
         quantity.setText(staw_count+"");
         if(staw_count==0){
             straw_linear.setVisibility(View.GONE);
             strawberry_plus.setVisibility(View.VISIBLE);
+            DeleteDB("strawberry");
+            addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
         }
         else {
             straw_linear.setVisibility(View.VISIBLE);
@@ -487,6 +552,8 @@ public class homescreen extends Fragment {
                 if(staw_count==0){
                     straw_linear.setVisibility(View.GONE);
                     strawberry_plus.setVisibility(View.VISIBLE);
+                    DeleteDB("strawberry");
+                    addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
                 }
 
                 quantity.setText(staw_count+"");
@@ -500,6 +567,8 @@ public class homescreen extends Fragment {
         if(lichi_count==0){
             lichi_linear.setVisibility(View.GONE);
             lichi_plus.setVisibility(View.VISIBLE);
+            DeleteDB("lichi");
+            addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
         }
         else {
             lichi_linear.setVisibility(View.VISIBLE);
@@ -522,9 +591,11 @@ public class homescreen extends Fragment {
                 if(lichi_count==0){
                     lichi_linear.setVisibility(View.GONE);
                     lichi_plus.setVisibility(View.VISIBLE);
+                    DeleteDB("lichi");
+                    addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
                 }
 
-                quantity3.setText(lichi_count+"");
+                quantity2.setText(lichi_count+"");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
                 addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
@@ -535,6 +606,8 @@ public class homescreen extends Fragment {
         if(orange_count==0){
             orange_linear.setVisibility(View.GONE);
             orange_plus.setVisibility(View.VISIBLE);
+            DeleteDB("orange");
+            addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
         }
         else {
             orange_linear.setVisibility(View.VISIBLE);
@@ -557,6 +630,8 @@ public class homescreen extends Fragment {
                 if(orange_count==0){
                     orange_linear.setVisibility(View.GONE);
                     orange_plus.setVisibility(View.VISIBLE);
+                    DeleteDB("orange");
+                    addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
                 }
 
                 quantity3.setText(orange_count+"");
@@ -568,7 +643,7 @@ public class homescreen extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void dailog(String name) {
+    private void dailog(final String name, final int quantity) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
         View mView = getLayoutInflater().inflate(R.layout.generic_dailog, null);
         CardView cardView = mView.findViewById(R.id.cardview);
@@ -586,6 +661,40 @@ public class homescreen extends Fragment {
 
         TextView name1 = mView.findViewById(R.id.name);
         name1.setText(name.toUpperCase());
+
+        ImageView add = mView.findViewById(R.id.add);
+        ImageView remove = mView.findViewById(R.id.remove);
+        final TextView quan = mView.findViewById(R.id.quantity1111);
+
+        quant = quantity;
+        quan.setText(quant+"");
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quant++;
+                quan.setText(quant+"");
+                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
+                DeleteDB(name);
+                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+            }
+        });
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quant--;
+                if(quant==0){
+                  //  orange_linear.setVisibility(View.GONE);
+                  //  orange_plus.setVisibility(View.VISIBLE);
+                    DeleteDB(name);
+                    addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                }
+                quan.setText(quant+"");
+                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
+                DeleteDB(name);
+                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+            }
+        });
 
         mBuilder.setView(mView);
         AlertDialog dialog = mBuilder.create();
@@ -626,16 +735,32 @@ public class homescreen extends Fragment {
         });
     }
 
-    private void DeleteAllDB(){
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    db.cartDao().nukeTable();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+
+
+    private void LoadAllDB(){
+                    db.cartDao().getAll().observe(DashBoardFragment.this, new Observer<List<CartEntity>>(){
+                        @Override
+                        public void onChanged(List<CartEntity> entities) {
+                            entitiesList = entities;
+
+                            if (entitiesList.size() != 0) {
+                                for (int i = 0; i < entitiesList.size(); i++) {
+                                    if (entitiesList.get(i).getItem_name().equals("strawberry")) {
+                                        staw_count = entitiesList.get(i).getQuantity();
+                                        quantity.setText(staw_count + "");
+                                    }
+                                    if (entitiesList.get(i).getItem_name().equals("lichi")) {
+                                        lichi_count = entitiesList.get(i).getQuantity();
+                                        quantity2.setText(lichi_count + "");
+                                    }
+                                    if (entitiesList.get(i).getItem_name().equals("orange")) {
+                                        orange_count = entitiesList.get(i).getQuantity();
+                                        quantity3.setText(orange_count + "");
+                                    }
+                                }
+                            }
+                        }
+                    });
     }
+
 }
