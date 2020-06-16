@@ -51,6 +51,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         if(data.get(position).getQuantity()<=0){
             linearLayout.setVisibility(View.GONE);
+           CartMainFragment cartMainFragment = new CartMainFragment();
+           cartMainFragment.onResume();
         }
 
         quantity.setText(data.get(position).getQuantity()+"");

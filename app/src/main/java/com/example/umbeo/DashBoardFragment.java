@@ -162,8 +162,6 @@ public class DashBoardFragment extends Fragment {
 
         LoadAllDB();
 
-
-
         lichi = v.findViewById(R.id.lichi);
         strawberry = v.findViewById(R.id.strawberry);
 
@@ -512,6 +510,35 @@ public class DashBoardFragment extends Fragment {
         });
 
          */
+
+
+        if(lichi_count==0){
+            lichi_linear.setVisibility(View.GONE);
+            lichi_plus.setVisibility(View.VISIBLE);
+            DeleteDB("lichi");
+        }
+        else {
+            lichi_linear.setVisibility(View.VISIBLE);
+            lichi_plus.setVisibility(View.GONE);
+        }
+        if(staw_count==0){
+            straw_linear.setVisibility(View.GONE);
+            strawberry_plus.setVisibility(View.VISIBLE);
+            DeleteDB("strawberry");
+        }
+        else {
+            straw_linear.setVisibility(View.VISIBLE);
+            strawberry_plus.setVisibility(View.GONE);
+        }
+        if(orange_count==0){
+            orange_linear.setVisibility(View.GONE);
+            orange_plus.setVisibility(View.VISIBLE);
+            DeleteDB("orange");
+        }
+        else {
+            orange_linear.setVisibility(View.VISIBLE);
+            orange_plus.setVisibility(View.GONE);
+        }
     }
     @Override
     public void onResume() {
@@ -529,7 +556,6 @@ public class DashBoardFragment extends Fragment {
             straw_linear.setVisibility(View.GONE);
             strawberry_plus.setVisibility(View.VISIBLE);
             DeleteDB("strawberry");
-            addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
         }
         else {
             straw_linear.setVisibility(View.VISIBLE);
@@ -553,7 +579,6 @@ public class DashBoardFragment extends Fragment {
                     straw_linear.setVisibility(View.GONE);
                     strawberry_plus.setVisibility(View.VISIBLE);
                     DeleteDB("strawberry");
-                    addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
                 }
 
                 quantity.setText(staw_count+"");
@@ -568,7 +593,6 @@ public class DashBoardFragment extends Fragment {
             lichi_linear.setVisibility(View.GONE);
             lichi_plus.setVisibility(View.VISIBLE);
             DeleteDB("lichi");
-            addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
         }
         else {
             lichi_linear.setVisibility(View.VISIBLE);
@@ -592,7 +616,6 @@ public class DashBoardFragment extends Fragment {
                     lichi_linear.setVisibility(View.GONE);
                     lichi_plus.setVisibility(View.VISIBLE);
                     DeleteDB("lichi");
-                    addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
                 }
 
                 quantity2.setText(lichi_count+"");
@@ -607,7 +630,6 @@ public class DashBoardFragment extends Fragment {
             orange_linear.setVisibility(View.GONE);
             orange_plus.setVisibility(View.VISIBLE);
             DeleteDB("orange");
-            addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
         }
         else {
             orange_linear.setVisibility(View.VISIBLE);
@@ -631,7 +653,6 @@ public class DashBoardFragment extends Fragment {
                     orange_linear.setVisibility(View.GONE);
                     orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB("orange");
-                    addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
                 }
 
                 quantity3.setText(orange_count+"");
@@ -757,6 +778,34 @@ public class DashBoardFragment extends Fragment {
                                         orange_count = entitiesList.get(i).getQuantity();
                                         quantity3.setText(orange_count + "");
                                     }
+                                }
+
+                                if(lichi_count==0){
+                                    lichi_linear.setVisibility(View.GONE);
+                                    lichi_plus.setVisibility(View.VISIBLE);
+                                    DeleteDB("lichi");
+                                }
+                                else {
+                                    lichi_linear.setVisibility(View.VISIBLE);
+                                    lichi_plus.setVisibility(View.GONE);
+                                }
+                                if(staw_count==0){
+                                    straw_linear.setVisibility(View.GONE);
+                                    strawberry_plus.setVisibility(View.VISIBLE);
+                                    DeleteDB("strawberry");
+                                }
+                                else {
+                                    straw_linear.setVisibility(View.VISIBLE);
+                                    strawberry_plus.setVisibility(View.GONE);
+                                }
+                                if(orange_count==0){
+                                    orange_linear.setVisibility(View.GONE);
+                                    orange_plus.setVisibility(View.VISIBLE);
+                                    DeleteDB("orange");
+                                }
+                                else {
+                                    orange_linear.setVisibility(View.VISIBLE);
+                                    orange_plus.setVisibility(View.GONE);
                                 }
                             }
                         }

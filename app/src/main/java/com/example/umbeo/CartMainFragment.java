@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.umbeo.room.AppDatabase;
@@ -46,6 +48,9 @@ public class CartMainFragment extends Fragment {
     RecyclerView recyclerView;
     CartAdapter cartAdapter;
     MutableLiveData<List<CartEntity>> data;
+
+    static TextView no_item;
+    static LinearLayout main_scroll;
 
     static List<Integer> amounts = new ArrayList<>();
 
@@ -105,6 +110,10 @@ public class CartMainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
+
+        no_item = v.findViewById(R.id.no_item);
+        main_scroll = v.findViewById(R.id.main_linear);
+
         recyclerView= v.findViewById(R.id.cartItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
          total_amount = v.findViewById(R.id.grand_total);
@@ -145,6 +154,14 @@ public class CartMainFragment extends Fragment {
         entityList = new ArrayList<>();
         LoadAllDB();
 
+        if(entityList.size()==0){
+            no_item.setVisibility(View.VISIBLE);
+            main_scroll.setVisibility(View.GONE);
+        }
+        else {
+            no_item.setVisibility(View.GONE);
+            main_scroll.setVisibility(View.VISIBLE);
+        }
 
 
         final Amount model = new Amount();
@@ -162,12 +179,20 @@ public class CartMainFragment extends Fragment {
                         super.onChanged(); }
                 });
                 recyclerView.setAdapter(cartAdapter);
+                if(entityList.size()==0){
+                    no_item.setVisibility(View.VISIBLE);
+                    main_scroll.setVisibility(View.GONE);
+                }
+                else {
+                    no_item.setVisibility(View.GONE);
+                    main_scroll.setVisibility(View.VISIBLE);
+                }
 
                 int sum = 0;
                 for(int i=0;i<entityList.size();i++){
                    sum = sum+ (entities.get(i).getQuantity()*50);
                 }
-                total_amount.setText("Rs "+ (sum -30 ));
+                total_amount.setText("Rs "+((sum -10)+20));
             }
         });
     }
@@ -180,6 +205,14 @@ public class CartMainFragment extends Fragment {
                      entityList = db.cartDao().loadAll();
                     cartAdapter = new CartAdapter(entityList, getContext(),db);
                     recyclerView.setAdapter(cartAdapter);
+                    if(entityList.size()==0){
+                        no_item.setVisibility(View.VISIBLE);
+                        main_scroll.setVisibility(View.GONE);
+                    }
+                    else {
+                        no_item.setVisibility(View.GONE);
+                        main_scroll.setVisibility(View.VISIBLE);
+                    }
                     Log.e("roomDB",entityList.get(0).getItem_name());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -189,5 +222,19 @@ public class CartMainFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        entityList = new ArrayList<>();
+        LoadAllDB();
 
+        if(entityList.size()==0){
+            no_item.setVisibility(View.VISIBLE);
+            main_scroll.setVisibility(View.GONE);
+        }
+        else {
+            no_item.setVisibility(View.GONE);
+            main_scroll.setVisibility(View.VISIBLE);
+        }
+    }
 }
