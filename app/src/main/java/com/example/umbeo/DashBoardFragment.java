@@ -169,27 +169,51 @@ public class DashBoardFragment extends Fragment {
         cat1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               HomeScreenActivity.viewPager.setCurrentItem(4);
+                HomeScreenActivity.category_frag = true;
+                CategoryFragment categoryFragment = new CategoryFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameSelected, categoryFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         cat2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeScreenActivity.viewPager.setCurrentItem(4);
+                HomeScreenActivity.category_frag = true;
+                CategoryFragment categoryFragment = new CategoryFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameSelected, categoryFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
         cat3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeScreenActivity.viewPager.setCurrentItem(4);
+                HomeScreenActivity.category_frag = true;
+                CategoryFragment categoryFragment = new CategoryFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameSelected, categoryFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
         cat4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeScreenActivity.viewPager.setCurrentItem(4);
+                HomeScreenActivity.category_frag = true;
+                CategoryFragment categoryFragment = new CategoryFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameSelected, categoryFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 

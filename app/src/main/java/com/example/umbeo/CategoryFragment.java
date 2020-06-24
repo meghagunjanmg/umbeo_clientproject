@@ -307,7 +307,6 @@ public class CategoryFragment extends Fragment {
         });
 
          */
-
     }
     @Override
     public void onResume() {

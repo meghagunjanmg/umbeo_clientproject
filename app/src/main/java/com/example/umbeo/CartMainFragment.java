@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -38,6 +39,8 @@ import java.util.Objects;
  * Use the {@link CartMainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+
 public class CartMainFragment extends Fragment {
     ImageView address;
     Button add,paym;
@@ -144,10 +147,17 @@ public class CartMainFragment extends Fragment {
         });
         paym=(Button)v.findViewById(R.id.payment);
         paym.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+
+                HomeScreenActivity.payment_frag = true;
                 PaymentFragment paymentFragment = new PaymentFragment();
-                getFragmentManager().beginTransaction().replace(R.id.frameSelected,paymentFragment).commit();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameSelected, paymentFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
@@ -195,6 +205,11 @@ public class CartMainFragment extends Fragment {
                 total_amount.setText("Rs "+((sum -10)+20));
             }
         });
+
+
+
+
+
     }
 
     private void LoadAllDB(){
@@ -213,7 +228,6 @@ public class CartMainFragment extends Fragment {
                         no_item.setVisibility(View.GONE);
                         main_scroll.setVisibility(View.VISIBLE);
                     }
-                    Log.e("roomDB",entityList.get(0).getItem_name());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

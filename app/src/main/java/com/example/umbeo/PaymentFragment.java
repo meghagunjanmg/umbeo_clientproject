@@ -18,12 +18,14 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 
 import java.util.Objects;
 
-public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedChangeListener{
+public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedChangeListener
+{
 
     private int counter=1;
     RadioGroup radioGroup;
@@ -83,7 +85,9 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 dialog.cancel();
             }
         });
+
     }
+
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -222,4 +226,5 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
             });
         }
     }
+
 }

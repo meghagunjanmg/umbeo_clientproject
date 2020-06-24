@@ -10,6 +10,7 @@ import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -29,9 +30,12 @@ import java.util.Objects;
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPagerAdapter adapter;
      static ViewPager viewPager;
-    LinearLayout explore,cart,order,profile;
+    static LinearLayout explore,cart,order,profile;
     AppDatabase db;
     int id;
+    public static boolean payment_frag = false;
+    public static boolean category_frag = false;
+
     FragmentManager fragmentManager = getSupportFragmentManager();
 
     @SuppressLint("CutPasteId")
@@ -97,7 +101,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         adapter.addFragment(new CartMainFragment(),"Cart");
         adapter.addFragment(new OrderMainFragment(),"Order");
         adapter.addFragment(new ProfileMainFragment(),"Profile");
-        adapter.addFragment(new CategoryFragment(),"cat");
+
         viewPager.setAdapter(adapter);
     }
 
@@ -193,6 +197,20 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
           if(viewPager.getCurrentItem()!=0){
               viewPager.setCurrentItem(0);
           }
+
+          if(category_frag){
+              Intent i = new Intent(this,HomeScreenActivity.class);
+              startActivity(i);
+          }
+        if(payment_frag){
+              CartMainFragment cartMainFragment = new CartMainFragment();
+              FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+              fragmentTransaction.replace(R.id.frameSelected, cartMainFragment);
+              fragmentTransaction.addToBackStack(null);
+              fragmentTransaction.commit();
+          }
+
+
 
         }
 
