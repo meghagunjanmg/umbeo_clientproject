@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="@color/bg_color"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_margin="8dp"
@@ -50,7 +51,7 @@
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="300dp"
                 tools:context=".MapActivity" />
             <ImageView
                 android:visibility="gone"
@@ -58,8 +59,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:src="@drawable/map"/>
-
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/current_location"
+                android:layout_weight="1"
+                android:layout_marginTop="12dp"
+                android:drawableStart="@drawable/home"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get Current Address"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:drawableLeft="@drawable/home" />
+            <TextView
+                android:layout_weight="2"
+                android:gravity="end"
+                android:id="@+id/my_addresses"
+                android:layout_marginTop="12dp"
+                android:drawablePadding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My Address"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+</LinearLayout>
             <EditText
+                android:id="@+id/line1"
                 android:padding="12dp"
                 android:textSize="16sp"
                 android:layout_width="match_parent"
@@ -67,6 +96,7 @@
                 android:hint="address line 1" />
 
             <EditText
+                android:id="@+id/line2"
                 android:padding="12dp"
                 android:textSize="16sp"
                 android:layout_width="match_parent"
@@ -74,33 +104,25 @@
                 android:hint="address line 2" />
 
             <EditText
+                android:id="@+id/line3"
                 android:padding="12dp"
                 android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="address line 3" />
 
-            <TextView
-                    android:layout_marginTop="12dp"
-                    android:drawableStart="@drawable/home"
-                    android:drawablePadding="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Current Address"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:drawableLeft="@drawable/home" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <Button
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+                android:id="@+id/add_address"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:layout_centerInParent="true"
                 android:backgroundTint="@color/active"
-                app:cornerRadius="20dp"
                 android:textStyle="bold"
                 android:text="add"/>
             </RelativeLayout>

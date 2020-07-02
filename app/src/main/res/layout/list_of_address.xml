@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List Of My Addresses"
+        android:padding="4dp"
+        android:gravity="center"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="24sp"/>
+
+    <ListView
+        android:layout_marginTop="50dp"
+        android:id="@+id/address_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+    <Button
+        android:layout_gravity="center|bottom"
+        android:id="@+id/add"
+        android:background="@android:color/holo_green_dark"
+        android:text="Add new Address"
+        android:textColor="@color/colorWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Button>
+</FrameLayout>

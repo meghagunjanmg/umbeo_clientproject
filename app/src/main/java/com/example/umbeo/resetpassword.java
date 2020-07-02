@@ -1,7 +1,9 @@
 package com.example.umbeo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -64,9 +66,8 @@ public class resetpassword extends AppCompatActivity {
                                     if (rep.getStatus().matches("success")){
                                         Toast.makeText(resetpassword.this,"Password Reset Successfully",Toast.LENGTH_LONG).show();
                                         send.setEnabled(true);
-                                        startActivity(new Intent(resetpassword.this,pop.class));
-
-
+                                        //startActivity(new Intent(resetpassword.this,pop.class));
+                                        dailog();
                                     }
                                 }
                                 else{
@@ -95,6 +96,23 @@ public class resetpassword extends AppCompatActivity {
         }
 
     }
+
+    private void dailog() {
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(resetpassword.this);
+        View mView = getLayoutInflater().inflate(R.layout.popwindow, null);
+        Button sen=(Button)findViewById(R.id.send);
+        sen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplication(),login.class));
+            }
+        });
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

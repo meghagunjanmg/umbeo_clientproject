@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
@@ -70,6 +72,8 @@ public class DashBoardFragment extends Fragment {
     ImageView add,remove,add2,remove2,add3,remove3;
     TextView quantity,quantity3,quantity2;
     ViewPager viewPager2;
+    List<ItemModel> mFlowerList;
+    RecyclerView item_recycler;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,8 +85,9 @@ public class DashBoardFragment extends Fragment {
     private String mParam2;
 
     List<CartEntity> entitiesList;
+    UserPreference preference;
 
-
+    private Context Context;
 
     public DashBoardFragment() {
         // Required empty public constructor
@@ -131,6 +136,58 @@ public class DashBoardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
+        preference = new UserPreference(getContext());
+
+        try {
+            item_recycler = v.findViewById(R.id.item_recycler);
+
+
+            try {
+                GridLayoutManager mGridLayoutManager = new GridLayoutManager(getContext(),2);
+                item_recycler.setLayoutManager(mGridLayoutManager);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            mFlowerList = new ArrayList<>();
+            mFlowerList.add(new ItemModel("Apple","https://drive.google.com/file/d/1hJvSaLGullzLDDXpzsNRiM8hjC0j2kav/edit"));
+            mFlowerList.add(new ItemModel("Lichi","https://drive.google.com/file/d/1zyZK7cct0JGZ24a85hnqOITFD2bnV-oR/edit"));
+            mFlowerList.add(new ItemModel("Colgate","https://drive.google.com/file/d/1tAIziqPijSs-kb27GZDjCSHnZaQ4prD3/edit"));
+            mFlowerList.add(new ItemModel("Hair oil","https://drive.google.com/file/d/1KfTJpBO_UL4Xdt-aXjZx4g3OATEN0BJR/edit"));
+
+            final ItemAdapter myAdapter = new ItemAdapter(mFlowerList, getContext());
+            item_recycler.setAdapter(myAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        log = (TextView) v.findViewById(R.id.login);
+
+        if( preference.getEmail()!=null){
+            log.setText(preference.getEmail());
+        }
+        else {
+            log.setText("Log in / Signup");
+        }
+
+        log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), login.class));
+            }
+        });
+        address = (TextView) v.findViewById(R.id.addre);
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(preference.getUserName()!=null)
+                startActivity(new Intent(getActivity(), MyAddresses.class));
+
+                else startActivity(new Intent(getActivity(), login.class));
+            }
+        });
+
+
 
         trending = v.findViewById(R.id.trending);
         popular = v.findViewById(R.id.popular);
@@ -259,8 +316,7 @@ public class DashBoardFragment extends Fragment {
                 feature_txt.setTextColor(getContext().getColor(R.color.green));
                 popular_txt.setTextColor(getContext().getColor(R.color.green));
 
-                lichi.setVisibility(View.GONE);
-                strawberry.setVisibility(View.VISIBLE);
+
             }
         });
         feature.setOnClickListener(new View.OnClickListener() {
@@ -281,9 +337,6 @@ public class DashBoardFragment extends Fragment {
                 trending_txt.setTextColor(getContext().getColor(R.color.green));
                 feature_txt.setTextColor(getContext().getColor(R.color.purple));
                 popular_txt.setTextColor(getContext().getColor(R.color.green));
-
-                lichi.setVisibility(View.VISIBLE);
-                strawberry.setVisibility(View.VISIBLE);
 
             }
         });
@@ -306,8 +359,7 @@ public class DashBoardFragment extends Fragment {
                 feature_txt.setTextColor(getContext().getColor(R.color.green));
                 popular_txt.setTextColor(getContext().getColor(R.color.purple));
 
-                strawberry.setVisibility(View.GONE);
-                lichi.setVisibility(View.VISIBLE);
+
             }
         });
         mViewPager = v.findViewById(R.id.pager);
@@ -336,21 +388,6 @@ public class DashBoardFragment extends Fragment {
             }
         });
        */
-        log = (TextView) v.findViewById(R.id.login);
-        log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), login.class));
-            }
-        });
-        address = (TextView) v.findViewById(R.id.addre);
-        address.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MapActivity.class));
-            }
-        });
-
 
 
 
@@ -528,6 +565,7 @@ public class DashBoardFragment extends Fragment {
 
                 mBuilder.setView(mView);
 
+                AlertDialog dialog = mBuilder.create();
                 AlertDialog dialog = mBuilder.create();
                 dialog.show();
             }

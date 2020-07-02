@@ -23,8 +23,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.Api;
 import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.SignUpResponse;
+import com.example.umbeo.response_data.SignUpResquest;
+import com.example.umbeo.response_data.UserGetProfileResponse;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,12 +39,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.umbeo.ProfileMainFragment.getBitmapForMediaUri;
+import static java.security.AccessController.getContext;
 
 public class signup extends AppCompatActivity {
 
@@ -51,12 +62,14 @@ public class signup extends AppCompatActivity {
     ImageView dp;
 
     String encodedImage;
+    UserPreference preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        preference = new UserPreference(getApplicationContext());
 
         dp = (ImageView) findViewById(R.id.dp);
         sign = (Button) findViewById(R.id.button);
@@ -64,10 +77,9 @@ public class signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 upload();
-
-
             }
         });
+
 
         dp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +92,6 @@ public class signup extends AppCompatActivity {
                     selectImage();
             }
         });
-
-
-
 
     }
 
@@ -116,18 +125,13 @@ public class signup extends AppCompatActivity {
                 Uri selectedImageUrl = data.getData();
                 if (selectedImageUrl != null) {
                     try {
-                        // set the image to display...
-                        InputStream inputStream = getContentResolver().openInputStream(selectedImageUrl);
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        dp.setImageBitmap(bitmap);
+                        Bitmap imageBitmap = getBitmapForMediaUri(getApplicationContext(), selectedImageUrl);
+                        // profilepic.setImageBitmap(imageBitmap);
+                        assert imageBitmap != null;
+                        preference.setProfilePic(BitmapToBase64(imageBitmap));
+                        dp.setImageBitmap(Base64ToBitmap(preference.getProfilePic()));
 
-                        //call function to go for base64 conversion...
-                        // Following is the selected image file
-                        File selectedImageFile = new File(getPathFromUri(selectedImageUrl));
-                        // do the conversion...
-
-                        encodedImage = encodeImage(selectedImageFile);
-
+                        encodedImage = BitmapToBase64(imageBitmap);
                     } catch (Exception e) {
                         Toast.makeText(signup.this, "Error: " + e.getMessage().toString(), Toast.LENGTH_LONG).show();
                     }
@@ -135,6 +139,22 @@ public class signup extends AppCompatActivity {
             }
         }
     }
+
+
+    private String BitmapToBase64(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    private Bitmap Base64ToBitmap(String encodedImage)
+    {
+        byte[] imageAsBytes = Base64.decode(encodedImage.getBytes(), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+    }
+
 
     private String getPathFromUri(Uri contentUri) {
         String filePath;
@@ -177,21 +197,20 @@ public class signup extends AppCompatActivity {
 
 
     public void upload() {
-
         nam = (EditText) findViewById(R.id.name);
         pno = (EditText) findViewById(R.id.phone);
         mail = (EditText) findViewById(R.id.mail);
-        pass = (EditText) findViewById(R.id.pass);
+        pass = (EditText) findViewById(R.id.password);
         add = (EditText) findViewById(R.id.address);
+
+
 
         String name = nam.getText().toString().trim();
         String number = pno.getText().toString();
         String email = mail.getText().toString().trim();
         String password = pass.getText().toString();
-        String add1 = add.getText().toString();
+        // String add1 = add.getText().toString();
 
-        String add2="new address";
-        String[] address= {add1, "new address"};
         if(name.isEmpty()){
             Toast.makeText(signup.this,"Please enter a user name",Toast.LENGTH_LONG).show();
             return;
@@ -216,20 +235,6 @@ public class signup extends AppCompatActivity {
             Toast.makeText(signup.this,"Please enter a password",Toast.LENGTH_LONG).show();
             return;
         }
-
-        if(add1.isEmpty()){
-            Toast.makeText(signup.this,"Please enter a user address",Toast.LENGTH_LONG).show();
-            return;
-        }
-
-
-        if (encodedImage == null) {
-            // that is user has not selected a display image then we show the error and return so that he/she can try again...
-            Toast.makeText(signup.this, "Please Select a Profile Picture first to continue", Toast.LENGTH_LONG).show();
-            return;
-
-        }
-
         // GPS API implementation is left...that's why taking pre-defined values of gps and latitude and longitude...
         String gps = "Delhi";
         String latlong = "112.00 78.015";
@@ -238,7 +243,61 @@ public class signup extends AppCompatActivity {
 
         String shop = "5ec8b35d94e1c83f430781a2";
 
-        Call<ResponseBody> call = RetrofitClient
+        List<String> address = new ArrayList<>();
+        address.add(" ");
+        address.add(" ");
+
+        SignUpResquest resquest = new SignUpResquest();
+        resquest.setName(name);
+        resquest.setPassword(password);
+        resquest.setEmail(email);
+        resquest.setDeliveryAddresses(address);
+        resquest.setPhone(number);
+        resquest.setShop(shop);
+        resquest.setProfilePic(encodedImage);
+        resquest.setLatlng(latlong);
+        resquest.setGps(gps);
+
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+
+        Call<SignUpResponse> call= retrofit_interface.SignUp("application/json",resquest);
+
+        call.enqueue(new Callback<SignUpResponse>() {
+            @Override
+            public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
+                Toast.makeText(getApplicationContext(), "Error: " +response.code()+" "+response.message(), Toast.LENGTH_LONG).show();
+
+                try {
+                    if(response.code()==201){
+                        if(response.body().getStatus().equalsIgnoreCase("success")){
+                            String userId = response.body().getData().getUserId();
+                            String token = response.body().getData().getToken();
+                            getProfile(token);
+
+                            startActivity(new Intent(signup.this,MainActivity.class));
+                        }
+                        else {
+                            startActivity(new Intent(signup.this,signup.class));
+                        }
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), "Error: " +response.code()+" "+response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SignUpResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+  /*      Call<ResponseBody> call = RetrofitClient
                 .getmInstance()
                 .getApi()
                 .Signup(name, number, email, password, gps, latlong, address, shop, encodedImage);
@@ -259,8 +318,8 @@ public class signup extends AppCompatActivity {
                                 String res1 = temp.get("status").toString();
                                 Toast.makeText(getApplicationContext(), "" + temp.get("status").toString(), Toast.LENGTH_LONG).show();
                                 if (res1.matches("success"))
-                                    
-                                    startActivity(new Intent(signup.this, DashBoardFragment.class));
+
+                                    startActivity(new Intent(signup.this, HomeScreenActivity.class));
                                 if (res1.matches("failure"))
                                     startActivity(new Intent(signup.this, signup.class));
 
@@ -290,6 +349,7 @@ public class signup extends AppCompatActivity {
                 });
             }
         });
+    */
     }
 
     @Override
@@ -297,4 +357,32 @@ public class signup extends AppCompatActivity {
         super.onBackPressed();
         this.finish();
     }
+
+    private void getProfile(final String tokens){
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        final String token = "Bearer "+tokens;
+        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
+
+        call.enqueue(new Callback<UserGetProfileResponse>() {
+            @Override
+            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
+                if(response.code()==200) {
+                    preference.setUserName(response.body().getData().getName());
+                    preference.setEmail(response.body().getData().getEmail());
+                    preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
+                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
+                    preference.setUserId(response.body().getData().getId());
+                    preference.setToken(tokens);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

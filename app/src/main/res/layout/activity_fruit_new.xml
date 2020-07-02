@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search"
+        android:drawableTint="@color/green"
         android:drawableLeft="@drawable/search" />
 
     <LinearLayout
@@ -46,6 +47,7 @@
             android:textSize="16sp"
             android:layout_height="wrap_content"
             android:hint="Current Address"
+            android:drawableTint="@color/green"
             android:textStyle="bold"/>
         <ImageView
             android:layout_marginStart="8dp"
@@ -53,6 +55,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/pen"
+            android:tint="@color/green"
             android:layout_marginLeft="8dp" />
     </LinearLayout>
 
@@ -72,10 +75,12 @@
         android:text="Fruits"
         android:textSize="18sp"
         android:textStyle="bold"/>
+
         <LinearLayout
             android:layout_marginBottom="12dp"
             android:id="@+id/strawberry"
             android:background="@drawable/bg_card"
+            android:backgroundTint="@color/green"
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:text="Strawberry"
                     android:textSize="16sp"
-                    android:textColor="@color/active"/>
+                    android:textColor="@color/green"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -108,28 +113,33 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryText"
+
                         android:text="₹60"
                         android:background="@drawable/line_cross"/>
                     <TextView
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryText"
                         android:text="₹50"
                         android:paddingLeft="10dp"/>
                 </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
+
+                    android:textColor="@color/colorPrimaryText"
                     android:layout_height="wrap_content"
                     android:text="Save ₹10"
-                    android:textColor="@color/active"
                     android:paddingTop="8dp"/>
             </LinearLayout>
             <ImageView
                 android:id="@+id/strawberry_plus"
                 android:layout_gravity="center"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/plus"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="@color/green"
+                android:src="@drawable/ic_add"/>
             <LinearLayout
                 android:visibility="gone"
                 android:gravity="center"
@@ -170,6 +180,7 @@
         <LinearLayout
             android:layout_marginBottom="12dp"
             android:id="@+id/lichi"
+            android:backgroundTint="@color/green"
             android:background="@drawable/bg_card"
             android:padding="8dp"
             android:layout_width="match_parent"
@@ -193,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:text="Lichi"
                     android:textSize="16sp"
-                    android:textColor="@color/active"/>
+                    android:textColor="@color/green"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -203,27 +214,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="₹60"
+
+                        android:textColor="@color/colorPrimaryText"
                         android:background="@drawable/line_cross"/>
                     <TextView
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryText"
+
                         android:text="₹50"
                         android:paddingLeft="10dp"/>
                 </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryText"
+
                     android:text="Save ₹10"
-                    android:textColor="@color/active"
                     android:paddingTop="8dp"/>
             </LinearLayout>
             <ImageView
                 android:id="@+id/lichi_plus"
                 android:layout_gravity="center"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/plus"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="@color/green"
+                android:src="@drawable/ic_add"/>
             <LinearLayout
                 android:visibility="gone"
                 android:gravity="center"
@@ -264,6 +281,8 @@
         <LinearLayout
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_card"
+            android:backgroundTint="@color/green"
+
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -288,7 +307,7 @@
                     android:layout_height="wrap_content"
                     android:text="Orange"
                     android:textSize="16sp"
-                    android:textColor="@color/active"/>
+                    android:textColor="@color/green"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -297,6 +316,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryText"
+
                         android:text="₹60"
                         android:background="@drawable/line_cross"/>
                     <TextView
@@ -304,21 +325,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="₹50"
+                        android:textColor="@color/colorPrimaryText"
+
                         android:paddingLeft="10dp"/>
                 </LinearLayout>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryText"
+
                     android:text="Save ₹10"
-                    android:textColor="@color/active"
                     android:paddingTop="8dp"/>
             </LinearLayout>
             <ImageView
                 android:id="@+id/orange_plus"
                 android:layout_gravity="center"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/plus"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:tint="@color/green"
+                android:src="@drawable/ic_add"/>
             <LinearLayout
                 android:visibility="gone"
                 android:gravity="center"
@@ -357,7 +382,8 @@
 
         </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+
+        <androidx.recyclerview.widget.RecyclerView
         tools:listitem="@layout/item_fruits_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="@color/bg_color"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -46,13 +47,15 @@
                     android:gravity="center"
                     android:text="happy and healthy Community" />
 
-        <ImageView
-            android:layout_gravity="center"
-            android:id="@+id/dp"
-            android:layout_width="89dp"
-            android:layout_height="89dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_profile_pic"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginTop="20dp"
+                android:id="@+id/dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/profilepic"
+                android:layout_width="120dp"
+                android:layout_height="120dp">
+            </de.hdodenhof.circleimageview.CircleImageView>
 
             <LinearLayout
                 android:layout_marginTop="8dp"
@@ -66,6 +69,7 @@
                     android:text="Name"/>
 
                 <EditText
+                    android:maxLines="1"
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -78,6 +82,8 @@
                     android:text="Email"/>
 
                 <EditText
+                    android:maxLines="1"
+
                     android:id="@+id/mail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,6 +95,8 @@
                     android:text="Phone"/>
 
                 <EditText
+                    android:maxLines="1"
+                    android:inputType="number"
                     android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,6 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
+                    android:maxLines="1"
                     android:hint="Enter Password*" />
             </LinearLayout>
 

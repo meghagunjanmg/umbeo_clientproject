@@ -1,6 +1,8 @@
 package com.example.umbeo;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -21,11 +23,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
@@ -57,6 +62,9 @@ public class CartMainFragment extends Fragment {
 
     static List<Integer> amounts = new ArrayList<>();
 
+    CheckBox loyalty;
+    UserPreference preference;
+    TextView loyalty_point;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -114,12 +122,18 @@ public class CartMainFragment extends Fragment {
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
+        preference = new UserPreference(getContext());
+
         no_item = v.findViewById(R.id.no_item);
         main_scroll = v.findViewById(R.id.main_linear);
 
         recyclerView= v.findViewById(R.id.cartItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
          total_amount = v.findViewById(R.id.grand_total);
+
+         loyalty = v.findViewById(R.id.loyalty);
+        loyalty_point = v.findViewById(R.id.loyalty_point);
+        loyalty_point.setText("- ₹ "+preference.getLoyaltyPoints());
 
         if (db == null) {
             db = AppDatabase.getInstance(getContext());
@@ -174,6 +188,84 @@ public class CartMainFragment extends Fragment {
         }
 
 
+        loyalty.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    loyalty.setTextColor(Color.parseColor("#000000"));
+                    loyalty_point.setTextColor(Color.parseColor("#000000"));
+
+                    db.cartDao().getAll().observe(CartMainFragment.this, new Observer<List<CartEntity>>(){
+                        @Override
+                        public void onChanged(List<CartEntity> entities) {
+                            entityList = entities;
+                            cartAdapter.notifyDataSetChanged();
+
+                            cartAdapter = new CartAdapter(entityList, getContext(),db);
+                            cartAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                                @Override
+                                public void onChanged() {
+                                    super.onChanged(); }
+                            });
+                            recyclerView.setAdapter(cartAdapter);
+                            if(entityList.size()==0){
+                                no_item.setVisibility(View.VISIBLE);
+                                main_scroll.setVisibility(View.GONE);
+                            }
+                            else {
+                                no_item.setVisibility(View.GONE);
+                                main_scroll.setVisibility(View.VISIBLE);
+                            }
+
+                            int sum = 0;
+                            for(int i=0;i<entityList.size();i++){
+                                sum = sum+ (entities.get(i).getQuantity()*50);
+                            }
+                            total_amount.setText("Rs "+((sum - preference.getLoyaltyPoints())+20));
+                        }
+                    });
+
+                }
+
+                else {
+
+                    loyalty.setTextColor(Color.parseColor("#757575"));
+                    loyalty_point.setTextColor(Color.parseColor("#757575"));
+
+                    db.cartDao().getAll().observe(CartMainFragment.this, new Observer<List<CartEntity>>(){
+                        @Override
+                        public void onChanged(List<CartEntity> entities) {
+                            entityList = entities;
+                            cartAdapter.notifyDataSetChanged();
+
+                            cartAdapter = new CartAdapter(entityList, getContext(),db);
+                            cartAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                                @Override
+                                public void onChanged() {
+                                    super.onChanged(); }
+                            });
+                            recyclerView.setAdapter(cartAdapter);
+                            if(entityList.size()==0){
+                                no_item.setVisibility(View.VISIBLE);
+                                main_scroll.setVisibility(View.GONE);
+                            }
+                            else {
+                                no_item.setVisibility(View.GONE);
+                                main_scroll.setVisibility(View.VISIBLE);
+                            }
+
+                            int sum = 0;
+                            for(int i=0;i<entityList.size();i++){
+                                sum = sum+ (entities.get(i).getQuantity()*50);
+                            }
+                            total_amount.setText("Rs "+((sum - 10)+20));
+                        }
+                    });
+
+                }
+            }
+        });
+
         final Amount model = new Amount();
 
         db.cartDao().getAll().observe(CartMainFragment.this, new Observer<List<CartEntity>>(){
@@ -202,7 +294,7 @@ public class CartMainFragment extends Fragment {
                 for(int i=0;i<entityList.size();i++){
                    sum = sum+ (entities.get(i).getQuantity()*50);
                 }
-                total_amount.setText("Rs "+((sum -10)+20));
+                total_amount.setText("Rs "+((sum - 10)+20));
             }
         });
 

@@ -12,15 +12,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.room.Room;
 
+import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.Api;
+import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     AppDatabase db;
     private int SPLASH_TIME_OUT=1599;
+    UserPreference preference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preference = new UserPreference(getApplicationContext());
+
         setContentView(R.layout.activity_main);
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
@@ -47,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         if(!isFirstRun)
         {
+
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -56,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             },SPLASH_TIME_OUT);
         }
+
+
     }
 
 
@@ -85,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         }else {
         }
     }
+
+
     private void DeleteAllDB(){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override

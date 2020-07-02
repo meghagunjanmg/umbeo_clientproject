@@ -39,6 +39,7 @@
                 android:text="Profile Name"
                 android:textSize="16sp" />
             <TextView
+                android:id="@+id/myemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="example12@gmail.com"
@@ -49,11 +50,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="end"
+            android:gravity="end|center_vertical"
             android:text="EDIT"
+            android:drawableRight="@drawable/pen"
+            android:drawablePadding="8dp"
             android:textStyle="bold"/>
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -109,4 +110,14 @@
             android:textStyle="bold"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@color/bg_color"
+        android:text="Logout"
+        android:textColor="@color/colorWhite"></Button>
 </LinearLayout>

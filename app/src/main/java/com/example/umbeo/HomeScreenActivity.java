@@ -21,10 +21,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.umbeo.Storage.SharedprefManager;
+import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.Api;
+import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.SignUpResponse;
+import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
@@ -37,6 +47,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     public static boolean category_frag = false;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
+     UserPreference preference ;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -48,6 +59,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         cart = findViewById(R.id.cart);
         order = findViewById(R.id.order);
         profile = findViewById(R.id.profile);
+        preference = new UserPreference(getApplicationContext());
 
         fragmentManager.popBackStack();
 
@@ -56,6 +68,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         order.setOnClickListener(this);
         profile.setOnClickListener(this);
 
+        //getProfile();
 
 
         if (db == null) {
@@ -79,6 +92,10 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+                if(position==3){
+                    if(preference.getUserName()==null)
+                     startActivity(new Intent(HomeScreenActivity.this, login.class));
+                }
             }
 
             @Override
@@ -101,6 +118,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         adapter.addFragment(new CartMainFragment(),"Cart");
         adapter.addFragment(new OrderMainFragment(),"Order");
         adapter.addFragment(new ProfileMainFragment(),"Profile");
+
 
         viewPager.setAdapter(adapter);
     }
@@ -227,5 +245,31 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
         });
     }
+
+    private void getProfile(){
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        String token = "Bearer "+preference.getToken();
+        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
+
+        call.enqueue(new Callback<UserGetProfileResponse>() {
+            @Override
+            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
+                if(response.code()==200) {
+                    preference.setUserName(response.body().getData().getName());
+                    preference.setEmail(response.body().getData().getEmail());
+                    preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+
 
 }

@@ -40,7 +40,7 @@ public class payment_popUp extends AppCompatActivity {
            @Override
            public void onClick(View v) {
                Fragment orderFragment = new OrderMainFragment();
-               getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,orderFragment)
+               getSupportFragmentManager().beginTransaction().replace(R.id.frameSelected,orderFragment)
                        .commit();
            }
        });

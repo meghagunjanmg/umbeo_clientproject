@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:background="@color/bg_color"
+
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -64,6 +66,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:id="@+id/username"
+        android:maxLines="1"
         android:layout_width="match_parent"
         android:textSize="16sp"
         android:layout_height="wrap_content"
@@ -85,6 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
+        android:maxLines="1"
         android:textSize="16sp"
         android:inputType="textPassword" />
 
