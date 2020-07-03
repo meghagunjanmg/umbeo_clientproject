@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.BitSet;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -101,7 +102,7 @@ public class ProfileMainFragment extends Fragment {
     EditText myname_et;
     int count = 0;
     public static final int RESULT_GALLERY = 0;
-    ImageView profilepic;
+    CircleImageView profilepic;
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
 
     @Override
@@ -124,6 +125,10 @@ public class ProfileMainFragment extends Fragment {
         myname_et = view.findViewById(R.id.myname_et);
 
         name_edit = view.findViewById(R.id.name_edit);
+        myname_et.setText(myname.getText().toString());
+
+
+
         name_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,14 +136,19 @@ public class ProfileMainFragment extends Fragment {
                 myname_et.setVisibility(View.VISIBLE);
                 myname.setVisibility(View.GONE);
                 String newName = myname_et.getText().toString();
+                name_edit.setText("Save");
                 if(count%2==0){
                     myname_et.setVisibility(View.GONE);
                     myname.setVisibility(View.VISIBLE);
-
-                    preference.setUserName(newName);
-                    myname.setText(preference.getUserName());
-
-                    updateAddress(getContext());
+                    if(newName.equals("")){
+                        Toast.makeText(getContext(),"Profile Name can't be empty",Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        preference.setUserName(newName);
+                        myname.setText(preference.getUserName());
+                        updateAddress(getContext());
+                    }
+                    name_edit.setText("Edit");
                 }
             }
         });
@@ -146,7 +156,7 @@ public class ProfileMainFragment extends Fragment {
 
 
         profile_edit = view.findViewById(R.id.profile_edit);
-        profilepic = view.findViewById(R.id.profilepic);
+        profilepic = view.findViewById(R.id.dp);
 
         if( !preference.getProfilePic().equals("null"))
         profilepic.setImageBitmap(Base64ToBitmap(preference.getProfilePic()));

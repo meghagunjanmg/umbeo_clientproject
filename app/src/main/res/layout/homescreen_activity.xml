@@ -23,11 +23,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <com.example.umbeo.CustomViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </androidx.viewpager.widget.ViewPager>
+    </com.example.umbeo.CustomViewPager>
     <include
         app:layout_constraintBottom_toBottomOf="@id/pager"
         android:id="@+id/content_farmer_screen_layout"

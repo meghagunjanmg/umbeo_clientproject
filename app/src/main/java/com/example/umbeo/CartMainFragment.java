@@ -48,7 +48,7 @@ import java.util.Objects;
 
 public class CartMainFragment extends Fragment {
     ImageView address;
-    Button add,paym;
+    Button add,paym,shop;
     TextView total_amount;
 
     AppDatabase db;
@@ -124,6 +124,7 @@ public class CartMainFragment extends Fragment {
 
         preference = new UserPreference(getContext());
 
+        shop = v.findViewById(R.id.shop);
         no_item = v.findViewById(R.id.no_item);
         main_scroll = v.findViewById(R.id.main_linear);
 
@@ -180,13 +181,21 @@ public class CartMainFragment extends Fragment {
 
         if(entityList.size()==0){
             no_item.setVisibility(View.VISIBLE);
+            shop.setVisibility(View.VISIBLE);
             main_scroll.setVisibility(View.GONE);
         }
         else {
             no_item.setVisibility(View.GONE);
+            shop.setVisibility(View.GONE);
             main_scroll.setVisibility(View.VISIBLE);
         }
 
+        shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),HomeScreenActivity.class));
+            }
+        });
 
         loyalty.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

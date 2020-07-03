@@ -10,16 +10,31 @@ android:background="@color/bg_color"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/no_item"
         android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_weight="1"
         android:textSize="24sp"
         android:text="There are no items in your cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </TextView>
-
+    <Button
+        android:visibility="gone"
+        android:backgroundTint="@color/green"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:padding="12dp"
+        android:id="@+id/shop"
+        android:gravity="center"
+        android:text="Start Shopping"
+        android:layout_marginBottom="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </Button>
     <LinearLayout
+        android:visibility="visible"
         android:background="@color/bg_color"
         android:id="@+id/main_linear"
         android:layout_width="match_parent"

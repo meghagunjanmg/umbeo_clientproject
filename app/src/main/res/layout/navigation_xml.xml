@@ -4,21 +4,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/bg_color"
-    android:layout_height="60dp">
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_height="50dp">
 
     <LinearLayout
         android:id="@+id/explore"
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:tint="@color/darker_gray"
             android:id="@+id/icon1"
             android:src="@drawable/ic_icon_explore"
-            android:layout_width="30dp"
-            android:layout_height="30dp">
+            android:layout_width="20dp"
+            android:layout_height="20dp">
         </ImageView>
 
         <TextView
@@ -34,14 +36,15 @@
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:tint="@color/darker_gray"
+
             android:id="@+id/icon2"
             android:src="@drawable/ic_icon_cart"
-            android:layout_width="30dp"
-            android:layout_height="30dp">
+            android:layout_width="20dp"
+            android:layout_height="20dp">
         </ImageView>
         <TextView
             android:id="@+id/text2"
@@ -56,14 +59,15 @@
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:tint="@color/darker_gray"
+
             android:id="@+id/icon3"
             android:src="@drawable/ic_icon_order"
-            android:layout_width="30dp"
-            android:layout_height="30dp">
+            android:layout_width="20dp"
+            android:layout_height="20dp">
         </ImageView>
         <TextView
             android:id="@+id/text3"
@@ -78,14 +82,15 @@
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:tint="@color/darker_gray"
+
             android:id="@+id/icon4"
             android:src="@drawable/ic_icon_profile"
-            android:layout_width="30dp"
-            android:layout_height="30dp">
+            android:layout_width="20dp"
+            android:layout_height="20dp">
         </ImageView>
         <TextView
             android:id="@+id/text4"

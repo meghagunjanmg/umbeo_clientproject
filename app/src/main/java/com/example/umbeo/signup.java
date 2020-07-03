@@ -63,6 +63,7 @@ public class signup extends AppCompatActivity {
 
     String encodedImage;
     UserPreference preference;
+TextView login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,14 @@ public class signup extends AppCompatActivity {
                 upload();
             }
         });
+        login = findViewById(R.id.login);
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(signup.this,login.class));
+            }
+        });
 
         dp.setOnClickListener(new View.OnClickListener() {
             @Override

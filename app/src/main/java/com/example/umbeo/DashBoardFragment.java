@@ -29,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,12 +54,13 @@ import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
  */
 public class DashBoardFragment extends Fragment {
 
-    LinearLayout trending, popular, feature;
+    /////LinearLayout trending, popular, feature;
 
     LinearLayout lichi,strawberry;
     AutoScrollViewPager mViewPager;
     CardView cat1, cat2, cat3, cat4;
-    ImageView orange_plus,lichi_plus,strawberry_plus;
+    ImageView orange_plus,lichi_plus;
+    FrameLayout strawberry_plus;
 
 
     TextView log, fruit;
@@ -140,8 +142,6 @@ public class DashBoardFragment extends Fragment {
 
         try {
             item_recycler = v.findViewById(R.id.item_recycler);
-
-
             try {
                 GridLayoutManager mGridLayoutManager = new GridLayoutManager(getContext(),2);
                 item_recycler.setLayoutManager(mGridLayoutManager);
@@ -183,15 +183,15 @@ public class DashBoardFragment extends Fragment {
                 if(preference.getUserName()!=null)
                 startActivity(new Intent(getActivity(), MyAddresses.class));
 
-                else startActivity(new Intent(getActivity(), login.class));
+                else startActivity(new Intent(getActivity(), signup.class));
             }
         });
 
 
 
-        trending = v.findViewById(R.id.trending);
-        popular = v.findViewById(R.id.popular);
-        feature = v.findViewById(R.id.feature);
+       // trending = v.findViewById(R.id.trending);
+        //popular = v.findViewById(R.id.popular);
+       // feature = v.findViewById(R.id.feature);
         cat1 = v.findViewById(R.id.cat1);
         cat2 = v.findViewById(R.id.cat2);
         cat3 = v.findViewById(R.id.cat3);
@@ -281,36 +281,26 @@ public class DashBoardFragment extends Fragment {
         popular_txt = v.findViewById(R.id.popular_txt);
 
 
-        Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
-        Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-        DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
-        popular.setBackground(wrappedDrawable);
-        trending.setBackground(wrappedDrawable);
 
-
-        Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
-        Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
-        DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
-        feature.setBackground(wrappedDrawable2);
         trending_txt.setTextColor(getContext().getColor(R.color.green));
         feature_txt.setTextColor(getContext().getColor(R.color.purple));
         popular_txt.setTextColor(getContext().getColor(R.color.green));
 
-        trending.setOnClickListener(new View.OnClickListener() {
+        trending_txt.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
                 DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
-                popular.setBackground(wrappedDrawable);
-                feature.setBackground(wrappedDrawable);
+                popular_txt.setBackground(wrappedDrawable);
+                feature_txt.setBackground(wrappedDrawable);
 
 
                 Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
                 DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
-                trending.setBackground(wrappedDrawable2);
+                trending_txt.setBackground(wrappedDrawable2);
 
                 trending_txt.setTextColor(getContext().getColor(R.color.purple));
                 feature_txt.setTextColor(getContext().getColor(R.color.green));
@@ -319,42 +309,43 @@ public class DashBoardFragment extends Fragment {
 
             }
         });
-        feature.setOnClickListener(new View.OnClickListener() {
+        feature_txt.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
                 DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
-                popular.setBackground(wrappedDrawable);
-                trending.setBackground(wrappedDrawable);
+                popular_txt.setBackground(wrappedDrawable);
+                trending_txt.setBackground(wrappedDrawable);
 
 
                 Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
                 DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
-                feature.setBackground(wrappedDrawable2);
+                feature_txt.setBackground(wrappedDrawable2);
                 trending_txt.setTextColor(getContext().getColor(R.color.green));
                 feature_txt.setTextColor(getContext().getColor(R.color.purple));
                 popular_txt.setTextColor(getContext().getColor(R.color.green));
 
             }
         });
-        popular.setOnClickListener(new View.OnClickListener() {
+        popular_txt.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
                 DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
-                trending.setBackground(wrappedDrawable);
-                feature.setBackground(wrappedDrawable);
+                trending_txt.setBackground(wrappedDrawable);
+                feature_txt.setBackground(wrappedDrawable);
 
 
                 Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
                 DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
-                popular.setBackground(wrappedDrawable2);
+                popular_txt.setBackground(wrappedDrawable2);
+
                 trending_txt.setTextColor(getContext().getColor(R.color.green));
                 feature_txt.setTextColor(getContext().getColor(R.color.green));
                 popular_txt.setTextColor(getContext().getColor(R.color.purple));
@@ -375,7 +366,7 @@ public class DashBoardFragment extends Fragment {
         CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
 
         mViewPager.setAdapter(mCustomPagerAdapter);
-        mViewPager.startAutoScroll(2000);
+        mViewPager.startAutoScroll(3000);
 
       /*  fruits = (CardView)v.findViewById(R.id.list1);
         fruits.setOnClickListener(new View.OnClickListener() {

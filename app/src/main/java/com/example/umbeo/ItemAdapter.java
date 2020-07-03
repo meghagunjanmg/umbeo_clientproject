@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_dash_straw, parent, false);
+                .inflate(R.layout.item_fruits_card, parent, false);
 
         ItemAdapter.ViewHolder vh = new ItemAdapter.ViewHolder(v);
         return vh;
@@ -56,7 +57,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         strawberry_name.setText(modelList.get(position).getName());
 
      //   byte[] imageByteArray = Base64.decode(modelList.get(position).getImage(), Base64.DEFAULT);
-        Picasso.get()
+    /*    Picasso.get()
                 .load(modelList.get(position).getImage().toString())
                 .resize(100, 100)
                 .centerCrop()
@@ -116,6 +117,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             }
         });
 
+     */
+
 
     }
 
@@ -128,7 +131,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     TextView strawberry_name;
     TextView quantity;
     ImageView staryberry_image;
-    ImageView strawberry_plus;
+    FrameLayout strawberry_plus;
     ImageView remove;
     ImageView add;
     LinearLayout strawberry_linear;
@@ -138,6 +141,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
             strawberry_name = itemView.findViewById(R.id.strawberry_name);
             staryberry_image = itemView.findViewById(R.id.staryberry_image);
+
             strawberry_plus = itemView.findViewById(R.id.strawberry_plus);
             strawberry_linear = itemView.findViewById(R.id.strawberry_linear);
             remove = itemView.findViewById(R.id.remove);
