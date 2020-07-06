@@ -3,6 +3,8 @@ package com.example.umbeo;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -26,17 +28,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.example.umbeo.R.drawable.farmers;
+
 public class CategoryActivity extends AppCompatActivity {
 
-    LinearLayout editAddress;
+    TextView editAddress;
     TextView lichipopupText, strawberryText, orangeText, pineappleText;
     Dialog mDialog;
     ImageView orange_plus, lichi_plus, strawberry_plus;
+    static List<ItemModel> mFlowerList;
+    static RecyclerView item_recycler;
+    static ItemAdapter myAdapter;
 
     AppDatabase db;
     static int staw_count = 0, lichi_count = 0, orange_count = 0 ,quant = 0;
     LinearLayout straw_linear, orange_linear, lichi_linear;
-    ImageView add, remove, add2, remove2, add3, remove3;
+    ImageView back_btn,cart_btn, add, remove, add2, remove2, add3, remove3;
     TextView quantity, quantity3, quantity2;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -48,6 +55,24 @@ public class CategoryActivity extends AppCompatActivity {
         add = findViewById(R.id.add);
         remove = findViewById(R.id.remove);
         quantity = findViewById(R.id.quantity);
+
+        back_btn = findViewById(R.id.back_btn);
+        cart_btn = findViewById(R.id.cart_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext() ,HomeScreenActivity.class));
+            }
+        });
+        cart_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
+                i.putExtra("Cat",5);
+                startActivity(i);
+
+            }
+        });
 
         orange_linear = findViewById(R.id.orange_linear);
         add3 = findViewById(R.id.add3);
@@ -64,7 +89,50 @@ public class CategoryActivity extends AppCompatActivity {
 
         LoadAllDB();
 
-        editAddress = (LinearLayout) findViewById(R.id.editAddress);
+        item_recycler = findViewById(R.id.item_recycler);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,2);
+        item_recycler.setLayoutManager(mGridLayoutManager);
+
+        mFlowerList = new ArrayList<>();
+
+        int Cat = getIntent().getIntExtra("Cat",0);
+
+        if(Cat==1){
+            ImageView title_img = findViewById(R.id.title_img);
+            int res = getResources().getIdentifier("farmers", "drawable", this.getPackageName());
+            title_img.setImageResource(res);
+
+
+            mFlowerList.add(new ItemModel("Apple","pic_0",0));
+            mFlowerList.add(new ItemModel("Lichi","pic_1",0));
+            mFlowerList.add(new ItemModel("Apple","pic_0",0));
+            mFlowerList.add(new ItemModel("Lichi","pic_1",0));
+            mFlowerList.add(new ItemModel("Apple","pic_0",0));
+            mFlowerList.add(new ItemModel("Lichi","pic_1",0));
+            mFlowerList.add(new ItemModel("Apple","pic_0",0));
+            mFlowerList.add(new ItemModel("Lichi","pic_1",0));
+        }
+        else if(Cat==2){
+            ImageView title_img = findViewById(R.id.title_img);
+            int res = getResources().getIdentifier("personals", "drawable", this.getPackageName());
+            title_img.setImageResource(res);
+
+            mFlowerList.add(new ItemModel("Colgate","pic_2",0));
+            mFlowerList.add(new ItemModel("Hair oil","pic_3",0));
+            mFlowerList.add(new ItemModel("Colgate","pic_2",0));
+            mFlowerList.add(new ItemModel("Hair oil","pic_3",0));
+            mFlowerList.add(new ItemModel("Colgate","pic_2",0));
+            mFlowerList.add(new ItemModel("Hair oil","pic_3",0));
+            mFlowerList.add(new ItemModel("Colgate","pic_2",0));
+            mFlowerList.add(new ItemModel("Hair oil","pic_3",0));
+
+        }
+
+        myAdapter = new ItemAdapter(mFlowerList, this);
+        item_recycler.setAdapter(myAdapter);
+
+
+        editAddress = findViewById(R.id.editAddress);
         editAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

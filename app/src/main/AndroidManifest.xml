@@ -8,9 +8,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"  />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,8 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MyAddresses"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MyOrderActivity"></activity>
+        <activity
+            android:name=".MyAddresses"
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,31 +34,18 @@
         -->
         <activity
             android:name=".MapActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_maps" />
-        <activity android:name=".CategoryActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".HomeScreenActivity"  android:screenOrientation="portrait" />
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeScreenActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".payment_popUp"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomItem" />
-        <activity
-            android:name=".dashboard"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Example"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pop_strawberry"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.CustomItem" />
-        <activity
-            android:name=".pop_lichi"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.CustomItem" />
-        <activity
-            android:name=".Fruits"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".Payment"
             android:screenOrientation="portrait" />

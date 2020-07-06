@@ -4,11 +4,14 @@ public class ItemModel {
 
     private String name;
     private String image;
+    public int quantity;
 
-    public ItemModel(String name, String image) {
+    public ItemModel(String name, String image, int quantity) {
         this.name = name;
         this.image = image;
+        this.quantity = quantity;
     }
+
 
     public String getName() {
         return name;
@@ -25,5 +28,13 @@ public class ItemModel {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

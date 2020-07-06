@@ -71,6 +71,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         //getProfile();
 
 
+
+
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
@@ -84,6 +86,17 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         if(id==1){
             viewPager.setCurrentItem(1);
         }
+
+
+        try {
+            int catIntent = getIntent().getIntExtra("Cat",0);
+            if(catIntent==5){
+                viewPager.setCurrentItem(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         setIcons();
 
@@ -113,7 +126,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DashBoardFragment(),"Home");
         adapter.addFragment(new CartMainFragment(),"Cart");
-        adapter.addFragment(new OrderMainFragment(),"Order");
+        adapter.addFragment(new LoyaltyPointsFragment(),"Points");
         adapter.addFragment(new ProfileMainFragment(),"Profile");
 
 

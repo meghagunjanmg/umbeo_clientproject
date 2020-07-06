@@ -1,5 +1,6 @@
 package com.example.umbeo;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -57,8 +58,8 @@ public class CartMainFragment extends Fragment {
     CartAdapter cartAdapter;
     MutableLiveData<List<CartEntity>> data;
 
-    static TextView no_item;
-    static LinearLayout main_scroll;
+     TextView no_item;
+      static LinearLayout main_scroll,no_item_linear;
 
     static List<Integer> amounts = new ArrayList<>();
 
@@ -117,13 +118,14 @@ public class CartMainFragment extends Fragment {
     }
 
 
+    @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
         preference = new UserPreference(getContext());
-
+        no_item_linear = v.findViewById(R.id.no_item_linear);
         shop = v.findViewById(R.id.shop);
         no_item = v.findViewById(R.id.no_item);
         main_scroll = v.findViewById(R.id.main_linear);
@@ -153,11 +155,7 @@ public class CartMainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Create new fragment and transaction
-                Fragment newFragment = new CategoryFragment();
-                FragmentTransaction transaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameSelected, newFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+              startActivity(new Intent(getContext(),HomeScreenActivity.class));
             }
         });
         paym=(Button)v.findViewById(R.id.payment);
@@ -179,14 +177,14 @@ public class CartMainFragment extends Fragment {
         entityList = new ArrayList<>();
         LoadAllDB();
 
+
+
         if(entityList.size()==0){
-            no_item.setVisibility(View.VISIBLE);
-            shop.setVisibility(View.VISIBLE);
+            no_item_linear.setVisibility(View.VISIBLE);
             main_scroll.setVisibility(View.GONE);
         }
         else {
-            no_item.setVisibility(View.GONE);
-            shop.setVisibility(View.GONE);
+            no_item_linear.setVisibility(View.GONE);
             main_scroll.setVisibility(View.VISIBLE);
         }
 
@@ -198,6 +196,7 @@ public class CartMainFragment extends Fragment {
         });
 
         loyalty.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @SuppressLint("FragmentLiveDataObserve")
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
@@ -217,12 +216,13 @@ public class CartMainFragment extends Fragment {
                                     super.onChanged(); }
                             });
                             recyclerView.setAdapter(cartAdapter);
+
                             if(entityList.size()==0){
-                                no_item.setVisibility(View.VISIBLE);
+                                no_item_linear.setVisibility(View.VISIBLE);
                                 main_scroll.setVisibility(View.GONE);
                             }
                             else {
-                                no_item.setVisibility(View.GONE);
+                                no_item_linear.setVisibility(View.GONE);
                                 main_scroll.setVisibility(View.VISIBLE);
                             }
 
@@ -255,11 +255,11 @@ public class CartMainFragment extends Fragment {
                             });
                             recyclerView.setAdapter(cartAdapter);
                             if(entityList.size()==0){
-                                no_item.setVisibility(View.VISIBLE);
+                                no_item_linear.setVisibility(View.VISIBLE);
                                 main_scroll.setVisibility(View.GONE);
                             }
                             else {
-                                no_item.setVisibility(View.GONE);
+                                no_item_linear.setVisibility(View.GONE);
                                 main_scroll.setVisibility(View.VISIBLE);
                             }
 
@@ -275,7 +275,6 @@ public class CartMainFragment extends Fragment {
             }
         });
 
-        final Amount model = new Amount();
 
         db.cartDao().getAll().observe(CartMainFragment.this, new Observer<List<CartEntity>>(){
             @Override
@@ -291,14 +290,13 @@ public class CartMainFragment extends Fragment {
                 });
                 recyclerView.setAdapter(cartAdapter);
                 if(entityList.size()==0){
-                    no_item.setVisibility(View.VISIBLE);
+                    no_item_linear.setVisibility(View.VISIBLE);
                     main_scroll.setVisibility(View.GONE);
                 }
                 else {
-                    no_item.setVisibility(View.GONE);
+                    no_item_linear.setVisibility(View.GONE);
                     main_scroll.setVisibility(View.VISIBLE);
                 }
-
                 int sum = 0;
                 for(int i=0;i<entityList.size();i++){
                    sum = sum+ (entities.get(i).getQuantity()*50);
@@ -321,14 +319,7 @@ public class CartMainFragment extends Fragment {
                      entityList = db.cartDao().loadAll();
                     cartAdapter = new CartAdapter(entityList, getContext(),db);
                     recyclerView.setAdapter(cartAdapter);
-                    if(entityList.size()==0){
-                        no_item.setVisibility(View.VISIBLE);
-                        main_scroll.setVisibility(View.GONE);
-                    }
-                    else {
-                        no_item.setVisibility(View.GONE);
-                        main_scroll.setVisibility(View.VISIBLE);
-                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -344,11 +335,11 @@ public class CartMainFragment extends Fragment {
         LoadAllDB();
 
         if(entityList.size()==0){
-            no_item.setVisibility(View.VISIBLE);
+            no_item_linear.setVisibility(View.VISIBLE);
             main_scroll.setVisibility(View.GONE);
         }
         else {
-            no_item.setVisibility(View.GONE);
+            no_item_linear.setVisibility(View.GONE);
             main_scroll.setVisibility(View.VISIBLE);
         }
     }

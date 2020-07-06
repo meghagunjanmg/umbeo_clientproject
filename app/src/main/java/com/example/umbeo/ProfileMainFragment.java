@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -97,21 +98,27 @@ public class ProfileMainFragment extends Fragment {
     }
 
     Button logout;
-    TextView myemail,myname,name_edit,profile_edit,loyalty_point;
+    TextView myemail,myname,name_edit,profile_edit,loyalty_point,my_order;
     UserPreference preference;
     EditText myname_et;
     int count = 0;
     public static final int RESULT_GALLERY = 0;
     CircleImageView profilepic;
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
-
+    Fragment fragment;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         preference = new UserPreference(getContext());
+        fragment = this;
 
-
-
+        my_order = view.findViewById(R.id.my_order);
+        my_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startActivity(new Intent(getContext(),MyOrderActivity.class));
+            }
+        });
 
         loyalty_point = view.findViewById(R.id.loyalty_point);
         loyalty_point.setText(preference.getLoyaltyPoints()+"");

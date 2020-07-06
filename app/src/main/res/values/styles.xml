@@ -28,6 +28,11 @@
 
 
     </style>
+
+
+    <style name="TextViewStyle" parent="android:Widget.DeviceDefault.Light.TextView">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
     
     <style name="Widget.MaterialComponents.Button.OutlinedButton.Icon"></style>
 </resources>

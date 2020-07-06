@@ -1,6 +1,5 @@
 package com.example.umbeo;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,17 +10,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
@@ -56,10 +51,10 @@ public class DashBoardFragment extends Fragment {
 
     /////LinearLayout trending, popular, feature;
 
-    LinearLayout lichi,strawberry;
+    LinearLayout lichi, strawberry;
     AutoScrollViewPager mViewPager;
     CardView cat1, cat2, cat3, cat4;
-    ImageView orange_plus,lichi_plus;
+    ImageView orange_plus, lichi_plus;
     FrameLayout strawberry_plus;
 
 
@@ -68,15 +63,18 @@ public class DashBoardFragment extends Fragment {
     CardView fruits;
     TextView trending_txt, popular_txt, feature_txt;
 
-    AppDatabase db;
-    static int staw_count = 0,lichi_count=0,orange_count=0, quant = 0;
-    LinearLayout straw_linear,orange_linear,lichi_linear;
-    ImageView add,remove,add2,remove2,add3,remove3;
-    TextView quantity,quantity3,quantity2;
+    static AppDatabase db;
+    static int staw_count = 0, lichi_count = 0, orange_count = 0, quant = 0;
+    LinearLayout straw_linear, orange_linear, lichi_linear;
+    ImageView add, remove, add2, remove2, add3, remove3;
+    TextView quantity, quantity3, quantity2;
     ViewPager viewPager2;
-    List<ItemModel> mFlowerList;
-    RecyclerView item_recycler;
+    List<ItemModel> mMainItemsList, mFruitsItem, mPersonalItems;
+     RecyclerView item_recycler, list_category;
+     ItemAdapter myAdapter;
+    private float total = 0;
 
+    static CategoryListAdapter categoryListAdapter;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -140,33 +138,55 @@ public class DashBoardFragment extends Fragment {
         super.onViewCreated(v, savedInstanceState);
         preference = new UserPreference(getContext());
 
-        try {
-            item_recycler = v.findViewById(R.id.item_recycler);
-            try {
-                GridLayoutManager mGridLayoutManager = new GridLayoutManager(getContext(),2);
-                item_recycler.setLayoutManager(mGridLayoutManager);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        item_recycler = v.findViewById(R.id.item_recycler);
+        list_category = v.findViewById(R.id.list_category);
 
-            mFlowerList = new ArrayList<>();
-            mFlowerList.add(new ItemModel("Apple","https://drive.google.com/file/d/1hJvSaLGullzLDDXpzsNRiM8hjC0j2kav/edit"));
-            mFlowerList.add(new ItemModel("Lichi","https://drive.google.com/file/d/1zyZK7cct0JGZ24a85hnqOITFD2bnV-oR/edit"));
-            mFlowerList.add(new ItemModel("Colgate","https://drive.google.com/file/d/1tAIziqPijSs-kb27GZDjCSHnZaQ4prD3/edit"));
-            mFlowerList.add(new ItemModel("Hair oil","https://drive.google.com/file/d/1KfTJpBO_UL4Xdt-aXjZx4g3OATEN0BJR/edit"));
 
-            final ItemAdapter myAdapter = new ItemAdapter(mFlowerList, getContext());
-            item_recycler.setAdapter(myAdapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
+        item_recycler.setLayoutManager(mGridLayoutManager);
+
+
+        GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+        list_category.setLayoutManager(mGridLayoutManager2);
+
+        mMainItemsList = new ArrayList<>();
+        mFruitsItem = new ArrayList<>();
+        mPersonalItems = new ArrayList<>();
+
+        mFruitsItem.add(new ItemModel("Apple", "pic_0", 0));
+        mFruitsItem.add(new ItemModel("Lichi", "pic_1", 0));
+        mFruitsItem.add(new ItemModel("Apple", "pic_0", 0));
+        mFruitsItem.add(new ItemModel("Lichi", "pic_1", 0));
+
+
+        mPersonalItems.add(new ItemModel("Colgate", "pic_2", 0));
+        mPersonalItems.add(new ItemModel("Hair oil", "pic_3", 0));
+        mPersonalItems.add(new ItemModel("Colgate", "pic_2", 0));
+        mPersonalItems.add(new ItemModel("Hair oil", "pic_3", 0));
+
+
+        List<CategoryModel> categoryModelList = new ArrayList<>();
+        categoryModelList.add(new CategoryModel("Fruits", mFruitsItem));
+        categoryModelList.add(new CategoryModel("Personal Care", mPersonalItems));
+
+        categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+        list_category.setAdapter(categoryListAdapter);
+
+
+        mMainItemsList.add(new ItemModel("Apple", "pic_0", 0));
+        mMainItemsList.add(new ItemModel("Lichi", "pic_1", 0));
+        mMainItemsList.add(new ItemModel("Colgate", "pic_2", 0));
+        mMainItemsList.add(new ItemModel("Hair oil", "pic_3", 0));
+
+
+        myAdapter = new ItemAdapter(mMainItemsList, getContext());
+        item_recycler.setAdapter(myAdapter);
 
         log = (TextView) v.findViewById(R.id.login);
 
-        if( preference.getEmail()!=null){
-            log.setText(preference.getEmail());
-        }
-        else {
+        if (preference.getUserName() != null) {
+            log.setText(preference.getUserName());
+        } else {
             log.setText("Log in / Signup");
         }
 
@@ -180,18 +200,17 @@ public class DashBoardFragment extends Fragment {
         address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(preference.getUserName()!=null)
-                startActivity(new Intent(getActivity(), MyAddresses.class));
+                if (preference.getUserName() != null)
+                    startActivity(new Intent(getActivity(), MyAddresses.class));
 
                 else startActivity(new Intent(getActivity(), signup.class));
             }
         });
 
 
-
-       // trending = v.findViewById(R.id.trending);
+        // trending = v.findViewById(R.id.trending);
         //popular = v.findViewById(R.id.popular);
-       // feature = v.findViewById(R.id.feature);
+        // feature = v.findViewById(R.id.feature);
         cat1 = v.findViewById(R.id.cat1);
         cat2 = v.findViewById(R.id.cat2);
         cat3 = v.findViewById(R.id.cat3);
@@ -226,54 +245,36 @@ public class DashBoardFragment extends Fragment {
         cat1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeScreenActivity.category_frag = true;
-                CategoryFragment categoryFragment = new CategoryFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameSelected, categoryFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Intent i = new Intent(getContext(), CategoryActivity.class);
+                i.putExtra("Cat", 1);
+                startActivity(i);
             }
         });
         cat2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeScreenActivity.category_frag = true;
-                CategoryFragment categoryFragment = new CategoryFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameSelected, categoryFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Intent i = new Intent(getContext(), CategoryActivity.class);
+                i.putExtra("Cat", 2);
+                startActivity(i);
+
             }
         });
 
         cat3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeScreenActivity.category_frag = true;
-                CategoryFragment categoryFragment = new CategoryFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameSelected, categoryFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                startActivity(new Intent(getContext(), CategoryActivity.class));
+
             }
         });
 
         cat4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeScreenActivity.category_frag = true;
-                CategoryFragment categoryFragment = new CategoryFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameSelected, categoryFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                startActivity(new Intent(getContext(), CategoryActivity.class));
+
             }
         });
-
 
 
         trending_txt = v.findViewById(R.id.trending_txt);
@@ -281,10 +282,22 @@ public class DashBoardFragment extends Fragment {
         popular_txt = v.findViewById(R.id.popular_txt);
 
 
+        Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
+        Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+        DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
+        popular_txt.setBackground(wrappedDrawable);
+        trending_txt.setBackground(wrappedDrawable);
+
+
+        Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
+        Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
+        DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
+        feature_txt.setBackground(wrappedDrawable2);
 
         trending_txt.setTextColor(getContext().getColor(R.color.green));
         feature_txt.setTextColor(getContext().getColor(R.color.purple));
         popular_txt.setTextColor(getContext().getColor(R.color.green));
+
 
         trending_txt.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -324,6 +337,7 @@ public class DashBoardFragment extends Fragment {
                 Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
                 DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
                 feature_txt.setBackground(wrappedDrawable2);
+
                 trending_txt.setTextColor(getContext().getColor(R.color.green));
                 feature_txt.setTextColor(getContext().getColor(R.color.purple));
                 popular_txt.setTextColor(getContext().getColor(R.color.green));
@@ -401,7 +415,7 @@ public class DashBoardFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                dailog("strawberry",staw_count);
+                dailog("strawberry", staw_count);
             }
         });
 
@@ -411,7 +425,7 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                dailog("lichi",lichi_count);
+                dailog("lichi", lichi_count);
             }
         });
 
@@ -420,7 +434,7 @@ public class DashBoardFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                dailog("orange",orange_count);
+                dailog("orange", orange_count);
             }
         });
 
@@ -430,18 +444,17 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 orange_count++;
-                if(orange_count>0){
+                if (orange_count > 0) {
                     orange_linear.setVisibility(View.VISIBLE);
                     orange_plus.setVisibility(View.GONE);
-                    quantity3.setText(orange_count+"");
-                }
-                else {
+                    quantity3.setText(orange_count + "");
+                } else {
 
                 }
 
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
+                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 50));
             }
         });
         lichi_plus = v.findViewById(R.id.lichi_plus);
@@ -449,17 +462,16 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 lichi_count++;
-                if(lichi_count>0){
+                if (lichi_count > 0) {
                     lichi_linear.setVisibility(View.VISIBLE);
                     lichi_plus.setVisibility(View.GONE);
-                    quantity2.setText(lichi_count+"");
-                }
-                else {
+                    quantity2.setText(lichi_count + "");
+                } else {
 
                 }
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
+                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 50));
             }
         });
         strawberry_plus = v.findViewById(R.id.strawberry_plus);
@@ -467,17 +479,16 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 staw_count++;
-                if(staw_count>0){
+                if (staw_count > 0) {
                     straw_linear.setVisibility(View.VISIBLE);
                     strawberry_plus.setVisibility(View.GONE);
-                    quantity.setText(staw_count+"");
-                }
-                else {
+                    quantity.setText(staw_count + "");
+                } else {
 
                 }
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
+                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 50));
             }
         });
 
@@ -565,34 +576,32 @@ public class DashBoardFragment extends Fragment {
          */
 
 
-        if(lichi_count==0){
+        if (lichi_count == 0) {
             lichi_linear.setVisibility(View.GONE);
             lichi_plus.setVisibility(View.VISIBLE);
             DeleteDB("lichi");
-        }
-        else {
+        } else {
             lichi_linear.setVisibility(View.VISIBLE);
             lichi_plus.setVisibility(View.GONE);
         }
-        if(staw_count==0){
+        if (staw_count == 0) {
             straw_linear.setVisibility(View.GONE);
             strawberry_plus.setVisibility(View.VISIBLE);
             DeleteDB("strawberry");
-        }
-        else {
+        } else {
             straw_linear.setVisibility(View.VISIBLE);
             strawberry_plus.setVisibility(View.GONE);
         }
-        if(orange_count==0){
+        if (orange_count == 0) {
             orange_linear.setVisibility(View.GONE);
             orange_plus.setVisibility(View.VISIBLE);
             DeleteDB("orange");
-        }
-        else {
+        } else {
             orange_linear.setVisibility(View.VISIBLE);
             orange_plus.setVisibility(View.GONE);
         }
     }
+
     @Override
     public void onResume() {
         Log.e("DEBUG", "onResume of HomeFragment");
@@ -604,13 +613,12 @@ public class DashBoardFragment extends Fragment {
 
         LoadAllDB();
 
-        quantity.setText(staw_count+"");
-        if(staw_count==0){
+        quantity.setText(staw_count + "");
+        if (staw_count == 0) {
             straw_linear.setVisibility(View.GONE);
             strawberry_plus.setVisibility(View.VISIBLE);
             DeleteDB("strawberry");
-        }
-        else {
+        } else {
             straw_linear.setVisibility(View.VISIBLE);
             strawberry_plus.setVisibility(View.GONE);
         }
@@ -618,36 +626,35 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 staw_count++;
-                quantity.setText(staw_count+"");
+                quantity.setText(staw_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
+                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 50));
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 staw_count--;
-                if(staw_count==0){
+                if (staw_count == 0) {
                     straw_linear.setVisibility(View.GONE);
                     strawberry_plus.setVisibility(View.VISIBLE);
                     DeleteDB("strawberry");
                 }
 
-                quantity.setText(staw_count+"");
+                quantity.setText(staw_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
+                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 50));
             }
         });
 
-        quantity2.setText(lichi_count+"");
-        if(lichi_count==0){
+        quantity2.setText(lichi_count + "");
+        if (lichi_count == 0) {
             lichi_linear.setVisibility(View.GONE);
             lichi_plus.setVisibility(View.VISIBLE);
             DeleteDB("lichi");
-        }
-        else {
+        } else {
             lichi_linear.setVisibility(View.VISIBLE);
             lichi_plus.setVisibility(View.GONE);
         }
@@ -655,36 +662,35 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 lichi_count++;
-                quantity2.setText(lichi_count+"");
+                quantity2.setText(lichi_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
+                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 50));
             }
         });
         remove2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 lichi_count--;
-                if(lichi_count==0){
+                if (lichi_count == 0) {
                     lichi_linear.setVisibility(View.GONE);
                     lichi_plus.setVisibility(View.VISIBLE);
                     DeleteDB("lichi");
                 }
 
-                quantity2.setText(lichi_count+"");
+                quantity2.setText(lichi_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
+                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 50));
             }
         });
 
-        quantity3.setText(orange_count+"");
-        if(orange_count==0){
+        quantity3.setText(orange_count + "");
+        if (orange_count == 0) {
             orange_linear.setVisibility(View.GONE);
             orange_plus.setVisibility(View.VISIBLE);
             DeleteDB("orange");
-        }
-        else {
+        } else {
             orange_linear.setVisibility(View.VISIBLE);
             orange_plus.setVisibility(View.GONE);
         }
@@ -692,32 +698,32 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 orange_count++;
-                quantity3.setText(orange_count+"");
+                quantity3.setText(orange_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
+                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 50));
             }
         });
         remove3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 orange_count--;
-                if(orange_count==0){
+                if (orange_count == 0) {
                     orange_linear.setVisibility(View.GONE);
                     orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB("orange");
                 }
 
-                quantity3.setText(orange_count+"");
+                quantity3.setText(orange_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
+                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 50));
             }
         });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void dailog(final String name, final int quantity) {
+    public void dailog(final String name, final int quantity) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
         View mView = getLayoutInflater().inflate(R.layout.generic_dailog, null);
         CardView cardView = mView.findViewById(R.id.cardview);
@@ -741,32 +747,32 @@ public class DashBoardFragment extends Fragment {
         final TextView quan = mView.findViewById(R.id.quantity1111);
 
         quant = quantity;
-        quan.setText(quant+"");
+        quan.setText(quant + "");
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 quant++;
-                quan.setText(quant+"");
+                quan.setText(quant + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 50));
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 quant--;
-                if(quant==0){
-                  //  orange_linear.setVisibility(View.GONE);
-                  //  orange_plus.setVisibility(View.VISIBLE);
+                if (quant == 0) {
+                    //  orange_linear.setVisibility(View.GONE);
+                    //  orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB(name);
-                    addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                    addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 50));
                 }
-                quan.setText(quant+"");
+                quan.setText(quant + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 50));
             }
         });
 
@@ -782,26 +788,27 @@ public class DashBoardFragment extends Fragment {
     }
 
 
-    private void addDB(final CartEntity entity){
+    private static void addDB(final CartEntity entity) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 try {
                     db.cartDao().insertOne(entity);
-                    Log.e("roomDB",entity.getItem_name());
+                    Log.e("roomDB", entity.getItem_name());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
-    private void DeleteDB(final String name){
+
+    private static void DeleteDB(final String name) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 try {
                     db.cartDao().deleteOne(name);
-                    Log.e("roomDB",name);
+                    Log.e("roomDB", name);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -810,59 +817,73 @@ public class DashBoardFragment extends Fragment {
     }
 
 
+    private void LoadAllDB() {
+        db.cartDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<CartEntity>>() {
+            @Override
+            public void onChanged(List<CartEntity> entities) {
+                entitiesList = entities;
 
-    private void LoadAllDB(){
-                    db.cartDao().getAll().observe(DashBoardFragment.this, new Observer<List<CartEntity>>(){
-                        @Override
-                        public void onChanged(List<CartEntity> entities) {
-                            entitiesList = entities;
-
-                            if (entitiesList.size() != 0) {
-                                for (int i = 0; i < entitiesList.size(); i++) {
-                                    if (entitiesList.get(i).getItem_name().equals("strawberry")) {
-                                        staw_count = entitiesList.get(i).getQuantity();
-                                        quantity.setText(staw_count + "");
-                                    }
-                                    if (entitiesList.get(i).getItem_name().equals("lichi")) {
-                                        lichi_count = entitiesList.get(i).getQuantity();
-                                        quantity2.setText(lichi_count + "");
-                                    }
-                                    if (entitiesList.get(i).getItem_name().equals("orange")) {
-                                        orange_count = entitiesList.get(i).getQuantity();
-                                        quantity3.setText(orange_count + "");
-                                    }
-                                }
-
-                                if(lichi_count==0){
-                                    lichi_linear.setVisibility(View.GONE);
-                                    lichi_plus.setVisibility(View.VISIBLE);
-                                    DeleteDB("lichi");
-                                }
-                                else {
-                                    lichi_linear.setVisibility(View.VISIBLE);
-                                    lichi_plus.setVisibility(View.GONE);
-                                }
-                                if(staw_count==0){
-                                    straw_linear.setVisibility(View.GONE);
-                                    strawberry_plus.setVisibility(View.VISIBLE);
-                                    DeleteDB("strawberry");
-                                }
-                                else {
-                                    straw_linear.setVisibility(View.VISIBLE);
-                                    strawberry_plus.setVisibility(View.GONE);
-                                }
-                                if(orange_count==0){
-                                    orange_linear.setVisibility(View.GONE);
-                                    orange_plus.setVisibility(View.VISIBLE);
-                                    DeleteDB("orange");
-                                }
-                                else {
-                                    orange_linear.setVisibility(View.VISIBLE);
-                                    orange_plus.setVisibility(View.GONE);
-                                }
-                            }
+                if (entitiesList.size() != 0) {
+                    for (int i = 0; i < entitiesList.size(); i++) {
+                        if (entitiesList.get(i).getItem_name().equals("strawberry")) {
+                            staw_count = entitiesList.get(i).getQuantity();
+                            quantity.setText(staw_count + "");
                         }
-                    });
+                        if (entitiesList.get(i).getItem_name().equals("lichi")) {
+                            lichi_count = entitiesList.get(i).getQuantity();
+                            quantity2.setText(lichi_count + "");
+                        }
+                        if (entitiesList.get(i).getItem_name().equals("orange")) {
+                            orange_count = entitiesList.get(i).getQuantity();
+                            quantity3.setText(orange_count + "");
+                        }
+                    }
+
+                    if (lichi_count == 0) {
+                        lichi_linear.setVisibility(View.GONE);
+                        lichi_plus.setVisibility(View.VISIBLE);
+                        DeleteDB("lichi");
+                    } else {
+                        lichi_linear.setVisibility(View.VISIBLE);
+                        lichi_plus.setVisibility(View.GONE);
+                    }
+                    if (staw_count == 0) {
+                        straw_linear.setVisibility(View.GONE);
+                        strawberry_plus.setVisibility(View.VISIBLE);
+                        DeleteDB("strawberry");
+                    } else {
+                        straw_linear.setVisibility(View.VISIBLE);
+                        strawberry_plus.setVisibility(View.GONE);
+                    }
+                    if (orange_count == 0) {
+                        orange_linear.setVisibility(View.GONE);
+                        orange_plus.setVisibility(View.VISIBLE);
+                        DeleteDB("orange");
+                    } else {
+                        orange_linear.setVisibility(View.VISIBLE);
+                        orange_plus.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
     }
 
+
+
+   /* public static void UpdateAdapter(Context context,int position, String name,String Image,int quantity){
+
+        for(int i = 0; i< mMainItemsList.size(); i++){
+            if(i == position){
+                mMainItemsList.get(i).setImage(Image);
+                mMainItemsList.get(i).setName(name);
+                mMainItemsList.get(i).setQuantity(quantity);
+                DeleteDB(mMainItemsList.get(position).getName());
+                addDB(new CartEntity(mMainItemsList.get(position).getName(),quantity,50));
+
+                Log.e("TESTING","2 "+ mMainItemsList.get(position).getName()+" "+ mMainItemsList.get(position).getQuantity());
+                myAdapter.notifyDataSetChanged();
+            }
+        }
+
+    */
 }

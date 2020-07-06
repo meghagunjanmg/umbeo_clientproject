@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:layout_margin="8dp"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -8,31 +7,92 @@
 android:background="@color/bg_color"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
 
-    <TextView
-        android:visibility="visible"
-        android:id="@+id/no_item"
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:gravity="center"
+            android:text="Cart"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/Del"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivery At : "
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/lightgrey"/>
+            <EditText
+                android:layout_width="345dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/location"
+                android:drawablePadding="12dp"
+                android:hint="Address"
+                android:textColorHint="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/editAddress"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/pen" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:textSize="24sp"
-        android:text="There are no items in your cart"
+        android:id="@+id/no_item_linear"
+        android:visibility="gone"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </TextView>
-    <Button
-        android:visibility="gone"
-        android:backgroundTint="@color/green"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:padding="12dp"
-        android:id="@+id/shop"
-        android:gravity="center"
-        android:text="Start Shopping"
-        android:layout_marginBottom="70dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </Button>
+        <TextView
+            android:id="@+id/no_item"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textSize="24sp"
+            android:text="There are no items in your cart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </TextView>
+        <Button
+            android:backgroundTint="@color/green"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            android:id="@+id/shop"
+            android:gravity="center"
+            android:text="Start Shopping"
+            android:layout_marginBottom="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Button>
+    </LinearLayout>
+
     <LinearLayout
         android:visibility="visible"
         android:background="@color/bg_color"
@@ -46,63 +106,17 @@ android:background="@color/bg_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <LinearLayout
             android:layout_marginBottom="60dp"
-
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/Cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Cart"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-        <ImageView
-            android:layout_gravity="end"
-            android:id="@+id/menu"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/menu">
-        </ImageView>
-    </FrameLayout>
     <TextView
-        android:id="@+id/Del"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delivery At"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/lightgrey"/>
-    <LinearLayout
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/location"
-            android:drawablePadding="12dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:hint="Address"
-            android:textStyle="bold"/>
-        <ImageView
-            android:layout_gravity="center"
-            android:id="@+id/editAddress"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/pen" />
-    </LinearLayout>
-    <TextView
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:id="@+id/Det"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,6 +129,8 @@ android:background="@color/bg_color"
         layout="@layout/item_detail_cart"></include>
 
             <LinearLayout
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -140,6 +156,8 @@ android:background="@color/bg_color"
             </LinearLayout>
 
     <LinearLayout
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -164,6 +182,8 @@ android:background="@color/bg_color"
             android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -201,6 +221,8 @@ android:background="@color/bg_color"
             android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:visibility="gone"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -229,6 +251,8 @@ android:background="@color/bg_color"
 
 
     <LinearLayout
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -255,6 +279,8 @@ android:background="@color/bg_color"
 
 
     <TextView
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:id="@+id/note"
         android:gravity="center"
@@ -265,6 +291,8 @@ android:background="@color/bg_color"
         android:textColor="@color/lightgrey"/>
 
     <Button
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="20dp"
         android:id="@+id/payment"
         android:layout_width="match_parent"

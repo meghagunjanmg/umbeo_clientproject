@@ -65,13 +65,13 @@
             android:tint="@color/darker_gray"
 
             android:id="@+id/icon3"
-            android:src="@drawable/ic_icon_order"
+            android:src="@drawable/ic_earn_point_24"
             android:layout_width="20dp"
             android:layout_height="20dp">
         </ImageView>
         <TextView
             android:id="@+id/text3"
-            android:text="Order"
+            android:text="Earn Points"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

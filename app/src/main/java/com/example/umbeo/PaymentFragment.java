@@ -30,7 +30,7 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
     private int counter=1;
     RadioGroup radioGroup;
     boolean flag = true;
-
+    ImageView back_btn,cart_btn;
     RadioButton cas,amazonpay,applepay,paypal,amazonupi,googleupi;
     Button sendd;
     @Nullable
@@ -53,7 +53,25 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
 
         sendd=(Button) v.findViewById(R.id.send);
         sendbt();
-        
+
+        back_btn = v.findViewById(R.id.back_btn);
+        cart_btn = v.findViewById(R.id.cart_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext() ,HomeScreenActivity.class));
+            }
+        });
+        cart_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(),HomeScreenActivity.class);
+                i.putExtra("Cat",5);
+                startActivity(i);
+
+            }
+        });
+
         return v;
     }
 
@@ -68,7 +86,9 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
         shopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),HomeScreenActivity.class));
+                Intent i = new Intent(getContext(),HomeScreenActivity.class);
+                //i.putExtra("Cat",5);
+                startActivity(i);
                 dialog.cancel();
             }
         });
@@ -80,7 +100,7 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 Fragment orderFragment = new OrderMainFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 assert fragmentManager != null;
-                fragmentManager.beginTransaction().replace(R.id.fragment_container,orderFragment)
+                fragmentManager.beginTransaction().replace(R.id.frameSelected,orderFragment)
                         .commit();
                 dialog.cancel();
             }
@@ -226,5 +246,6 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
             });
         }
     }
+
 
 }
