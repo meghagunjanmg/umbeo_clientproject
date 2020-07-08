@@ -7,6 +7,8 @@
     >
 
     <CheckBox
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:layout_weight="1"
         android:id="@+id/address"
         android:layout_width="match_parent"

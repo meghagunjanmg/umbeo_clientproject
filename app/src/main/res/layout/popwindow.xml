@@ -10,6 +10,8 @@
     android:background="@android:color/white"
     android:layout_height="wrap_content">
     <TextView
+        style="@style/TextViewStyle"
+        android:textSize="20sp"
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,11 +20,12 @@
             android:text="Password Successfully Reset "
             android:textAlignment="center"
             android:textColor="@color/colorTextSecondary"
-            android:textSize="24sp"
             android:textStyle="bold"
             android:visibility="visible"/>
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -39,6 +42,8 @@
 
 
             <Button
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:id="@+id/send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

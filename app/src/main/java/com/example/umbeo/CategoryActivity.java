@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.example.umbeo.R.drawable.farmers;
-
 public class CategoryActivity extends AppCompatActivity {
 
     TextView editAddress;
@@ -50,7 +48,7 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fruit_new);
+        setContentView(R.layout.activity_category);
         straw_linear =findViewById(R.id.strawberry_linear);
         add = findViewById(R.id.add);
         remove = findViewById(R.id.remove);
@@ -185,7 +183,7 @@ public class CategoryActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 50));
+                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 5));
             }
         });
         lichi_plus = findViewById(R.id.lichi_plus);
@@ -202,7 +200,7 @@ public class CategoryActivity extends AppCompatActivity {
                 }
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 50));
+                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 5));
             }
         });
         strawberry_plus = findViewById(R.id.strawberry_plus);
@@ -219,7 +217,7 @@ public class CategoryActivity extends AppCompatActivity {
                 }
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 50));
+                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 5));
             }
         });
 
@@ -314,7 +312,7 @@ public class CategoryActivity extends AppCompatActivity {
             straw_linear.setVisibility(View.GONE);
             strawberry_plus.setVisibility(View.VISIBLE);
             DeleteDB("strawberry");
-            addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
+            addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),5));
         }
         else {
             straw_linear.setVisibility(View.VISIBLE);
@@ -327,7 +325,7 @@ public class CategoryActivity extends AppCompatActivity {
                 quantity.setText(staw_count+"");
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
+                addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),5));
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
@@ -338,13 +336,13 @@ public class CategoryActivity extends AppCompatActivity {
                     straw_linear.setVisibility(View.GONE);
                     strawberry_plus.setVisibility(View.VISIBLE);
                     DeleteDB("strawberry");
-                    addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
+                    addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),5));
                 }
 
                 quantity.setText(staw_count+"");
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),50));
+                addDB(new CartEntity("strawberry",Integer.parseInt(quantity.getText().toString()),5));
             }
         });
 
@@ -353,7 +351,7 @@ public class CategoryActivity extends AppCompatActivity {
             lichi_linear.setVisibility(View.GONE);
             lichi_plus.setVisibility(View.VISIBLE);
             DeleteDB("lichi");
-            addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
+            addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),5));
         }
         else {
             lichi_linear.setVisibility(View.VISIBLE);
@@ -366,7 +364,7 @@ public class CategoryActivity extends AppCompatActivity {
                 quantity2.setText(lichi_count+"");
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
+                addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),5));
             }
         });
         remove2.setOnClickListener(new View.OnClickListener() {
@@ -377,13 +375,13 @@ public class CategoryActivity extends AppCompatActivity {
                     lichi_linear.setVisibility(View.GONE);
                     lichi_plus.setVisibility(View.VISIBLE);
                     DeleteDB("lichi");
-                    addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
+                    addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),5));
                 }
 
                 quantity2.setText(lichi_count+"");
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),50));
+                addDB(new CartEntity("lichi",Integer.parseInt(quantity2.getText().toString()),5));
             }
         });
 
@@ -392,7 +390,7 @@ public class CategoryActivity extends AppCompatActivity {
             orange_linear.setVisibility(View.GONE);
             orange_plus.setVisibility(View.VISIBLE);
             DeleteDB("orange");
-            addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
+            addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),5));
         }
         else {
             orange_linear.setVisibility(View.VISIBLE);
@@ -405,7 +403,7 @@ public class CategoryActivity extends AppCompatActivity {
                 quantity3.setText(orange_count+"");
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
+                addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),5));
             }
         });
         remove3.setOnClickListener(new View.OnClickListener() {
@@ -416,13 +414,13 @@ public class CategoryActivity extends AppCompatActivity {
                     orange_linear.setVisibility(View.GONE);
                     orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB("orange");
-                    addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
+                    addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),5));
                 }
 
                 quantity3.setText(orange_count+"");
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),50));
+                addDB(new CartEntity("orange",Integer.parseInt(quantity3.getText().toString()),5));
             }
         });
     }
@@ -462,7 +460,7 @@ public class CategoryActivity extends AppCompatActivity {
                 quan.setText(quant+"");
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),5));
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
@@ -473,12 +471,12 @@ public class CategoryActivity extends AppCompatActivity {
                     //  orange_linear.setVisibility(View.GONE);
                     //  orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB(name);
-                    addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                    addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),5));
                 }
                 quan.setText(quant+"");
                 Toast.makeText(getApplicationContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),5));
             }
         });
 

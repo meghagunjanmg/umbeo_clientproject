@@ -70,11 +70,12 @@ public class DashBoardFragment extends Fragment {
     TextView quantity, quantity3, quantity2;
     ViewPager viewPager2;
     List<ItemModel> mMainItemsList, mFruitsItem, mPersonalItems;
-     RecyclerView item_recycler, list_category;
+     RecyclerView item_recycler, list_category,list_category_fruit;
      ItemAdapter myAdapter;
     private float total = 0;
 
-    static CategoryListAdapter categoryListAdapter;
+    CardView see_more;
+    static CategoryListAdapter categoryListAdapter,categoryListAdapter2;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -140,6 +141,7 @@ public class DashBoardFragment extends Fragment {
 
         item_recycler = v.findViewById(R.id.item_recycler);
         list_category = v.findViewById(R.id.list_category);
+        list_category_fruit = v.findViewById(R.id.list_category_fruit);
 
 
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
@@ -166,17 +168,20 @@ public class DashBoardFragment extends Fragment {
 
 
         List<CategoryModel> categoryModelList = new ArrayList<>();
-        categoryModelList.add(new CategoryModel("Fruits", mFruitsItem));
-        categoryModelList.add(new CategoryModel("Personal Care", mPersonalItems));
+        List<CategoryModel> categoryModelList1 = new ArrayList<>();
 
+        categoryModelList.add(new CategoryModel("Fruits", mFruitsItem));
         categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-        list_category.setAdapter(categoryListAdapter);
+        list_category_fruit.setAdapter(categoryListAdapter);
+
+        categoryModelList1.add(new CategoryModel("Personal Care", mPersonalItems));
+        categoryListAdapter2 = new CategoryListAdapter(categoryModelList1, getContext());
+        list_category.setAdapter(categoryListAdapter2);
 
 
         mMainItemsList.add(new ItemModel("Apple", "pic_0", 0));
         mMainItemsList.add(new ItemModel("Lichi", "pic_1", 0));
         mMainItemsList.add(new ItemModel("Colgate", "pic_2", 0));
-        mMainItemsList.add(new ItemModel("Hair oil", "pic_3", 0));
 
 
         myAdapter = new ItemAdapter(mMainItemsList, getContext());
@@ -196,6 +201,20 @@ public class DashBoardFragment extends Fragment {
                 startActivity(new Intent(getActivity(), login.class));
             }
         });
+
+
+        see_more = v.findViewById(R.id.see_more);
+        see_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(),CategoryActivity.class);
+                i.putExtra("Cat",1);
+                startActivity(i);
+            }
+        });
+
+
+
         address = (TextView) v.findViewById(R.id.addre);
         address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -380,7 +399,7 @@ public class DashBoardFragment extends Fragment {
         CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
 
         mViewPager.setAdapter(mCustomPagerAdapter);
-        mViewPager.startAutoScroll(3000);
+        mViewPager.startAutoScroll(5000);
 
       /*  fruits = (CardView)v.findViewById(R.id.list1);
         fruits.setOnClickListener(new View.OnClickListener() {
@@ -454,7 +473,7 @@ public class DashBoardFragment extends Fragment {
 
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 50));
+                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 5));
             }
         });
         lichi_plus = v.findViewById(R.id.lichi_plus);
@@ -471,7 +490,7 @@ public class DashBoardFragment extends Fragment {
                 }
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 50));
+                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 5));
             }
         });
         strawberry_plus = v.findViewById(R.id.strawberry_plus);
@@ -488,7 +507,7 @@ public class DashBoardFragment extends Fragment {
                 }
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 50));
+                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 5));
             }
         });
 
@@ -629,7 +648,7 @@ public class DashBoardFragment extends Fragment {
                 quantity.setText(staw_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 50));
+                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 5));
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
@@ -645,7 +664,7 @@ public class DashBoardFragment extends Fragment {
                 quantity.setText(staw_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 50));
+                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 5));
             }
         });
 
@@ -665,7 +684,7 @@ public class DashBoardFragment extends Fragment {
                 quantity2.setText(lichi_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 50));
+                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 5));
             }
         });
         remove2.setOnClickListener(new View.OnClickListener() {
@@ -681,7 +700,7 @@ public class DashBoardFragment extends Fragment {
                 quantity2.setText(lichi_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("lichi");
-                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 50));
+                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 5));
             }
         });
 
@@ -701,7 +720,7 @@ public class DashBoardFragment extends Fragment {
                 quantity3.setText(orange_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 50));
+                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 5));
             }
         });
         remove3.setOnClickListener(new View.OnClickListener() {
@@ -717,7 +736,7 @@ public class DashBoardFragment extends Fragment {
                 quantity3.setText(orange_count + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB("orange");
-                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 50));
+                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 5));
             }
         });
     }
@@ -756,7 +775,7 @@ public class DashBoardFragment extends Fragment {
                 quan.setText(quant + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB(name);
-                addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 50));
+                addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 5));
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
@@ -767,12 +786,12 @@ public class DashBoardFragment extends Fragment {
                     //  orange_linear.setVisibility(View.GONE);
                     //  orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB(name);
-                    addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 50));
+                    addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 5));
                 }
                 quan.setText(quant + "");
                 Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
                 DeleteDB(name);
-                addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 50));
+                addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 5));
             }
         });
 
@@ -878,7 +897,7 @@ public class DashBoardFragment extends Fragment {
                 mMainItemsList.get(i).setName(name);
                 mMainItemsList.get(i).setQuantity(quantity);
                 DeleteDB(mMainItemsList.get(position).getName());
-                addDB(new CartEntity(mMainItemsList.get(position).getName(),quantity,50));
+                addDB(new CartEntity(mMainItemsList.get(position).getName(),quantity,5));
 
                 Log.e("TESTING","2 "+ mMainItemsList.get(position).getName()+" "+ mMainItemsList.get(position).getQuantity());
                 myAdapter.notifyDataSetChanged();

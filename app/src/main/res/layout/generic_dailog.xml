@@ -37,24 +37,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Strawberry"
-            android:textSize="18sp"
-            android:textColor="@color/active"
+            style="@style/TextViewStyle"
+            android:textSize="16sp"
+            android:textColor="@color/green"
             android:textStyle="bold"/>
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:id="@+id/ammount"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="₹ 50"
-            android:textSize="22sp"
             android:textStyle="bold"/>
 
     </LinearLayout>
     <ImageView
         android:id="@+id/a3"
-        android:layout_below="@id/a2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/stars"
@@ -74,12 +75,13 @@
             android:orientation="horizontal">
 
             <TextView
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:gravity="center_vertical"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Quantities"
-                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -96,11 +98,12 @@
                     android:src="@drawable/ic_remove">
                 </ImageView>
                 <TextView
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
                     android:padding="8dp"
                     android:id="@+id/quantity1111"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:textSize="18sp"
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -127,8 +130,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:backgroundTint="@color/active"
-        android:fontFamily="sans-serif"
+        android:backgroundTint="@color/green"
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:text="Add to Cart"
         android:layout_marginTop="12dp"
         android:textStyle="bold"/>

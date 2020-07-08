@@ -19,12 +19,13 @@
         android:contentDescription="@string/app_name"/>
     
     <TextView
+        style="@style/TextViewStyle"
+        android:textSize="24sp"
         android:id="@+id/textTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/colorTextSecondary"
-        android:textSize="20sp"
 
         />
 

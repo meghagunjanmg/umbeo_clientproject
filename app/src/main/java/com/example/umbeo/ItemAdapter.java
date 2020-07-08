@@ -131,6 +131,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         */
 
 
+
+
         strawberry_name.setText(modelList.get(position).getName()+"");
 //        quantity.setText(modelList.get(position).getQuantity()+"");
 
@@ -212,7 +214,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     FrameLayout strawberry_plus;
     ImageView remove;
     ImageView add;
-    LinearLayout item_linear;
+    LinearLayout item_linear,linear;
 
     CardView card;
 
@@ -231,6 +233,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             remove = itemView.findViewById(R.id.item_remove);
             add = itemView.findViewById(R.id.item_add);
             quantity = itemView.findViewById(R.id.item_quant);
+            linear = itemView.findViewById(R.id.linear);
 
             card = itemView.findViewById(R.id.card);
 

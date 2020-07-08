@@ -13,13 +13,14 @@
         android:layout_height="60dp">
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="20sp"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="List Of My Addresses"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -38,6 +39,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:layout_margin="8dp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"

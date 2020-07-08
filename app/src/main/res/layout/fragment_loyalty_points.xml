@@ -16,13 +16,13 @@
         android:layout_height="wrap_content">
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="20sp"
             android:layout_margin="4dp"
             android:gravity="center"
             android:textColor="@color/colorWhite"
             android:text="Your Loyalty point is"
             android:textStyle="bold"
-            android:fontFamily="cursive"
-            android:textSize="24sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
@@ -35,8 +35,8 @@
             android:textColor="@color/colorWhite"
             android:text="50"
             android:textStyle="bold"
-            android:fontFamily="cursive"
-            android:textSize="28sp"
+            style="@style/TextViewStyle"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
@@ -46,13 +46,19 @@
             android:layout_margin="4dp"
             android:gravity="center"
             android:textColor="@color/colorWhite"
-            android:text="Which is equivalent to   $ 4"
+            android:text="Which is equivalent to   $ 5"
             android:textStyle="bold"
-            android:fontFamily="cursive"
-            android:textSize="24sp"
+            style="@style/TextViewStyle"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
     </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_recycler"
+        android:layout_width="match_parent"
+        tools:listitem="@layout/item_category_card"
+        android:layout_height="wrap_content">
 
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

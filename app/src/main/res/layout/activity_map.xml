@@ -24,6 +24,7 @@
             android:gravity="center"
             android:text="Add Address"
             android:textColor="@color/colorWhite"
+            style="@style/TextViewStyle"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -83,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:text="Get Current Address"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:drawableLeft="@drawable/home" />
             <TextView
                 android:layout_weight="2"
@@ -94,13 +96,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="My Address"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:textSize="16sp" />
+              />
 </LinearLayout>
             <EditText
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:id="@+id/line1"
                 android:padding="12dp"
-                android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="address line 1" />
@@ -108,7 +113,8 @@
             <EditText
                 android:id="@+id/line2"
                 android:padding="12dp"
-                android:textSize="16sp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="address line 2" />
@@ -116,7 +122,8 @@
             <EditText
                 android:id="@+id/line3"
                 android:padding="12dp"
-                android:textSize="16sp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="address line 3" />
@@ -126,6 +133,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <Button
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:id="@+id/add_address"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"

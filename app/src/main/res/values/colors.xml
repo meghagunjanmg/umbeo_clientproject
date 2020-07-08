@@ -11,7 +11,6 @@
     <color name="colorSemiDark">#90000000</color>
     <color name="dark_blue">#3023AE</color>
     <color name="colorButton">#2196F3</color>
-    <color name="active">#00ac16</color>
     <color name="grey">#B3B1B1</color>
     <color name="lightgrey">#A9A9A9</color>
     <color name="brightgreen">#44CC00</color>
@@ -27,8 +26,11 @@
 
     <color name="colorPrimaryText">#000000</color>
     <color name="bg_color">#FFFFFF</color>
-    <color name="green">#00ac16</color>
     <color name="green_dark">#dcdcdc</color>
     <color name="darker_gray">#1E1E1E</color>
+
+
+    <color name="green">#374d7c</color>
+    <color name="active">#374d7c</color>
 
 </resources>

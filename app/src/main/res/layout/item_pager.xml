@@ -21,6 +21,8 @@
             android:layout_height="120dp"
             android:src="@color/semidark" />
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="20sp"
             android:layout_gravity="bottom"
             android:id="@+id/text"
             android:padding="8dp"
@@ -29,7 +31,6 @@
             android:gravity="bottom"
             android:text="Best and healthiest products in town"
             android:textColor="@color/colorWhite"
-            android:textSize="22sp"
             android:textStyle="bold" />
     </FrameLayout>
 

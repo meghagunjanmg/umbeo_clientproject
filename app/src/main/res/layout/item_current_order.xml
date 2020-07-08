@@ -14,27 +14,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ITEMS"
             android:textColor="@color/grey"
-            android:textSize="16sp" />
+            />
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="1 x dairymilk, 1 x frazen food, Sauce"
             android:textStyle="bold" />
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Ordered ON"
             android:textColor="@color/grey"
-            android:textSize="16sp" />
+      />
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="12 Jan 2020 at 7:30 PM"
@@ -46,28 +54,36 @@
             android:layout_marginTop="6dp"
             android:text="Total Amount"
             android:textColor="@color/grey"
-            android:textSize="14sp" />
+            style="@style/TextViewStyle"
+            android:textSize="14sp"/>
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="₹ 80"
+            android:text="$ 8"
             android:textStyle="bold" />
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Status"
             android:textColor="@color/grey"
-            android:textSize="16sp" />
+         />
         <include layout="@layout/item_status_bar"></include>
         <LinearLayout
+
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <Button
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:id="@+id/cancel"
                 android:layout_weight="3"
                 android:layout_gravity="end"

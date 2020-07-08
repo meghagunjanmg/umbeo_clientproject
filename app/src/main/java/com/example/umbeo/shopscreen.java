@@ -12,7 +12,7 @@ private CardView shopCard1,shopCard2,shopcard3,shopCard4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shopscreen);
+        setContentView(R.layout.z_activity_shopscreen);
 
         shopCard1=(CardView) findViewById(R.id.cardShop1);
         shopCard2=(CardView) findViewById(R.id.cardShop2);

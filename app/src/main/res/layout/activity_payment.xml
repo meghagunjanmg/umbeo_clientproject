@@ -34,12 +34,13 @@
             </ImageView>
 
             <TextView
+                style="@style/TextViewStyle"
+                android:textSize="20sp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Payment"
                 android:textColor="@color/colorWhite"
-                android:textSize="20sp"
                 android:textStyle="bold" />
             <ImageView
                 android:visibility="gone"
@@ -76,7 +77,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Payable Amount "
-                android:textSize="18dp" />
+                style="@style/TextViewStyle"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_weight="1"
@@ -84,7 +86,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="₹ 31.47"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
+                android:text="$ 31.47"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -98,10 +102,14 @@
                 <TextView
                     android:padding="8dp"
                     android:text="Cash On Delivery"
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </TextView>
                         <RadioButton
+                            style="@style/TextViewStyle"
+                            android:textSize="14sp"
                             android:layout_margin="8dp"
                             android:background="@drawable/payment_outline"
                             android:padding="12dp"
@@ -112,6 +120,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                 <TextView
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
                     android:padding="8dp"
                     android:text="Wallet"
                     android:layout_width="match_parent"
@@ -121,6 +131,8 @@
                             android:layout_margin="8dp"
                             android:background="@drawable/payment_outline"
                             android:padding="12dp"
+                            style="@style/TextViewStyle"
+                            android:textSize="14sp"
                             android:id="@+id/amazonPay"
                             android:drawableLeft="@drawable/amazonpay"
                             android:drawablePadding="8dp"
@@ -128,6 +140,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                         <RadioButton
+                            style="@style/TextViewStyle"
+                            android:textSize="14sp"
                             android:layout_margin="8dp"
                             android:background="@drawable/payment_outline"
                             android:padding="12dp"
@@ -138,6 +152,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                         <RadioButton
+                            style="@style/TextViewStyle"
+                            android:textSize="14sp"
                             android:layout_margin="8dp"
                             android:padding="12dp"
                             android:id="@+id/payPal"
@@ -150,6 +166,8 @@
                 <TextView
                     android:padding="8dp"
                     android:text="UPI"
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </TextView>
@@ -161,6 +179,8 @@
                         android:drawableLeft="@drawable/amazonpay"
                         android:drawablePadding="8dp"
                         android:text="Amazon pay UPI"
+                        style="@style/TextViewStyle"
+                        android:textSize="14sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -172,6 +192,8 @@
                         android:drawableLeft="@drawable/googlepay"
                         android:drawablePadding="8dp"
                         android:text="Google pay"
+                        style="@style/TextViewStyle"
+                        android:textSize="14sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
             </RadioGroup>
@@ -180,6 +202,8 @@
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:layout_marginTop="25dp"
             android:backgroundTint="@color/active"
             android:text="Continue"

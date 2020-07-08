@@ -31,12 +31,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif"
+                style="@style/TextViewStyle"
+                android:textSize="20sp"
                 android:gravity="center"
                 android:text="Welcome Back "
                 android:textAlignment="center"
                 android:textColor="@color/colorTextSecondary"
-                android:textSize="24sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -44,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textSize="16sp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:text="You are one step away from dicovering" />
 
             <TextView
@@ -62,15 +63,16 @@
                 android:layout_height="wrap_content"
                 android:text="Mobile No./Email Address*"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                />
+                style="@style/TextViewStyle"
+                android:textSize="16sp"        />
             <EditText
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
                 android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:textSize="16sp"
                 android:maxLines="1"
+                android:layout_width="match_parent"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
                 android:hint="Enter E-mail Address*"/>
 
@@ -79,6 +81,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/TextViewStyle"
                 android:textSize="16sp"
                 android:text="Password"
                 android:textStyle="bold"/>
@@ -91,7 +94,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:maxLines="1"
-                android:textSize="16sp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:inputType="textPassword" />
 
             <TextView
@@ -107,17 +111,19 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/active"
-                android:fontFamily="sans-serif"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:text="Sign In"
                 android:textStyle="bold"
-                app:cornerRadius="20dp"/>
+                app:cornerRadius="20dp" />
 
             <TextView
                 android:id="@+id/forget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="16sp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:text="forgot your password?" />
             <LinearLayout
                 android:id="@+id/belowme"
@@ -131,7 +137,8 @@
                     android:layout_width="250dp"
                     android:layout_height="57dp"
                     android:textColor="@color/colorTextSecondary"
-                    android:fontFamily="sans-serif"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/fon"
                     android:backgroundTint="@color/colorWhite"
                     app:icon="@drawable/facebook"
                     app:iconPadding="4dp"
@@ -149,6 +156,8 @@
                     android:backgroundTint="@color/colorWhite"
                     app:icon="@drawable/googlelogo"
                     app:iconPadding="4dp"
+                    android:fontFamily="@font/fon"
+                    android:textSize="14sp"
                     app:iconTint="@color/empty"
                     android:text="Connect with Google"
                     app:cornerRadius="20dp"
@@ -164,13 +173,15 @@
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
                     android:text="Don't have an Account?  " />
 
                 <TextView
-                    android:textSize="16sp"
                     android:gravity="center"
                     android:id="@+id/signin"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:text="Sign Up"

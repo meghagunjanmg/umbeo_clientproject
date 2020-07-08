@@ -21,6 +21,7 @@ android:background="@color/bg_color"
             android:gravity="center"
             android:text="Cart"
             android:textColor="@color/colorWhite"
+            style="@style/TextViewStyle"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -51,7 +52,8 @@ android:background="@color/bg_color"
                 android:drawablePadding="12dp"
                 android:hint="Address"
                 android:textColorHint="@color/colorWhite"
-                android:textSize="16sp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
                 android:textStyle="bold" />
             <ImageView
                 android:layout_gravity="center"
@@ -121,7 +123,8 @@ android:background="@color/bg_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Details"
-        android:textSize="16sp"
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:textColor="@color/lightgrey" />
 
@@ -135,13 +138,14 @@ android:background="@color/bg_color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
                     android:id="@+id/loyalty"
                     android:layout_weight="2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Loyalty points"
                     android:textColor="@color/colorTextSecondary"
-                    android:textSize="16sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/loyalty_point"
@@ -149,9 +153,10 @@ android:background="@color/bg_color"
                     android:layout_margin="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="- ₹ 10"
+                    android:text="- $ 1"
                     android:textColor="@color/colorTextSecondary"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -168,7 +173,8 @@ android:background="@color/bg_color"
         android:layout_height="wrap_content"
         android:text="Delivery Charges"
         android:textColor="@color/lightgrey"
-        android:textSize="16sp"
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:textStyle="bold" />
         <TextView
             android:gravity="end"
@@ -176,9 +182,10 @@ android:background="@color/bg_color"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="₹ 10"
+            android:text="$ 1"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
@@ -198,13 +205,15 @@ android:background="@color/bg_color"
             android:layout_height="wrap_content"
             android:text="Taxes &amp; Charges"
             android:textColor="@color/lightgrey"
-            android:textSize="16sp"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:textStyle="bold" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="GST\nHST"
                 android:textColor="@color/lightgrey"
+                style="@style/TextViewStyle"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="8dp" />
@@ -215,9 +224,10 @@ android:background="@color/bg_color"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="₹ 10"
+            android:text="$ 1"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
@@ -234,7 +244,8 @@ android:background="@color/bg_color"
             android:layout_height="wrap_content"
             android:text="Discounts"
             android:textColor="@color/lightgrey"
-            android:textSize="16sp"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:textStyle="bold" />
         <TextView
             android:gravity="end"
@@ -242,9 +253,10 @@ android:background="@color/bg_color"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="₹ 10"
+            android:text="$ 1"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -262,7 +274,8 @@ android:background="@color/bg_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Grand Total"
-            android:textSize="20sp"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/grand_total"
@@ -271,9 +284,10 @@ android:background="@color/bg_color"
             android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="₹ 10"
+            android:text="$ 1"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -286,7 +300,8 @@ android:background="@color/bg_color"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:text="Please note after placing the order on \n cancelation charges might apply"
         android:textColor="@color/lightgrey"/>
 
@@ -295,6 +310,8 @@ android:background="@color/bg_color"
         android:layout_marginRight="8dp"
         android:layout_marginTop="20dp"
         android:id="@+id/payment"
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/active"

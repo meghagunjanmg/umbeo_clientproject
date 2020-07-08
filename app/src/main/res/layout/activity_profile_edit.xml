@@ -13,13 +13,14 @@
         android:layout_height="60dp">
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="20sp"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Profile"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -34,6 +35,8 @@
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:padding="8dp"
         android:id="@+id/profile_edit"
         android:layout_marginTop="12dp"
@@ -41,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="EDIT PROFILE PICTURE"
-        android:textSize="14sp"
         android:drawableRight="@drawable/pen"
         android:drawablePadding="8dp"
         android:textStyle="bold"/>
@@ -51,6 +53,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
+        style="@style/TextViewStyle"
+        android:textSize="16sp"
         android:padding="8dp"
         android:layout_weight="1"
         android:layout_marginTop="20dp"
@@ -58,8 +62,10 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:text="Profile Name"
-        android:textSize="18sp" />
+       />
     <TextView
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:padding="8dp"
         android:layout_weight="2"
         android:id="@+id/name_edit"
@@ -69,20 +75,20 @@
         android:layout_gravity="center"
         android:text="EDIT"
         android:gravity="end"
-        android:textSize="14sp"
         android:drawableRight="@drawable/pen"
         android:drawablePadding="8dp"
         android:textStyle="bold"/>
 </LinearLayout>
     <TextView
+        style="@style/TextViewStyle"
+        android:textSize="16sp"
         android:id="@+id/myname"
         android:paddingLeft="8dp"
         android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Profile Name"
-        android:textStyle="bold"
-        android:textSize="16sp" />
+        android:textStyle="bold" />
     <EditText
         android:visibility="gone"
         android:id="@+id/myname_et"
@@ -95,21 +101,25 @@
 
 
     <TextView
+        style="@style/TextViewStyle"
+        android:textSize="16sp"
         android:padding="8dp"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:text="Email"
-        android:textSize="18sp" />
+        />
     <TextView
         android:paddingLeft="8dp"
         android:id="@+id/myemail"
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="example12@gmail.com"
         android:textColor="@color/active"
-        android:textSize="16sp"/>
+      />
 
 
     <TextView
@@ -119,15 +129,17 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:text="Loyalty Points"
-        android:textSize="18sp" />
+        style="@style/TextViewStyle"
+        android:textSize="16sp" />
     <TextView
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
         android:paddingLeft="8dp"
         android:id="@+id/loyalty_point"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textColor="@color/active"
-        android:textSize="16sp"/>
+        android:textColor="@color/active" />
 
 
 
@@ -140,7 +152,8 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:text="My Orders"
-        android:textSize="18sp" />
+        style="@style/TextViewStyle"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_gravity="center|bottom"
@@ -156,6 +169,8 @@
             android:layout_gravity="center|bottom"
             android:id="@+id/logout"
             android:text="Logout"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:textStyle="bold"/>
     </LinearLayout>
 

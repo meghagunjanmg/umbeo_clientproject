@@ -24,6 +24,8 @@
         </ImageView>
 
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +49,8 @@
             android:layout_height="20dp">
         </ImageView>
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:id="@+id/text2"
             android:text="Cart"
             android:gravity="center"
@@ -70,6 +74,8 @@
             android:layout_height="20dp">
         </ImageView>
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:id="@+id/text3"
             android:text="Earn Points"
             android:gravity="center"
@@ -93,6 +99,8 @@
             android:layout_height="20dp">
         </ImageView>
         <TextView
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
             android:id="@+id/text4"
             android:text="Profile"
             android:gravity="center"
