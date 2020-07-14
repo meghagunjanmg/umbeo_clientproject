@@ -9,4 +9,16 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/helvitica" />
+
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/callibri" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/opensans" />
+
 </font-family>
