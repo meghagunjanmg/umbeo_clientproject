@@ -165,7 +165,7 @@ public class CartMainFragment extends Fragment {
             public void onClick(View v) {
 
                 HomeScreenActivity.payment_frag = true;
-                PaymentFragment paymentFragment = new PaymentFragment();
+                PaymentFragment paymentFragment = new PaymentFragment(total_amount.getText().toString());
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frameSelected, paymentFragment);

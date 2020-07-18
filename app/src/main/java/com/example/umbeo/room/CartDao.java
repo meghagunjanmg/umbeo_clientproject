@@ -17,7 +17,7 @@ public interface CartDao {
     @Query("SELECT * FROM cart_items_table")
     List<CartEntity> loadAll();
 
-    @Query("SELECT * FROM cart_items_table WHERE item_name =:name")
+    @Query("SELECT * FROM cart_items_table WHERE name =:name")
     CartEntity findByName(String name);
 
     @Insert
@@ -35,6 +35,6 @@ public interface CartDao {
 
 
 
-    @Query("DELETE FROM cart_items_table WHERE item_name =:name")
+    @Query("DELETE FROM cart_items_table WHERE name =:name")
     void deleteOne(String name);
 }

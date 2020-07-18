@@ -133,7 +133,7 @@ public class DashBoardFragment extends Fragment {
                 db = AppDatabase.getInstance(getContext());
             }
 
-            LoadAllDB();
+            //LoadAllDB();
         }
     }
 
@@ -198,7 +198,7 @@ public class DashBoardFragment extends Fragment {
         mMainItemsList.add(new ItemModel("Colgate", "pic_2", 0));
 */
 
-       // myAdapter = new ItemAdapter(mMainItemsList, getContext());
+        // myAdapter = new ItemAdapter(mMainItemsList, getContext());
         item_recycler.setAdapter(myAdapter);
 
         log = (TextView) v.findViewById(R.id.login);
@@ -221,12 +221,11 @@ public class DashBoardFragment extends Fragment {
         see_more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(),CategoryActivity.class);
-                i.putExtra("Cat",1);
+                Intent i = new Intent(getContext(), CategoryActivity.class);
+                i.putExtra("Cat", 1);
                 startActivity(i);
             }
         });
-
 
 
         address = (TextView) v.findViewById(R.id.addre);
@@ -269,7 +268,7 @@ public class DashBoardFragment extends Fragment {
             db = AppDatabase.getInstance(getContext());
         }
 
-        LoadAllDB();
+        //LoadAllDB();
 
         lichi = v.findViewById(R.id.lichi);
         strawberry = v.findViewById(R.id.strawberry);
@@ -414,225 +413,6 @@ public class DashBoardFragment extends Fragment {
 
         mViewPager.setAdapter(mCustomPagerAdapter);
         mViewPager.startAutoScroll(5000);
-
-      /*  fruits = (CardView)v.findViewById(R.id.list1);
-        fruits.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FruitsFragment fruits= new FruitsFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fruits)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-       */
-
-
-
-        /*
-        fruit=(TextView)v.findViewById(R.id.fruits);
-        fruit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FruitsFragment fruits= new FruitsFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fruits).commit();
-                //startActivity(new Intent(getActivity(),FruitsFragment.class));
-            }
-        });
-
-         */
-
-
-        strawberry.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-                dailog("strawberry", staw_count);
-            }
-        });
-
-
-        lichi.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-
-                dailog("lichi", lichi_count);
-            }
-        });
-
-        final LinearLayout orange = v.findViewById(R.id.orange);
-        orange.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-                dailog("orange", orange_count);
-            }
-        });
-
-
-        orange_plus = v.findViewById(R.id.orange_plus);
-        orange_plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                orange_count++;
-                if (orange_count > 0) {
-                    orange_linear.setVisibility(View.VISIBLE);
-                    orange_plus.setVisibility(View.GONE);
-                    quantity3.setText(orange_count + "");
-                } else {
-
-                }
-
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("orange");
-                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 5));
-            }
-        });
-        lichi_plus = v.findViewById(R.id.lichi_plus);
-        lichi_plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lichi_count++;
-                if (lichi_count > 0) {
-                    lichi_linear.setVisibility(View.VISIBLE);
-                    lichi_plus.setVisibility(View.GONE);
-                    quantity2.setText(lichi_count + "");
-                } else {
-
-                }
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("lichi");
-                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 5));
-            }
-        });
-        strawberry_plus = v.findViewById(R.id.strawberry_plus);
-        strawberry_plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                staw_count++;
-                if (staw_count > 0) {
-                    straw_linear.setVisibility(View.VISIBLE);
-                    strawberry_plus.setVisibility(View.GONE);
-                    quantity.setText(staw_count + "");
-                } else {
-
-                }
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 5));
-            }
-        });
-
-       /*      orange = (ImageView)v.findViewById(R.id.orange);
-        orange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Added to Cart Successfully",Toast.LENGTH_LONG).show();
-            }
-        });
-
-   pineappleText= (TextView)v.findViewById(R.id.pineappletext);
-        pineappleText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
-                View mView = getLayoutInflater().inflate(R.layout.popup1_pineapple, null);
-                Button addtocart = mView.findViewById(R.id.button);
-
-                addtocart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Toast.makeText(getContext(),"Added to Cart Successfully",Toast.LENGTH_LONG).show();
-
-                        startActivity(new Intent(getContext(),login.class));
-
-                    }
-                });
-
-                ImageView img= mView.findViewById(R.id.image);
-
-                mBuilder.setView(mView);
-
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-            }
-        });
-        pineapple=(ImageView)v.findViewById(R.id.pineapple);
-        pineapple.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Added to Cart Successfully",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        strawbe=(ImageView)v.findViewById(R.id.strawberry);
-        strawbe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Added to Cart Successfully",Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-
-        strawberryText = (TextView)v.findViewById(R.id.straaaa);
-        strawberryText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
-                View mView = getLayoutInflater().inflate(R.layout.popup1_strawberry, null);
-                Button addtocart = mView.findViewById(R.id.button);
-
-                addtocart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Toast.makeText(getContext(),"Added to Cart Successfully",Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getContext(),login.class));
-
-                    }
-                });
-
-                ImageView img= mView.findViewById(R.id.image);
-
-                mBuilder.setView(mView);
-
-                AlertDialog dialog = mBuilder.create();
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-            }
-        });
-
-         */
-
-
-        if (lichi_count == 0) {
-            lichi_linear.setVisibility(View.GONE);
-            lichi_plus.setVisibility(View.VISIBLE);
-            DeleteDB("lichi");
-        } else {
-            lichi_linear.setVisibility(View.VISIBLE);
-            lichi_plus.setVisibility(View.GONE);
-        }
-        if (staw_count == 0) {
-            straw_linear.setVisibility(View.GONE);
-            strawberry_plus.setVisibility(View.VISIBLE);
-            DeleteDB("strawberry");
-        } else {
-            straw_linear.setVisibility(View.VISIBLE);
-            strawberry_plus.setVisibility(View.GONE);
-        }
-        if (orange_count == 0) {
-            orange_linear.setVisibility(View.GONE);
-            orange_plus.setVisibility(View.VISIBLE);
-            DeleteDB("orange");
-        } else {
-            orange_linear.setVisibility(View.VISIBLE);
-            orange_plus.setVisibility(View.GONE);
-        }
     }
 
     private void getCategoryProduct(final String categoryName, final String categoryId) {
@@ -682,7 +462,6 @@ public class DashBoardFragment extends Fragment {
                 Log.e("CategoryResponse",response+"");
                 Log.e("CategoryResponse",response.code()+"");
                 Log.e("CategoryResponse",response.message()+"");
-                Log.e("CategoryResponse",response.body().getStatus()+"");
                 if(response.code()==200){
                     categoryModel = response.body().getData().getCategories();
                     Log.e("CategoryResponse",categoryModel+"");
@@ -717,190 +496,16 @@ public class DashBoardFragment extends Fragment {
             db = AppDatabase.getInstance(getContext());
         }
 
-        LoadAllDB();
+        //LoadAllDB();
 
-        quantity.setText(staw_count + "");
-        if (staw_count == 0) {
-            straw_linear.setVisibility(View.GONE);
-            strawberry_plus.setVisibility(View.VISIBLE);
-            DeleteDB("strawberry");
-        } else {
-            straw_linear.setVisibility(View.VISIBLE);
-            strawberry_plus.setVisibility(View.GONE);
-        }
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                staw_count++;
-                quantity.setText(staw_count + "");
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 5));
-            }
-        });
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                staw_count--;
-                if (staw_count == 0) {
-                    straw_linear.setVisibility(View.GONE);
-                    strawberry_plus.setVisibility(View.VISIBLE);
-                    DeleteDB("strawberry");
-                }
-
-                quantity.setText(staw_count + "");
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("strawberry");
-                addDB(new CartEntity("strawberry", Integer.parseInt(quantity.getText().toString()), 5));
-            }
-        });
-
-        quantity2.setText(lichi_count + "");
-        if (lichi_count == 0) {
-            lichi_linear.setVisibility(View.GONE);
-            lichi_plus.setVisibility(View.VISIBLE);
-            DeleteDB("lichi");
-        } else {
-            lichi_linear.setVisibility(View.VISIBLE);
-            lichi_plus.setVisibility(View.GONE);
-        }
-        add2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lichi_count++;
-                quantity2.setText(lichi_count + "");
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("lichi");
-                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 5));
-            }
-        });
-        remove2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lichi_count--;
-                if (lichi_count == 0) {
-                    lichi_linear.setVisibility(View.GONE);
-                    lichi_plus.setVisibility(View.VISIBLE);
-                    DeleteDB("lichi");
-                }
-
-                quantity2.setText(lichi_count + "");
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("lichi");
-                addDB(new CartEntity("lichi", Integer.parseInt(quantity2.getText().toString()), 5));
-            }
-        });
-
-        quantity3.setText(orange_count + "");
-        if (orange_count == 0) {
-            orange_linear.setVisibility(View.GONE);
-            orange_plus.setVisibility(View.VISIBLE);
-            DeleteDB("orange");
-        } else {
-            orange_linear.setVisibility(View.VISIBLE);
-            orange_plus.setVisibility(View.GONE);
-        }
-        add3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                orange_count++;
-                quantity3.setText(orange_count + "");
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("orange");
-                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 5));
-            }
-        });
-        remove3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                orange_count--;
-                if (orange_count == 0) {
-                    orange_linear.setVisibility(View.GONE);
-                    orange_plus.setVisibility(View.VISIBLE);
-                    DeleteDB("orange");
-                }
-
-                quantity3.setText(orange_count + "");
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB("orange");
-                addDB(new CartEntity("orange", Integer.parseInt(quantity3.getText().toString()), 5));
-            }
-        });
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void dailog(final String name, final int quantity) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
-        View mView = getLayoutInflater().inflate(R.layout.generic_dailog, null);
-        CardView cardView = mView.findViewById(R.id.cardview);
-        cardView.setBackgroundDrawable(Objects.requireNonNull(getContext()).getDrawable(R.drawable.bg_dailog));
-        Button addtocart = mView.findViewById(R.id.button);
-        addtocart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getContext(), login.class));
-            }
-        });
-        ImageView img = mView.findViewById(R.id.image);
-        Glide.with(Objects.requireNonNull(getContext())).load(getImage(name)).into(img);
-
-        TextView name1 = mView.findViewById(R.id.name);
-        name1.setText(name.toUpperCase());
-
-        ImageView add = mView.findViewById(R.id.add);
-        ImageView remove = mView.findViewById(R.id.remove);
-        final TextView quan = mView.findViewById(R.id.quantity1111);
-
-        quant = quantity;
-        quan.setText(quant + "");
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quant++;
-                quan.setText(quant + "");
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB(name);
-                addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 5));
-            }
-        });
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quant--;
-                if (quant == 0) {
-                    //  orange_linear.setVisibility(View.GONE);
-                    //  orange_plus.setVisibility(View.VISIBLE);
-                    DeleteDB(name);
-                    addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 5));
-                }
-                quan.setText(quant + "");
-                Toast.makeText(getContext(), "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                DeleteDB(name);
-                addDB(new CartEntity(name, Integer.parseInt(quan.getText().toString()), 5));
-            }
-        });
-
-        mBuilder.setView(mView);
-        AlertDialog dialog = mBuilder.create();
-        dialog.show();
-    }
-
-    public int getImage(String imageName) {
-
-        int drawableResourceId = getContext().getResources().getIdentifier(imageName, "drawable", getContext().getPackageName());
-        return drawableResourceId;
-    }
-
-
     private static void addDB(final CartEntity entity) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 try {
                     db.cartDao().insertOne(entity);
-                    Log.e("roomDB", entity.getItem_name());
+                    Log.e("roomDB", entity.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -923,7 +528,7 @@ public class DashBoardFragment extends Fragment {
     }
 
 
-    private void LoadAllDB() {
+   /* private void LoadAllDB() {
         db.cartDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<CartEntity>>() {
             @Override
             public void onChanged(List<CartEntity> entities) {
@@ -931,7 +536,7 @@ public class DashBoardFragment extends Fragment {
 
                 if (entitiesList.size() != 0) {
                     for (int i = 0; i < entitiesList.size(); i++) {
-                        if (entitiesList.get(i).getItem_name().equals("strawberry")) {
+                        if (entitiesList.get(i).getName().equals("strawberry")) {
                             staw_count = entitiesList.get(i).getQuantity();
                             quantity.setText(staw_count + "");
                         }
@@ -973,6 +578,8 @@ public class DashBoardFragment extends Fragment {
             }
         });
     }
+
+    */
 
 
 

@@ -2,11 +2,13 @@ package com.example.umbeo.api;
 
 import com.example.umbeo.response_data.CategoryResponse;
 import com.example.umbeo.response_data.LoginResponse;
+import com.example.umbeo.response_data.OrderResponse;
 import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.response_data.SignUpResponse;
 import com.example.umbeo.response_data.SignUpResquest;
 import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.response_data.forgetpassword_response;
+import com.example.umbeo.response_data.orderRequest.OrderRequest;
 
 import org.json.JSONArray;
 
@@ -83,6 +85,11 @@ public interface Api {
     @POST("/api/v1/products/get-products-by-category")
     Call<ProductResponse> fetchAllProducts(@Field("shopId") String shopId,
                                            @Field("categoryId") String categoryId);
+
+
+    @POST("/api/v1/orders/create-order")
+    Call<OrderResponse> CreateOrder(@Header("Authorization")String token,
+                                    @Body OrderRequest orderRequest);
 
 
 }

@@ -132,10 +132,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         price.setText("$"+modelList.get(position).getPrice());
 //        quantity.setText(modelList.get(position).getQuantity()+"");
 
-        byte[] decodedString = Base64.decode(modelList.get(position).getImage(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        Glide.with(context).asBitmap().load(decodedByte).into(staryberry_image); //>>not tested
-
+        try {
+            byte[] decodedString = Base64.decode(modelList.get(position).getImage(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            Glide.with(context).asBitmap().load(decodedByte).into(staryberry_image); //>>not tested
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         final ViewHolder viewHolderFinal = holder;
@@ -150,7 +153,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal.quantity.setText(finalRowItem.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem.getName());
-                addDB(new CartEntity(finalRowItem.getName(),finalRowItem.getQuantity(),finalRowItem.getPrice()));
+                addDB(new CartEntity(finalRowItem.getName(),finalRowItem.getCategoryId(),finalRowItem.getSubCategoryId(),finalRowItem.getSubCategoryId(),finalRowItem.getQuantity(),finalRowItem.getPrice()));
                 Log.e("TESTING","3 "+modelList.get(position).getName()+" "+quant);
 
             }
@@ -167,7 +170,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal1.quantity.setText(finalRowItem1.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem1.getName());
-                addDB(new CartEntity(finalRowItem1.getName(),finalRowItem1.getQuantity(),finalRowItem.getPrice()));
+                addDB(new CartEntity(finalRowItem1.getName(),finalRowItem1.getCategoryId(),finalRowItem1.getSubCategoryId(),finalRowItem1.getSubCategoryId(),finalRowItem1.getQuantity(),finalRowItem1.getPrice()));
             }
         });
 
@@ -182,7 +185,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal2.quantity.setText(finalRowItem2.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem2.getName());
-                addDB(new CartEntity(finalRowItem2.getName(),finalRowItem2.getQuantity(),finalRowItem.getPrice()));
+                addDB(new CartEntity(finalRowItem2.getName(),finalRowItem2.getCategoryId(),finalRowItem2.getSubCategoryId(),finalRowItem2.getSubCategoryId(),finalRowItem2.getQuantity(),finalRowItem2.getPrice()));
 
 
                 if(finalRowItem2.getQuantity()==0){
@@ -196,7 +199,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                dailog(modelList.get(position).getName(),modelList.get(position).getQuantity(),modelList.get(position).getImage(),modelList.get(position).getPrice());
+                dailog(modelList.get(position).getName(),modelList.get(position).getQuantity(),modelList.get(position).getImage(),modelList.get(position).getPrice(),
+                        modelList.get(position).getDescription(),modelList.get(position).getCategoryId(),modelList.get(position).getSubCategoryId());
             }
         });
     }
@@ -248,7 +252,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public void run() {
                 try {
                     db.cartDao().insertOne(entity);
-                    Log.e("roomDB",entity.getItem_name());
+                    Log.e("roomDB",entity.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -280,7 +284,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void dailog(final String name, final int quantity,final String image,final int prices) {
+    private void dailog(final String name, final int quantity,final String image,final int prices,final String description,final String cat,final String subCat) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -314,7 +318,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         final TextView quan = mView.findViewById(R.id.quantity1111);
 
 
-        TextView price = mView.findViewById(R.id.price);
+        final TextView price = mView.findViewById(R.id.price);
         price.setText("$"+prices);
 
         quant = quantity;
@@ -326,7 +330,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 quant++;
                 quan.setText(quant+"");
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),prices));
+                addDB(new CartEntity(name,cat,subCat,description,Integer.parseInt(quan.getText().toString()),prices));
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
@@ -337,11 +341,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     //  orange_linear.setVisibility(View.GONE);
                     //  orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB(name);
-                    addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),prices));
+                    addDB(new CartEntity(name,cat,subCat,description,Integer.parseInt(quan.getText().toString()),prices));
                 }
                 quan.setText(quant+"");
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),prices));
+                addDB(new CartEntity(name,cat,subCat,description,Integer.parseInt(quan.getText().toString()),prices));
             }
         });
 

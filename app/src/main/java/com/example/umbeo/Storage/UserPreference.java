@@ -26,7 +26,7 @@ public class UserPreference {
     private String profilePic = "profilePic";
     private Integer LoyaltyPoints = 0;
     private static final String Addresses = "addresses";
-    private static final String ShopId = "5f0f36f38c586b00172b71aa";
+    private static final String ShopId = "5f131026a7cd970017e7b655";
 
 
     @SuppressLint("CommitPrefEdits")
@@ -38,7 +38,7 @@ public class UserPreference {
 
 
     public String getShopId() {
-        return pref.getString(ShopId, "5f0f36f38c586b00172b71aa");
+        return pref.getString(ShopId, "5f131026a7cd970017e7b655");
     }
 
 

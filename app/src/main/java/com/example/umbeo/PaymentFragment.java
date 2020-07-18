@@ -3,6 +3,7 @@ package com.example.umbeo;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,18 +22,42 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.Api;
+import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.OrderResponse;
+import com.example.umbeo.response_data.orderRequest.OrderRequest;
+import com.example.umbeo.response_data.orderRequest.Product;
+import com.example.umbeo.response_data.orderRequest.Product_;
+import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
+import com.example.umbeo.room.CartDao;
+import com.example.umbeo.room.CartEntity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedChangeListener
 {
 
+    TextView amount;
     private int counter=1;
     RadioGroup radioGroup;
     boolean flag = true;
     ImageView back_btn,cart_btn;
     RadioButton cas,amazonpay,applepay,paypal,amazonupi,googleupi;
     Button sendd;
+    String Total;
+    public PaymentFragment(String total_amount) {
+        Total = total_amount;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +67,11 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
 
         radioGroup = v.findViewById(R.id.role_radioGroup_ID);
         radioGroup.setOnCheckedChangeListener(this);
+
+
+        amount=(TextView) v.findViewById(R.id.amount);
+        amount.setText(Total+"");
+
 
         cas=(RadioButton) v.findViewById(R.id.cash);
         amazonpay=(RadioButton) v.findViewById(R.id.amazonPay);
@@ -226,8 +256,8 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 @Override
                 public void onClick(View v) {
                     // startActivity(new Intent(getContext(),payment_popUp.class));
-
-                    dailog();
+                    createOrder(Total);
+                    //dailog();
                 }
             });
         }
@@ -240,6 +270,77 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 }
             });
         }
+    }
+
+    private void createOrder(String total) {
+        DBLoadAll();
+
+        final UserPreference preference = new UserPreference(getContext());
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        String token = "Bearer "+preference.getToken();
+
+        String amt = total.replace("$","");
+        int amount = Integer.parseInt(amt.trim());
+
+        final OrderRequest request = new OrderRequest();
+        request.setTotalAmount(amount);
+        request.setShopId(preference.getShopId());
+
+        List<Product> products = new ArrayList<>();
+
+        for(int i = 0 ; i<cartEntities.size();i++) {
+            Product product = new Product();
+
+            Product_ p = new Product_();
+            p.setCategoryId(cartEntities.get(i).getCategoryId());
+            p.setName(cartEntities.get(i).getName());
+            p.setDescription(cartEntities.get(i).getDescription());
+            p.setPrice(cartEntities.get(i).getPrice());
+            p.setSubCategory(cartEntities.get(i).getSubCategoryId());
+
+            product.setQuantity(cartEntities.get(i).getQuantity());
+            product.setProduct(p);
+            products.add(product);
+        }
+
+        request.setProducts(products);
+
+        Call<OrderResponse> call = retrofit_interface.CreateOrder(token,request);
+
+        call.enqueue(new Callback<OrderResponse>() {
+            @Override
+            public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+                Log.e("OrderResponse",response+"");
+                Log.e("OrderResponse",response.code()+"");
+                Log.e("OrderResponse",response.message()+"");
+                if(response.code()==200){
+                    dailog();
+                    Toast.makeText(getContext(),request.getProducts().get(0).getQuantity()+"    "+ response.body().getData().getOrderId(), Toast.LENGTH_SHORT).show();
+                }
+                else if(preference.getUserName()==null){
+                    Toast.makeText(getContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();
+                }
+                else Toast.makeText(getContext(),"Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<OrderResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    List<CartEntity> cartEntities = new ArrayList<>();
+    private void DBLoadAll() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                CartDao dao = AppDatabase.getInstance(getContext()).cartDao();
+                cartEntities =  dao.loadAll();
+            }
+        });
     }
 
 

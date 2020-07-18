@@ -9,12 +9,18 @@ public class CartEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String item_name;
+    private String name;
+    private String categoryId;
+    private String subCategoryId;
+    private String description;
     private int quantity;
     private int price;
 
-    public CartEntity(String item_name, int quantity, int price) {
-        this.item_name = item_name;
+    public CartEntity(String name, String categoryId, String subCategoryId, String description, int quantity, int price) {
+        this.name = name;
+        this.categoryId = categoryId;
+        this.subCategoryId = subCategoryId;
+        this.description = description;
         this.quantity = quantity;
         this.price = price;
     }
@@ -27,12 +33,36 @@ public class CartEntity {
         this.id = id;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getName() {
+        return name;
     }
 
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(String subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getQuantity() {

@@ -5,8 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL1="https://umbeo-delivery-app2.herokuapp.com/api/v1/users/";
-    private static final String BASE_URL="https://umbeo-delivery-app2.herokuapp.com";
+    private static final String BASE_URL1="https://viristore.herokuapp.com/api/v1/users/";
+    private static final String BASE_URL="https://viristore.herokuapp.com";
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
 

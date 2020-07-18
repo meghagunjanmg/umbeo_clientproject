@@ -57,7 +57,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
 
         quantity.setText(data.get(position).getQuantity()+"");
-        item_name.setText(data.get(position).getItem_name()+"");
+        item_name.setText(data.get(position).getName()+"");
 
 
         final int i = position;
@@ -65,12 +65,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 quant = data.get(i).getQuantity();
-                name =  data.get(i).getItem_name();
+                name =  data.get(i).getName();
                 price =  data.get(i).getPrice();
                 quant++;
                 quantity.setText(quant+"");
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),price));
+                addDB(new CartEntity(name,data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),Integer.parseInt(quantity.getText().toString()),price));
                 total_amount.setText(quant*price+"");
 
             }
@@ -79,17 +79,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 quant = data.get(i).getQuantity();
-                name =  data.get(i).getItem_name();
+                name =  data.get(i).getName();
                 quant--;
                 if(quant==0){
                     //  orange_linear.setVisibility(View.GONE);
                     //  orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB(name);
-                    addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),price));
+                    addDB(new CartEntity(name,data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),Integer.parseInt(quantity.getText().toString()),price));
                 }
                 quantity.setText(quant+"");
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),price));
+                addDB(new CartEntity(name,data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),Integer.parseInt(quantity.getText().toString()),price));
                 total_amount.setText(quant*price+"");
 
             }
@@ -130,7 +130,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void run() {
                 try {
                     db.cartDao().insertOne(entity);
-                    Log.e("roomDB",entity.getItem_name());
+                    Log.e("roomDB",entity.getName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
