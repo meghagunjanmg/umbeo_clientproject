@@ -39,9 +39,7 @@ public class payment_popUp extends AppCompatActivity {
        go_order.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Fragment orderFragment = new OrderMainFragment();
-               getSupportFragmentManager().beginTransaction().replace(R.id.frameSelected,orderFragment)
-                       .commit();
+               startActivity(new Intent(getApplicationContext(),MyOrderActivity.class));
            }
        });
     }

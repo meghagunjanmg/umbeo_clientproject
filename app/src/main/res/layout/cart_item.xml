@@ -29,7 +29,7 @@
 
         <ImageView
             android:id="@+id/remove"
-            android:tint="@color/green"
+            android:tint="@color/main"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_remove">
@@ -48,7 +48,7 @@
         </TextView>
         <ImageView
             android:id="@+id/add"
-            android:tint="@color/green"
+            android:tint="@color/main"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_add">

@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="4dp">
 
             <ImageView
                 android:id="@+id/staryberry_image"
@@ -35,14 +35,15 @@
                 android:src="@drawable/strawberry_icon" />
 
             <LinearLayout
-                android:layout_width="86dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:padding="4dp">
 
                 <TextView
+                    android:id="@+id/price"
                     style="@style/TextViewStyle"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$5"
                     android:letterSpacing="0.09"
@@ -128,7 +129,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_remove"
-                android:tint="@color/green"></ImageView>
+                android:tint="@color/main"></ImageView>
 
             <TextView
                 style="@style/TextViewStyle"
@@ -150,7 +151,7 @@
                 android:layout_height="24dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_add"
-                android:tint="@color/green"></ImageView>
+                android:tint="@color/main"></ImageView>
 
         </LinearLayout>
     </LinearLayout>

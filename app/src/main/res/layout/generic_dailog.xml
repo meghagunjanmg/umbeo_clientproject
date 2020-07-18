@@ -39,18 +39,18 @@
             android:text="Strawberry"
             style="@style/TextViewStyle"
             android:textSize="16sp"
-            android:textColor="@color/green"
+            android:textColor="@color/main"
             android:textStyle="bold"/>
 
         <TextView
             style="@style/TextViewStyle"
             android:textSize="14sp"
-            android:id="@+id/ammount"
+            android:id="@+id/price"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="₹ 50"
+            android:text="$ 50"
             android:textStyle="bold"/>
 
     </LinearLayout>
@@ -92,7 +92,7 @@
 
                 <ImageView
                     android:id="@+id/remove"
-                    android:tint="@color/green"
+                    android:tint="@color/main"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_remove">
@@ -111,7 +111,7 @@
                 </TextView>
                 <ImageView
                     android:id="@+id/add"
-                    android:tint="@color/green"
+                    android:tint="@color/main"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_add">
@@ -130,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/main"
         style="@style/TextViewStyle"
         android:textSize="14sp"
         android:text="Add to Cart"

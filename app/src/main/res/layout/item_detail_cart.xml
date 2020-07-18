@@ -28,10 +28,10 @@
             android:id="@+id/additem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/green"
+            android:background="@color/main"
             android:text="Add more items"
             app:cornerRadius="20dp"
-            android:backgroundTint="@color/active"
+            android:backgroundTint="@color/main2"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
     </LinearLayout>

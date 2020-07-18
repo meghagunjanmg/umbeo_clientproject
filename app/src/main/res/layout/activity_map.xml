@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
                 android:layout_centerInParent="true"
-                android:backgroundTint="@color/active"
+                android:backgroundTint="@color/main2"
                 android:textStyle="bold"
                 android:text="add"/>
             </RelativeLayout>

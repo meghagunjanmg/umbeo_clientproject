@@ -97,12 +97,7 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
         go_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment orderFragment = new OrderMainFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                assert fragmentManager != null;
-                fragmentManager.beginTransaction().replace(R.id.frameSelected,orderFragment)
-                        .commit();
-                dialog.cancel();
+                startActivity(new Intent(getContext(),MyOrderActivity.class));
             }
         });
 

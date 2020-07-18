@@ -16,6 +16,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -32,6 +33,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.Api;
+import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.CategoryResponse;
+import com.example.umbeo.response_data.ProductModel;
+import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
@@ -41,6 +47,9 @@ import java.util.List;
 import java.util.Objects;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,10 +79,12 @@ public class DashBoardFragment extends Fragment {
     TextView quantity, quantity3, quantity2;
     ViewPager viewPager2;
     List<ItemModel> mMainItemsList, mFruitsItem, mPersonalItems;
-     RecyclerView item_recycler, list_category,list_category_fruit;
+     RecyclerView category_list, item_recycler, list_category,list_category_fruit;
      ItemAdapter myAdapter;
-    private float total = 0;
 
+     List<com.example.umbeo.response_data.CategoryModel> categoryModel = new ArrayList<>();
+    private float total = 0;
+    List<CategoryModel> categoryModelList = new ArrayList<>();
     CardView see_more;
     static CategoryListAdapter categoryListAdapter,categoryListAdapter2;
     // TODO: Rename parameter arguments, choose names that match
@@ -140,8 +151,11 @@ public class DashBoardFragment extends Fragment {
         preference = new UserPreference(getContext());
 
         item_recycler = v.findViewById(R.id.item_recycler);
+        category_list = v.findViewById(R.id.category_list);
         list_category = v.findViewById(R.id.list_category);
         list_category_fruit = v.findViewById(R.id.list_category_fruit);
+
+        getCategory();
 
 
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
@@ -151,7 +165,7 @@ public class DashBoardFragment extends Fragment {
         GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
         list_category.setLayoutManager(mGridLayoutManager2);
 
-        mMainItemsList = new ArrayList<>();
+     /*   mMainItemsList = new ArrayList<>();
         mFruitsItem = new ArrayList<>();
         mPersonalItems = new ArrayList<>();
 
@@ -182,9 +196,9 @@ public class DashBoardFragment extends Fragment {
         mMainItemsList.add(new ItemModel("Apple", "pic_0", 0));
         mMainItemsList.add(new ItemModel("Lichi", "pic_1", 0));
         mMainItemsList.add(new ItemModel("Colgate", "pic_2", 0));
+*/
 
-
-        myAdapter = new ItemAdapter(mMainItemsList, getContext());
+       // myAdapter = new ItemAdapter(mMainItemsList, getContext());
         item_recycler.setAdapter(myAdapter);
 
         log = (TextView) v.findViewById(R.id.login);
@@ -303,7 +317,7 @@ public class DashBoardFragment extends Fragment {
 
         Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
         Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-        DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
+        DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.main));
         popular_txt.setBackground(wrappedDrawable);
         trending_txt.setBackground(wrappedDrawable);
 
@@ -313,9 +327,9 @@ public class DashBoardFragment extends Fragment {
         DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
         feature_txt.setBackground(wrappedDrawable2);
 
-        trending_txt.setTextColor(getContext().getColor(R.color.green));
+        trending_txt.setTextColor(getContext().getColor(R.color.main));
         feature_txt.setTextColor(getContext().getColor(R.color.purple));
-        popular_txt.setTextColor(getContext().getColor(R.color.green));
+        popular_txt.setTextColor(getContext().getColor(R.color.main));
 
 
         trending_txt.setOnClickListener(new View.OnClickListener() {
@@ -324,7 +338,7 @@ public class DashBoardFragment extends Fragment {
             public void onClick(View v) {
                 Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
+                DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.main));
                 popular_txt.setBackground(wrappedDrawable);
                 feature_txt.setBackground(wrappedDrawable);
 
@@ -335,8 +349,8 @@ public class DashBoardFragment extends Fragment {
                 trending_txt.setBackground(wrappedDrawable2);
 
                 trending_txt.setTextColor(getContext().getColor(R.color.purple));
-                feature_txt.setTextColor(getContext().getColor(R.color.green));
-                popular_txt.setTextColor(getContext().getColor(R.color.green));
+                feature_txt.setTextColor(getContext().getColor(R.color.main));
+                popular_txt.setTextColor(getContext().getColor(R.color.main));
 
 
             }
@@ -347,7 +361,7 @@ public class DashBoardFragment extends Fragment {
             public void onClick(View v) {
                 Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
+                DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.main));
                 popular_txt.setBackground(wrappedDrawable);
                 trending_txt.setBackground(wrappedDrawable);
 
@@ -357,9 +371,9 @@ public class DashBoardFragment extends Fragment {
                 DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
                 feature_txt.setBackground(wrappedDrawable2);
 
-                trending_txt.setTextColor(getContext().getColor(R.color.green));
+                trending_txt.setTextColor(getContext().getColor(R.color.main));
                 feature_txt.setTextColor(getContext().getColor(R.color.purple));
-                popular_txt.setTextColor(getContext().getColor(R.color.green));
+                popular_txt.setTextColor(getContext().getColor(R.color.main));
 
             }
         });
@@ -369,7 +383,7 @@ public class DashBoardFragment extends Fragment {
             public void onClick(View v) {
                 Drawable unwrappedDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.bg_feature_card);
                 Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-                DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.green));
+                DrawableCompat.setTint(wrappedDrawable, getContext().getColor(R.color.main));
                 trending_txt.setBackground(wrappedDrawable);
                 feature_txt.setBackground(wrappedDrawable);
 
@@ -379,8 +393,8 @@ public class DashBoardFragment extends Fragment {
                 DrawableCompat.setTint(wrappedDrawable2, getContext().getColor(R.color.purple));
                 popular_txt.setBackground(wrappedDrawable2);
 
-                trending_txt.setTextColor(getContext().getColor(R.color.green));
-                feature_txt.setTextColor(getContext().getColor(R.color.green));
+                trending_txt.setTextColor(getContext().getColor(R.color.main));
+                feature_txt.setTextColor(getContext().getColor(R.color.main));
                 popular_txt.setTextColor(getContext().getColor(R.color.purple));
 
 
@@ -619,6 +633,79 @@ public class DashBoardFragment extends Fragment {
             orange_linear.setVisibility(View.VISIBLE);
             orange_plus.setVisibility(View.GONE);
         }
+    }
+
+    private void getCategoryProduct(final String categoryName, final String categoryId) {
+
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(preference.getShopId(),categoryId);
+
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                Log.e("ProductResponse",response+"");
+                Log.e("ProductResponse",response.code()+"");
+                Log.e("ProductResponse",response.message()+"");
+                Log.e("ProductResponse",response.body().getStatus()+"");
+                if(response.code()==200){
+                    List<ProductModel> productModels = response.body().getData().getProducts();
+                    Log.e("ProductResponse",productModels+"");
+
+                    categoryModelList.add(new CategoryModel(categoryId,categoryName, productModels));
+
+                    GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+                    list_category.setLayoutManager(mGridLayoutManager2);
+                    categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+                    list_category.setAdapter(categoryListAdapter);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getCategory() {
+
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        Call<CategoryResponse> call = retrofit_interface.fetchAllCategory();
+        call.enqueue(new Callback<CategoryResponse>() {
+            @Override
+            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                Log.e("CategoryResponse",response+"");
+                Log.e("CategoryResponse",response.code()+"");
+                Log.e("CategoryResponse",response.message()+"");
+                Log.e("CategoryResponse",response.body().getStatus()+"");
+                if(response.code()==200){
+                    categoryModel = response.body().getData().getCategories();
+                    Log.e("CategoryResponse",categoryModel+"");
+
+                    for(int i = 0;i<categoryModel.size();i++){
+                        getCategoryProduct(categoryModel.get(i).getCategoryName(),categoryModel.get(i).getCategoryId());
+                    }
+
+
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                    MainCategoriesAdapter adapter = new MainCategoriesAdapter(categoryModel,getContext());
+                    category_list.setLayoutManager(linearLayoutManager);
+                    category_list.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CategoryResponse> call, Throwable t) {
+
+            }
+        });
+
     }
 
     @Override

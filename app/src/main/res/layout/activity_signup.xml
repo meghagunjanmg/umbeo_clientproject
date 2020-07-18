@@ -168,7 +168,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="@color/active"
+                android:backgroundTint="@color/main2"
                 android:fontFamily="sans-serif"
                 android:text="Sign Up"
                 android:textStyle="bold"/>
@@ -195,7 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:text=" login "
-                    android:textColor="@color/active" />
+                    android:textColor="@color/main2" />
             </LinearLayout>
 
         </LinearLayout>

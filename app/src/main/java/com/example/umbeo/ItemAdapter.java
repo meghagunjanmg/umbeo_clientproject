@@ -3,7 +3,8 @@ package com.example.umbeo;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
@@ -18,27 +19,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
-import com.squareup.picasso.Picasso;
 
-import java.text.BreakIterator;
 import java.util.List;
 import java.util.Objects;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    List<ItemModel> modelList;
+    List<ProductModel> modelList;
     Context context;
     AppDatabase db;
 
@@ -46,7 +41,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     String clicked;
     private LayoutInflater layoutInflater;
 
-    public ItemAdapter(List<ItemModel> modelList, Context context) {
+    public ItemAdapter(List<ProductModel> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
 
@@ -134,13 +129,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
         strawberry_name.setText(modelList.get(position).getName()+"");
+        price.setText("$"+modelList.get(position).getPrice());
 //        quantity.setText(modelList.get(position).getQuantity()+"");
 
-        Glide.with(context).load(getImage(modelList.get(position).getImage())).into(staryberry_image);
+        byte[] decodedString = Base64.decode(modelList.get(position).getImage(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        Glide.with(context).asBitmap().load(decodedByte).into(staryberry_image); //>>not tested
+
 
 
         final ViewHolder viewHolderFinal = holder;
-        final ItemModel finalRowItem = modelList.get(position);
+        final ProductModel finalRowItem = modelList.get(position);
         strawberry_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +150,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal.quantity.setText(finalRowItem.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem.getName());
-                addDB(new CartEntity(finalRowItem.getName(),finalRowItem.getQuantity(),50));
+                addDB(new CartEntity(finalRowItem.getName(),finalRowItem.getQuantity(),finalRowItem.getPrice()));
                 Log.e("TESTING","3 "+modelList.get(position).getName()+" "+quant);
 
             }
@@ -159,7 +158,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
         final ViewHolder viewHolderFinal1 = holder;
-        final ItemModel finalRowItem1 = modelList.get(position);
+        final ProductModel finalRowItem1 = modelList.get(position);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,13 +167,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal1.quantity.setText(finalRowItem1.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem1.getName());
-                addDB(new CartEntity(finalRowItem1.getName(),finalRowItem1.getQuantity(),50));
+                addDB(new CartEntity(finalRowItem1.getName(),finalRowItem1.getQuantity(),finalRowItem.getPrice()));
             }
         });
 
 
         final ViewHolder viewHolderFinal2 = holder;
-        final ItemModel finalRowItem2 = modelList.get(position);
+        final ProductModel finalRowItem2 = modelList.get(position);
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +182,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal2.quantity.setText(finalRowItem2.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem2.getName());
-                addDB(new CartEntity(finalRowItem2.getName(),finalRowItem2.getQuantity(),50));
+                addDB(new CartEntity(finalRowItem2.getName(),finalRowItem2.getQuantity(),finalRowItem.getPrice()));
 
 
                 if(finalRowItem2.getQuantity()==0){
@@ -197,7 +196,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                dailog(modelList.get(position).getName(),modelList.get(position).getQuantity(),modelList.get(position).getImage());
+                dailog(modelList.get(position).getName(),modelList.get(position).getQuantity(),modelList.get(position).getImage(),modelList.get(position).getPrice());
             }
         });
     }
@@ -215,7 +214,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     ImageView remove;
     ImageView add;
     LinearLayout item_linear,linear;
-
+    TextView price;
     CardView card;
 
 
@@ -227,6 +226,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
             strawberry_name = itemView.findViewById(R.id.strawberry_name);
             staryberry_image = itemView.findViewById(R.id.staryberry_image);
+            price = itemView.findViewById(R.id.price);
 
             strawberry_plus = itemView.findViewById(R.id.item_plus);
             item_linear = itemView.findViewById(R.id.item_linear);
@@ -280,7 +280,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void dailog(final String name, final int quantity, String image) {
+    private void dailog(final String name, final int quantity,final String image,final int prices) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -298,8 +298,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 context.startActivity(i);
             }
         });
+
         ImageView img = mView.findViewById(R.id.image);
-        Glide.with(context).load(getImage(image)).into(img);
+        byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        Glide.with(context).asBitmap().load(decodedByte).into(img); //>>not tested
+
+
 
         TextView name1 = mView.findViewById(R.id.name);
         name1.setText(name.toUpperCase());
@@ -307,6 +312,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         ImageView add = mView.findViewById(R.id.add);
         ImageView remove = mView.findViewById(R.id.remove);
         final TextView quan = mView.findViewById(R.id.quantity1111);
+
+
+        TextView price = mView.findViewById(R.id.price);
+        price.setText("$"+prices);
 
         quant = quantity;
         quan.setText(quant+"");
@@ -317,7 +326,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 quant++;
                 quan.setText(quant+"");
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),prices));
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
@@ -328,11 +337,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     //  orange_linear.setVisibility(View.GONE);
                     //  orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB(name);
-                    addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                    addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),prices));
                 }
                 quan.setText(quant+"");
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),50));
+                addDB(new CartEntity(name,Integer.parseInt(quan.getText().toString()),prices));
             }
         });
 

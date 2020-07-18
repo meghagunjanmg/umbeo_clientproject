@@ -1,20 +1,25 @@
 package com.example.umbeo;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -24,7 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +40,7 @@ import com.example.umbeo.response_data.SignUpResquest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.BitSet;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
@@ -97,6 +102,7 @@ public class ProfileMainFragment extends Fragment {
         return inflater.inflate(R.layout.activity_profile_edit, container, false);
     }
 
+    Switch darkTheme;
     Button logout;
     TextView myemail,myname,name_edit,profile_edit,loyalty_point,my_order;
     UserPreference preference;
@@ -106,11 +112,29 @@ public class ProfileMainFragment extends Fragment {
     CircleImageView profilepic;
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     Fragment fragment;
+    private Resources res;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         preference = new UserPreference(getContext());
         fragment = this;
+
+        //getContext().setTheme(R.style.LightTheme);
+
+        darkTheme = view.findViewById(R.id.theme);
+        darkTheme.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                if(darkTheme.isChecked()){
+                    //getContext().setTheme(R.style.DarkTheme);
+                    Intent i = new Intent(getContext(),HomeScreenActivity.class);
+                    i.putExtra("Theme",1);
+                    startActivity(i);
+                }
+            }
+        });
 
         my_order = view.findViewById(R.id.my_order);
         my_order.setOnClickListener(new View.OnClickListener() {

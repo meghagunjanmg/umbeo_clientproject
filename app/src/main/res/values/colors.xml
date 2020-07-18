@@ -30,7 +30,7 @@
     <color name="darker_gray">#1E1E1E</color>
 
 
-    <color name="green">#374d7c</color>
-    <color name="active">#374d7c</color>
+    <color name="main">#374d7c</color>
+    <color name="main2">#374d7c</color>
 
 </resources>

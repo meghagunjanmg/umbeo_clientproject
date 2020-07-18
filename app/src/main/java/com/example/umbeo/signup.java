@@ -249,7 +249,7 @@ TextView login;
 
         // Also taking pre-defined value of shop for the time being...
 
-        String shop = "5ec8b35d94e1c83f430781a2";
+        String shop = preference.getShopId();
 
         List<String> address = new ArrayList<>();
         address.add(" ");
@@ -382,6 +382,7 @@ TextView login;
                     preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
                     preference.setAddresses(response.body().getData().getDeliveryAddresses());
                     preference.setUserId(response.body().getData().getId());
+                    preference.setProfilePic(response.body().getData().getProfile_pic());
                     preference.setToken(tokens);
                 }
             }

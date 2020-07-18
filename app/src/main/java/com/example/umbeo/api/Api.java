@@ -1,6 +1,8 @@
 package com.example.umbeo.api;
 
+import com.example.umbeo.response_data.CategoryResponse;
 import com.example.umbeo.response_data.LoginResponse;
+import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.response_data.SignUpResponse;
 import com.example.umbeo.response_data.SignUpResquest;
 import com.example.umbeo.response_data.UserGetProfileResponse;
@@ -41,10 +43,11 @@ public interface Api {
     Call<SignUpResponse> SignUp (@Header("Content-Type") String content_type,@Body SignUpResquest requestBody);
 
     @FormUrlEncoded
-    @POST("login")
+    @POST("/api/v1/users/login")
     Call<LoginResponse> userLogin(
             @Field("email") String email,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("shopId") String shop
     );
     @FormUrlEncoded
     @POST("forgot-password")
@@ -70,4 +73,16 @@ public interface Api {
             @Header("Authorization")String token,
             @Body SignUpResquest request
     );
+
+
+    @POST("/api/v1/products/get-all-categories")
+    Call<CategoryResponse> fetchAllCategory();
+
+
+    @FormUrlEncoded
+    @POST("/api/v1/products/get-products-by-category")
+    Call<ProductResponse> fetchAllProducts(@Field("shopId") String shopId,
+                                           @Field("categoryId") String categoryId);
+
+
 }

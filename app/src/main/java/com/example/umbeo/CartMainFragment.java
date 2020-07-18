@@ -228,7 +228,7 @@ public class CartMainFragment extends Fragment {
 
                             int sum = 0;
                             for(int i=0;i<entityList.size();i++){
-                                sum = sum+ (entities.get(i).getQuantity()*5);
+                                sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                             }
                             total_amount.setText("$ "+((sum - preference.getLoyaltyPoints())+2));
                         }
@@ -265,7 +265,7 @@ public class CartMainFragment extends Fragment {
 
                             int sum = 0;
                             for(int i=0;i<entityList.size();i++){
-                                sum = sum+ (entities.get(i).getQuantity()*5);
+                                sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                             }
                             total_amount.setText("$ "+((sum - 1)+2));
                         }
@@ -299,7 +299,7 @@ public class CartMainFragment extends Fragment {
                 }
                 int sum = 0;
                 for(int i=0;i<entityList.size();i++){
-                   sum = sum+ (entities.get(i).getQuantity()*5);
+                   sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                 }
                 total_amount.setText("$ "+((sum - 1)+2));
             }

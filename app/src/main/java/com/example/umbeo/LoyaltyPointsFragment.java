@@ -96,7 +96,7 @@ public class LoyaltyPointsFragment extends Fragment {
 
 
 
-        mPersonalItems = new ArrayList<>();
+   /*     mPersonalItems = new ArrayList<>();
 
         mPersonalItems.add(new ItemModel("Colgate", "pic_2", 0));
         mPersonalItems.add(new ItemModel("Hair oil", "pic_3", 0));
@@ -108,5 +108,7 @@ public class LoyaltyPointsFragment extends Fragment {
 
         CategoryListAdapter categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
         item_recycler.setAdapter(categoryListAdapter);
+
+    */
     }
 }

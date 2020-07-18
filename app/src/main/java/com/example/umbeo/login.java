@@ -3,6 +3,7 @@ package com.example.umbeo;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -103,15 +104,19 @@ public class login extends AppCompatActivity {
             return;
         }
 
-        Call<LoginResponse> call = RetrofitClient
-                .getmInstance()
-                .getApi()
-                .userLogin(email, password);
 
-        call.enqueue(new Callback<LoginResponse>() {
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+      Call<LoginResponse> call =  retrofit_interface.userLogin(email,password,preference.getShopId());
+      call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 try {
+                    Log.e("LoginResponse",""+response);
+                    Log.e("LoginResponse",response.code()+"");
+                    Log.e("LoginResponse",response.message()+"");
+                    Log.e("LoginResponse",response.body().getStatus()+"");
                     if (response.code() == 200) {
                         login.setEnabled(true);
 
@@ -194,6 +199,7 @@ public class login extends AppCompatActivity {
                     preference.setEmail(response.body().getData().getEmail());
                     preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
                     preference.setAddresses(response.body().getData().getDeliveryAddresses());
+                    preference.setProfilePic(response.body().getData().getProfile_pic());
                     preference.setToken(tokens);
                 }
             }

@@ -82,7 +82,7 @@ android:background="@color/bg_color"
             android:layout_height="match_parent">
         </TextView>
         <Button
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/main"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:padding="12dp"
@@ -314,9 +314,9 @@ android:background="@color/bg_color"
         android:textSize="14sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/active"
+        android:backgroundTint="@color/main2"
         app:cornerRadius="20dp"
-        android:background="@color/green"
+        android:background="@color/main"
         android:text="Place Your Order"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"/>

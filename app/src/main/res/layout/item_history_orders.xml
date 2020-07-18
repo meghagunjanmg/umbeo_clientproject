@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/main"
         android:background="@drawable/bg_cardview"
         android:padding="12dp"
         android:orientation="vertical"
@@ -103,7 +103,7 @@
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/active"
+                    android:backgroundTint="@color/main2"
                     android:text="Repeat Order"
                     app:cornerRadius="20dp" />
             </LinearLayout>

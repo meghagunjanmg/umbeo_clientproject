@@ -28,6 +28,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
      int quant = 0;
     private String name ="";
+    private int price =0;
     AppDatabase db;
      static int total = 0;
 
@@ -65,11 +66,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
                 quant = data.get(i).getQuantity();
                 name =  data.get(i).getItem_name();
+                price =  data.get(i).getPrice();
                 quant++;
                 quantity.setText(quant+"");
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),50));
-                total_amount.setText(quant*50+"");
+                addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),price));
+                total_amount.setText(quant*price+"");
 
             }
         });
@@ -83,18 +85,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     //  orange_linear.setVisibility(View.GONE);
                     //  orange_plus.setVisibility(View.VISIBLE);
                     DeleteDB(name);
-                    addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),50));
+                    addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),price));
                 }
                 quantity.setText(quant+"");
                 DeleteDB(name);
-                addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),50));
-                total_amount.setText(quant*50+"");
+                addDB(new CartEntity(name,Integer.parseInt(quantity.getText().toString()),price));
+                total_amount.setText(quant*price+"");
 
             }
         });
 
         quantity.setText(data.get(position).getQuantity()+"");
-        total_amount.setText(data.get(position).getQuantity()*50+"");
+        total_amount.setText(data.get(position).getQuantity()*data.get(position).getPrice()+"");
 
             CartMainFragment.amounts.add(Integer.parseInt(total_amount.getText().toString()));
 

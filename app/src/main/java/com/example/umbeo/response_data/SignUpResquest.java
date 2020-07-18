@@ -21,7 +21,7 @@ public class SignUpResquest implements Serializable
     @SerializedName("phone")
     @Expose
     private String phone;
-    @SerializedName("shop")
+    @SerializedName("shopId")
     @Expose
     private String shop;
     @SerializedName("delivery_addresses")

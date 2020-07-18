@@ -54,6 +54,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen_activity);
+
+
         viewPager = findViewById(R.id.pager);
         explore = findViewById(R.id.explore);
         cart = findViewById(R.id.cart);
@@ -72,7 +74,6 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
 
 
-
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
@@ -85,6 +86,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         id = getIntent().getIntExtra("Id",0);
         if(id==1){
             viewPager.setCurrentItem(1);
+            setIcons();
         }
 
 
@@ -92,6 +94,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             int catIntent = getIntent().getIntExtra("Cat",0);
             if(catIntent==5){
                 viewPager.setCurrentItem(1);
+                setIcons();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -230,20 +233,9 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
           if(viewPager.getCurrentItem()!=0){
               viewPager.setCurrentItem(0);
           }
-
-          if(category_frag){
-              Intent i = new Intent(this,HomeScreenActivity.class);
-              startActivity(i);
+          if(payment_frag){
+              startActivity(new Intent(getApplicationContext(),HomeScreenActivity.class));
           }
-        if(payment_frag){
-              CartMainFragment cartMainFragment = new CartMainFragment();
-              FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-              fragmentTransaction.replace(R.id.frameSelected, cartMainFragment);
-              fragmentTransaction.addToBackStack(null);
-              fragmentTransaction.commit();
-          }
-
-
 
         }
 
@@ -275,6 +267,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                     preference.setUserName(response.body().getData().getName());
                     preference.setEmail(response.body().getData().getEmail());
                     preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
+                    preference.setProfilePic(response.body().getData().getProfile_pic());
                 }
             }
 

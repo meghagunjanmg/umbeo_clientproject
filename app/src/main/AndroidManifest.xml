@@ -47,9 +47,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomItem" />
         <activity
-            android:name=".Payment"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".intro1"
             android:screenOrientation="portrait" />
         <activity

@@ -9,17 +9,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.umbeo.response_data.CategoryModel;
+
 import java.util.List;
 
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
+public class MainCategoriesAdapter extends RecyclerView.Adapter<MainCategoriesAdapter.ViewHolder> {
 
-    List<CategoryModel> modelList;
+    List<com.example.umbeo.response_data.CategoryModel> modelList;
     Context context;
-    ItemAdapter itemAdapter;
-    public CategoryListAdapter(List<CategoryModel> modelList, Context context) {
+    public MainCategoriesAdapter(List<CategoryModel> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
     }
@@ -27,20 +29,19 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MainCategoriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_category_card, parent, false);
+                .inflate(R.layout.category_card, parent, false);
 
-        CategoryListAdapter.ViewHolder vh = new CategoryListAdapter.ViewHolder(v);
+        MainCategoriesAdapter.ViewHolder vh = new MainCategoriesAdapter.ViewHolder(v);
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull MainCategoriesAdapter.ViewHolder holder, final int position) {
 
         category_name.setText(modelList.get(position).getCategoryName()+"");
-        view_more.setText("View More");
-        view_more.setOnClickListener(new View.OnClickListener() {
+        category_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,CategoryActivity.class);
@@ -49,8 +50,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 context.startActivity(intent);
             }
         });
-        itemAdapter = new ItemAdapter(modelList.get(position).getCategoryItems(), context);
-        item_recycler.setAdapter(itemAdapter);
 
     }
 
@@ -59,18 +58,14 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         return modelList.size();
     }
 
-    TextView category_name,view_more;
-    RecyclerView item_recycler;
+    TextView category_name;
+    CardView category_card;
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             category_name = itemView.findViewById(R.id.category_name);
-            view_more = itemView.findViewById(R.id.view_more);
-            item_recycler = itemView.findViewById(R.id.item_recycler);
-            GridLayoutManager mGridLayoutManager = new GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false);
-            item_recycler.setLayoutManager(mGridLayoutManager);
-
+            category_card = itemView.findViewById(R.id.category_card);
         }
     }
 }

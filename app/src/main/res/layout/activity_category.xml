@@ -30,6 +30,7 @@
                 android:layout_height="30dp">
             </ImageView>
         <TextView
+            android:id="@+id/category_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -57,7 +58,7 @@
             android:textSize="14sp"
             android:textColorHint="@color/colorTextSecondary"
             android:drawableLeft="@drawable/ic_search"
-            android:drawableTint="@color/green"
+            android:drawableTint="@color/main"
             android:background="@drawable/search_outline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -70,7 +71,7 @@
         android:layout_weight="2"
         android:id="@+id/editAddress"
         android:drawableLeft="@drawable/location"
-        android:drawableTint="@color/green"
+        android:drawableTint="@color/main"
         android:drawablePadding="8dp"
         android:text="Address"
         android:textSize="16sp"
@@ -112,7 +113,7 @@
             android:layout_marginBottom="12dp"
             android:id="@+id/strawberry"
             android:background="@drawable/bg_card"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/main"
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:text="Strawberry"
                     android:textSize="16sp"
-                    android:textColor="@color/green"/>
+                    android:textColor="@color/main"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -170,7 +171,7 @@
                 android:layout_gravity="center"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:tint="@color/green"
+                android:tint="@color/main"
                 android:src="@drawable/ic_add"/>
             <LinearLayout
                 android:visibility="gone"
@@ -182,7 +183,7 @@
 
                 <ImageView
                     android:id="@+id/remove"
-                    android:tint="@color/green"
+                    android:tint="@color/main"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_remove">
@@ -200,7 +201,7 @@
                 </TextView>
                 <ImageView
                     android:id="@+id/add"
-                    android:tint="@color/green"
+                    android:tint="@color/main"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_add">
@@ -213,7 +214,7 @@
             android:visibility="gone"
             android:layout_marginBottom="12dp"
             android:id="@+id/lichi"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/main"
             android:background="@drawable/bg_card"
             android:padding="8dp"
             android:layout_width="match_parent"
@@ -237,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:text="Lichi"
                     android:textSize="16sp"
-                    android:textColor="@color/green"/>
+                    android:textColor="@color/main"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -272,7 +273,7 @@
                 android:layout_gravity="center"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:tint="@color/green"
+                android:tint="@color/main"
                 android:src="@drawable/ic_add"/>
             <LinearLayout
                 android:visibility="gone"
@@ -284,7 +285,7 @@
 
                 <ImageView
                     android:id="@+id/remove1"
-                    android:tint="@color/green"
+                    android:tint="@color/main"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_remove">
@@ -302,7 +303,7 @@
                 </TextView>
                 <ImageView
                     android:id="@+id/add1"
-                    android:tint="@color/green"
+                    android:tint="@color/main"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_add">
@@ -315,7 +316,7 @@
             android:visibility="gone"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_card"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/main"
 
             android:padding="8dp"
             android:layout_width="match_parent"
@@ -341,7 +342,7 @@
                     android:layout_height="wrap_content"
                     android:text="Orange"
                     android:textSize="16sp"
-                    android:textColor="@color/green"/>
+                    android:textColor="@color/main"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -376,7 +377,7 @@
                 android:layout_gravity="center"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:tint="@color/green"
+                android:tint="@color/main"
                 android:src="@drawable/ic_add"/>
             <LinearLayout
                 android:visibility="gone"
@@ -388,7 +389,7 @@
 
                 <ImageView
                     android:id="@+id/remove3"
-                    android:tint="@color/green"
+                    android:tint="@color/main"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_remove">
@@ -406,7 +407,7 @@
                 </TextView>
                 <ImageView
                     android:id="@+id/add3"
-                    android:tint="@color/green"
+                    android:tint="@color/main"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_add">

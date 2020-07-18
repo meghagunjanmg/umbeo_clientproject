@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
@@ -20,6 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.Api;
+import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.ProductModel;
+import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
@@ -27,6 +33,10 @@ import com.example.umbeo.room.CartEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -42,7 +52,9 @@ public class CategoryActivity extends AppCompatActivity {
     static int staw_count = 0, lichi_count = 0, orange_count = 0 ,quant = 0;
     LinearLayout straw_linear, orange_linear, lichi_linear;
     ImageView back_btn,cart_btn, add, remove, add2, remove2, add3, remove3;
-    TextView quantity, quantity3, quantity2;
+    TextView category_name, quantity, quantity3, quantity2;
+
+    String category_id,categoryName;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -53,6 +65,15 @@ public class CategoryActivity extends AppCompatActivity {
         add = findViewById(R.id.add);
         remove = findViewById(R.id.remove);
         quantity = findViewById(R.id.quantity);
+        category_name = findViewById(R.id.category_name);
+
+        UserPreference preference = new UserPreference(this);
+
+        category_id = getIntent().getStringExtra("category_id");
+        categoryName = getIntent().getStringExtra("category_name");
+        category_name.setText(categoryName+"");
+
+        getProducts(preference.getShopId());
 
         back_btn = findViewById(R.id.back_btn);
         cart_btn = findViewById(R.id.cart_btn);
@@ -126,7 +147,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         }
 
-        myAdapter = new ItemAdapter(mFlowerList, this);
+      //  myAdapter = new ItemAdapter(mFlowerList, this);
         item_recycler.setAdapter(myAdapter);
 
 
@@ -303,6 +324,38 @@ public class CategoryActivity extends AppCompatActivity {
 
          */
     }
+
+    private void getProducts(String shopId) {
+
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(shopId,category_id);
+
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                Log.e("ProductResponse",response+"");
+                Log.e("ProductResponse",response.code()+"");
+                Log.e("ProductResponse",response.message()+"");
+                Log.e("ProductResponse",response.body().getStatus()+"");
+                if(response.code()==200){
+                    List<ProductModel> productModels = response.body().getData().getProducts();
+                    Log.e("ProductResponse",productModels+"");
+                    GridLayoutManager mGridLayoutManager = new GridLayoutManager(CategoryActivity.this,2);
+                    item_recycler.setLayoutManager(mGridLayoutManager);
+                    myAdapter = new ItemAdapter(productModels,CategoryActivity.this);
+                    item_recycler.setAdapter(myAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         Log.e("DEBUG", "onResume of HomeFragment");

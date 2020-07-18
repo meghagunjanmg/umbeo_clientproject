@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -33,6 +33,19 @@
     <style name="TextViewStyle" parent="android:Widget.DeviceDefault.Light.TextView">
         <item name="android:fontFamily">@font/callibri</item>
     </style>
-    
+
+    <style name="DarkTheme" parent="TextViewStyle">
+        <!-- change themeBackground manually here -->
+        <item name="android:backgroundTint" tools:ignore="NewApi">@color/colorPrimaryText</item>
+        <item name="android:textColor" tools:ignore="NewApi">@color/colorWhite</item>
+    </style>
+
+    <style name="LightTheme" parent="TextViewStyle">
+        <!-- change themeBackground manually here -->
+        <item name="android:backgroundTint" tools:ignore="NewApi">@color/grey</item>
+        <item name="android:textColor" tools:ignore="NewApi">@color/colorPrimaryText</item>
+    </style>
+
+
     <style name="Widget.MaterialComponents.Button.OutlinedButton.Icon"></style>
 </resources>
