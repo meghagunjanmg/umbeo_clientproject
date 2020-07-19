@@ -319,30 +319,34 @@ public class CartMainFragment extends Fragment {
                 }
             }
         });
-        db.cartDao().getAll().observe(CartMainFragment.this, new Observer<List<CartEntity>>(){
-            @Override
-            public void onChanged(List<CartEntity> entities) {
-                entityList = entities;
-                cartAdapter.notifyDataSetChanged();
+        try {
+            db.cartDao().getAll().observe(CartMainFragment.this, new Observer<List<CartEntity>>(){
+                @Override
+                public void onChanged(List<CartEntity> entities) {
+                    entityList = entities;
+                    cartAdapter.notifyDataSetChanged();
 
-                cartAdapter = new CartAdapter(entityList, getContext(),db);
+                    cartAdapter = new CartAdapter(entityList, getContext(),db);
 
-                recyclerView.setAdapter(cartAdapter);
-                if(entityList.size()==0){
-                    no_item_linear.setVisibility(View.VISIBLE);
-                    main_scroll.setVisibility(View.GONE);
+                    recyclerView.setAdapter(cartAdapter);
+                    if(entityList.size()==0){
+                        no_item_linear.setVisibility(View.VISIBLE);
+                        main_scroll.setVisibility(View.GONE);
+                    }
+                    else {
+                        no_item_linear.setVisibility(View.GONE);
+                        main_scroll.setVisibility(View.VISIBLE);
+                    }
+                    int sum = 0;
+                    for(int i=0;i<entityList.size();i++){
+                        sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
+                    }
+                    total_amount.setText("$ "+((sum - 1)+2));
                 }
-                else {
-                    no_item_linear.setVisibility(View.GONE);
-                    main_scroll.setVisibility(View.VISIBLE);
-                }
-                int sum = 0;
-                for(int i=0;i<entityList.size();i++){
-                    sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
-                }
-                total_amount.setText("$ "+((sum - 1)+2));
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }

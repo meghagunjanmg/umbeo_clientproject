@@ -55,7 +55,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_fruits_card, parent, false);
+                .inflate(R.layout.item_card, parent, false);
 
         return new ViewHolder(v);
     }
@@ -231,7 +231,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     TextView strawberry_name;
     ImageView staryberry_image;
-    FrameLayout strawberry_plus;
+    CardView strawberry_plus;
     ImageView remove;
     ImageView add;
     LinearLayout item_linear,linear;
