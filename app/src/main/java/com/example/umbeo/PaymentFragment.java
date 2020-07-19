@@ -306,6 +306,7 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
         }
 
         request.setProducts(products);
+        request.setStatus(0);
 
         Call<OrderResponse> call = retrofit_interface.CreateOrder(token,request);
 

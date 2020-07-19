@@ -31,7 +31,7 @@
 
 
     <style name="TextViewStyle" parent="android:Widget.DeviceDefault.Light.TextView">
-        <item name="android:fontFamily">@font/callibri</item>
+        <item name="android:fontFamily">@font/gilroy</item>
     </style>
 
     <style name="DarkTheme" parent="TextViewStyle">

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 <androidx.cardview.widget.CardView android:layout_margin="12dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -22,6 +28,7 @@
            />
 
             <TextView
+                android:id="@+id/products"
                 style="@style/TextViewStyle"
                 android:textSize="14sp"
                 android:layout_width="match_parent"
@@ -40,6 +47,7 @@
                />
 
             <TextView
+                android:id="@+id/time"
                 style="@style/TextViewStyle"
                 android:textSize="14sp"
                 android:layout_width="match_parent"
@@ -58,6 +66,7 @@
                 />
 
             <TextView
+                android:id="@+id/amount"
                 style="@style/TextViewStyle"
                 android:textSize="14sp"
                 android:layout_width="match_parent"
@@ -80,6 +89,7 @@
                 android:textColor="@color/grey"
             />
         <TextView
+            android:id="@+id/status"
             android:padding="4dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
@@ -109,3 +119,4 @@
             </LinearLayout>
         </LinearLayout>
 </androidx.cardview.widget.CardView>
+</LinearLayout>

@@ -6,12 +6,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.umbeo.response_data.GetOrders.OrdersList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +26,7 @@ import android.widget.Button;
  */
 public class OrderHistoryFragment extends Fragment {
 
+    List<OrdersList> historicOrder = new ArrayList<>();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,8 +36,9 @@ public class OrderHistoryFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OrderHistoryFragment() {
+    public OrderHistoryFragment(List<OrdersList> historicOrder) {
         // Required empty public constructor
+        this.historicOrder = historicOrder;
     }
 
     /**
@@ -42,8 +50,8 @@ public class OrderHistoryFragment extends Fragment {
      * @return A new instance of fragment OrderHistoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OrderHistoryFragment newInstance(String param1, String param2) {
-        OrderHistoryFragment fragment = new OrderHistoryFragment();
+    public OrderHistoryFragment newInstance(String param1, String param2) {
+        OrderHistoryFragment fragment = new OrderHistoryFragment(historicOrder);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,11 +75,19 @@ public class OrderHistoryFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_history_orders, container, false);
     }
 
+    RecyclerView item_history_orders;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button repeat = view.findViewById(R.id.repeat);
+        item_history_orders = view.findViewById(R.id.item_history_orders);
+
+        item_history_orders.setLayoutManager(new LinearLayoutManager(getContext()));
+        HistoricOrderAdapter adapter = new HistoricOrderAdapter(historicOrder, getContext());
+        item_history_orders.setAdapter(adapter);
+
+     /*   Button repeat = view.findViewById(R.id.repeat);
         repeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,5 +96,7 @@ public class OrderHistoryFragment extends Fragment {
                 getContext().startActivity(i);
             }
         });
+
+      */
     }
 }

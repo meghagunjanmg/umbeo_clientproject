@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,7 +20,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.umbeo.response_data.GetOrders.OrdersList;
 import com.google.android.material.slider.Slider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +33,8 @@ import com.google.android.material.slider.Slider;
  */
 public class OrderAllFragment extends Fragment {
 
+    List<OrdersList> currentOrder = new ArrayList<>();
+    List<OrdersList> historicOrder = new ArrayList<>();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,8 +44,9 @@ public class OrderAllFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OrderAllFragment() {
-        // Required empty public constructor
+    public OrderAllFragment(List<OrdersList> currentOrder, List<OrdersList> historicOrder) {
+        this.currentOrder = currentOrder;
+        this.historicOrder = historicOrder;
     }
 
     /**
@@ -50,8 +58,8 @@ public class OrderAllFragment extends Fragment {
      * @return A new instance of fragment OrderAllFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OrderAllFragment newInstance(String param1, String param2) {
-        OrderAllFragment fragment = new OrderAllFragment();
+    public OrderAllFragment newInstance(String param1, String param2) {
+        OrderAllFragment fragment = new OrderAllFragment(currentOrder, historicOrder);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,10 +83,27 @@ public class OrderAllFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_order_all, container, false);
     }
 
+    RecyclerView item_current_order;
+    RecyclerView item_history_orders;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final Slider slider = view.findViewById(R.id.slider);
+
+        item_current_order = view.findViewById(R.id.item_current_order);
+        item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
+        CurrentOrderAdapter adapter = new CurrentOrderAdapter(currentOrder, getContext());
+        item_current_order.setAdapter(adapter);
+
+
+        item_history_orders = view.findViewById(R.id.item_history_orders);
+        item_history_orders.setLayoutManager(new LinearLayoutManager(getContext()));
+        HistoricOrderAdapter adapter2= new HistoricOrderAdapter(historicOrder, getContext());
+        item_history_orders.setAdapter(adapter2);
+
+
+
+
+       /* final Slider slider = view.findViewById(R.id.slider);
         slider.setValue(60);
         slider.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -146,4 +171,7 @@ public class OrderAllFragment extends Fragment {
         getContext().startActivity(callIntent);
     }
 
+        */
+
+    }
 }

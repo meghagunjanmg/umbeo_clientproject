@@ -43,6 +43,17 @@ public class ProductModel implements Serializable
     private Integer v;
     private final static long serialVersionUID = -7343819980592329962L;
 
+    @SerializedName("discount")
+    @Expose
+    private Integer discount;
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
 
     private int quantity;
 

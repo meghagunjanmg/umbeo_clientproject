@@ -18,7 +18,19 @@ public class OrderRequest implements Serializable
     @SerializedName("totalAmount")
     @Expose
     private Integer totalAmount;
+
+    @SerializedName("orderStatus")
+    @Expose
+    private Integer status;
     private final static long serialVersionUID = -2557480166792349327L;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public List<Product> getProducts() {
         return products;

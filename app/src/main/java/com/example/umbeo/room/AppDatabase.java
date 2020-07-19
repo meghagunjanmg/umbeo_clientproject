@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {CartEntity.class}, version = 1)
+@Database(entities = {CartEntity.class}, version = 2)
     public abstract class AppDatabase extends RoomDatabase {
         public abstract CartDao cartDao();
     private static final Object LOCK = new Object();
@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
                 if (sInstance == null) {
                     sInstance = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, AppDatabase.DATABASE_NAME)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

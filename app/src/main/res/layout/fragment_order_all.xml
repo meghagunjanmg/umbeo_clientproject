@@ -8,16 +8,30 @@
     android:layout_marginBottom="60dp"
     tools:context=".OrderAllFragment">
 
-    <ScrollView
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_marginBottom="60dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-    <include layout="@layout/item_current_order"></include>
-    <include layout="@layout/item_history_orders"></include>
-        </LinearLayout>
-    </ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_current_order"
+        tools:listitem="@layout/item_current_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_history_orders"
+        tools:listitem="@layout/item_history_orders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>

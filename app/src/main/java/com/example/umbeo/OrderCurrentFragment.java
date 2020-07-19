@@ -1,20 +1,17 @@
 package com.example.umbeo;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,9 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
+import com.example.umbeo.response_data.GetOrders.OrdersList;
 import com.google.android.material.slider.Slider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +32,8 @@ import com.google.android.material.slider.Slider;
  * create an instance of this fragment.
  */
 public class OrderCurrentFragment extends Fragment {
+
+    List<OrdersList> currentOrder = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,8 +44,8 @@ public class OrderCurrentFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OrderCurrentFragment() {
-        // Required empty public constructor
+    public OrderCurrentFragment(List<OrdersList> currentOrder) {
+        this.currentOrder = currentOrder;
     }
 
     /**
@@ -55,8 +57,8 @@ public class OrderCurrentFragment extends Fragment {
      * @return A new instance of fragment OrderCurrentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OrderCurrentFragment newInstance(String param1, String param2) {
-        OrderCurrentFragment fragment = new OrderCurrentFragment();
+    public OrderCurrentFragment newInstance(String param1, String param2) {
+        OrderCurrentFragment fragment = new OrderCurrentFragment(currentOrder);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -80,10 +82,20 @@ public class OrderCurrentFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_current_order, container, false);
     }
 
+
+    RecyclerView item_current_order;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final Slider slider = view.findViewById(R.id.slider);
+        item_current_order = view.findViewById(R.id.item_current_order);
+
+        item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
+        CurrentOrderAdapter adapter = new CurrentOrderAdapter(currentOrder, getContext());
+        item_current_order.setAdapter(adapter);
+
+
+     /*   final Slider slider = view.findViewById(R.id.slider);
         slider.setValue(60);
         slider.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -140,5 +152,8 @@ public class OrderCurrentFragment extends Fragment {
             Intent callIntent = new Intent(Intent.ACTION_DIAL);
             callIntent.setData(Uri.parse("tel:12345678900"));
             getContext().startActivity(callIntent);
+    }
+
+      */
     }
 }

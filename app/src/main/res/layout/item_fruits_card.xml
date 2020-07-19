@@ -52,6 +52,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/crossed"
                     style="@style/TextViewStyle"
                     android:textSize="14sp"
                     android:layout_width="wrap_content"
@@ -61,6 +62,7 @@
                     android:textColor="@color/colorPrimaryText" />
 
                 <TextView
+                    android:id="@+id/saved"
                     style="@style/TextViewStyle"
                     android:textSize="14sp"
                     android:layout_width="match_parent"

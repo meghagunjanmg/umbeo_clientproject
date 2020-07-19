@@ -1,6 +1,7 @@
 package com.example.umbeo.api;
 
 import com.example.umbeo.response_data.CategoryResponse;
+import com.example.umbeo.response_data.GetOrders.GetOrderResponse;
 import com.example.umbeo.response_data.LoginResponse;
 import com.example.umbeo.response_data.OrderResponse;
 import com.example.umbeo.response_data.ProductResponse;
@@ -90,6 +91,10 @@ public interface Api {
     @POST("/api/v1/orders/create-order")
     Call<OrderResponse> CreateOrder(@Header("Authorization")String token,
                                     @Body OrderRequest orderRequest);
+
+
+    @POST("/api/v1/orders/get-all-orders")
+    Call<GetOrderResponse> GetOrder(@Header("Authorization")String token);
 
 
 }

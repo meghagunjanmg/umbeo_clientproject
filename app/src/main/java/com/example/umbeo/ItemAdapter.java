@@ -130,6 +130,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         strawberry_name.setText(modelList.get(position).getName()+"");
         price.setText("$"+modelList.get(position).getPrice());
+
+        int PriceOld = modelList.get(position).getPrice()+(modelList.get(position).getDiscount()/100)*modelList.get(position).getPrice();
+        crossed.setText("$"+PriceOld);
+
+        saved.setText("Save "+modelList.get(position).getDiscount()+"%");
+
 //        quantity.setText(modelList.get(position).getQuantity()+"");
 
         try {
@@ -220,7 +226,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     LinearLayout item_linear,linear;
     TextView price;
     CardView card;
-
+    TextView crossed,saved;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView quantity;
@@ -231,6 +237,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             strawberry_name = itemView.findViewById(R.id.strawberry_name);
             staryberry_image = itemView.findViewById(R.id.staryberry_image);
             price = itemView.findViewById(R.id.price);
+            crossed = itemView.findViewById(R.id.crossed);
+            saved = itemView.findViewById(R.id.saved);
 
             strawberry_plus = itemView.findViewById(R.id.item_plus);
             item_linear = itemView.findViewById(R.id.item_linear);

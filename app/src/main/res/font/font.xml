@@ -21,4 +21,9 @@
         android:fontWeight="400"
         android:font="@font/opensans" />
 
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/gilroy" />
 </font-family>
