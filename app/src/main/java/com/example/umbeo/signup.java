@@ -253,7 +253,6 @@ TextView login;
 
         List<String> address = new ArrayList<>();
         address.add(" ");
-        address.add(" ");
 
         SignUpResquest resquest = new SignUpResquest();
         resquest.setName(name);
@@ -275,7 +274,6 @@ TextView login;
         call.enqueue(new Callback<SignUpResponse>() {
             @Override
             public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
-                Toast.makeText(getApplicationContext(), "Error: " +response.code()+" "+response.message(), Toast.LENGTH_LONG).show();
 
                 try {
                     if(response.code()==201){
@@ -283,6 +281,7 @@ TextView login;
                             String userId = response.body().getData().getUserId();
                             String token = response.body().getData().getToken();
                             getProfile(token);
+                            Toast.makeText(getApplicationContext(), "User Created", Toast.LENGTH_LONG).show();
 
                             startActivity(new Intent(signup.this,MainActivity.class));
                         }

@@ -59,15 +59,28 @@ public class ProductModel implements Serializable
 
     @SerializedName("image")
     @Expose
-    private String Image;
+    private String image;
 
+    public ProductModel(String name, String categoryId, String subCategoryId, Integer price, String description, int quantity,int discount,String image) {
+        this.name = name;
+        this.categoryId = categoryId;
+        this.subCategoryId = subCategoryId;
+        this.price = price;
+        this.description = description;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.image = image;
+    }
+
+    public ProductModel() {
+    }
 
     public String getImage() {
-        return Image;
+        return image;
     }
 
     public void setImage(String image) {
-        Image = image;
+        this.image = image;
     }
 
     public int getQuantity() {

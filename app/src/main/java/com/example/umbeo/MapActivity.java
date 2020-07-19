@@ -137,8 +137,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         RetrofitClient api_manager = new RetrofitClient();
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
         final SignUpResquest request = new SignUpResquest();
-        request.setShop("5ec8b35d94e1c83f430781a2");
-        request.setProfilePic(" ");
+        request.setShop(preference.getShopId());
+        request.setProfilePic(preference.getProfilePic());
         request.setName(preference.getUserName());
         request.setDeliveryAddresses(preference.getAddresses());
 
@@ -157,6 +157,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                    if(response.code()==200){
                        Toast.makeText(getApplicationContext(),"Address Added",Toast.LENGTH_LONG).show();
+                       startActivity(new Intent(getApplicationContext(), MainActivity.class));
                    }
                    else Toast.makeText(getApplicationContext(),response.code()+" "+response.message(),Toast.LENGTH_LONG).show();
 

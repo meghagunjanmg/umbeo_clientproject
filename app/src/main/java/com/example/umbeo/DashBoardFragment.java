@@ -87,6 +87,11 @@ public class DashBoardFragment extends Fragment {
     List<CategoryModel> categoryModelList = new ArrayList<>();
     CardView see_more;
     static CategoryListAdapter categoryListAdapter,categoryListAdapter2;
+
+
+    List<CartEntity> entities = new ArrayList<>();
+    List<ProductModel> productModels = new ArrayList<>();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -154,6 +159,13 @@ public class DashBoardFragment extends Fragment {
         category_list = v.findViewById(R.id.category_list);
         list_category = v.findViewById(R.id.list_category);
         list_category_fruit = v.findViewById(R.id.list_category_fruit);
+
+
+        if (db == null) {
+            db = AppDatabase.getInstance(getContext());
+        }
+
+        LoadAllDB();
 
         getCategory();
 
@@ -262,13 +274,6 @@ public class DashBoardFragment extends Fragment {
         remove2 = v.findViewById(R.id.remove1);
         quantity2 = v.findViewById(R.id.quantity1);
         entitiesList = new ArrayList<>();
-
-
-        if (db == null) {
-            db = AppDatabase.getInstance(getContext());
-        }
-
-        //LoadAllDB();
 
         lichi = v.findViewById(R.id.lichi);
         strawberry = v.findViewById(R.id.strawberry);
@@ -430,16 +435,29 @@ public class DashBoardFragment extends Fragment {
                 Log.e("ProductResponse",response.message()+"");
                 Log.e("ProductResponse",response.body().getStatus()+"");
                 if(response.code()==200){
-                    List<ProductModel> productModels = response.body().getData().getProducts();
-                    Log.e("ProductResponse",productModels+"");
+                    productModels = new ArrayList<>();
+                    categoryModelList = new ArrayList<>();
 
+                    productModels = response.body().getData().getProducts();
+                    Log.e("ProductResponse",productModels+"");
+                      for(int i = 0;i<productModels.size();i++) {
+                        for (CartEntity e : entities) {
+                            if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
+                                ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
+                                        ,e.getSubCategoryId(),e.getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
+
+                                productModels.remove(i);
+                                productModels.add(productModel);
+                            }
+                        }
+                        Log.e("products ",productModels.get(i).getQuantity()+"");
+                    }
                     categoryModelList.add(new CategoryModel(categoryId,categoryName, productModels));
 
                     GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
                     list_category.setLayoutManager(mGridLayoutManager2);
                     categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
                     list_category.setAdapter(categoryListAdapter);
-
                 }
             }
 
@@ -463,6 +481,7 @@ public class DashBoardFragment extends Fragment {
                 Log.e("CategoryResponse",response.code()+"");
                 Log.e("CategoryResponse",response.message()+"");
                 if(response.code()==200){
+                    categoryModel = new ArrayList<>();
                     categoryModel = response.body().getData().getCategories();
                     Log.e("CategoryResponse",categoryModel+"");
 
@@ -487,16 +506,15 @@ public class DashBoardFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        Log.e("DEBUG", "onResume of HomeFragment");
-        super.onResume();
 
-        if (db == null) {
-            db = AppDatabase.getInstance(getContext());
-        }
 
-        //LoadAllDB();
+    private void LoadAllDB() {
+        db.cartDao().getAll().observe(DashBoardFragment.this, new Observer<List<CartEntity>>() {
+            @Override
+            public void onChanged(List<CartEntity> cartEntities) {
+                entities = cartEntities;
+            }
+        });
 
     }
     private static void addDB(final CartEntity entity) {

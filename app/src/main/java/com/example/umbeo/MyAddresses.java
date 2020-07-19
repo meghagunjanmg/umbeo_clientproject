@@ -1,9 +1,11 @@
 package com.example.umbeo;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,9 +22,11 @@ import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.Api;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.SignUpResquest;
+import com.example.umbeo.response_data.UserGetProfileResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -38,6 +42,7 @@ public class MyAddresses extends AppCompatActivity {
     AddressAdapter myAdapter;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +51,20 @@ public class MyAddresses extends AppCompatActivity {
         add = findViewById(R.id.add);
         preference = new UserPreference(getApplicationContext());
 
+        getProfile();
+
 
         try {
-            if(preference.getAddresses()!=null){
+            if(preference.getAddresses()!=null && preference.getAddresses().size()!=0 ){
                 myAdapter = new AddressAdapter(this, R.layout.my_address_lists, preference.getAddresses());
-
+                address_list.setChoiceMode(CHOICE_MODE_SINGLE);
+                address_list.setAdapter(myAdapter);
             }
 
-            address_list.setChoiceMode(CHOICE_MODE_SINGLE);
-            address_list.setAdapter(myAdapter);
+            else if(Objects.requireNonNull(preference.getAddresses()).size()==0 || preference.getAddresses().get(0).equals(" ")){
+                startActivity(new Intent(getApplicationContext(), MapActivity.class));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -114,6 +124,39 @@ public class MyAddresses extends AppCompatActivity {
     }
 
 
+    private void getProfile(){
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        final String token = "Bearer "+preference.getToken();
+
+        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
+
+        call.enqueue(new Callback<UserGetProfileResponse>() {
+            @Override
+            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
+                Log.e("UserGetProfileResponse",response.code()+"");
+                Log.e("UserGetProfileResponse",response.message()+"");
+
+                if(response.code()==200) {
+                    preference.setUserName(response.body().getData().getName());
+                    preference.setEmail(response.body().getData().getEmail());
+                    preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
+                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
+                    preference.setProfilePic(response.body().getData().getProfile_pic());
+                    preference.setToken(token);
+
+                    Log.e("UserGetProfileResponse",response.body().getData().getDeliveryAddresses().toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
 
     private static void updateAddress(final Context context) {
@@ -121,7 +164,7 @@ public class MyAddresses extends AppCompatActivity {
         RetrofitClient api_manager = new RetrofitClient();
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
         final SignUpResquest request = new SignUpResquest();
-        request.setShop("5ec8b35d94e1c83f430781a2");
+        request.setShop(preference.getShopId());
         request.setProfilePic(preference.getProfilePic());
         request.setName(preference.getUserName());
         request.setDeliveryAddresses(preference.getAddresses());
@@ -143,7 +186,6 @@ public class MyAddresses extends AppCompatActivity {
                     Toast.makeText(context,"Address Updated",Toast.LENGTH_LONG).show();
                 }
                 else Toast.makeText(context,response.code()+" "+response.message(),Toast.LENGTH_LONG).show();
-
             }
 
             @Override

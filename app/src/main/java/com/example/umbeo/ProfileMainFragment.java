@@ -260,7 +260,7 @@ public class ProfileMainFragment extends Fragment {
         RetrofitClient api_manager = new RetrofitClient();
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
         final SignUpResquest request = new SignUpResquest();
-        request.setShop("5ec8b35d94e1c83f430781a2");
+        request.setShop(preference.getShopId());
         request.setProfilePic(preference.getProfilePic());
         request.setName(preference.getUserName());
         request.setDeliveryAddresses(preference.getAddresses());

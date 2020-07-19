@@ -120,9 +120,14 @@ public class login extends AppCompatActivity {
                     if (response.code() == 200) {
                         login.setEnabled(true);
 
-                        getProfile(response.body().getData());
                         Toast.makeText(com.example.umbeo.login.this,"Login Successful",Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                i.putExtra("token",response.body().getData());
+                        startActivity(i);
+                    }
+                    else if(response.code()==401){
+                        Toast.makeText(com.example.umbeo.login.this,"Invalid email/password",Toast.LENGTH_LONG).show();
                     }
                     else {
                         login.setEnabled(true);
@@ -194,6 +199,9 @@ public class login extends AppCompatActivity {
         call.enqueue(new Callback<UserGetProfileResponse>() {
             @Override
             public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
+                Log.e("UserGetProfileResponse",response.code()+"");
+                Log.e("UserGetProfileResponse",response.message()+"");
+
                 if(response.code()==200) {
                     preference.setUserName(response.body().getData().getName());
                     preference.setEmail(response.body().getData().getEmail());
@@ -201,6 +209,8 @@ public class login extends AppCompatActivity {
                     preference.setAddresses(response.body().getData().getDeliveryAddresses());
                     preference.setProfilePic(response.body().getData().getProfile_pic());
                     preference.setToken(tokens);
+
+
                 }
             }
 

@@ -3,6 +3,7 @@ package com.example.umbeo;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,6 +57,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     String category_id,categoryName;
 
+    List<CartEntity> entities = new ArrayList<>();
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +88,8 @@ public class CategoryActivity extends AppCompatActivity {
         cart_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
-                i.putExtra("Cat",5);
-                startActivity(i);
-
+                finish();
+                HomeScreenActivity.viewPager.setCurrentItem(1);
             }
         });
 
@@ -106,7 +106,7 @@ public class CategoryActivity extends AppCompatActivity {
             db = AppDatabase.getInstance(getApplicationContext());
         }
 
-       // LoadAllDB();
+        LoadAllDB();
 
         item_recycler = findViewById(R.id.item_recycler);
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,2);
@@ -160,6 +160,18 @@ public class CategoryActivity extends AppCompatActivity {
         });
     }
 
+    private void LoadAllDB() {
+
+
+        db.cartDao().getAll().observe(CategoryActivity.this, new Observer<List<CartEntity>>() {
+            @Override
+            public void onChanged(List<CartEntity> cartEntities) {
+                entities = cartEntities;
+            }
+        });
+
+    }
+
     private void getProducts(String shopId) {
 
         RetrofitClient api_manager = new RetrofitClient();
@@ -177,6 +189,19 @@ public class CategoryActivity extends AppCompatActivity {
                 if(response.code()==200){
                     List<ProductModel> productModels = response.body().getData().getProducts();
                     Log.e("ProductResponse",productModels+"");
+
+                    for(int i = 0;i<productModels.size();i++) {
+                        for (CartEntity e : entities) {
+                            if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
+                               ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
+                                        ,e.getSubCategoryId(),e.getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
+
+                                productModels.remove(i);
+                                productModels.add(productModel);
+                            }
+                        }
+                    }
+
                     GridLayoutManager mGridLayoutManager = new GridLayoutManager(CategoryActivity.this,2);
                     item_recycler.setLayoutManager(mGridLayoutManager);
                     myAdapter = new ItemAdapter(productModels,CategoryActivity.this);

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
         if(!isFirstRun)
         {
 
+            try {
+                String token = getIntent().getStringExtra("token");
+                getProfile(token);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -101,6 +108,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void getProfile(final String tokens){
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        String token = "Bearer "+tokens;
+
+        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
+
+        call.enqueue(new Callback<UserGetProfileResponse>() {
+            @Override
+            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
+                Log.e("UserGetProfileResponse",response.code()+"");
+                Log.e("UserGetProfileResponse",response.message()+"");
+
+                if(response.code()==200) {
+                    preference.setUserName(response.body().getData().getName());
+                    preference.setEmail(response.body().getData().getEmail());
+                    preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
+                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
+                    preference.setProfilePic(response.body().getData().getProfile_pic());
+                    preference.setToken(tokens);
+
+                    Log.e("UserGetProfileResponse",response.body().getData().getDeliveryAddresses().toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
+
+            }
+        });
+    }
 
     private void DeleteAllDB(){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {

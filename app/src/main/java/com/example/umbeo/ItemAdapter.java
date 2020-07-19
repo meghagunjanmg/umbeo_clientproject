@@ -131,10 +131,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         strawberry_name.setText(modelList.get(position).getName()+"");
         price.setText("$"+modelList.get(position).getPrice());
 
-        int PriceOld = modelList.get(position).getPrice()+(modelList.get(position).getDiscount()/100)*modelList.get(position).getPrice();
-        crossed.setText("$"+PriceOld);
+        try {
+            int PriceOld = modelList.get(position).getPrice()+(modelList.get(position).getDiscount()/100)*modelList.get(position).getPrice();
+            crossed.setText("$"+PriceOld);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         saved.setText("Save "+modelList.get(position).getDiscount()+"%");
+
+        holder.quantity.setText(modelList.get(position).getQuantity()+"");
+
+        if(modelList.get(position).getQuantity()>0){
+            holder.itemView.findViewById(R.id.item_linear).setVisibility(View.VISIBLE);
+            holder.itemView.findViewById(R.id.item_plus).setVisibility(View.GONE);
+        }
+
 
 //        quantity.setText(modelList.get(position).getQuantity()+"");
 
@@ -218,7 +230,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     TextView strawberry_name;
-     TextView quantity;
     ImageView staryberry_image;
     FrameLayout strawberry_plus;
     ImageView remove;

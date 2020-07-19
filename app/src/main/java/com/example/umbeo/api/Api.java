@@ -67,7 +67,7 @@ public interface Api {
 
 
 
-    @GET("/api/v1/users/me")
+    @POST("/api/v1/users/me")
     Call<UserGetProfileResponse> getProfile(@Header("Authorization")String token);
 
     @POST("/api/v1/users/update-me")

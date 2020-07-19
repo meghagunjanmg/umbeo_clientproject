@@ -23,6 +23,15 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
     </LinearLayout>
+    <ScrollView
+        android:layout_marginBottom="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<LinearLayout
+    android:layout_marginBottom="60dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -206,5 +215,6 @@
     </LinearLayout>
 
 
-
+</LinearLayout>
+    </ScrollView>
 </LinearLayout>
