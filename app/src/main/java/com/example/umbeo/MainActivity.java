@@ -3,12 +3,17 @@ package com.example.umbeo;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.room.Room;
@@ -28,12 +33,13 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase db;
     private int SPLASH_TIME_OUT=1599;
     UserPreference preference;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preference = new UserPreference(getApplicationContext());
-
         setContentView(R.layout.activity_main);
+
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
@@ -128,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                     preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
                     preference.setAddresses(response.body().getData().getDeliveryAddresses());
                     preference.setProfilePic(response.body().getData().getProfile_pic());
+                    preference.setUserId(response.body().getData().getId());
                     preference.setToken(tokens);
 
                     Log.e("UserGetProfileResponse",response.body().getData().getDeliveryAddresses().toString());

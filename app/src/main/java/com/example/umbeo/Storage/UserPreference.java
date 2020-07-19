@@ -25,6 +25,7 @@ public class UserPreference {
     private String Email = "email";
     private String profilePic = "profilePic";
     private Integer LoyaltyPoints = 0;
+    private Integer Theme = 0;
     private static final String Addresses = "addresses";
     private static final String ShopId = "5f131026a7cd970017e7b655";
 
@@ -95,7 +96,14 @@ public class UserPreference {
         editor.putInt(String.valueOf(LoyaltyPoints), loyaltyPoints);
         editor.apply();
     }
+    public Integer getTheme() {
+        return pref.getInt(String.valueOf(Theme), 0);
+    }
 
+    public void setTheme(Integer theme) {
+        editor.putInt(String.valueOf(Theme), theme);
+        editor.apply();
+    }
 
     public void setAddresses(List<String> dataList) {
         if (dataList != null) {

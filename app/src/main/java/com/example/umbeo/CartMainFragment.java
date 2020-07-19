@@ -2,7 +2,6 @@ package com.example.umbeo;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,9 +16,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +25,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.umbeo.Storage.UserPreference;
@@ -38,7 +34,6 @@ import com.example.umbeo.room.CartEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,7 +56,7 @@ public class CartMainFragment extends Fragment {
      TextView no_item;
       static LinearLayout main_scroll,no_item_linear;
 
-    static List<Integer> amounts = new ArrayList<>();
+    static List<Double> amounts = new ArrayList<Double>();
 
     CheckBox loyalty;
     UserPreference preference;
@@ -114,6 +109,12 @@ public class CartMainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        preference = new UserPreference(getContext());
+        if(preference.getTheme()==1){
+            return inflater.inflate(R.layout.dark_cart, container, false);
+        }
+        else
         return inflater.inflate(R.layout.activity_new_cart, container, false);
     }
 
@@ -224,7 +225,7 @@ public class CartMainFragment extends Fragment {
                                 main_scroll.setVisibility(View.VISIBLE);
                             }
 
-                            int sum = 0;
+                            double sum = 0;
                             for(int i=0;i<entityList.size();i++){
                                 sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                             }
@@ -261,7 +262,7 @@ public class CartMainFragment extends Fragment {
                                 main_scroll.setVisibility(View.VISIBLE);
                             }
 
-                            int sum = 0;
+                            double sum = 0;
                             for(int i=0;i<entityList.size();i++){
                                 sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                             }
@@ -291,7 +292,7 @@ public class CartMainFragment extends Fragment {
                     no_item_linear.setVisibility(View.GONE);
                     main_scroll.setVisibility(View.VISIBLE);
                 }
-                int sum = 0;
+                double sum = 0;
                 for(int i=0;i<entityList.size();i++){
                    sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                 }
@@ -337,7 +338,7 @@ public class CartMainFragment extends Fragment {
                         no_item_linear.setVisibility(View.GONE);
                         main_scroll.setVisibility(View.VISIBLE);
                     }
-                    int sum = 0;
+                    double sum = 0;
                     for(int i=0;i<entityList.size();i++){
                         sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                     }

@@ -1,6 +1,7 @@
 package com.example.umbeo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
@@ -28,14 +29,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
      int quant = 0;
     private String name ="";
-    private int price =0;
+    private double price =0;
     AppDatabase db;
      static int total = 0;
 
+     UserPreference preference;
     public CartAdapter(List<CartEntity> data, Context context,AppDatabase db) {
         this.data = data;
         this.context = context;
         this.db = db;
+
+        preference = new UserPreference(context);
     }
 
     @NonNull
@@ -98,7 +102,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         quantity.setText(data.get(position).getQuantity()+"");
         total_amount.setText(data.get(position).getQuantity()*data.get(position).getPrice()+"");
 
-            CartMainFragment.amounts.add(Integer.parseInt(total_amount.getText().toString()));
+            CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString()));
 
     }
 
@@ -119,6 +123,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             remove = itemView.findViewById(R.id.remove);
             linearLayout = itemView.findViewById(R.id.linear);
             total_amount = itemView.findViewById(R.id.total_amount);
+
+            if(preference.getTheme()==1){
+                item_name.setTextColor(Color.WHITE);
+                quantity.setTextColor(Color.WHITE);
+                total_amount.setTextColor(Color.WHITE);
+            }
         }
     }
 

@@ -27,11 +27,11 @@
 
     <color name="colorPrimaryText">#000000</color>
     <color name="bg_color">#FFFFFF</color>
-    <color name="green_dark">#dcdcdc</color>
+    <color name="green_dark">#4CAF50</color>
     <color name="darker_gray">#1E1E1E</color>
 
 
-    <color name="main">#374d7c</color>
-    <color name="main2">#374d7c</color>
+    <color name="main">#F84B18</color>
+    <color name="main2">#F84B18</color>
 
 </resources>

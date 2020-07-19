@@ -50,7 +50,9 @@ public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdap
         }
         products.setText(productName+"");
 
-        time.setText(modelList.get(position).getUpdatedAt()+"");
+        String[] date = modelList.get(position).getUpdatedAt().split("T");
+        time.setText(date[0]+"");
+
         amount.setText("$"+modelList.get(position).getTotalAmount()+"");
 
         status.setText("Delivered");

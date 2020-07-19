@@ -46,11 +46,14 @@ public class MyAddresses extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_of_address);
+        preference = new UserPreference(getApplicationContext());
+        if(preference.getTheme()==1){
+            setContentView(R.layout.dark_addresses);
+        }
+        else setContentView(R.layout.list_of_address);
+
         address_list = findViewById(R.id.address_list);
         add = findViewById(R.id.add);
-        preference = new UserPreference(getApplicationContext());
-
         getProfile();
 
 

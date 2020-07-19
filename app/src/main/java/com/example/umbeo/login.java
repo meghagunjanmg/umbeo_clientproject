@@ -38,10 +38,13 @@ public class login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
         preference = new UserPreference(getApplicationContext());
 
+        if(preference.getTheme()==1){
+            setContentView(R.layout.dark_login);
+        }
+        else
+        setContentView(R.layout.activity_login);
         signu=(TextView)findViewById(R.id.signin);
 
         signu.setOnClickListener(new View.OnClickListener() {

@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorWhite"
                 android:text="Cancel Order"
-                android:textColor="@color/main"
+                android:textColor="@color/colorPrimaryText"
                 app:cornerRadius="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp" />

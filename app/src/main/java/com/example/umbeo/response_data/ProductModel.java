@@ -31,7 +31,7 @@ public class ProductModel implements Serializable
     private String subCategoryId;
     @SerializedName("price")
     @Expose
-    private Integer price;
+    private String price;
     @SerializedName("description")
     @Expose
     private String description;
@@ -61,7 +61,7 @@ public class ProductModel implements Serializable
     @Expose
     private String image;
 
-    public ProductModel(String name, String categoryId, String subCategoryId, Integer price, String description, int quantity,int discount,String image) {
+    public ProductModel(String name, String categoryId, String subCategoryId, String price, String description, int quantity,int discount,String image) {
         this.name = name;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
@@ -147,11 +147,11 @@ public class ProductModel implements Serializable
         this.subCategoryId = subCategoryId;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 

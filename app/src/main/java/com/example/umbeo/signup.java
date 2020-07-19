@@ -68,9 +68,12 @@ TextView login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-
         preference = new UserPreference(getApplicationContext());
+
+        if(preference.getTheme()==1){
+            setContentView(R.layout.dark_signup);
+        }
+        else setContentView(R.layout.activity_signup);
 
         dp = (ImageView) findViewById(R.id.dp);
         sign = (Button) findViewById(R.id.button);

@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:background="@android:color/black"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Profile"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimaryText"
             android:textStyle="bold" />
     </LinearLayout>
     <ScrollView
@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="EDIT PROFILE PICTURE"
+        android:drawableTint="@color/main"
         android:drawableRight="@drawable/pen"
         android:drawablePadding="8dp"
         android:textStyle="bold"/>
@@ -85,6 +86,7 @@
         android:text="EDIT"
         android:gravity="end"
         android:drawableRight="@drawable/pen"
+        android:drawableTint="@color/main"
         android:drawablePadding="8dp"
         android:textStyle="bold"/>
 </LinearLayout>
@@ -155,15 +157,24 @@
     <TextView
         android:id="@+id/my_order"
         android:padding="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:text="My Orders"
         style="@style/TextViewStyle"
         android:textSize="16sp" />
-
+    <TextView
+        android:id="@+id/my_addresses"
+        android:padding="8dp"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="Delivery Addresses"
+        style="@style/TextViewStyle"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_marginBottom="12dp"

@@ -55,13 +55,18 @@ public class CategoryActivity extends AppCompatActivity {
     ImageView back_btn,cart_btn, add, remove, add2, remove2, add3, remove3;
     TextView category_name, quantity, quantity3, quantity2;
 
-    String category_id,categoryName;
+    String category_id="",categoryName="";
 
     List<CartEntity> entities = new ArrayList<>();
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UserPreference preference = new UserPreference(this);
+        if(preference.getTheme()==1){
+            setContentView(R.layout.dark_category);
+        }
+        else
         setContentView(R.layout.activity_category);
         straw_linear =findViewById(R.id.strawberry_linear);
         add = findViewById(R.id.add);
@@ -69,13 +74,23 @@ public class CategoryActivity extends AppCompatActivity {
         quantity = findViewById(R.id.quantity);
         category_name = findViewById(R.id.category_name);
 
-        UserPreference preference = new UserPreference(this);
 
-        category_id = getIntent().getStringExtra("category_id");
-        categoryName = getIntent().getStringExtra("category_name");
-        category_name.setText(categoryName+"");
+        try {
+            category_id = getIntent().getStringExtra("category_id");
+            categoryName = getIntent().getStringExtra("category_name");
+            category_name.setText(categoryName+"");
 
-        getProducts(preference.getShopId());
+            getProducts(preference.getShopId());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(category_id == null)
+        {
+            category_name.setText("Deals");
+        }
+
+
 
         back_btn = findViewById(R.id.back_btn);
         cart_btn = findViewById(R.id.cart_btn);
@@ -173,6 +188,8 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void getProducts(String shopId) {
+        final Utils.CustomDialog customDialog = new Utils.CustomDialog();
+        customDialog.showProgress(getApplicationContext(),"Loading...","Please Wait");
 
         RetrofitClient api_manager = new RetrofitClient();
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
@@ -182,36 +199,41 @@ public class CategoryActivity extends AppCompatActivity {
         call.enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                Log.e("ProductResponse",response+"");
-                Log.e("ProductResponse",response.code()+"");
-                Log.e("ProductResponse",response.message()+"");
-                Log.e("ProductResponse",response.body().getStatus()+"");
-                if(response.code()==200){
-                    List<ProductModel> productModels = response.body().getData().getProducts();
-                    Log.e("ProductResponse",productModels+"");
+                try {
+                    Log.e("ProductResponse",response+"");
+                    Log.e("ProductResponse",response.code()+"");
+                    Log.e("ProductResponse",response.message()+"");
+                    if(response.code()==200){
+                        List<ProductModel> productModels = response.body().getData().getProducts();
+                        Log.e("ProductResponse",productModels+"");
 
-                    for(int i = 0;i<productModels.size();i++) {
-                        for (CartEntity e : entities) {
-                            if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
-                               ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
-                                        ,e.getSubCategoryId(),e.getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
+                        for(int i = 0;i<productModels.size();i++) {
+                            for (CartEntity e : entities) {
+                                if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
+                                   ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
+                                            ,e.getSubCategoryId(),productModels.get(i).getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
 
-                                productModels.remove(i);
-                                productModels.add(productModel);
+                                    productModels.remove(i);
+                                    productModels.add(productModel);
+                                }
                             }
                         }
-                    }
 
-                    GridLayoutManager mGridLayoutManager = new GridLayoutManager(CategoryActivity.this,2);
-                    item_recycler.setLayoutManager(mGridLayoutManager);
-                    myAdapter = new ItemAdapter(productModels,CategoryActivity.this);
-                    item_recycler.setAdapter(myAdapter);
+                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(CategoryActivity.this,1);
+                        item_recycler.setLayoutManager(mGridLayoutManager);
+                        myAdapter = new ItemAdapter(productModels,CategoryActivity.this);
+                        item_recycler.setAdapter(myAdapter);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    customDialog.hideProgress();
                 }
             }
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-
+                    customDialog.hideProgress();
             }
         });
     }

@@ -4,12 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginBottom="60dp"
-android:background="@color/bg_color"
+android:background="@color/colorWhite"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:orientation="vertical"
-        android:background="@android:color/black"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
@@ -20,13 +20,14 @@ android:background="@color/bg_color"
             android:layout_height="18dp"
             android:gravity="center"
             android:text="Cart"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimaryText"
             style="@style/TextViewStyle"
             android:textSize="20sp"
             android:textStyle="bold" />
 
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="4dp"
@@ -43,19 +44,21 @@ android:background="@color/bg_color"
                 android:text="Delivery At : "
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/lightgrey"/>
+                android:textColor="@color/colorPrimaryText"/>
             <EditText
                 android:layout_width="345dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/location"
+                android:drawableTint="@color/main"
                 android:drawablePadding="12dp"
                 android:hint="Address"
-                android:textColorHint="@color/colorWhite"
+                android:textColorHint="@color/colorPrimaryText"
                 style="@style/TextViewStyle"
                 android:textSize="14sp"
                 android:textStyle="bold" />
             <ImageView
+                android:tint="@color/main"
                 android:layout_gravity="center"
                 android:id="@+id/editAddress"
                 android:layout_width="20dp"
@@ -126,7 +129,7 @@ android:background="@color/bg_color"
         style="@style/TextViewStyle"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:textColor="@color/lightgrey" />
+        android:textColor="@color/colorPrimaryText" />
 
     <include
         layout="@layout/item_detail_cart"></include>

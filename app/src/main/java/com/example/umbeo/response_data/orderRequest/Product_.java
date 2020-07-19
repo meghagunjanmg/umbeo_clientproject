@@ -19,7 +19,7 @@ public class Product_ implements Serializable
     private String subCategory;
     @SerializedName("price")
     @Expose
-    private Integer price;
+    private double price;
     @SerializedName("description")
     @Expose
     private String description;
@@ -49,11 +49,11 @@ public class Product_ implements Serializable
         this.subCategory = subCategory;
     }
 
-    public Integer getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

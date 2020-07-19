@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/main_linear"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     android:layout_marginTop="12dp"
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content">
         <TextView
             style="@style/TextViewStyle"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_weight="1"
             android:id="@+id/category_name"
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
             android:textColor="@color/colorPrimaryText" />
             <TextView
                 style="@style/TextViewStyle"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:layout_weight="2"
                 android:id="@+id/view_more"
                 android:gravity="end"
@@ -54,7 +55,7 @@
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/item_fruits_card">
+                tools:listitem="@layout/item_card">
             </androidx.recyclerview.widget.RecyclerView>
 
 

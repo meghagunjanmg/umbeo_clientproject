@@ -8,15 +8,24 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.Api;
+import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.ProductModel;
+import com.example.umbeo.response_data.ProductResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +34,8 @@ import java.util.List;
  */
 public class LoyaltyPointsFragment extends Fragment {
 
+
+    UserPreference preference;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,13 +80,20 @@ public class LoyaltyPointsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        preference = new UserPreference(getContext());
+
+        if(preference.getTheme()==1){
+            return inflater.inflate(R.layout.dark_loyalty, container, false);
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loyalty_points, container, false);
+      else   return inflater.inflate(R.layout.fragment_loyalty_points, container, false);
     }
 
 
     TextView my_points;
-    UserPreference preference;
+
     RecyclerView item_recycler;
     List<ItemModel> mPersonalItems;
     @Override
@@ -94,7 +112,7 @@ public class LoyaltyPointsFragment extends Fragment {
         GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
         item_recycler.setLayoutManager(mGridLayoutManager2);
 
-
+            getTrendingProducts();
 
    /*     mPersonalItems = new ArrayList<>();
 
@@ -111,4 +129,59 @@ public class LoyaltyPointsFragment extends Fragment {
 
     */
     }
+
+    private void getTrendingProducts() {
+        final Utils.CustomDialog customDialog = new Utils.CustomDialog();
+        customDialog.showProgress(getContext(),"Loading...","Please Wait");
+
+        RetrofitClient api_manager = new RetrofitClient();
+        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+
+        Call<ProductResponse> call = retrofit_interface.fetchTrendingProducts(preference.getShopId());
+
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                try {
+                    Log.e("TrendingProduct",response+"");
+                    Log.e("TrendingProduct",response.code()+"");
+                    Log.e("TrendingProduct",response.message()+"");
+                    if(response.code()==200){
+                        List<ProductModel> productModels = response.body().getData().getProducts();
+                        Log.e("TrendingProduct",productModels.get(0).getName()+"");
+
+                  /*      for(int i = 0;i<productModels.size();i++) {
+                            for (CartEntity e : entities) {
+                                if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
+                                    ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
+                                            ,e.getSubCategoryId(),productModels.get(i).getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
+
+                                    productModels.remove(i);
+                                    productModels.add(productModel);
+                                }
+                            }
+                        }
+
+                   */
+                        List<CategoryModel> categoryModelList = new ArrayList<>();
+                        categoryModelList.add(new CategoryModel("","Top Awarded Products", productModels));
+
+                        CategoryListAdapter categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+                        item_recycler.setAdapter(categoryListAdapter);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    customDialog.hideProgress();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                customDialog.hideProgress();
+            }
+        });
+    }
+
+
 }

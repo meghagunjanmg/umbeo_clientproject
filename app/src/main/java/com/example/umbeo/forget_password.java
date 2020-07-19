@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.forgetpassword_response;
 
@@ -26,9 +27,16 @@ public class forget_password extends AppCompatActivity {
 
     Button send;
     TextView signu;
+    UserPreference preference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preference = new UserPreference(this);
+
+        if(preference.getTheme()==1){
+            setContentView(R.layout.dark_forgetpassword);
+        }
+        else
         setContentView(R.layout.activity_forget_password);
 
         signu=(TextView)findViewById(R.id.signin);

@@ -8,7 +8,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:gravity="center"
-        android:background="@drawable/bg_cardview"
+        android:background="@drawable/bg_card"
+        android:backgroundTint="@color/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -24,6 +25,7 @@
 
 
         <Button
+            style="@style/TextViewStyle"
             android:layout_marginTop="20dp"
             android:id="@+id/additem"
             android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
@@ -24,6 +25,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
@@ -41,6 +43,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     String clicked;
     private LayoutInflater layoutInflater;
 
+    UserPreference preference;
     public ItemAdapter(List<ProductModel> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
@@ -48,6 +51,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         if (db == null) {
             db = AppDatabase.getInstance(context);
         }
+
+        preference = new UserPreference(context);
 
     }
 
@@ -132,8 +137,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         price.setText("$"+modelList.get(position).getPrice());
 
         try {
-            int PriceOld = modelList.get(position).getPrice()+(modelList.get(position).getDiscount()/100)*modelList.get(position).getPrice();
-            crossed.setText("$"+PriceOld);
+            double PriceOld = Double.parseDouble(modelList.get(position).getPrice())+
+                    ((modelList.get(position).getDiscount().floatValue()/100)*Double.parseDouble(modelList.get(position).getPrice()));
+
+            crossed.setText("$"+String.format("%.2f",PriceOld));
+            Log.e("Discount",modelList.get(position).getName()+" "+PriceOld);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,7 +179,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal.quantity.setText(finalRowItem.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem.getName());
-                addDB(new CartEntity(finalRowItem.getName(),finalRowItem.getCategoryId(),finalRowItem.getSubCategoryId(),finalRowItem.getSubCategoryId(),finalRowItem.getQuantity(),finalRowItem.getPrice()));
+                addDB(new CartEntity(finalRowItem.getName(),finalRowItem.getCategoryId(),finalRowItem.getSubCategoryId(),finalRowItem.getSubCategoryId(),finalRowItem.getQuantity(),Double.parseDouble(finalRowItem.getPrice())));
                 Log.e("TESTING","3 "+modelList.get(position).getName()+" "+quant);
 
             }
@@ -188,7 +196,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal1.quantity.setText(finalRowItem1.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem1.getName());
-                addDB(new CartEntity(finalRowItem1.getName(),finalRowItem1.getCategoryId(),finalRowItem1.getSubCategoryId(),finalRowItem1.getSubCategoryId(),finalRowItem1.getQuantity(),finalRowItem1.getPrice()));
+                addDB(new CartEntity(finalRowItem1.getName(),finalRowItem1.getCategoryId(),finalRowItem1.getSubCategoryId(),finalRowItem1.getSubCategoryId(),finalRowItem1.getQuantity(),Double.parseDouble(finalRowItem1.getPrice())));
             }
         });
 
@@ -203,7 +211,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 viewHolderFinal2.quantity.setText(finalRowItem2.getQuantity()+""); // set the new description (that uses the updated qunatity)
 
                 DeleteDB(finalRowItem2.getName());
-                addDB(new CartEntity(finalRowItem2.getName(),finalRowItem2.getCategoryId(),finalRowItem2.getSubCategoryId(),finalRowItem2.getSubCategoryId(),finalRowItem2.getQuantity(),finalRowItem2.getPrice()));
+                addDB(new CartEntity(finalRowItem2.getName(),finalRowItem2.getCategoryId(),finalRowItem2.getSubCategoryId(),finalRowItem2.getSubCategoryId(),finalRowItem2.getQuantity(),Double.parseDouble(finalRowItem2.getPrice())));
 
 
                 if(finalRowItem2.getQuantity()==0){
@@ -217,7 +225,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                dailog(modelList.get(position).getName(),modelList.get(position).getQuantity(),modelList.get(position).getImage(),modelList.get(position).getPrice(),
+                dailog(modelList.get(position).getName(),modelList.get(position).getQuantity(),modelList.get(position).getImage(),Double.parseDouble(modelList.get(position).getPrice()),
                         modelList.get(position).getDescription(),modelList.get(position).getCategoryId(),modelList.get(position).getSubCategoryId());
             }
         });
@@ -259,6 +267,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             linear = itemView.findViewById(R.id.linear);
 
             card = itemView.findViewById(R.id.card);
+
+            if(preference.getTheme()==1){
+                card.setBackgroundColor(Color.LTGRAY);
+                item_linear.setBackgroundColor(Color.LTGRAY);
+            }
 
         }
     }
@@ -303,29 +316,23 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void dailog(final String name, final int quantity,final String image,final int prices,final String description,final String cat,final String subCat) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+    private void dailog(final String name, final int quantity,final String image,final double prices,final String description,final String cat,final String subCat) {
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         assert li != null;
         View mView = li.inflate(R.layout.generic_dailog, null);
-        CardView cardView = mView.findViewById(R.id.cardview);
+        final CardView cardView = mView.findViewById(R.id.cardview);
         cardView.setBackgroundDrawable(Objects.requireNonNull(context).getDrawable(R.drawable.bg_dailog));
         Button addtocart = mView.findViewById(R.id.button);
-        addtocart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Added to Cart Successfully", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(context,HomeScreenActivity.class);
-                i.putExtra("Cat",5);
-                context.startActivity(i);
-            }
-        });
 
-        ImageView img = mView.findViewById(R.id.image);
-        byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        Glide.with(context).asBitmap().load(decodedByte).into(img); //>>not tested
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+
+        final TextView quan = mView.findViewById(R.id.quantity1111);
 
 
 
@@ -334,13 +341,18 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         ImageView add = mView.findViewById(R.id.add);
         ImageView remove = mView.findViewById(R.id.remove);
-        final TextView quan = mView.findViewById(R.id.quantity1111);
+
 
 
         final TextView price = mView.findViewById(R.id.price);
         price.setText("$"+prices);
 
         quant = quantity;
+
+
+        if(quant == 0){
+            quant = 1;
+        }
         quan.setText(quant+"");
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -368,9 +380,25 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             }
         });
 
-        mBuilder.setView(mView);
-        AlertDialog dialog = mBuilder.create();
-        dialog.show();
+
+        addtocart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quan.setText(quant+"");
+                DeleteDB(name);
+                addDB(new CartEntity(name,cat,subCat,description,Integer.parseInt(quan.getText().toString()),prices));
+
+                HomeScreenActivity.viewPager.setCurrentItem(1);
+                dialog.cancel();
+            }
+        });
+
+        ImageView img = mView.findViewById(R.id.image);
+        byte[] decodedString = Base64.decode(image, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        Glide.with(context).asBitmap().load(decodedByte).into(img); //>>not tested
+
+
     }
 
 

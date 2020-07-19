@@ -13,7 +13,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:background="@android:color/black"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Add Address"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimaryText"
             style="@style/TextViewStyle"
             android:textSize="20sp"
             android:textStyle="bold" />

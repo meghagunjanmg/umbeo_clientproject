@@ -98,13 +98,19 @@ public class ProfileMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        preference = new UserPreference(getContext());
+
+        if(preference.getTheme()==1){
+            return inflater.inflate(R.layout.dark_profile, container, false);
+        }
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_profile_edit, container, false);
+        else return inflater.inflate(R.layout.activity_profile_edit, container, false);
     }
 
     Switch darkTheme;
     Button logout;
-    TextView myemail,myname,name_edit,profile_edit,loyalty_point,my_order;
+    TextView my_addresses,myemail,myname,name_edit,profile_edit,loyalty_point,my_order;
     UserPreference preference;
     EditText myname_et;
     int count = 0;
@@ -122,25 +128,47 @@ public class ProfileMainFragment extends Fragment {
 
         //getContext().setTheme(R.style.LightTheme);
 
+        int theme = preference.getTheme();
         darkTheme = view.findViewById(R.id.theme);
+        if(theme==1){
+            darkTheme.setChecked(true);
+            preference.setTheme(1);
+        }
         darkTheme.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 if(darkTheme.isChecked()){
+                    preference.setTheme(1);
                     //getContext().setTheme(R.style.DarkTheme);
                     Intent i = new Intent(getContext(),HomeScreenActivity.class);
                     i.putExtra("Theme",1);
+                    startActivity(i);
+                }
+                else {
+                    preference.setTheme(0);
+                    //getContext().setTheme(R.style.DarkTheme);
+                    Intent i = new Intent(getContext(),HomeScreenActivity.class);
+                    i.putExtra("Theme",0);
                     startActivity(i);
                 }
             }
         });
 
         my_order = view.findViewById(R.id.my_order);
+        my_addresses = view.findViewById(R.id.my_addresses);
+
         my_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                startActivity(new Intent(getContext(),MyOrderActivity.class));
+            }
+        });
+
+        my_addresses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),MyAddresses.class));
             }
         });
 

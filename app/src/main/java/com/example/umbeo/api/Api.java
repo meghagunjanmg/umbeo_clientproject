@@ -88,6 +88,24 @@ public interface Api {
                                            @Field("categoryId") String categoryId);
 
 
+
+
+    @FormUrlEncoded
+    @POST("/api/v1/products/get-featured")
+    Call<ProductResponse> fetchFeaturedProducts(@Field("shopId") String shopId);
+
+
+    @FormUrlEncoded
+    @POST("/api/v1/products/get-recommended")
+    Call<ProductResponse> fetchRecommendedProducts(@Field("shopId") String shopId,
+                                                   @Field("user") String user);
+
+
+    @FormUrlEncoded
+    @POST("/api/v1/products/get-trending")
+    Call<ProductResponse> fetchTrendingProducts(@Field("shopId") String shopId);
+
+
     @POST("/api/v1/orders/create-order")
     Call<OrderResponse> CreateOrder(@Header("Authorization")String token,
                                     @Body OrderRequest orderRequest);

@@ -3,14 +3,14 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/grey"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:layout_marginBottom="2dp"
         android:orientation="vertical"
-        android:background="@android:color/black"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="100dp">
 
@@ -25,7 +25,7 @@
             <ImageView
                 android:id="@+id/back_btn"
                 android:src="@drawable/ic_baseline_arrow_back_24"
-                android:tint="@color/colorWhite"
+                android:tint="@color/colorPrimaryText"
                 android:layout_width="30dp"
                 android:layout_height="30dp">
             </ImageView>
@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Fruits"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorPrimaryText"
             style="@style/TextViewStyle"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -43,7 +43,7 @@
                 android:id="@+id/cart_btn"
                 android:src="@drawable/ic_cart"
                 android:layout_gravity="end"
-                android:tint="@color/colorWhite"
+                android:tint="@color/colorPrimaryText"
                 android:layout_width="30dp"
                 android:layout_height="30dp">
             </ImageView>
@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
-        android:background="@color/grey"
+        android:background="@color/colorWhite"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -420,15 +420,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginBottom="50dp"
-
-            android:nestedScrollingEnabled="false"
-            app:spanCount="5"
-            android:paddingRight="2dp"
-            android:paddingLeft="2dp"
+            app:spanCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            android:id="@+id/item_recycler"
             android:orientation="horizontal"
-            tools:listitem="@layout/item_fruits_card"
+            android:id="@+id/item_recycler"
+            tools:listitem="@layout/item_card"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </androidx.recyclerview.widget.RecyclerView>

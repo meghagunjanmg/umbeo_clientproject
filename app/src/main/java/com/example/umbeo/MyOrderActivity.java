@@ -35,9 +35,15 @@ public class MyOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preference = new UserPreference(this);
+
+        if(preference.getTheme()==1){
+            setContentView(R.layout.dark_order);
+        }
+        else
         setContentView(R.layout.activity_orders);
 
-        preference = new UserPreference(this);
+
 
         getAllOrder();
 

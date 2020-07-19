@@ -84,6 +84,8 @@
                 android:text="Quantities"
                 android:textStyle="bold" />
 
+
+
             <LinearLayout
                 android:id="@+id/strawberry_linear"
                 android:layout_width="wrap_content"

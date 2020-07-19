@@ -50,7 +50,8 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
         }
         products.setText(productName+"");
 
-        time.setText(modelList.get(position).getUpdatedAt()+"");
+        String[] date = modelList.get(position).getUpdatedAt().split("T");
+        time.setText(date[0]+"");
         amount.setText("$"+modelList.get(position).getTotalAmount()+"");
 
         if(modelList.get(position).getOrderStatus()==0){

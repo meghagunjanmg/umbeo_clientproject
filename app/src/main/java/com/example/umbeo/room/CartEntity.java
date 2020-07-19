@@ -14,10 +14,10 @@ public class CartEntity {
     private String subCategoryId;
     private String description;
     private int quantity;
-    private int price;
+    private double price;
     private int discount;
 
-    public CartEntity(String name, String categoryId, String subCategoryId, String description, int quantity, int price) {
+    public CartEntity(String name, String categoryId, String subCategoryId, String description, int quantity, double price) {
         this.name = name;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
@@ -82,11 +82,11 @@ public class CartEntity {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }

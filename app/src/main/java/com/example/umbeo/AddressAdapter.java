@@ -1,6 +1,7 @@
 package com.example.umbeo;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.umbeo.Storage.UserPreference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +28,14 @@ public class AddressAdapter extends ArrayAdapter<String> {
     List<String> address = new ArrayList<>();
     int item,count=0;
     public SparseBooleanArray checkedState = new SparseBooleanArray();
-
+    UserPreference preference;
     Context context;
     public AddressAdapter(Context context, int textViewResourceId, List<String> objects) {
         super(context, textViewResourceId, objects);
         address = objects;
        this.context = context;
+
+       preference = new UserPreference(context);
     }
 
     @Override
@@ -50,6 +55,10 @@ public class AddressAdapter extends ArrayAdapter<String> {
         ImageView remove = (ImageView) v.findViewById(R.id.remove);
 
         textView.setText(address.get(position));
+
+        if(preference.getTheme()==1){
+            textView.setTextColor(Color.WHITE);
+        }
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

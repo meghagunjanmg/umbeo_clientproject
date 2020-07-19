@@ -7,53 +7,14 @@
     tools:context=".LoyaltyPointsFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:background="@drawable/gradient"
-        android:padding="12dp"
+
+    <include
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        layout="@layout/loyalty_card">
+    </include>
 
-        <TextView
-            style="@style/TextViewStyle"
-            android:textSize="20sp"
-            android:layout_margin="4dp"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:text="Your Loyalty point is"
-            android:textStyle="bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </TextView>
-
-
-        <TextView
-            android:id="@+id/my_points"
-            android:layout_margin="4dp"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:text="50"
-            android:textStyle="bold"
-            style="@style/TextViewStyle"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </TextView>
-
-
-        <TextView
-            android:layout_margin="4dp"
-            android:gravity="center"
-            android:textColor="@color/colorWhite"
-            android:text="Which is equivalent to   $ 5"
-            android:textStyle="bold"
-            style="@style/TextViewStyle"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </TextView>
-    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_recycler"
         android:layout_width="match_parent"

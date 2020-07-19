@@ -55,7 +55,6 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen_activity);
 
-
         viewPager = findViewById(R.id.pager);
         explore = findViewById(R.id.explore);
         cart = findViewById(R.id.cart);
@@ -71,8 +70,6 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         profile.setOnClickListener(this);
 
         //getProfile();
-
-
 
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
@@ -148,7 +145,12 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                 setIcons();
             }break;
             case R.id.order:{
-                viewPager.setCurrentItem(2);
+                if(preference.getUserName()==null)
+                {
+                    startActivity(new Intent(HomeScreenActivity.this, signup.class));
+                    viewPager.setCurrentItem(0);
+                }
+                else viewPager.setCurrentItem(2);
                 setIcons();
             }break;
             case R.id.profile:{
@@ -165,6 +167,9 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
 
     private void setIcons(){
+        LinearLayout nav_linear = findViewById(R.id.nav_linear);
+        nav_linear.setBackgroundColor(Color.WHITE);
+
         ImageView icon1 = findViewById(R.id.icon1);
         TextView text1 = findViewById(R.id.text1);
         ImageView icon2 = findViewById(R.id.icon2);
@@ -174,56 +179,113 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         ImageView icon4 = findViewById(R.id.icon4);
         TextView text4 = findViewById(R.id.text4);
 
-        if(viewPager.getCurrentItem()==0){
-            icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-            text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+        if(preference.getTheme()==0) {
+            nav_linear.setBackgroundColor(Color.WHITE);
+            if (viewPager.getCurrentItem() == 0) {
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
 
-            icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
 
+            }
+            if (viewPager.getCurrentItem() == 1) {
+
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+
+
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            }
+            if (viewPager.getCurrentItem() == 2) {
+
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+
+
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            }
+            if (viewPager.getCurrentItem() == 3) {
+
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+
+
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            }
         }
-        if(viewPager.getCurrentItem()==1){
+       else if (preference.getTheme()==1) {
+            nav_linear.setBackgroundColor(Color.BLACK);
+            if (viewPager.getCurrentItem() == 0) {
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
 
-            icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-            text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
 
+            }
+            if (viewPager.getCurrentItem() == 1) {
 
-            icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-        }
-        if(viewPager.getCurrentItem()==2){
-
-            icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-            text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-
-
-            icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-        }
-        if(viewPager.getCurrentItem()==3){
-
-            icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-            text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
 
 
-            icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            }
+            if (viewPager.getCurrentItem() == 2) {
+
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+
+
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            }
+            if (viewPager.getCurrentItem() == 3) {
+
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+
+
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            }
         }
     }
 
@@ -268,6 +330,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                     preference.setEmail(response.body().getData().getEmail());
                     preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
                     preference.setProfilePic(response.body().getData().getProfile_pic());
+                    preference.setUserId(response.body().getData().getId());
                 }
             }
 

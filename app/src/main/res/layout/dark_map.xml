@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/colorPrimaryText"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryText"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Add Address"
+            android:textColor="@color/colorWhite"
+            style="@style/TextViewStyle"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sidebar"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    tools:context=".MapActivity" />
+                <ImageView
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:src="@drawable/map"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:textColor="@color/colorWhite"
+                        android:id="@+id/current_location"
+                        android:layout_weight="1"
+                        android:layout_marginTop="12dp"
+                        android:drawableStart="@drawable/home"
+                        android:drawablePadding="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Get Current Address"
+                        android:textStyle="bold"
+                        style="@style/TextViewStyle"
+                        android:textSize="14sp"
+                        android:drawableTint="@color/colorWhite"
+                        android:drawableLeft="@drawable/home" />
+                    <TextView
+                        android:textColor="@color/colorWhite"
+
+                        android:layout_weight="2"
+                        android:gravity="end"
+                        android:id="@+id/my_addresses"
+                        android:layout_marginTop="12dp"
+                        android:drawablePadding="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="My Address"
+                        style="@style/TextViewStyle"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        />
+                </LinearLayout>
+                <EditText
+                    android:textColorHint="@color/colorWhite"
+                    android:textColor="@color/colorWhite"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:id="@+id/line1"
+                    android:padding="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="address line 1" />
+
+                <EditText
+                    android:textColorHint="@color/colorWhite"
+
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/line2"
+                    android:padding="12dp"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="address line 2" />
+
+                <EditText
+                    android:textColor="@color/colorWhite"
+                    android:textColorHint="@color/colorWhite"
+                    android:id="@+id/line3"
+                    android:padding="12dp"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="address line 3" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        style="@style/TextViewStyle"
+                        android:textSize="14sp"
+                        android:id="@+id/add_address"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:layout_centerInParent="true"
+                        android:backgroundTint="@color/main2"
+                        android:textStyle="bold"
+                        android:text="add"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

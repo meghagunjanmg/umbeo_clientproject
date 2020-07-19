@@ -2,6 +2,7 @@ package com.example.umbeo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.response_data.CategoryModel;
 
 import java.util.List;
@@ -21,9 +23,11 @@ public class MainCategoriesAdapter extends RecyclerView.Adapter<MainCategoriesAd
 
     List<com.example.umbeo.response_data.CategoryModel> modelList;
     Context context;
+    UserPreference preference;
     public MainCategoriesAdapter(List<CategoryModel> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
+        preference = new UserPreference(context);
     }
 
 
@@ -31,7 +35,7 @@ public class MainCategoriesAdapter extends RecyclerView.Adapter<MainCategoriesAd
     @Override
     public MainCategoriesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.category_card, parent, false);
+                .inflate(R.layout.item_categoty, parent, false);
 
         MainCategoriesAdapter.ViewHolder vh = new MainCategoriesAdapter.ViewHolder(v);
         return vh;
@@ -66,6 +70,11 @@ public class MainCategoriesAdapter extends RecyclerView.Adapter<MainCategoriesAd
 
             category_name = itemView.findViewById(R.id.category_name);
             category_card = itemView.findViewById(R.id.category_card);
+
+            if(preference.getTheme()==1){
+                category_name.setTextColor(Color.WHITE);
+                category_card.setBackgroundColor(Color.BLACK);
+            }
         }
     }
 }
