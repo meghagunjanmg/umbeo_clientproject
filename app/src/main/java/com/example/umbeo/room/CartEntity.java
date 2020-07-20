@@ -10,6 +10,7 @@ public class CartEntity {
     private int id;
 
     private String name;
+    private String productId;
     private String categoryId;
     private String subCategoryId;
     private String description;
@@ -17,20 +18,14 @@ public class CartEntity {
     private double price;
     private int discount;
 
-    public CartEntity(String name, String categoryId, String subCategoryId, String description, int quantity, double price) {
+    public CartEntity(String name, String productId, String categoryId, String subCategoryId, String description, int quantity, double price, int discount) {
         this.name = name;
+        this.productId = productId;
         this.categoryId = categoryId;
         this.subCategoryId = subCategoryId;
         this.description = description;
         this.quantity = quantity;
         this.price = price;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
@@ -48,6 +43,14 @@ public class CartEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getCategoryId() {
@@ -88,5 +91,13 @@ public class CartEntity {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 }

@@ -73,10 +73,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 price =  data.get(i).getPrice();
                 quant++;
                 quantity.setText(quant+"");
-                DeleteDB(name);
-                addDB(new CartEntity(name,data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),Integer.parseInt(quantity.getText().toString()),price));
+                DeleteDB(data.get(i).getProductId());
+                addDB(new CartEntity(name,data.get(i).getProductId(),data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),quant,price,data.get(i).getDiscount()));
                 total_amount.setText(quant*price+"");
-
+                notifyDataSetChanged();
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
@@ -84,25 +84,25 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
                 quant = data.get(i).getQuantity();
                 name =  data.get(i).getName();
+                price =  data.get(i).getPrice();
                 quant--;
                 if(quant==0){
-                    //  orange_linear.setVisibility(View.GONE);
-                    //  orange_plus.setVisibility(View.VISIBLE);
-                    DeleteDB(name);
-                    addDB(new CartEntity(name,data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),Integer.parseInt(quantity.getText().toString()),price));
+                    DeleteDB(data.get(i).getProductId());
+                    addDB(new CartEntity(name,data.get(i).getProductId(),data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),quant,price,data.get(i).getDiscount()));
                 }
                 quantity.setText(quant+"");
-                DeleteDB(name);
-                addDB(new CartEntity(name,data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),Integer.parseInt(quantity.getText().toString()),price));
-                total_amount.setText(quant*price+"");
 
+                DeleteDB(data.get(i).getProductId());
+                addDB(new CartEntity(name,data.get(i).getProductId(),data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),quant,price,data.get(i).getDiscount()));
+                total_amount.setText(quant*price+"");
+                notifyDataSetChanged();
             }
         });
 
         quantity.setText(data.get(position).getQuantity()+"");
         total_amount.setText(data.get(position).getQuantity()*data.get(position).getPrice()+"");
 
-            CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString()));
+        CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString()));
 
     }
 
@@ -147,13 +147,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
     }
-    private void DeleteDB(final String name){
+    private void DeleteDB(final String prodId){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    db.cartDao().deleteOne(name);
-                    Log.e("roomDB",name);
+                    db.cartDao().deleteOne(prodId);
+                    Log.e("roomDB",prodId);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

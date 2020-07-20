@@ -35,6 +35,6 @@ public interface CartDao {
 
 
 
-    @Query("DELETE FROM cart_items_table WHERE name =:name")
-    void deleteOne(String name);
+    @Query("DELETE FROM cart_items_table WHERE productId =:prodId")
+    void deleteOne(String prodId);
 }

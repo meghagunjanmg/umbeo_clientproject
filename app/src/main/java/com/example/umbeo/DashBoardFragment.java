@@ -147,15 +147,12 @@ public class DashBoardFragment extends Fragment {
             if (db == null) {
                 db = AppDatabase.getInstance(getContext());
             }
-
-            //LoadAllDB();
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         preference = new UserPreference(getContext());
         if(preference.getTheme()==1){
             return inflater.inflate(R.layout.dark_dashboard, container, false);
@@ -178,7 +175,6 @@ public class DashBoardFragment extends Fragment {
         log = (TextView) v.findViewById(R.id.login);
 
 
-
         if (db == null) {
             db = AppDatabase.getInstance(getContext());
         }
@@ -187,47 +183,8 @@ public class DashBoardFragment extends Fragment {
 
         getCategory();
 
-
-
         GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
         list_category.setLayoutManager(mGridLayoutManager2);
-
-     /*   mMainItemsList = new ArrayList<>();
-        mFruitsItem = new ArrayList<>();
-        mPersonalItems = new ArrayList<>();
-
-        mFruitsItem.add(new ItemModel("Apple", "pic_0", 0));
-        mFruitsItem.add(new ItemModel("Lichi", "pic_1", 0));
-        mFruitsItem.add(new ItemModel("Apple", "pic_0", 0));
-        mFruitsItem.add(new ItemModel("Lichi", "pic_1", 0));
-
-
-        mPersonalItems.add(new ItemModel("Colgate", "pic_2", 0));
-        mPersonalItems.add(new ItemModel("Hair oil", "pic_3", 0));
-        mPersonalItems.add(new ItemModel("Colgate", "pic_2", 0));
-        mPersonalItems.add(new ItemModel("Hair oil", "pic_3", 0));
-
-
-        List<CategoryModel> categoryModelList = new ArrayList<>();
-        List<CategoryModel> categoryModelList1 = new ArrayList<>();
-
-        categoryModelList.add(new CategoryModel("Fruits", mFruitsItem));
-        categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-        list_category_fruit.setAdapter(categoryListAdapter);
-
-        categoryModelList1.add(new CategoryModel("Personal Care", mPersonalItems));
-        categoryListAdapter2 = new CategoryListAdapter(categoryModelList1, getContext());
-        list_category.setAdapter(categoryListAdapter2);
-
-
-        mMainItemsList.add(new ItemModel("Apple", "pic_0", 0));
-        mMainItemsList.add(new ItemModel("Lichi", "pic_1", 0));
-        mMainItemsList.add(new ItemModel("Colgate", "pic_2", 0));
-*/
-
-        // myAdapter = new ItemAdapter(mMainItemsList, getContext());
-        item_recycler.setAdapter(myAdapter);
-
 
         if (preference.getUserName() != null) {
             log.setText(preference.getUserName());
@@ -272,69 +229,6 @@ public class DashBoardFragment extends Fragment {
                 else startActivity(new Intent(getActivity(), signup.class));
             }
         });
-
-
-        // trending = v.findViewById(R.id.trending);
-        //popular = v.findViewById(R.id.popular);
-        // feature = v.findViewById(R.id.feature);
-        cat1 = v.findViewById(R.id.cat1);
-        cat2 = v.findViewById(R.id.cat2);
-        cat3 = v.findViewById(R.id.cat3);
-        cat4 = v.findViewById(R.id.cat4);
-        straw_linear = v.findViewById(R.id.strawberry_linear);
-        add = v.findViewById(R.id.add);
-        remove = v.findViewById(R.id.remove);
-        quantity = v.findViewById(R.id.quantity);
-
-        orange_linear = v.findViewById(R.id.orange_linear);
-        add3 = v.findViewById(R.id.add3);
-        remove3 = v.findViewById(R.id.remove3);
-        quantity3 = v.findViewById(R.id.quantity3);
-
-        lichi_linear = v.findViewById(R.id.lichi_linear);
-        add2 = v.findViewById(R.id.add1);
-        remove2 = v.findViewById(R.id.remove1);
-        quantity2 = v.findViewById(R.id.quantity1);
-        entitiesList = new ArrayList<>();
-
-        lichi = v.findViewById(R.id.lichi);
-        strawberry = v.findViewById(R.id.strawberry);
-
-
-        cat1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), CategoryActivity.class);
-                i.putExtra("Cat", 1);
-                startActivity(i);
-            }
-        });
-        cat2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), CategoryActivity.class);
-                i.putExtra("Cat", 2);
-                startActivity(i);
-
-            }
-        });
-
-        cat3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), CategoryActivity.class));
-
-            }
-        });
-
-        cat4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), CategoryActivity.class));
-
-            }
-        });
-
 
         trending_txt = v.findViewById(R.id.trending_txt);
         feature_txt = v.findViewById(R.id.feature_txt);
@@ -530,8 +424,6 @@ public class DashBoardFragment extends Fragment {
             });
         }
         mViewPager = v.findViewById(R.id.pager);
-
-// This is just an example. You can use whatever collection of images.
         int[] mResources = {
                 R.drawable.bananas1,
                 R.drawable.strawberries,
@@ -569,19 +461,7 @@ public class DashBoardFragment extends Fragment {
                         //categoryModelList = new ArrayList<>();
 
                         productModels = response.body().getData().getProducts();
-                        Log.e("ProductResponse",productModels+"");
-                          for(int i = 0;i<productModels.size();i++) {
-                            for (CartEntity e : entities) {
-                                if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
-                                    ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
-                                            ,e.getSubCategoryId(),productModels.get(i).getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
 
-                                    productModels.remove(i);
-                                    productModels.add(productModel);
-                                }
-                            }
-                            Log.e("products ",productModels.get(i).getQuantity()+"");
-                        }
                         categoryModelList.add(new CategoryModel(categoryId,categoryName, productModels));
 
                         GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
@@ -661,106 +541,6 @@ public class DashBoardFragment extends Fragment {
         });
 
     }
-    private static void addDB(final CartEntity entity) {
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    db.cartDao().insertOne(entity);
-                    Log.e("roomDB", entity.getName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private static void DeleteDB(final String name) {
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    db.cartDao().deleteOne(name);
-                    Log.e("roomDB", name);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-
-   /* private void LoadAllDB() {
-        db.cartDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<CartEntity>>() {
-            @Override
-            public void onChanged(List<CartEntity> entities) {
-                entitiesList = entities;
-
-                if (entitiesList.size() != 0) {
-                    for (int i = 0; i < entitiesList.size(); i++) {
-                        if (entitiesList.get(i).getName().equals("strawberry")) {
-                            staw_count = entitiesList.get(i).getQuantity();
-                            quantity.setText(staw_count + "");
-                        }
-                        if (entitiesList.get(i).getItem_name().equals("lichi")) {
-                            lichi_count = entitiesList.get(i).getQuantity();
-                            quantity2.setText(lichi_count + "");
-                        }
-                        if (entitiesList.get(i).getItem_name().equals("orange")) {
-                            orange_count = entitiesList.get(i).getQuantity();
-                            quantity3.setText(orange_count + "");
-                        }
-                    }
-
-                    if (lichi_count == 0) {
-                        lichi_linear.setVisibility(View.GONE);
-                        lichi_plus.setVisibility(View.VISIBLE);
-                        DeleteDB("lichi");
-                    } else {
-                        lichi_linear.setVisibility(View.VISIBLE);
-                        lichi_plus.setVisibility(View.GONE);
-                    }
-                    if (staw_count == 0) {
-                        straw_linear.setVisibility(View.GONE);
-                        strawberry_plus.setVisibility(View.VISIBLE);
-                        DeleteDB("strawberry");
-                    } else {
-                        straw_linear.setVisibility(View.VISIBLE);
-                        strawberry_plus.setVisibility(View.GONE);
-                    }
-                    if (orange_count == 0) {
-                        orange_linear.setVisibility(View.GONE);
-                        orange_plus.setVisibility(View.VISIBLE);
-                        DeleteDB("orange");
-                    } else {
-                        orange_linear.setVisibility(View.VISIBLE);
-                        orange_plus.setVisibility(View.GONE);
-                    }
-                }
-            }
-        });
-    }
-
-    */
-
-
-
-   /* public static void UpdateAdapter(Context context,int position, String name,String Image,int quantity){
-
-        for(int i = 0; i< mMainItemsList.size(); i++){
-            if(i == position){
-                mMainItemsList.get(i).setImage(Image);
-                mMainItemsList.get(i).setName(name);
-                mMainItemsList.get(i).setQuantity(quantity);
-                DeleteDB(mMainItemsList.get(position).getName());
-                addDB(new CartEntity(mMainItemsList.get(position).getName(),quantity,5));
-
-                Log.e("TESTING","2 "+ mMainItemsList.get(position).getName()+" "+ mMainItemsList.get(position).getQuantity());
-                myAdapter.notifyDataSetChanged();
-            }
-        }
-
-    */
 
     private void getFeaturedProducts() {
         final Utils.CustomDialog customDialog = new Utils.CustomDialog();
@@ -780,20 +560,6 @@ public class DashBoardFragment extends Fragment {
                     Log.e("FeaturedProducts",response.message()+"");
                     if(response.code()==200){
                         List<ProductModel> productModels = response.body().getData().getProducts();
-                        Log.e("FeaturedProducts",productModels+"");
-
-                        for(int i = 0;i<productModels.size();i++) {
-                            for (CartEntity e : entities) {
-                                if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
-                                    ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
-                                            ,e.getSubCategoryId(),productModels.get(i).getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
-
-                                    productModels.remove(i);
-                                    productModels.add(productModel);
-                                }
-                            }
-                        }
-
                         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
                         item_recycler.setLayoutManager(mGridLayoutManager);
 
@@ -887,20 +653,6 @@ public class DashBoardFragment extends Fragment {
                     if(response.code()==200){
 
                        List<ProductModel> productModels = response.body().getData().getProducts();
-                        Log.e("RecommendedProducts",productModels.get(0).getName()+"");
-                /*      for(int i = 0;i<productModels.size();i++) {
-                            for (CartEntity e : entities) {
-                                if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
-                                    ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
-                                            ,e.getSubCategoryId(),productModels.get(i).getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
-
-                                    productModels.remove(i);
-                                    productModels.add(productModel);
-                                }
-                            }
-                        }
-
-                   */
 
                         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
                         item_recycler.setLayoutManager(mGridLayoutManager);
