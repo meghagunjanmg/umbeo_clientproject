@@ -1,12 +1,14 @@
-package com.example.umbeo;
+package com.example.umbeo.Storage;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -14,15 +16,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.bumptech.glide.Glide;
-import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.HomeScreenActivity;
+import com.example.umbeo.MyOrderActivity;
+import com.example.umbeo.R;
 import com.example.umbeo.api.Api;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.OrderResponse;
@@ -36,15 +32,13 @@ import com.example.umbeo.room.CartEntity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedChangeListener
-{
-
+public class PaymentActivity extends AppCompatActivity  implements RadioGroup.OnCheckedChangeListener{
+    UserPreference preference;
     TextView amount;
     private int counter=1;
     RadioGroup radioGroup;
@@ -53,66 +47,63 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
     RadioButton cas,amazonpay,applepay,paypal,amazonupi,googleupi;
     Button sendd;
     String Total;
-    UserPreference preference;
-    public PaymentFragment(String total_amount) {
-        Total = total_amount;
-    }
 
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-      preference = new UserPreference(getContext());
-        View v = null;
-      if(preference.getTheme()==1){
-          v= inflater.inflate(R.layout.dark_payment,container , false);
-      }
-        else {
-          v= inflater.inflate(R.layout.activity_payment,container , false);
-      }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        preference = new UserPreference(this);
 
-        radioGroup = v.findViewById(R.id.role_radioGroup_ID);
+        if(preference.getTheme()==1){
+            setContentView(R.layout.dark_payment);
+        }
+        else setContentView(R.layout.activity_payment);
+
+        Total = getIntent().getStringExtra("total");
+
+
+        radioGroup = findViewById(R.id.role_radioGroup_ID);
         radioGroup.setOnCheckedChangeListener(this);
 
 
-        amount=(TextView) v.findViewById(R.id.amount);
+        amount=(TextView) findViewById(R.id.amount);
         amount.setText(Total+"");
 
 
-        cas=(RadioButton) v.findViewById(R.id.cash);
-        amazonpay=(RadioButton) v.findViewById(R.id.amazonPay);
-        applepay=(RadioButton) v.findViewById(R.id.applePay);
-        paypal=(RadioButton) v.findViewById(R.id.payPal);
-        amazonupi=(RadioButton) v.findViewById(R.id.amazonPayUPI);
-        googleupi=(RadioButton) v.findViewById(R.id.googleUPI);
+        cas=(RadioButton) findViewById(R.id.cash);
+        amazonpay=(RadioButton) findViewById(R.id.amazonPay);
+        applepay=(RadioButton) findViewById(R.id.applePay);
+        paypal=(RadioButton) findViewById(R.id.payPal);
+        amazonupi=(RadioButton) findViewById(R.id.amazonPayUPI);
+        googleupi=(RadioButton) findViewById(R.id.googleUPI);
 
 
-        sendd=(Button) v.findViewById(R.id.send);
+        sendd=(Button) findViewById(R.id.send);
         sendbt();
 
-        back_btn = v.findViewById(R.id.back_btn);
-        cart_btn = v.findViewById(R.id.cart_btn);
+        back_btn = findViewById(R.id.back_btn);
+        cart_btn = findViewById(R.id.cart_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext() ,HomeScreenActivity.class));
+                finish();
+                HomeScreenActivity.viewPager.setCurrentItem(1);
             }
         });
         cart_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(),HomeScreenActivity.class);
+                Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
                 i.putExtra("Cat",5);
                 startActivity(i);
 
             }
         });
 
-        return v;
     }
 
     private void dailog() {
-        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(PaymentActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.activity_payment_pop_up, null);
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
@@ -122,7 +113,7 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
         shopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(),HomeScreenActivity.class);
+                Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
                 //i.putExtra("Cat",5);
                 startActivity(i);
                 dialog.cancel();
@@ -133,7 +124,7 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
         go_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),MyOrderActivity.class));
+                startActivity(new Intent(getApplicationContext(), MyOrderActivity.class));
             }
         });
 
@@ -175,10 +166,10 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 amazonupi.setChecked(false);
                 googleupi.setChecked(false);
 
-                Toast.makeText(getContext(), "You have selected Cash as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Cash as mode of Payment", Toast.LENGTH_LONG).show();
             } else {
                 counter++;
-                Toast.makeText(getContext(), "You have selected Cash as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Cash as mode of Payment", Toast.LENGTH_LONG).show();
             }
         } else if (amazonpay.isChecked() == true) {
             if (counter > 1) {
@@ -189,10 +180,10 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 googleupi.setChecked(false);
 
 
-                Toast.makeText(getContext(), "You have selected Amazon Pay as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Amazon Pay as mode of Payment", Toast.LENGTH_LONG).show();
             } else {
                 counter++;
-                Toast.makeText(getContext(), "You have selected Amazon Pay as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Amazon Pay as mode of Payment", Toast.LENGTH_LONG).show();
 
             }
         } else if (applepay.isChecked() == true) {
@@ -203,10 +194,10 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 amazonupi.setChecked(false);
                 googleupi.setChecked(false);
 
-                Toast.makeText(getContext(), "You have selected Apple Pay as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Apple Pay as mode of Payment", Toast.LENGTH_LONG).show();
             } else {
                 counter++;
-                Toast.makeText(getContext(), "You have selected Apple Pay as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Apple Pay as mode of Payment", Toast.LENGTH_LONG).show();
 
             }
         } else if (paypal.isChecked() == true) {
@@ -217,10 +208,10 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 amazonupi.setChecked(false);
                 googleupi.setChecked(false);
 
-                Toast.makeText(getContext(), "You have selected Pay Pal as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Pay Pal as mode of Payment", Toast.LENGTH_LONG).show();
             } else {
                 counter++;
-                Toast.makeText(getContext(), "You have selected Pay Pal as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Pay Pal as mode of Payment", Toast.LENGTH_LONG).show();
 
             }
         } else if (amazonupi.isChecked() == true) {
@@ -231,10 +222,10 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 cas.setChecked(false);
                 googleupi.setChecked(false);
 
-                Toast.makeText(getContext(), "You have selected Amazon UPI as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Amazon UPI as mode of Payment", Toast.LENGTH_LONG).show();
             } else {
                 counter++;
-                Toast.makeText(getContext(), "You have selected Amazon UPI as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Amazon UPI as mode of Payment", Toast.LENGTH_LONG).show();
 
             }
         } else if (googleupi.isChecked() == true) {
@@ -245,10 +236,10 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 amazonupi.setChecked(false);
                 cas.setChecked(false);
 
-                Toast.makeText(getContext(), "You have selected Google UPI as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Google UPI as mode of Payment", Toast.LENGTH_LONG).show();
             } else {
                 counter++;
-                Toast.makeText(getContext(), "You have selected Google UPI as mode of Payment", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "You have selected Google UPI as mode of Payment", Toast.LENGTH_LONG).show();
 
             }
         }
@@ -272,7 +263,7 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 @Override
                 public void onClick(View v) {
                     // startActivity(new Intent(getContext(),payment_popUp.class));
-                    Toast.makeText(getContext(),"Select Payment option",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Select Payment option",Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -281,14 +272,14 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
     private void createOrder(String total) {
         DBLoadAll();
 
-        final UserPreference preference = new UserPreference(getContext());
+        final UserPreference preference = new UserPreference(this);
         RetrofitClient api_manager = new RetrofitClient();
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
 
         String token = "Bearer "+preference.getToken();
 
         String amt = total.replace("$","");
-        int amount = Integer.parseInt(amt.trim());
+        double amount = Double.parseDouble(amt.trim());
 
         final OrderRequest request = new OrderRequest();
         request.setTotalAmount(amount);
@@ -324,12 +315,12 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
                 Log.e("OrderResponse",response.message()+"");
                 if(response.code()==200){
                     dailog();
-                    Toast.makeText(getContext(),request.getProducts().get(0).getQuantity()+"    "+ response.body().getData().getOrderId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),request.getProducts().get(0).getQuantity()+"    "+ response.body().getData().getOrderId(), Toast.LENGTH_SHORT).show();
                 }
                 else if(preference.getUserName()==null){
-                    Toast.makeText(getContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();
                 }
-                else Toast.makeText(getContext(),"Something went wrong", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getApplicationContext(),"Something went wrong", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -344,11 +335,9 @@ public class PaymentFragment extends Fragment implements RadioGroup.OnCheckedCha
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                CartDao dao = AppDatabase.getInstance(getContext()).cartDao();
+                CartDao dao = AppDatabase.getInstance(getApplicationContext()).cartDao();
                 cartEntities =  dao.loadAll();
             }
         });
     }
-
-
 }

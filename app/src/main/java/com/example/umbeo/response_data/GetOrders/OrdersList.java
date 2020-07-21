@@ -35,7 +35,7 @@ public class OrdersList implements Serializable
     private Integer orderStatus;
     @SerializedName("totalAmount")
     @Expose
-    private Integer totalAmount;
+    private double totalAmount;
     @SerializedName("user")
     @Expose
     private String user;
@@ -117,11 +117,11 @@ public class OrdersList implements Serializable
         this.orderStatus = orderStatus;
     }
 
-    public Integer getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 

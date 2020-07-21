@@ -9,7 +9,7 @@
         app:cardBackgroundColor="@color/light_grey"
         android:id="@+id/card"
         app:cardElevation="2dp"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="16dp"
         android:layout_width="160dp"
         android:layout_height="250dp">
         <LinearLayout
@@ -92,17 +92,19 @@
 
             </LinearLayout>
             </LinearLayout>
+
             <TextView
-                style="@style/TextViewStyle"
                 android:id="@+id/strawberry_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/TextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:maxLines="3"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:textStyle="bold"
                 android:text="Strawberry"
                 android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

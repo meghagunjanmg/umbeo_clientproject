@@ -417,20 +417,16 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:background="@color/colorPrimaryText"
                 android:layout_marginBottom="50dp"
                 app:spanCount="2"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                android:orientation="horizontal"
                 android:id="@+id/item_recycler"
                 tools:listitem="@layout/item_card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </androidx.recyclerview.widget.RecyclerView>
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

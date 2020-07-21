@@ -72,12 +72,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        loadAll();
+
         for(int i = 0;i<cartEntities.size();i++){
             if(cartEntities.get(i).getProductId().equals(modelList.get(position).getId())){
                 holder.quantity.setText(cartEntities.get(i).getQuantity()+"");
                 modelList.get(position).setQuantity(cartEntities.get(i).getQuantity());
             }
-            else holder.quantity.setText(modelList.get(position).getQuantity()+"");
+            else {
+                holder.quantity.setText(modelList.get(position).getQuantity()+"");
+            }
         }
 
         strawberry_name.setText(modelList.get(position).getName()+"");
@@ -125,8 +129,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                 DeleteDB(finalRowItem.getId());
                 addDB(new CartEntity(finalRowItem.getName(),finalRowItem.getId(),finalRowItem.getCategoryId(),finalRowItem.getSubCategoryId(),finalRowItem.getSubCategoryId(),finalRowItem.getQuantity(),Double.parseDouble(finalRowItem.getPrice()),finalRowItem.getDiscount()));
-                Log.e("TESTING","3 "+modelList.get(position).getName()+" "+quant);
 
+                notifyDataSetChanged();
             }
         });
 
@@ -140,8 +144,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 finalRowItem1.setQuantity(quantity + 1);
                 viewHolderFinal1.quantity.setText(finalRowItem1.getQuantity()+"");
 
-                DeleteDB(finalRowItem1.getId());
-                addDB(new CartEntity(finalRowItem1.getName(),finalRowItem1.getId(),finalRowItem1.getCategoryId(),finalRowItem1.getSubCategoryId(),finalRowItem1.getSubCategoryId(),finalRowItem1.getQuantity(),Double.parseDouble(finalRowItem1.getPrice()),finalRowItem1.getDiscount()));
+                updateDB(finalRowItem1.getQuantity(),finalRowItem1.getId());
+                notifyDataSetChanged();
             }
         });
 
@@ -155,14 +159,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 finalRowItem2.setQuantity(quantity - 1);
                 viewHolderFinal2.quantity.setText(finalRowItem2.getQuantity()+"");
 
-                DeleteDB(finalRowItem2.getId());
-                addDB(new CartEntity(finalRowItem2.getName(),finalRowItem2.getId(),finalRowItem2.getCategoryId(),finalRowItem2.getSubCategoryId(),finalRowItem2.getSubCategoryId(),finalRowItem2.getQuantity(),Double.parseDouble(finalRowItem2.getPrice()),finalRowItem2.getDiscount()));
-
+                updateDB(finalRowItem2.getQuantity(),finalRowItem2.getId());
 
                 if(finalRowItem2.getQuantity()==0){
                     holder.itemView.findViewById(R.id.item_linear).setVisibility(View.GONE);
                     holder.itemView.findViewById(R.id.item_plus).setVisibility(View.VISIBLE);
+                    DeleteDB(finalRowItem2.getId());
+                    notifyDataSetChanged();
                 }
+                notifyDataSetChanged();
             }
         });
 
@@ -214,13 +219,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             card = itemView.findViewById(R.id.card);
 
             if(preference.getTheme()==1){
-                card.setBackgroundColor(Color.LTGRAY);
+                card.setCardBackgroundColor(Color.LTGRAY);
                 item_linear.setBackgroundColor(Color.LTGRAY);
             }
 
-            if(Integer.parseInt(quantity.getText().toString())==0){
-                strawberry_plus.setVisibility(View.VISIBLE);
+            if(Integer.parseInt(quantity.getText().toString())>0){
+                item_linear.setVisibility(View.VISIBLE);
+                strawberry_plus.setVisibility(View.GONE);
+            }
+            else {
                 item_linear.setVisibility(View.GONE);
+                strawberry_plus.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -248,6 +257,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             }
         });
     }
+    private void updateDB(final int quantity,final String prodId){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    db.cartDao().UpdateOne(quantity,prodId);
+                    Log.e("roomDB",prodId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     private void DeleteDB(final String prodId){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -311,8 +334,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public void onClick(View v) {
                 quant++;
                 quan.setText(quant+"");
-                DeleteDB(prodId);
-                addDB(new CartEntity(name,prodId,cat,subCat,description,Integer.parseInt(quan.getText().toString()),prices,discount));
+
+                updateDB(quant,prodId);
+
+                notifyDataSetChanged();
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
@@ -321,11 +346,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 quant--;
                 if(quant==0){
                     DeleteDB(prodId);
-                    addDB(new CartEntity(name,prodId,cat,subCat,description,Integer.parseInt(quan.getText().toString()),prices,discount));
                 }
                 quan.setText(quant+"");
-                DeleteDB(prodId);
-                addDB(new CartEntity(name,prodId,cat,subCat,description,Integer.parseInt(quan.getText().toString()),prices,discount));
+
+                updateDB(quant,prodId);
+
+                notifyDataSetChanged();
             }
         });
 
@@ -336,6 +362,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 quan.setText(quant+"");
                 DeleteDB(prodId);
                 addDB(new CartEntity(name,prodId,cat,subCat,description,Integer.parseInt(quan.getText().toString()),prices,discount));
+
+                notifyDataSetChanged();
 
                 dialog.cancel();
             }

@@ -4,21 +4,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp">
+    android:layout_height="150dp">
     <FrameLayout
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:layout_width="match_parent"
         tools:ignore="MissingConstraints">
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"
             android:src="@drawable/bananas1" />
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="150dp"
             android:src="@color/semidark" />
         <TextView
             style="@style/TextViewStyle"

@@ -17,7 +17,7 @@ public class OrderRequest implements Serializable
     private String shopId;
     @SerializedName("totalAmount")
     @Expose
-    private Integer totalAmount;
+    private double totalAmount;
 
     @SerializedName("orderStatus")
     @Expose
@@ -48,11 +48,11 @@ public class OrderRequest implements Serializable
         this.shopId = shopId;
     }
 
-    public Integer getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 

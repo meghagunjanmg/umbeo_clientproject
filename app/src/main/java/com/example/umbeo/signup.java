@@ -284,7 +284,7 @@ TextView login;
                             String userId = response.body().getData().getUserId();
                             String token = response.body().getData().getToken();
                             getProfile(token);
-                            Toast.makeText(getApplicationContext(), "User Created", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "You have earned 500 crystal point as reward", Toast.LENGTH_LONG).show();
 
                             startActivity(new Intent(signup.this,MainActivity.class));
                         }

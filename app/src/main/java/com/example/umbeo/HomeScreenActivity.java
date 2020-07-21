@@ -39,7 +39,7 @@ import retrofit2.Response;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPagerAdapter adapter;
-     static CustomViewPager viewPager;
+     public static CustomViewPager viewPager;
     static LinearLayout explore,cart,order,profile;
     AppDatabase db;
     int id;
@@ -182,8 +182,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         if(preference.getTheme()==0) {
             nav_linear.setBackgroundColor(Color.WHITE);
             if (viewPager.getCurrentItem() == 0) {
-                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
                 icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
                 text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
@@ -195,8 +195,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
             if (viewPager.getCurrentItem() == 1) {
 
-                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
                 icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
@@ -208,8 +208,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
             if (viewPager.getCurrentItem() == 2) {
 
-                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
                 icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
@@ -221,8 +221,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
             if (viewPager.getCurrentItem() == 3) {
 
-                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
                 icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
@@ -236,8 +236,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
        else if (preference.getTheme()==1) {
             nav_linear.setBackgroundColor(Color.BLACK);
             if (viewPager.getCurrentItem() == 0) {
-                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
                 icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                 text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
@@ -249,8 +249,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
             if (viewPager.getCurrentItem() == 1) {
 
-                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
                 icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
@@ -262,8 +262,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
             if (viewPager.getCurrentItem() == 2) {
 
-                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
                 icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
@@ -275,8 +275,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
             if (viewPager.getCurrentItem() == 3) {
 
-                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
-                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#c86dd7")));
+                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
                 icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));

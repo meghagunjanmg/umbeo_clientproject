@@ -422,7 +422,6 @@
             android:layout_marginBottom="50dp"
             app:spanCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            android:orientation="horizontal"
             android:id="@+id/item_recycler"
             tools:listitem="@layout/item_card"
             android:layout_width="match_parent"

@@ -54,11 +54,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        if(data.get(position).getQuantity()<=0){
-            linearLayout.setVisibility(View.GONE);
-           CartMainFragment cartMainFragment = new CartMainFragment();
-           cartMainFragment.onResume();
-        }
 
         quantity.setText(data.get(position).getQuantity()+"");
         item_name.setText(data.get(position).getName()+"");
@@ -73,8 +68,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 price =  data.get(i).getPrice();
                 quant++;
                 quantity.setText(quant+"");
-                DeleteDB(data.get(i).getProductId());
-                addDB(new CartEntity(name,data.get(i).getProductId(),data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),quant,price,data.get(i).getDiscount()));
+
+                updateDB(quant,data.get(i).getProductId());
+
                 total_amount.setText(quant*price+"");
                 notifyDataSetChanged();
             }
@@ -86,14 +82,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 name =  data.get(i).getName();
                 price =  data.get(i).getPrice();
                 quant--;
+
                 if(quant==0){
                     DeleteDB(data.get(i).getProductId());
-                    addDB(new CartEntity(name,data.get(i).getProductId(),data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),quant,price,data.get(i).getDiscount()));
                 }
+
                 quantity.setText(quant+"");
 
-                DeleteDB(data.get(i).getProductId());
-                addDB(new CartEntity(name,data.get(i).getProductId(),data.get(i).getCategoryId(),data.get(i).getSubCategoryId(),data.get(i).getDescription(),quant,price,data.get(i).getDiscount()));
+                updateDB(quant,data.get(i).getProductId());
+
                 total_amount.setText(quant*price+"");
                 notifyDataSetChanged();
             }
@@ -133,20 +130,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
 
-
-    private void addDB(final CartEntity entity){
+    private void updateDB(final int quantity,final String prodId){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    db.cartDao().insertOne(entity);
-                    Log.e("roomDB",entity.getName());
+                    db.cartDao().UpdateOne(quantity,prodId);
+                    Log.e("roomDB",prodId);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
+
+
     private void DeleteDB(final String prodId){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -160,5 +158,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
     }
+
 
 }

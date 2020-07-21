@@ -41,7 +41,9 @@ public class MyOrderActivity extends AppCompatActivity {
             setContentView(R.layout.dark_order);
         }
         else
-        setContentView(R.layout.activity_orders);
+        {
+            setContentView(R.layout.activity_orders);
+        }
 
 
 
@@ -168,6 +170,7 @@ public class MyOrderActivity extends AppCompatActivity {
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
 
         String token = "Bearer "+preference.getToken();
+        Log.e("GetOrderResponse ",token);
 
         Call<GetOrderResponse> call = retrofit_interface.GetOrder(token);
 
@@ -189,7 +192,7 @@ public class MyOrderActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<GetOrderResponse> call, Throwable t) {
-
+                Log.e("GetOrderResponse",t.getLocalizedMessage()+"");
             }
         });
     }

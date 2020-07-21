@@ -131,8 +131,6 @@ public class LoyaltyPointsFragment extends Fragment {
     }
 
     private void getTrendingProducts() {
-        final Utils.CustomDialog customDialog = new Utils.CustomDialog();
-        customDialog.showProgress(getContext(),"Loading...","Please Wait");
 
         RetrofitClient api_manager = new RetrofitClient();
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
@@ -150,19 +148,6 @@ public class LoyaltyPointsFragment extends Fragment {
                         List<ProductModel> productModels = response.body().getData().getProducts();
                         Log.e("TrendingProduct",productModels.get(0).getName()+"");
 
-                  /*      for(int i = 0;i<productModels.size();i++) {
-                            for (CartEntity e : entities) {
-                                if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
-                                    ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
-                                            ,e.getSubCategoryId(),productModels.get(i).getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
-
-                                    productModels.remove(i);
-                                    productModels.add(productModel);
-                                }
-                            }
-                        }
-
-                   */
                         List<CategoryModel> categoryModelList = new ArrayList<>();
                         categoryModelList.add(new CategoryModel("","Top Awarded Products", productModels));
 
@@ -172,13 +157,11 @@ public class LoyaltyPointsFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    customDialog.hideProgress();
                 }
             }
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-                customDialog.hideProgress();
             }
         });
     }

@@ -68,10 +68,7 @@ public class CategoryActivity extends AppCompatActivity {
         }
         else
         setContentView(R.layout.activity_category);
-        straw_linear =findViewById(R.id.strawberry_linear);
-        add = findViewById(R.id.add);
-        remove = findViewById(R.id.remove);
-        quantity = findViewById(R.id.quantity);
+
         category_name = findViewById(R.id.category_name);
 
 
@@ -108,15 +105,6 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
-        orange_linear = findViewById(R.id.orange_linear);
-        add3 = findViewById(R.id.add3);
-        remove3 = findViewById(R.id.remove3);
-        quantity3 =findViewById(R.id.quantity3);
-
-        lichi_linear = findViewById(R.id.lichi_linear);
-        add2 = findViewById(R.id.add1);
-        remove2 = findViewById(R.id.remove1);
-        quantity2 = findViewById(R.id.quantity1);
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
@@ -124,46 +112,6 @@ public class CategoryActivity extends AppCompatActivity {
         LoadAllDB();
 
         item_recycler = findViewById(R.id.item_recycler);
-        GridLayoutManager mGridLayoutManager = new GridLayoutManager(this,2);
-        item_recycler.setLayoutManager(mGridLayoutManager);
-
-        mFlowerList = new ArrayList<>();
-
-        int Cat = getIntent().getIntExtra("Cat",0);
-
-        if(Cat==1){
-            ImageView title_img = findViewById(R.id.title_img);
-            int res = getResources().getIdentifier("farmers", "drawable", this.getPackageName());
-            title_img.setImageResource(res);
-
-
-            mFlowerList.add(new ItemModel("Apple","pic_0",0));
-            mFlowerList.add(new ItemModel("Lichi","pic_1",0));
-            mFlowerList.add(new ItemModel("Apple","pic_0",0));
-            mFlowerList.add(new ItemModel("Lichi","pic_1",0));
-            mFlowerList.add(new ItemModel("Apple","pic_0",0));
-            mFlowerList.add(new ItemModel("Lichi","pic_1",0));
-            mFlowerList.add(new ItemModel("Apple","pic_0",0));
-            mFlowerList.add(new ItemModel("Lichi","pic_1",0));
-        }
-        else if(Cat==2){
-            ImageView title_img = findViewById(R.id.title_img);
-            int res = getResources().getIdentifier("personals", "drawable", this.getPackageName());
-            title_img.setImageResource(res);
-
-            mFlowerList.add(new ItemModel("Colgate","pic_2",0));
-            mFlowerList.add(new ItemModel("Hair oil","pic_3",0));
-            mFlowerList.add(new ItemModel("Colgate","pic_2",0));
-            mFlowerList.add(new ItemModel("Hair oil","pic_3",0));
-            mFlowerList.add(new ItemModel("Colgate","pic_2",0));
-            mFlowerList.add(new ItemModel("Hair oil","pic_3",0));
-            mFlowerList.add(new ItemModel("Colgate","pic_2",0));
-            mFlowerList.add(new ItemModel("Hair oil","pic_3",0));
-
-        }
-
-      //  myAdapter = new ItemAdapter(mFlowerList, this);
-        item_recycler.setAdapter(myAdapter);
 
 
         editAddress = findViewById(R.id.editAddress);
@@ -188,9 +136,6 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void getProducts(String shopId) {
-        final Utils.CustomDialog customDialog = new Utils.CustomDialog();
-        customDialog.showProgress(getApplicationContext(),"Loading...","Please Wait");
-
         RetrofitClient api_manager = new RetrofitClient();
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
 
@@ -207,33 +152,20 @@ public class CategoryActivity extends AppCompatActivity {
                         List<ProductModel> productModels = response.body().getData().getProducts();
                         Log.e("ProductResponse",productModels+"");
 
-                        for(int i = 0;i<productModels.size();i++) {
-                            for (CartEntity e : entities) {
-                                if (e.getName().equalsIgnoreCase(productModels.get(i).getName())) {
-                                   ProductModel productModel = new ProductModel(e.getName(),e.getCategoryId()
-                                            ,e.getSubCategoryId(),productModels.get(i).getPrice(),e.getDescription(),e.getQuantity(),productModels.get(i).getDiscount(),productModels.get(i).getImage());
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2, LinearLayoutManager.VERTICAL,false);
 
-                                    productModels.remove(i);
-                                    productModels.add(productModel);
-                                }
-                            }
-                        }
-
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(CategoryActivity.this,1);
-                        item_recycler.setLayoutManager(mGridLayoutManager);
+                        item_recycler.setLayoutManager(gridLayoutManager);
                         myAdapter = new ItemAdapter(productModels,CategoryActivity.this);
                         item_recycler.setAdapter(myAdapter);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    customDialog.hideProgress();
                 }
             }
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-                    customDialog.hideProgress();
             }
         });
     }

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimaryText"
+    android:layout_height="match_parent"
+    android:id="@+id/payment_linear"
+    tools:context=".Payment">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryText"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <FrameLayout
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/back_btn"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:tint="@color/colorWhite"
+                android:layout_gravity="center_vertical"
+                android:layout_width="30dp"
+                android:layout_height="30dp">
+            </ImageView>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Payment"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold" />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/cart_btn"
+                android:src="@drawable/ic_cart"
+                android:layout_gravity="end|center_vertical"
+                android:tint="@color/colorWhite"
+                android:layout_width="30dp"
+                android:layout_height="30dp">
+            </ImageView>
+        </FrameLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:background="@color/colorPrimaryText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@color/colorPrimaryText"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+
+            <LinearLayout
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textColor="@color/colorWhite"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Payable Amount "
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:textColor="@color/colorWhite"
+                    android:layout_weight="1"
+                    android:id="@+id/amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:paddingRight="8dp"
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
+                    android:text="$ 31.47"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <RadioGroup
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:id="@+id/role_radioGroup_ID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl">
+                <TextView
+                    android:textColor="@color/colorWhite"
+                    android:padding="8dp"
+                    android:text="Cash On Delivery"
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <RadioButton
+                    android:textColor="@color/colorWhite"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/payment_outline"
+                    android:padding="12dp"
+                    android:id="@+id/cash"
+                    android:drawableLeft="@drawable/paymentcash"
+                    android:drawableTint="@color/colorWhite"
+                    android:drawablePadding="8dp"
+                    android:text="COD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:visibility="gone"
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
+                    android:padding="8dp"
+                    android:text="Wallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <RadioButton
+                    android:visibility="gone"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/payment_outline"
+                    android:padding="12dp"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:id="@+id/amazonPay"
+                    android:drawableLeft="@drawable/amazonpay"
+                    android:drawablePadding="8dp"
+                    android:text="Amazon pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:visibility="gone"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/payment_outline"
+                    android:padding="12dp"
+                    android:id="@+id/applePay"
+                    android:drawableLeft="@drawable/applepay"
+                    android:drawablePadding="8dp"
+                    android:text="Apple pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:visibility="gone"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:layout_margin="8dp"
+                    android:padding="12dp"
+                    android:id="@+id/payPal"
+                    android:drawableLeft="@drawable/paypal"
+                    android:drawablePadding="8dp"
+                    android:text="PayPal"
+                    android:background="@drawable/payment_outline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:visibility="gone"
+                    android:padding="8dp"
+                    android:text="UPI"
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <RadioButton
+                    android:visibility="gone"
+                    android:layout_margin="8dp"
+                    android:padding="12dp"
+                    android:background="@drawable/payment_outline"
+                    android:id="@+id/amazonPayUPI"
+                    android:drawableLeft="@drawable/amazonpay"
+                    android:drawablePadding="8dp"
+                    android:text="Amazon pay UPI"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:visibility="gone"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/payment_outline"
+                    android:padding="12dp"
+                    android:id="@+id/googleUPI"
+                    android:drawableLeft="@drawable/googlepay"
+                    android:drawablePadding="8dp"
+                    android:text="Google pay"
+                    style="@style/TextViewStyle"
+                    android:textSize="14sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+            <Button
+                android:layout_gravity="center"
+                android:id="@+id/send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/main2"
+                android:text="Continue"
+                app:cornerRadius="16dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

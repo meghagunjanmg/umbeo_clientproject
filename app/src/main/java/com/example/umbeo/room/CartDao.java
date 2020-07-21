@@ -33,8 +33,9 @@ public interface CartDao {
     @Query("DELETE FROM cart_items_table")
     void nukeTable();
 
-
-
     @Query("DELETE FROM cart_items_table WHERE productId =:prodId")
     void deleteOne(String prodId);
+
+    @Query("Update cart_items_table SET quantity =:quant WHERE productId =:prodId")
+    void UpdateOne(int quant, String prodId);
 }

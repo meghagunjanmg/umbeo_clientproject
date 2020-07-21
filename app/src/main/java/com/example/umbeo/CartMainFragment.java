@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.umbeo.Storage.PaymentActivity;
 import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
@@ -156,10 +157,10 @@ public class CartMainFragment extends Fragment {
 
         add=(Button)v.findViewById(R.id.additem);
         add.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                // Create new fragment and transaction
-              startActivity(new Intent(getContext(),HomeScreenActivity.class));
+                HomeScreenActivity.viewPager.setCurrentItem(0);
             }
         });
         paym=(Button)v.findViewById(R.id.payment);
@@ -167,14 +168,9 @@ public class CartMainFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-
-                HomeScreenActivity.payment_frag = true;
-                PaymentFragment paymentFragment = new PaymentFragment(total_amount.getText().toString());
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameSelected, paymentFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Intent i = new Intent(getContext(), PaymentActivity.class);
+                i.putExtra("total",total_amount.getText().toString());
+                startActivity(i);
             }
         });
 
@@ -229,7 +225,9 @@ public class CartMainFragment extends Fragment {
                             for(int i=0;i<entityList.size();i++){
                                 sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                             }
-                            total_amount.setText("$ "+((sum - preference.getLoyaltyPoints())+2));
+                            sum = Double.parseDouble(String.format("%.2f",(sum - preference.getLoyaltyPoints())+2));
+                            total_amount.setText("$ "+sum);
+
                         }
                     });
 
@@ -266,7 +264,8 @@ public class CartMainFragment extends Fragment {
                             for(int i=0;i<entityList.size();i++){
                                 sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                             }
-                            total_amount.setText("$ "+((sum - 1)+2));
+                            sum = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
+                            total_amount.setText("$ "+sum);
                         }
                     });
 
@@ -296,7 +295,8 @@ public class CartMainFragment extends Fragment {
                 for(int i=0;i<entityList.size();i++){
                    sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                 }
-                total_amount.setText("$ "+((sum - 1)+2));
+                sum = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
+                total_amount.setText("$ "+sum);
             }
         });
 
@@ -342,7 +342,8 @@ public class CartMainFragment extends Fragment {
                     for(int i=0;i<entityList.size();i++){
                         sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
                     }
-                    total_amount.setText("$ "+((sum - 1)+2));
+                    sum = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
+                    total_amount.setText("$ "+sum);
                 }
             });
         } catch (Exception e) {
