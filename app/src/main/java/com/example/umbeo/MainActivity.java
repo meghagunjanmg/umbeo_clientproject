@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase db;
     private int SPLASH_TIME_OUT=1599;
     UserPreference preference;
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     Intent intent= new Intent(MainActivity.this,HomeScreenActivity.class);
                     startActivity(intent);
-                    finish();
                 }
             },SPLASH_TIME_OUT);
         }

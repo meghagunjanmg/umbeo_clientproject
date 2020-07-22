@@ -83,7 +83,6 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
         back_btn = findViewById(R.id.back_btn);
         cart_btn = findViewById(R.id.cart_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 finish();

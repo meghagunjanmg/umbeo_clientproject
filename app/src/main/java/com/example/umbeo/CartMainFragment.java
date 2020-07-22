@@ -121,7 +121,6 @@ public class CartMainFragment extends Fragment {
 
 
     @SuppressLint("FragmentLiveDataObserve")
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
@@ -157,7 +156,6 @@ public class CartMainFragment extends Fragment {
 
         add=(Button)v.findViewById(R.id.additem);
         add.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 HomeScreenActivity.viewPager.setCurrentItem(0);
@@ -165,7 +163,6 @@ public class CartMainFragment extends Fragment {
         });
         paym=(Button)v.findViewById(R.id.payment);
         paym.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getContext(), PaymentActivity.class);

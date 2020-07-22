@@ -36,7 +36,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     private ViewPagerAdapter adapter;
      public static CustomViewPager viewPager;
@@ -49,8 +48,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     FragmentManager fragmentManager = getSupportFragmentManager();
      UserPreference preference ;
 
-    @SuppressLint("CutPasteId")
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen_activity);

@@ -92,7 +92,7 @@ TextView login;
             }
         });
 
-        dp.setOnClickListener(new View.OnClickListener() {
+/*        dp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(
@@ -103,6 +103,8 @@ TextView login;
                     selectImage();
             }
         });
+
+ */
 
     }
 

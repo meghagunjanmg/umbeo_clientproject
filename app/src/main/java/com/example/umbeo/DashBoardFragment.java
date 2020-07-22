@@ -168,7 +168,6 @@ public class DashBoardFragment extends Fragment {
         else return inflater.inflate(R.layout.activity_dashboard, container, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
@@ -348,29 +347,28 @@ public class DashBoardFragment extends Fragment {
         getFeaturedProducts();
 
         if(preference.getTheme()==1){
-            trending_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+            trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
             feature_txt.setBackgroundResource(R.drawable.bg_feature_card);
-            feature_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+            feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-            popular_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+            popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
 
 
 
             trending_txt.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onClick(View v) {
-                    feature_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card);
-                    trending_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     trending_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    popular_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
 
@@ -379,32 +377,30 @@ public class DashBoardFragment extends Fragment {
                 }
             });
             feature_txt.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onClick(View v) {
-                    trending_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card);
-                    feature_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    popular_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     getFeaturedProducts();
                 }
             });
             popular_txt.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onClick(View v) {
-                    trending_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card);
-                    popular_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     popular_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    feature_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     if(preference.getEmail()!=null){
@@ -415,27 +411,26 @@ public class DashBoardFragment extends Fragment {
             });
         }
         else {
-            trending_txt.setTextColor(getContext().getColor(R.color.main));
+            trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
             trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
             feature_txt.setBackgroundResource(R.drawable.bg_feature_card);
-            feature_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+            feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-            popular_txt.setTextColor(getContext().getColor(R.color.main));
+            popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
             popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
 
             trending_txt.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onClick(View v) {
-                    feature_txt.setTextColor(getContext().getColor(R.color.main));
+                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card);
-                    trending_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     trending_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    popular_txt.setTextColor(getContext().getColor(R.color.main));
+                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
 
@@ -444,32 +439,30 @@ public class DashBoardFragment extends Fragment {
                 }
             });
             feature_txt.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onClick(View v) {
-                    trending_txt.setTextColor(getContext().getColor(R.color.main));
+                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card);
-                    feature_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    popular_txt.setTextColor(getContext().getColor(R.color.main));
+                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     getFeaturedProducts();
                 }
             });
             popular_txt.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onClick(View v) {
-                    trending_txt.setTextColor(getContext().getColor(R.color.main));
+                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card);
-                    popular_txt.setTextColor(getContext().getColor(R.color.colorWhite));
+                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     popular_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    feature_txt.setTextColor(getContext().getColor(R.color.main));
+                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     if(preference.getEmail()!=null){
@@ -479,6 +472,7 @@ public class DashBoardFragment extends Fragment {
                 }
             });
         }
+
 
         mViewPager = v.findViewById(R.id.pager);
 

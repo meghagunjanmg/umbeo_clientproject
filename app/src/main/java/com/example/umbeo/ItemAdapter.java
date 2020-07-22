@@ -1,5 +1,6 @@
 package com.example.umbeo;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -111,6 +112,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         try {
             byte[] decodedString = Base64.decode(modelList.get(position).getImage(), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            //decodedByte.setPixel(36,36,Color.WHITE);
             Glide.with(context).asBitmap().load(decodedByte).into(staryberry_image);
         } catch (Exception e) {
             e.printStackTrace();
@@ -172,7 +174,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         });
 
         card.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 dailog(modelList.get(position).getName(),Integer.parseInt(holder.quantity.getText().toString()),modelList.get(position).getImage(),Double.parseDouble(modelList.get(position).getPrice()),
@@ -295,8 +296,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void dailog(final String name, final int quantity,final String image,final double prices,final String description,final String cat,final String subCat,final String prodId,final int discount) {
+    @SuppressLint("NewApi")
+    private void dailog(final String name, final int quantity, final String image, final double prices, final String description, final String cat, final String subCat, final String prodId, final int discount) {
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

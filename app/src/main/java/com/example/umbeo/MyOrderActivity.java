@@ -31,7 +31,6 @@ public class MyOrderActivity extends AppCompatActivity {
     ImageView back_btn;
     UserPreference preference;
     @SuppressLint("ResourceAsColor")
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +81,6 @@ public class MyOrderActivity extends AppCompatActivity {
         // Commit the transaction
 
         history.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
 
@@ -109,6 +107,7 @@ public class MyOrderActivity extends AppCompatActivity {
         });
 
         current.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
 

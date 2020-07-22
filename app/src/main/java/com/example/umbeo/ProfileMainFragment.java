@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -115,7 +116,7 @@ public class ProfileMainFragment extends Fragment {
     EditText myname_et;
     int count = 0;
     public static final int RESULT_GALLERY = 0;
-    CircleImageView profilepic;
+    ImageView profilepic;
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     Fragment fragment;
     private Resources res;
@@ -135,7 +136,6 @@ public class ProfileMainFragment extends Fragment {
             preference.setTheme(1);
         }
         darkTheme.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 if(darkTheme.isChecked()){
@@ -263,7 +263,7 @@ public class ProfileMainFragment extends Fragment {
             if (getContext() != null && data!=null) {
                 Uri imageUri = data.getData();
                 Bitmap imageBitmap = getBitmapForMediaUri(getContext(), imageUri);
-               // profilepic.setImageBitmap(imageBitmap);
+                profilepic.setImageBitmap(imageBitmap);
                 assert imageBitmap != null;
                 preference.setProfilePic(BitmapToBase64(imageBitmap));
                 profilepic.setImageBitmap(Base64ToBitmap(preference.getProfilePic()));

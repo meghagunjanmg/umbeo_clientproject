@@ -3,6 +3,7 @@ package com.example.umbeo;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -42,7 +43,7 @@ public class MyAddresses extends AppCompatActivity {
     AddressAdapter myAdapter;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

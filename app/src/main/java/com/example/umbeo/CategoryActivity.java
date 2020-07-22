@@ -58,7 +58,6 @@ public class CategoryActivity extends AppCompatActivity {
     String category_id="",categoryName="";
 
     List<CartEntity> entities = new ArrayList<>();
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
