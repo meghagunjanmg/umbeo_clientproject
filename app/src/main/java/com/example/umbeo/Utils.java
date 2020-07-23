@@ -2,6 +2,11 @@ package com.example.umbeo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
 
 public class Utils {
     public static class CustomDialog {
@@ -41,6 +46,22 @@ public class Utils {
                 mDialog = null;
             }
         }
+    }
+
+
+
+    public static String BitmapToBase64(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+    }
+
+    public static Bitmap Base64ToBitmap(String encodedImage)
+    {
+        byte[] imageAsBytes = Base64.decode(encodedImage.getBytes(), Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
 }

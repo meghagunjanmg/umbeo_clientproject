@@ -34,6 +34,12 @@
         <item name="android:fontFamily">@font/gilroy</item>
     </style>
 
+    <style name="TextViewStyle.1" parent="android:Widget.DeviceDefault.Light.TextView">
+        <item name="android:fontFamily">@font/gilroy</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
     <style name="DarkTheme" parent="TextViewStyle">
         <!-- change themeBackground manually here -->
         <item name="android:backgroundTint" tools:ignore="NewApi">@color/colorPrimaryText</item>

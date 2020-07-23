@@ -14,7 +14,7 @@
         android:padding="8dp"
         android:id="@+id/category_name"
         style="@style/TextViewStyle"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:fontFamily="@font/opensans"
         android:layout_width="wrap_content"

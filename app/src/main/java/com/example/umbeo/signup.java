@@ -257,7 +257,7 @@ TextView login;
         String shop = preference.getShopId();
 
         List<String> address = new ArrayList<>();
-        address.add(" ");
+        address.add("address 1");
 
         SignUpResquest resquest = new SignUpResquest();
         resquest.setName(name);

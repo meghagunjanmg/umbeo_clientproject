@@ -45,8 +45,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     AppDatabase db;
 
     int quant;
-    String clicked;
-    private LayoutInflater layoutInflater;
+
 
     UserPreference preference;
     public ItemAdapter(List<ProductModel> modelList, Context context) {
@@ -73,12 +72,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        loadAll();
 
         for(int i = 0;i<cartEntities.size();i++){
             if(cartEntities.get(i).getProductId().equals(modelList.get(position).getId())){
                 holder.quantity.setText(cartEntities.get(i).getQuantity()+"");
                 modelList.get(position).setQuantity(cartEntities.get(i).getQuantity());
+                if(cartEntities.get(i).getQuantity()==0){
+                    DeleteDB(cartEntities.get(i).getProductId());
+                    holder.itemView.findViewById(R.id.item_linear).setVisibility(View.GONE);
+                    holder.itemView.findViewById(R.id.item_plus).setVisibility(View.VISIBLE);
+                }
             }
             else {
                 holder.quantity.setText(modelList.get(position).getQuantity()+"");
@@ -110,10 +113,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
 
         try {
-            byte[] decodedString = Base64.decode(modelList.get(position).getImage(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+           // byte[] decodedString = Base64.decode(modelList.get(position).getImage(), Base64.DEFAULT);
+           // Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             //decodedByte.setPixel(36,36,Color.WHITE);
-            Glide.with(context).asBitmap().load(decodedByte).into(staryberry_image);
+           // Glide.with(context).asBitmap().load(decodedByte).into(staryberry_image);
+
+
+           Bitmap bitmap = Utils.Base64ToBitmap(modelList.get(position).getImage());
+           staryberry_image.setImageBitmap(bitmap);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,15 +167,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public void onClick(View v) {
                 int quantity = finalRowItem2.getQuantity();
                 finalRowItem2.setQuantity(quantity - 1);
-                viewHolderFinal2.quantity.setText(finalRowItem2.getQuantity()+"");
-
-                updateDB(finalRowItem2.getQuantity(),finalRowItem2.getId());
-
                 if(finalRowItem2.getQuantity()==0){
                     holder.itemView.findViewById(R.id.item_linear).setVisibility(View.GONE);
                     holder.itemView.findViewById(R.id.item_plus).setVisibility(View.VISIBLE);
-                    DeleteDB(finalRowItem2.getId());
+
+                    updateDB(finalRowItem1.getQuantity(),finalRowItem1.getId());
                     notifyDataSetChanged();
+                }
+            else {
+                    viewHolderFinal2.quantity.setText(finalRowItem2.getQuantity()+"");
+                    updateDB(finalRowItem2.getQuantity(),finalRowItem2.getId());
                 }
                 notifyDataSetChanged();
             }
@@ -321,7 +330,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         name1.setText(name.toUpperCase());
 
         ImageView add = mView.findViewById(R.id.add);
-        ImageView remove = mView.findViewById(R.id.remove);
+        final ImageView remove = mView.findViewById(R.id.remove);
 
         final TextView price = mView.findViewById(R.id.price);
         price.setText("$"+prices);
@@ -347,6 +356,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 quant--;
                 if(quant==0){
                     DeleteDB(prodId);
+                    remove.setClickable(false);
                 }
                 quan.setText(quant+"");
 

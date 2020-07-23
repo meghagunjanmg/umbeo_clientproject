@@ -71,9 +71,8 @@
         android:layout_height="wrap_content">
         <ImageView
             android:tint="@color/darker_gray"
-
             android:id="@+id/icon3"
-            android:src="@drawable/ic_earn_point_24"
+            android:src="@drawable/ic_diamond"
             android:layout_width="25dp"
             android:layout_height="25dp">
         </ImageView>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RadioButton
+        style="@style/TextViewStyle"
+        android:textSize="14sp"
+        android:layout_weight="1"
+        android:id="@+id/slot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:gravity="center_vertical"
+        android:text="- Action finished" />
+
+
+    <TextView
+        style="@style/TextViewStyle"
+        android:id="@+id/price"
+        android:text="$1"
+        android:gravity="end"
+        android:layout_margin="4dp"
+        android:layout_weight="3"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+</LinearLayout>

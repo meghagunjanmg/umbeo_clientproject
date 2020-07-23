@@ -177,10 +177,7 @@ public class DashBoardFragment extends Fragment {
         list_category = v.findViewById(R.id.list_category);
         list_category_fruit = v.findViewById(R.id.list_category_fruit);
         welcome = v.findViewById(R.id.welcome);
-        scroll = v.findViewById(R.id.scroll);
-        main_scroll = v.findViewById(R.id.main_scroll);
         log = (TextView) v.findViewById(R.id.login);
-
 
 
         if (db == null) {
@@ -190,47 +187,6 @@ public class DashBoardFragment extends Fragment {
         LoadAllDB();
 
         getCategory();
-
-
-
-        GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-        list_category.setLayoutManager(mGridLayoutManager2);
-
-     /*   mMainItemsList = new ArrayList<>();
-        mFruitsItem = new ArrayList<>();
-        mPersonalItems = new ArrayList<>();
-
-        mFruitsItem.add(new ItemModel("Apple", "pic_0", 0));
-        mFruitsItem.add(new ItemModel("Lichi", "pic_1", 0));
-        mFruitsItem.add(new ItemModel("Apple", "pic_0", 0));
-        mFruitsItem.add(new ItemModel("Lichi", "pic_1", 0));
-
-
-        mPersonalItems.add(new ItemModel("Colgate", "pic_2", 0));
-        mPersonalItems.add(new ItemModel("Hair oil", "pic_3", 0));
-        mPersonalItems.add(new ItemModel("Colgate", "pic_2", 0));
-        mPersonalItems.add(new ItemModel("Hair oil", "pic_3", 0));
-
-
-        List<CategoryModel> categoryModelList = new ArrayList<>();
-        List<CategoryModel> categoryModelList1 = new ArrayList<>();
-
-        categoryModelList.add(new CategoryModel("Fruits", mFruitsItem));
-        categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-        list_category_fruit.setAdapter(categoryListAdapter);
-
-        categoryModelList1.add(new CategoryModel("Personal Care", mPersonalItems));
-        categoryListAdapter2 = new CategoryListAdapter(categoryModelList1, getContext());
-        list_category.setAdapter(categoryListAdapter2);
-
-
-        mMainItemsList.add(new ItemModel("Apple", "pic_0", 0));
-        mMainItemsList.add(new ItemModel("Lichi", "pic_1", 0));
-        mMainItemsList.add(new ItemModel("Colgate", "pic_2", 0));
-*/
-
-        // myAdapter = new ItemAdapter(mMainItemsList, getContext());
-        item_recycler.setAdapter(myAdapter);
 
 
         if (preference.getUserName() != null) {
@@ -254,90 +210,6 @@ public class DashBoardFragment extends Fragment {
             }
         });
 
-
-        see_more = v.findViewById(R.id.see_more);
-        see_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), CategoryActivity.class);
-                i.putExtra("Cat", 1);
-                startActivity(i);
-            }
-        });
-
-
-        address = (TextView) v.findViewById(R.id.addre);
-        address.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (preference.getUserName() != null)
-                    startActivity(new Intent(getActivity(), MyAddresses.class));
-
-                else startActivity(new Intent(getActivity(), signup.class));
-            }
-        });
-
-
-        // trending = v.findViewById(R.id.trending);
-        //popular = v.findViewById(R.id.popular);
-        // feature = v.findViewById(R.id.feature);
-        cat1 = v.findViewById(R.id.cat1);
-        cat2 = v.findViewById(R.id.cat2);
-        cat3 = v.findViewById(R.id.cat3);
-        cat4 = v.findViewById(R.id.cat4);
-        straw_linear = v.findViewById(R.id.strawberry_linear);
-        add = v.findViewById(R.id.add);
-        remove = v.findViewById(R.id.remove);
-        quantity = v.findViewById(R.id.quantity);
-
-        orange_linear = v.findViewById(R.id.orange_linear);
-        add3 = v.findViewById(R.id.add3);
-        remove3 = v.findViewById(R.id.remove3);
-        quantity3 = v.findViewById(R.id.quantity3);
-
-        lichi_linear = v.findViewById(R.id.lichi_linear);
-        add2 = v.findViewById(R.id.add1);
-        remove2 = v.findViewById(R.id.remove1);
-        quantity2 = v.findViewById(R.id.quantity1);
-        entitiesList = new ArrayList<>();
-
-        lichi = v.findViewById(R.id.lichi);
-        strawberry = v.findViewById(R.id.strawberry);
-
-
-        cat1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), CategoryActivity.class);
-                i.putExtra("Cat", 1);
-                startActivity(i);
-            }
-        });
-        cat2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getContext(), CategoryActivity.class);
-                i.putExtra("Cat", 2);
-                startActivity(i);
-
-            }
-        });
-
-        cat3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), CategoryActivity.class));
-
-            }
-        });
-
-        cat4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), CategoryActivity.class));
-
-            }
-        });
 
 
         trending_txt = v.findViewById(R.id.trending_txt);
@@ -603,7 +475,7 @@ public class DashBoardFragment extends Fragment {
                     Log.e("FeaturedProducts",response.message()+"");
                     if(response.code()==200){
                         List<ProductModel> productModels = response.body().getData().getProducts();
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),  (int) Math.ceil( productModels.size() / 3f ),LinearLayoutManager.HORIZONTAL, false);
+                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
                         item_recycler.setLayoutManager(mGridLayoutManager);
 
                         myAdapter = new ItemAdapter(productModels, getContext());
@@ -640,7 +512,7 @@ public class DashBoardFragment extends Fragment {
                        List<ProductModel> productModels = response.body().getData().getProducts();
                         Log.e("TrendingProduct",productModels.get(0).getName()+"");
 
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),  (int) Math.ceil( productModels.size() / 3f ),LinearLayoutManager.HORIZONTAL, false);
+                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
                         item_recycler.setLayoutManager(mGridLayoutManager);
 
                        ItemAdapter myAdapter = new ItemAdapter(productModels, getContext());
@@ -676,7 +548,7 @@ public class DashBoardFragment extends Fragment {
 
                        List<ProductModel> productModels = response.body().getData().getProducts();
 
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), (int) Math.ceil( productModels.size() / 3f ),LinearLayoutManager.HORIZONTAL, false);
+                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
 
                         item_recycler.setLayoutManager(mGridLayoutManager);
 

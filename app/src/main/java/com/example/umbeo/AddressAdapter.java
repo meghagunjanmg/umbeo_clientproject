@@ -60,10 +60,12 @@ public class AddressAdapter extends ArrayAdapter<String> {
             textView.setTextColor(Color.WHITE);
         }
 
+
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MyAddresses.selectItem(position);
+                HomeScreenActivity.viewPager.setCurrentItem(1);
             }
         });
 

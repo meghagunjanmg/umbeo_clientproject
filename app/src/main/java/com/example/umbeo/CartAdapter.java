@@ -85,6 +85,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                 if(quant==0){
                     DeleteDB(data.get(i).getProductId());
+                    remove.setClickable(false);
                 }
 
                 quantity.setText(quant+"");
@@ -97,9 +98,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         });
 
         quantity.setText(data.get(position).getQuantity()+"");
-        total_amount.setText(data.get(position).getQuantity()*data.get(position).getPrice()+"");
+        total_amount.setText("$"+String.format("%.2f",data.get(position).getQuantity()*data.get(position).getPrice()));
+        double gsts = data.get(position).getPrice()*0.13;
 
-        CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString()));
+        gst_amount.setText("GST (13%) : $ "+String.format("%.2f",gsts));
+
+        CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString().replace("$","")));
 
     }
 
@@ -108,7 +112,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         return data.size();
     }
 
-    TextView item_name,quantity,total_amount;
+    TextView item_name,quantity,total_amount,gst_amount;
     LinearLayout linearLayout;
     ImageView add,remove;
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -120,11 +124,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             remove = itemView.findViewById(R.id.remove);
             linearLayout = itemView.findViewById(R.id.linear);
             total_amount = itemView.findViewById(R.id.total_amount);
+            gst_amount = itemView.findViewById(R.id.gst_amount);
 
             if(preference.getTheme()==1){
                 item_name.setTextColor(Color.WHITE);
                 quantity.setTextColor(Color.WHITE);
                 total_amount.setTextColor(Color.WHITE);
+                gst_amount.setTextColor(Color.WHITE);
             }
         }
     }

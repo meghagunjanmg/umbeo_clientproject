@@ -20,12 +20,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.umbeo.Storage.PaymentActivity;
 import com.example.umbeo.Storage.UserPreference;
@@ -34,7 +37,10 @@ import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import static android.widget.AbsListView.CHOICE_MODE_SINGLE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,9 +50,8 @@ import java.util.List;
 
 
 public class CartMainFragment extends Fragment {
-    ImageView address;
-    Button add,paym,shop;
-    TextView total_amount;
+    Button paym,shop;
+    TextView add,total_amount,subtotal;
 
     AppDatabase db;
     List<CartEntity> entityList;
@@ -62,7 +67,10 @@ public class CartMainFragment extends Fragment {
     CheckBox loyalty;
     UserPreference preference;
     TextView loyalty_point;
+    double sum = 0;
 
+    TextView address,change_address;
+    ListView slots;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -134,10 +142,12 @@ public class CartMainFragment extends Fragment {
         recyclerView= v.findViewById(R.id.cartItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
          total_amount = v.findViewById(R.id.grand_total);
+        subtotal = v.findViewById(R.id.subtotal);
+        slots = v.findViewById(R.id.slots);
 
          loyalty = v.findViewById(R.id.loyalty);
         loyalty_point = v.findViewById(R.id.loyalty_point);
-        loyalty_point.setText("- ₹ "+preference.getLoyaltyPoints());
+        loyalty_point.setText(""+preference.getLoyaltyPoints());
 
         if (db == null) {
             db = AppDatabase.getInstance(getContext());
@@ -145,16 +155,23 @@ public class CartMainFragment extends Fragment {
         entityList = new ArrayList<>();
         LoadAllDB();
 
+        address = v.findViewById(R.id.address);
+        if(preference.getAddresses()!=null && preference.getAddresses().size()>0){
+            address.setText(""+preference.getAddresses().get(0));
+        }
+        else {
+            /////
+        }
 
-        address=(ImageView)v.findViewById(R.id.editAddress);
-        address.setOnClickListener(new View.OnClickListener() {
+        change_address=v.findViewById(R.id.change_add);
+        change_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),MapActivity.class));
+                startActivity(new Intent(getActivity(),MyAddresses.class));
             }
         });
 
-        add=(Button)v.findViewById(R.id.additem);
+        add=v.findViewById(R.id.additem);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,47 +204,87 @@ public class CartMainFragment extends Fragment {
             }
         });
 
+        db.cartDao().getAll().observe(this, new Observer<List<CartEntity>>() {
+            @Override
+            public void onChanged(List<CartEntity> entities) {
+                entityList = entities;
+                for (int i = 0; i < entityList.size(); i++) {
+                    sum = sum + (entities.get(i).getQuantity() * entities.get(i).getPrice());
+                }
+                subtotal.setText("$ "+String.format("%.2f",sum));
+            }
+        });
+
+
+
+        final HashMap<String,Double> slotList = new HashMap<>();
+        slotList.put("9 am - 11 am",1.0);
+      //  slotList.put("1 pm - 3 pm",5.0);
+       // slotList.put("5 pm - 8 pm",5.0);
+        SlotAdapter myAdapter = new SlotAdapter(slotList, getContext());
+        slots.setChoiceMode(CHOICE_MODE_SINGLE);
+        slots.setAdapter(myAdapter);
+
+        slots.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CheckBox checkBox = view.findViewById(R.id.slot);
+                if(checkBox.isChecked()){
+                    sum = sum + 1;
+                }
+            }
+        });
+
+
+
+
+
         loyalty.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @SuppressLint("FragmentLiveDataObserve")
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    loyalty.setTextColor(Color.parseColor("#000000"));
-                    loyalty_point.setTextColor(Color.parseColor("#000000"));
+                    if(preference.getLoyaltyPoints()<1000){
+                        int i = 1000-preference.getLoyaltyPoints();
+                        Toast.makeText(getContext(),"You need "+i+" more crystals to redeem",Toast.LENGTH_LONG).show();
+                        loyalty.setChecked(false);
+                    }
+                    else if(sum<30){
+                        Toast.makeText(getContext(),"Minimum bill should be $30 to redeem crystal",Toast.LENGTH_LONG).show();
+                        loyalty.setChecked(false);
+                    }
+                    else {
+                        loyalty.setTextColor(Color.GREEN);
+                        loyalty_point.setTextColor(Color.GREEN);
 
-                    db.cartDao().getAll().observe(CartMainFragment.this, new Observer<List<CartEntity>>(){
-                        @Override
-                        public void onChanged(List<CartEntity> entities) {
-                            entityList = entities;
-                            cartAdapter.notifyDataSetChanged();
+                        db.cartDao().getAll().observe(CartMainFragment.this, new Observer<List<CartEntity>>() {
+                            @Override
+                            public void onChanged(List<CartEntity> entities) {
+                                entityList = entities;
+                                cartAdapter.notifyDataSetChanged();
 
-                            cartAdapter = new CartAdapter(entityList, getContext(),db);
-                            cartAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                                @Override
-                                public void onChanged() {
-                                    super.onChanged(); }
-                            });
-                            recyclerView.setAdapter(cartAdapter);
+                                cartAdapter = new CartAdapter(entityList, getContext(), db);
+                                cartAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                                    @Override
+                                    public void onChanged() {
+                                        super.onChanged();
+                                    }
+                                });
+                                recyclerView.setAdapter(cartAdapter);
 
-                            if(entityList.size()==0){
-                                no_item_linear.setVisibility(View.VISIBLE);
-                                main_scroll.setVisibility(View.GONE);
+                                if (entityList.size() == 0) {
+                                    no_item_linear.setVisibility(View.VISIBLE);
+                                    main_scroll.setVisibility(View.GONE);
+                                } else {
+                                    no_item_linear.setVisibility(View.GONE);
+                                    main_scroll.setVisibility(View.VISIBLE);
+                                }
+
+                               double amt = Double.parseDouble(String.format("%.2f", (sum - preference.getLoyaltyPoints()) + 2));
+                                total_amount.setText("$ " + amt);
                             }
-                            else {
-                                no_item_linear.setVisibility(View.GONE);
-                                main_scroll.setVisibility(View.VISIBLE);
-                            }
-
-                            double sum = 0;
-                            for(int i=0;i<entityList.size();i++){
-                                sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
-                            }
-                            sum = Double.parseDouble(String.format("%.2f",(sum - preference.getLoyaltyPoints())+2));
-                            total_amount.setText("$ "+sum);
-
-                        }
-                    });
-
+                        });
+                    }
                 }
 
                 else {
@@ -257,11 +314,7 @@ public class CartMainFragment extends Fragment {
                                 main_scroll.setVisibility(View.VISIBLE);
                             }
 
-                            double sum = 0;
-                            for(int i=0;i<entityList.size();i++){
-                                sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
-                            }
-                            sum = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
+                            double amt = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
                             total_amount.setText("$ "+sum);
                         }
                     });
@@ -288,12 +341,9 @@ public class CartMainFragment extends Fragment {
                     no_item_linear.setVisibility(View.GONE);
                     main_scroll.setVisibility(View.VISIBLE);
                 }
-                double sum = 0;
-                for(int i=0;i<entityList.size();i++){
-                   sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
-                }
-                sum = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
-                total_amount.setText("$ "+sum);
+
+               double amt = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
+                total_amount.setText("$ "+amt);
             }
         });
 
@@ -335,12 +385,9 @@ public class CartMainFragment extends Fragment {
                         no_item_linear.setVisibility(View.GONE);
                         main_scroll.setVisibility(View.VISIBLE);
                     }
-                    double sum = 0;
-                    for(int i=0;i<entityList.size();i++){
-                        sum = sum+ (entities.get(i).getQuantity()*entities.get(i).getPrice());
-                    }
-                    sum = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
-                    total_amount.setText("$ "+sum);
+
+                    double amt = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
+                    total_amount.setText("$ "+amt);
                 }
             });
         } catch (Exception e) {

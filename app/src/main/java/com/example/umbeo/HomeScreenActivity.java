@@ -67,7 +67,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         order.setOnClickListener(this);
         profile.setOnClickListener(this);
 
-        //getProfile();
+        getProfile();
 
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
@@ -329,6 +329,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                     preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
                     preference.setProfilePic(response.body().getData().getProfile_pic());
                     preference.setUserId(response.body().getData().getId());
+                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
                 }
             }
 

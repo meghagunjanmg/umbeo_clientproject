@@ -10,12 +10,14 @@
     <color name="semidark">#66000000</color>
     <color name="colorSemiDark">#90000000</color>
     <color name="dark_blue">#3023AE</color>
+    <color name="blue">#1870d5</color>
     <color name="colorButton">#2196F3</color>
     <color name="grey">#B3B1B1</color>
     <color name="lightgrey">#A9A9A9</color>
     <color name="brightgreen">#44CC00</color>
     <color name="inactive">#95E06C</color>
     <color name="purple">#c86dd7</color>
+    <color name="purple_dark">#6C3375</color>
     <color name="empty"></color>
     <color name="login_form_details">#ccffffff</color>
     <color name="login_form_details_light">#1affffff</color>
@@ -28,6 +30,7 @@
     <color name="colorPrimaryText">#000000</color>
     <color name="bg_color">#FFFFFF</color>
     <color name="green_dark">#4CAF50</color>
+    <color name="green_darker">#18511A</color>
     <color name="darker_gray">#1E1E1E</color>
 
 

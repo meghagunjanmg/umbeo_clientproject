@@ -72,7 +72,6 @@ public interface Api {
 
     @POST("/api/v1/users/update-me")
     Call<ResponseBody> updateUser(
-            @Header("Content-Type") String content_type,
             @Header("Authorization")String token,
             @Body SignUpResquest request
     );

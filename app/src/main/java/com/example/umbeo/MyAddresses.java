@@ -55,7 +55,7 @@ public class MyAddresses extends AppCompatActivity {
 
         address_list = findViewById(R.id.address_list);
         add = findViewById(R.id.add);
-        getProfile();
+        //getProfile();
 
 
         try {
@@ -182,7 +182,7 @@ public class MyAddresses extends AppCompatActivity {
         Log.e("PREFERNCES: 4",request.getName().toString());
         Log.e("PREFERNCES: 5",request.getProfilePic().toString());
         Log.e("PREFERNCES: 6",token);
-        Call<ResponseBody> call= retrofit_interface.updateUser("application/json",token,request);
+        Call<ResponseBody> call= retrofit_interface.updateUser(token,request);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

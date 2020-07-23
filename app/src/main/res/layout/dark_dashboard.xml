@@ -84,7 +84,7 @@
         </EditText>
     </LinearLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/main_scroll"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
@@ -926,6 +926,6 @@
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

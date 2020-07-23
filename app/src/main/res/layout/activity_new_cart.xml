@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<LinearLayout android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_marginBottom="60dp"
-android:background="@color/colorWhite"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <LinearLayout
         android:orientation="vertical"
         android:background="@color/colorWhite"
@@ -31,7 +31,6 @@ android:background="@color/colorWhite"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="4dp"
-            android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -119,20 +118,39 @@ android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:id="@+id/Det"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Details"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryText" />
+            <include
+                layout="@layout/item_detail_cart"></include>
 
-    <include
-        layout="@layout/item_detail_cart"></include>
+
+            <LinearLayout
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sub total"
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/subtotal"
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:textColor="@color/colorPrimaryText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$ 1"
+                    style="@style/TextViewStyle"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_marginLeft="8dp"
@@ -141,18 +159,20 @@ android:background="@color/colorWhite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
+                    android:layout_marginTop="8dp"
                     style="@style/TextViewStyle"
                     android:textSize="14sp"
                     android:id="@+id/loyalty"
                     android:layout_weight="2"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Crystal points"
+                    android:text="Redeem Crystals (100 crystal = $ 1)"
                     android:textColor="@color/colorTextSecondary"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/loyalty_point"
-                    android:gravity="end"
+                    android:gravity="center_vertical|end"
                     android:layout_margin="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -162,36 +182,112 @@ android:background="@color/colorWhite"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
+            <TextView
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delivery"
+                style="@style/TextViewStyle"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold" />
+            <androidx.cardview.widget.CardView
+               android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_marginTop="8dp"
+                        android:layout_margin="4dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Delivery Address"
+                                style="@style/TextViewStyle"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimaryText" />
+                            <TextView
+                                android:id="@+id/address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Delivery Address: "
+                                style="@style/TextViewStyle"
+                                android:textSize="14sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+                        <TextView
+                            android:layout_weight="2"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:id="@+id/change_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="Change"
+                            android:gravity="end|center"
+                            style="@style/TextViewStyle"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/main" />
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Delivery Slot"
+                        style="@style/TextViewStyle"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryText" />
+                    <ListView
+                        android:choiceMode="singleChoice"
+                        android:id="@+id/slots"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </ListView>
+                    <LinearLayout
+                        android:layout_margin="4dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Delivery Charges"
+                            android:textColor="@color/lightgrey"
+                            style="@style/TextViewStyle"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:gravity="end"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="$ 1"
+                            android:textColor="@android:color/black"
+                            style="@style/TextViewStyle"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
     <LinearLayout
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <TextView
-        android:layout_weight="1"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delivery Charges"
-        android:textColor="@color/lightgrey"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
-        android:textStyle="bold" />
-        <TextView
-            android:gravity="end"
-            android:layout_weight="1"
-            android:layout_margin="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="$ 1"
-            android:textColor="@android:color/black"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-    <LinearLayout
+        android:visibility="gone"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:orientation="horizontal"
@@ -278,7 +374,7 @@ android:background="@color/colorWhite"
             android:layout_height="wrap_content"
             android:text="Grand Total"
             style="@style/TextViewStyle"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/grand_total"
@@ -290,39 +386,39 @@ android:background="@color/colorWhite"
             android:text="$ 1"
             android:textColor="@android:color/black"
             style="@style/TextViewStyle"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
 
 
-    <TextView
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:id="@+id/note"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
-        android:text="Please note after placing the order on \n cancelation charges might apply"
-        android:textColor="@color/lightgrey"/>
+            <TextView
+                android:visibility="gone"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/note"
+                style="@style/TextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="Please note after placing the order on \n cancelation charges might apply"
+                android:textColor="@color/lightgrey"
+                android:textSize="14sp" />
 
-    <Button
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="20dp"
-        android:id="@+id/payment"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/main2"
-        app:cornerRadius="20dp"
-        android:background="@color/main"
-        android:text="Place Your Order"
-        android:textAllCaps="false"
-        android:textColor="@color/colorWhite"/>
+            <Button
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/payment"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Proceed to pay"
+                android:backgroundTint="@color/main"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"/>
 
         </LinearLayout>
     </ScrollView>

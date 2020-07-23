@@ -16,10 +16,37 @@
     </include>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/item_recycler"
         android:layout_width="match_parent"
         tools:listitem="@layout/item_category_card"
         android:layout_height="wrap_content">
-
     </androidx.recyclerview.widget.RecyclerView>
-</LinearLayout>
+
+    <TextView
+        android:padding="8dp"
+        style="@style/TextViewStyle"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/opensans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Achievements"
+        android:textColor="@color/colorPrimaryText" />
+
+<HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<include layout="@layout/card_one"></include>
+<include layout="@layout/card_two"></include>
+<include layout="@layout/card_three"></include>
+
+    </LinearLayout>
+
+</HorizontalScrollView>
+    </LinearLayout>

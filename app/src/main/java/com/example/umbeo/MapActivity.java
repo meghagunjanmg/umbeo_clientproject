@@ -131,14 +131,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     preference.setAddresses(addresses);
                 }
 
-                updateAddress();
+                updateAddress(addresses);
 
                 startActivity(new Intent(getApplicationContext(),MyAddresses.class));
             }
         });
     }
 
-    private void updateAddress() {
+    private void updateAddress(List<String> addresses) {
 
         RetrofitClient api_manager = new RetrofitClient();
         Api retrofit_interface =api_manager.usersClient().create(Api.class);
@@ -146,18 +146,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         request.setShop(preference.getShopId());
         request.setProfilePic(preference.getProfilePic());
         request.setName(preference.getUserName());
-        request.setDeliveryAddresses(preference.getAddresses());
+        request.setDeliveryAddresses(addresses);
 
         String token = "Bearer "+preference.getToken();
         //String token = "Bearer "+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZTRmMjhhOTJjNWE3MDAxNzIwZjE1YSIsImlhdCI6MTU5MzE2MjUzNywiZXhwIjoxNTkzMTY2MTM3fQ.wAC-uZyjgi9bFCj2pK2wOdP8MB2SytNpYwqrYFC3Dy8";
 
         Log.e("PREFERNCES: 1",preference.getAddresses().toString());
-        Log.e("PREFERNCES: 2",request.getDeliveryAddresses().toString());
+        Log.e("PREFERNCES: 2",addresses.toString());
         Log.e("PREFERNCES: 3",request.getShop().toString());
         Log.e("PREFERNCES: 4",request.getName().toString());
         Log.e("PREFERNCES: 5",request.getProfilePic().toString());
         Log.e("PREFERNCES: 6",token);
-        Call<ResponseBody> call= retrofit_interface.updateUser("application/json",token,request);
+        Call<ResponseBody> call= retrofit_interface.updateUser(token,request);
            call.enqueue(new Callback<ResponseBody>() {
                @Override
                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

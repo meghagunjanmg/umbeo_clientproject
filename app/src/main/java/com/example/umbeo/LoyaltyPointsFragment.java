@@ -1,5 +1,6 @@
 package com.example.umbeo;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.umbeo.Storage.UserPreference;
@@ -93,7 +96,6 @@ public class LoyaltyPointsFragment extends Fragment {
 
 
     TextView my_points;
-
     RecyclerView item_recycler;
     List<ItemModel> mPersonalItems;
     @Override
@@ -102,11 +104,22 @@ public class LoyaltyPointsFragment extends Fragment {
 
         preference = new UserPreference(getContext());
 
+
+        if(preference.getTheme()==1){
+            TextView text1 = view.findViewById(R.id.text1);
+            text1.setTextColor(Color.WHITE);
+            TextView text2 = view.findViewById(R.id.text2);
+            text2.setTextColor(Color.WHITE);
+            TextView text3 = view.findViewById(R.id.text3);
+            text3.setTextColor(Color.WHITE);
+        }
+
         my_points = view.findViewById(R.id.my_points);
 
         if(preference.getLoyaltyPoints()!=0){
             my_points.setText(preference.getLoyaltyPoints()+"");
         }
+
 
         item_recycler = view.findViewById(R.id.item_recycler);
         GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
