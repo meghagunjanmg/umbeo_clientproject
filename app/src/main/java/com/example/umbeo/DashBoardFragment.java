@@ -376,7 +376,10 @@ public class DashBoardFragment extends Fragment {
         CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
 
         mViewPager.setAdapter(mCustomPagerAdapter);
+        mViewPager.setPageTransformer(true,new ZoomOutPageTransformer());
+        mViewPager.setScrollFactor(4);
         mViewPager.startAutoScroll(5000);
+
     }
     private void hideDefaultKeyboard(View et) {
         getMethodManager().hideSoftInputFromWindow(et.getWindowToken(), 0);

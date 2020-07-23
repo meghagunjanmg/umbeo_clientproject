@@ -68,16 +68,16 @@ public class intro1 extends AppCompatActivity {
         List<OnboardingItem> onboardingItems = new ArrayList<>();
 
         OnboardingItem firstItem = new OnboardingItem();
-        firstItem.setTitle("love shopping");
-        firstItem.setImage(R.drawable.group_194);
+        firstItem.setTitle("Your daily needs from the comfort of your smart phone");
+        firstItem.setImage(R.drawable.group_204);
 
         OnboardingItem secondItem = new OnboardingItem();
-        secondItem.setTitle("buy what you love");
+        secondItem.setTitle("Buy what you love");
         secondItem.setImage(R.drawable.group_195);
 
         OnboardingItem thirdItem = new OnboardingItem();
-        thirdItem.setTitle("get all your products under single screen");
-        thirdItem.setImage(R.drawable.group_204);
+        thirdItem.setTitle("Earn daily rewards");
+        thirdItem.setImage(R.drawable.group_194);
 
         onboardingItems.add(firstItem);
         onboardingItems.add(secondItem);

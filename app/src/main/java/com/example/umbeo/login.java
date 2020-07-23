@@ -32,7 +32,7 @@ import retrofit2.Response;
 
 public class login extends AppCompatActivity {
 
-    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String emailPattern = "^(?:\\d{10}|\\w+@\\w+\\.\\w{2,3})$";
     Button  login;
     TextView signu;
     UserPreference preference;
@@ -108,7 +108,7 @@ public class login extends AppCompatActivity {
         }
         if (!(email.matches(emailPattern))) {
             err.setBackgroundColor(Color.parseColor("#f0f8ff"));
-            err.setText("Please Enter valid Email");
+            err.setText("Please Enter valid Email/Phone Number");
             login.setEnabled(true);
             return;
         }

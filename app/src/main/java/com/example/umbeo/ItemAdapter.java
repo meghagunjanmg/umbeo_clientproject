@@ -242,8 +242,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
             if(preference.getTheme()==1){
-                card.setCardBackgroundColor(Color.LTGRAY);
-                item_linear.setBackgroundColor(Color.LTGRAY);
+                card.setCardBackgroundColor(Color.parseColor("#F6F6F6"));
+                item_linear.setBackgroundColor(Color.parseColor("#F6F6F6"));
             }
 
             if(Integer.parseInt(quantity.getText().toString())>0){
