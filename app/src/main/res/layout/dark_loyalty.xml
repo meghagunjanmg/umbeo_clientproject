@@ -24,6 +24,14 @@
         android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
     <TextView
         android:padding="8dp"
         style="@style/TextViewStyle"
@@ -49,4 +57,7 @@
 
         </LinearLayout>
 
-    </HorizontalScrollView></LinearLayout>
+    </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
+        </LinearLayout>

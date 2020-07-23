@@ -190,6 +190,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/delivery_card"
                     android:layout_margin="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -215,9 +216,10 @@
                                     style="@style/TextViewStyle"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
-                                    android:textColor="@color/colorPrimaryText" />
+                                    android:textColor="@color/colorWhite" />
                                 <TextView
                                     android:id="@+id/address"
+                                    android:textColor="@color/colorWhite"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Delivery Address: "
@@ -273,7 +275,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="$ 1"
-                                android:textColor="@android:color/black"
+                                android:textColor="@color/colorWhite"
                                 style="@style/TextViewStyle"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />

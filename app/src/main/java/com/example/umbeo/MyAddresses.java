@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,7 @@ public class MyAddresses extends AppCompatActivity {
     UserPreference preference;
     Button add;
     AddressAdapter myAdapter;
-
+    ImageView back_btn;
 
     @SuppressLint("NewApi")
     @Override
@@ -57,6 +58,14 @@ public class MyAddresses extends AppCompatActivity {
         add = findViewById(R.id.add);
         //getProfile();
 
+
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         try {
             if(preference.getAddresses()!=null && preference.getAddresses().size()!=0 ){
@@ -199,5 +208,11 @@ public class MyAddresses extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
 }
 

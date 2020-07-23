@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,13 +67,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
+        ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_card, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+
+        holder.quantity.setFilters(new InputFilter[]{ new InputFilterMinMax("1", modelList.get(position).getQuantityAvailable().toString())});
 
         for(int i = 0;i<cartEntities.size();i++){
             if(cartEntities.get(i).getProductId().equals(modelList.get(position).getId())){
@@ -185,7 +189,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dailog(modelList.get(position).getName(),Integer.parseInt(holder.quantity.getText().toString()),modelList.get(position).getImage(),Double.parseDouble(modelList.get(position).getPrice()),
+                int quant_1 = 0;
+                try {
+                    quant_1 = Integer.parseInt(holder.quantity.getText().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    quant_1 =0;
+                }
+                dailog(modelList.get(position).getName(),quant_1,modelList.get(position).getImage(),Double.parseDouble(modelList.get(position).getPrice()),
                         modelList.get(position).getDescription(),modelList.get(position).getCategoryId(),modelList.get(position).getSubCategoryId(),modelList.get(position).getId(),modelList.get(position).getDiscount());
             }
         });
@@ -227,6 +238,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             linear = itemView.findViewById(R.id.linear);
 
             card = itemView.findViewById(R.id.card);
+
+
 
             if(preference.getTheme()==1){
                 card.setCardBackgroundColor(Color.LTGRAY);
@@ -323,6 +336,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
         final TextView quan = mView.findViewById(R.id.quantity1111);
+        quan.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "10000")});
 
 
 
@@ -346,7 +360,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 quan.setText(quant+"");
 
                 updateDB(quant,prodId);
-
+                 if(quant>=1){
+                    remove.setClickable(true);
+                }
                 notifyDataSetChanged();
             }
         });
@@ -357,6 +373,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 if(quant==0){
                     DeleteDB(prodId);
                     remove.setClickable(false);
+                }
+                else if(quant>=1){
+                    remove.setClickable(true);
                 }
                 quan.setText(quant+"");
 

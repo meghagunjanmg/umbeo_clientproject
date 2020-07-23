@@ -140,17 +140,12 @@ public class ProfileMainFragment extends Fragment {
             public void onClick(View v) {
                 if(darkTheme.isChecked()){
                     preference.setTheme(1);
-                    //getContext().setTheme(R.style.DarkTheme);
-                    Intent i = new Intent(getContext(),HomeScreenActivity.class);
-                    i.putExtra("Theme",1);
-                    startActivity(i);
+                    HomeScreenActivity.refreshFragments();
                 }
                 else {
                     preference.setTheme(0);
-                    //getContext().setTheme(R.style.DarkTheme);
-                    Intent i = new Intent(getContext(),HomeScreenActivity.class);
-                    i.putExtra("Theme",0);
-                    startActivity(i);
+                    HomeScreenActivity.refreshFragments();
+
                 }
             }
         });

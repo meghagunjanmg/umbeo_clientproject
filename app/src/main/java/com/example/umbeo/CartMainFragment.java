@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -127,13 +128,20 @@ public class CartMainFragment extends Fragment {
         return inflater.inflate(R.layout.activity_new_cart, container, false);
     }
 
-
+    CardView delivery_card;
     @SuppressLint("FragmentLiveDataObserve")
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
         preference = new UserPreference(getContext());
+
+        delivery_card = v.findViewById(R.id.delivery_card);
+
+        if(preference.getTheme()==1){
+            delivery_card.setCardBackgroundColor(Color.BLACK);
+        }
+
         no_item_linear = v.findViewById(R.id.no_item_linear);
         shop = v.findViewById(R.id.shop);
         no_item = v.findViewById(R.id.no_item);
@@ -182,9 +190,16 @@ public class CartMainFragment extends Fragment {
         paym.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), PaymentActivity.class);
-                i.putExtra("total",total_amount.getText().toString());
-                startActivity(i);
+                if(preference.getUserName()==null){
+                    Toast.makeText(getContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getContext(), signup.class);
+                    startActivity(i);
+                }
+                else {
+                    Intent i = new Intent(getContext(), PaymentActivity.class);
+                    i.putExtra("total", total_amount.getText().toString());
+                    startActivity(i);
+                }
             }
         });
 

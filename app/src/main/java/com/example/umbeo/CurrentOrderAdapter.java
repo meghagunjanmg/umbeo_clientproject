@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.response_data.GetOrders.OrdersList;
 import com.google.android.material.slider.Slider;
 
@@ -25,10 +27,12 @@ import java.util.List;
 public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapter.ViewHolder> {
     List<OrdersList> modelList;
     Context context;
+    UserPreference preference;
 
     public CurrentOrderAdapter(List<OrdersList> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
+        preference = new UserPreference(context);
     }
 
     @NonNull
@@ -121,6 +125,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
     TextView products,time,amount;
     Slider status;
     Button cancel;
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView card1;
         ImageView call_btn;
@@ -135,6 +140,9 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
             card1 = itemView.findViewById(R.id.card1);
             call_btn = itemView.findViewById(R.id.call_btn);
 
+            if(preference.getTheme()==1){
+                card1.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
+            }
 
         }
     }

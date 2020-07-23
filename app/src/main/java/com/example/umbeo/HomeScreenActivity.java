@@ -37,18 +37,27 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
-    private ViewPagerAdapter adapter;
+    private static ViewPagerAdapter adapter;
      public static CustomViewPager viewPager;
     static LinearLayout explore,cart,order,profile;
     AppDatabase db;
     int id;
     public static boolean payment_frag = false;
     public static boolean category_frag = false;
+    static LinearLayout nav_linear;
+    static ImageView icon1,icon2,icon3,icon4;
+    static TextView text1,text2,text3,text4;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
-     UserPreference preference ;
+     static UserPreference preference ;
 
-     @Override
+    public static void refreshFragments() {
+
+        viewPager.setAdapter(adapter);
+        setIcons();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen_activity);
@@ -67,6 +76,19 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         order.setOnClickListener(this);
         profile.setOnClickListener(this);
 
+
+
+        nav_linear = findViewById(R.id.nav_linear);
+         icon1 = findViewById(R.id.icon1);
+         text1 = findViewById(R.id.text1);
+         icon2 = findViewById(R.id.icon2);
+         text2 = findViewById(R.id.text2);
+         icon3 = findViewById(R.id.icon3);
+         text3 = findViewById(R.id.text3);
+         icon4 = findViewById(R.id.icon4);
+         text4 = findViewById(R.id.text4);
+
+
         getProfile();
 
         if (db == null) {
@@ -78,11 +100,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
         setupViewPager();
 
-        id = getIntent().getIntExtra("Id",0);
-        if(id==1){
-            viewPager.setCurrentItem(1);
-            setIcons();
-        }
+
 
 
         try {
@@ -164,18 +182,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-    private void setIcons(){
-        LinearLayout nav_linear = findViewById(R.id.nav_linear);
+    private static void setIcons(){
         nav_linear.setBackgroundColor(Color.WHITE);
-
-        ImageView icon1 = findViewById(R.id.icon1);
-        TextView text1 = findViewById(R.id.text1);
-        ImageView icon2 = findViewById(R.id.icon2);
-        TextView text2 = findViewById(R.id.text2);
-        ImageView icon3 = findViewById(R.id.icon3);
-        TextView text3 = findViewById(R.id.text3);
-        ImageView icon4 = findViewById(R.id.icon4);
-        TextView text4 = findViewById(R.id.text4);
 
         if(preference.getTheme()==0) {
             nav_linear.setBackgroundColor(Color.WHITE);

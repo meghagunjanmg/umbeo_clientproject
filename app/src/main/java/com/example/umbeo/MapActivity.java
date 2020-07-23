@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     Button add_address;
     List<String> addresses ;
     String address;
+    ImageView back_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         line2 = findViewById(R.id.line2);
         line3 = findViewById(R.id.line3);
         add_address = findViewById(R.id.add_address);
+
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
         try {
             if( preference.getAddresses().size()==0) {
@@ -371,5 +382,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

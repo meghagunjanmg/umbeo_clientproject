@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -29,9 +30,13 @@ import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -50,6 +55,9 @@ import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +68,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.Gravity.END;
 import static android.view.Gravity.START;
 
@@ -120,6 +129,7 @@ public class DashBoardFragment extends Fragment {
     private Context Context;
     HorizontalScrollView scroll;
     ScrollView main_scroll;
+    private InputMethodManager imm;
 
     public DashBoardFragment() {
         // Required empty public constructor
@@ -178,6 +188,10 @@ public class DashBoardFragment extends Fragment {
         list_category_fruit = v.findViewById(R.id.list_category_fruit);
         welcome = v.findViewById(R.id.welcome);
         log = (TextView) v.findViewById(R.id.login);
+        EditText search = v.findViewById(R.id.search);
+        search.clearFocus();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
 
 
         if (db == null) {
@@ -215,6 +229,9 @@ public class DashBoardFragment extends Fragment {
         trending_txt = v.findViewById(R.id.trending_txt);
         feature_txt = v.findViewById(R.id.feature_txt);
         popular_txt = v.findViewById(R.id.popular_txt);
+
+
+
 
         getFeaturedProducts();
 
@@ -361,6 +378,16 @@ public class DashBoardFragment extends Fragment {
         mViewPager.setAdapter(mCustomPagerAdapter);
         mViewPager.startAutoScroll(5000);
     }
+    private void hideDefaultKeyboard(View et) {
+        getMethodManager().hideSoftInputFromWindow(et.getWindowToken(), 0);
+    }
+
+    private InputMethodManager getMethodManager() {
+        if (this.imm == null) {
+            this.imm = (InputMethodManager)  getContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+        }
+        return this.imm;
+    }
 
     private void getCategoryProduct(final String categoryName, final String categoryId) {
 
@@ -476,6 +503,7 @@ public class DashBoardFragment extends Fragment {
                     if(response.code()==200){
                         List<ProductModel> productModels = response.body().getData().getProducts();
                         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
+
                         item_recycler.setLayoutManager(mGridLayoutManager);
 
                         myAdapter = new ItemAdapter(productModels, getContext());

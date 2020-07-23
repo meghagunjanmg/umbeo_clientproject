@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 String token = getIntent().getStringExtra("token");
                 getProfile(token);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -75,8 +76,23 @@ public class MainActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent= new Intent(MainActivity.this,HomeScreenActivity.class);
-                    startActivity(intent);
+                    int i = getIntent().getIntExtra("intent",0);
+                    try {
+                        String token = getIntent().getStringExtra("token");
+                        getProfile(token);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if(i==1) {
+                        Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                    }
+                    else {
+                        Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
+                        startActivity(intent);
+                    }
                 }
             },SPLASH_TIME_OUT);
         }

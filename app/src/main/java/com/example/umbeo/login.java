@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class login extends AppCompatActivity {
     Button  login;
     TextView signu;
     UserPreference preference;
+    ImageView back_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,16 @@ public class login extends AppCompatActivity {
         else
         setContentView(R.layout.activity_login);
         signu=(TextView)findViewById(R.id.signin);
+
+
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                HomeScreenActivity.viewPager.setCurrentItem(0);
+            }
+        });
 
         signu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,10 +136,13 @@ public class login extends AppCompatActivity {
                         login.setEnabled(true);
 
                         Toast.makeText(com.example.umbeo.login.this,"Login Successful",Toast.LENGTH_LONG).show();
-
                         Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                                i.putExtra("token",response.body().getData());
+                        //i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        i.putExtra("token",response.body().getData());
+                        i.putExtra("intent",1);
                         startActivity(i);
+
+                        getProfile(response.body().getData());
                     }
                     else if(response.code()==401){
                         Toast.makeText(com.example.umbeo.login.this,"Invalid email/password",Toast.LENGTH_LONG).show();
@@ -212,8 +227,6 @@ public class login extends AppCompatActivity {
                     preference.setAddresses(response.body().getData().getDeliveryAddresses());
                     preference.setProfilePic(response.body().getData().getProfile_pic());
                     preference.setToken(tokens);
-
-
                 }
             }
 
@@ -227,7 +240,14 @@ public class login extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         this.finish();
+    }
+
+
+    public void back(){
+        onBackPressed();
+        HomeScreenActivity.refreshFragments();
     }
 
 }

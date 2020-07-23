@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.response_data.GetOrders.OrdersList;
 import com.google.android.material.slider.Slider;
 
@@ -25,10 +27,12 @@ import java.util.List;
 public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdapter.ViewHolder> {
     List<OrdersList> modelList;
     Context context;
+    UserPreference preference;
 
     public HistoricOrderAdapter(List<OrdersList> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
+        preference = new UserPreference(context);
     }
 
     @NonNull
@@ -76,6 +80,7 @@ public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdap
     TextView products,time,amount,status;
     Button repeat;
     public class ViewHolder extends RecyclerView.ViewHolder {
+        CardView card1;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -84,10 +89,11 @@ public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdap
             amount = itemView.findViewById(R.id.amount);
             status = itemView.findViewById(R.id.status);
             repeat = itemView.findViewById(R.id.repeat);
+            card1 = itemView.findViewById(R.id.card1);
 
-
-
-
+            if(preference.getTheme()==1){
+                card1.setCardBackgroundColor(Color.parseColor("#F8F8F8"));
+            }
         }
     }
 }

@@ -67,6 +67,8 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/search"
+            android:keyboardNavigationCluster="false"
             style="@style/TextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -299,7 +301,7 @@
                         android:text="Recommended"
                         android:textColor="@color/main"
                         style="@style/TextViewStyle"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:layout_weight="1"
@@ -312,7 +314,7 @@
                         android:text="Feature"
                         android:textColor="@color/main"
                         style="@style/TextViewStyle"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:layout_weight="1"
@@ -325,7 +327,7 @@
                         android:text="Trending"
                         android:textColor="@color/main"
                         style="@style/TextViewStyle"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 

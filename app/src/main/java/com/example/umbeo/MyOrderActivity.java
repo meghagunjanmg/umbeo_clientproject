@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.Api;
@@ -27,10 +30,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MyOrderActivity extends AppCompatActivity {
-    Button history,current, all;
+    TextView history,current, all;
     ImageView back_btn;
     UserPreference preference;
-    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +59,11 @@ public class MyOrderActivity extends AppCompatActivity {
             }
         });
 
-        history=(Button)findViewById(R.id.history);
-        current=(Button)findViewById(R.id.current);
-        all=(Button)findViewById(R.id.all);
+        history=findViewById(R.id.history);
+        current=findViewById(R.id.current);
+        all=findViewById(R.id.all);
 
-        current.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.main2));
+       /* current.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.main2));
         current.setTextColor(R.color.colorWhite);
 
         history.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.colorWhite));
@@ -69,6 +71,8 @@ public class MyOrderActivity extends AppCompatActivity {
 
         all.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.colorWhite));
         all.setTextColor(R.color.main2);
+
+
 
         // Create new fragment and transaction
         Fragment newFragment = new OrderCurrentFragment(currentOrder);
@@ -79,19 +83,20 @@ public class MyOrderActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, newFragment).commit();
 
         // Commit the transaction
-
+ */
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                current.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                current.setBackgroundResource(R.drawable.bg_feature_card2);
 
-                history.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.main2));
-                history.setTextColor(R.color.colorWhite);
+                history.setBackgroundResource(R.drawable.bg_feature_card);
+                history.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                history.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                all.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                all.setBackgroundResource(R.drawable.bg_feature_card2);
 
-                current.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.colorWhite));
-                current.setTextColor(R.color.main2);
 
-                all.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.colorWhite));
-                all.setTextColor(R.color.main2);
 
                 // Create new fragment and transaction
                 Fragment newFragment = new OrderHistoryFragment(historicOrder);
@@ -106,19 +111,27 @@ public class MyOrderActivity extends AppCompatActivity {
             }
         });
 
+        history.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+        history.setBackgroundResource(R.drawable.bg_feature_card2);
+
+        current.setBackgroundResource(R.drawable.bg_feature_card);
+        current.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+        current.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+        all.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+        all.setBackgroundResource(R.drawable.bg_feature_card2);
+
         current.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
 
-                current.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.main2));
-                current.setTextColor(R.color.colorWhite);
+                history.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                history.setBackgroundResource(R.drawable.bg_feature_card2);
 
-                history.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.colorWhite));
-                history.setTextColor(R.color.main2);
-
-                all.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.colorWhite));
-                all.setTextColor(R.color.main2);
+                current.setBackgroundResource(R.drawable.bg_feature_card);
+                current.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                current.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                all.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                all.setBackgroundResource(R.drawable.bg_feature_card2);
 
                 // Create new fragment and transaction
                 Fragment newFragment = new OrderCurrentFragment(currentOrder);
@@ -136,14 +149,14 @@ public class MyOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                all.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.main2));
-                all.setTextColor(R.color.colorWhite);
+                current.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                current.setBackgroundResource(R.drawable.bg_feature_card2);
 
-                history.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.colorWhite));
-                history.setTextColor(R.color.main2);
-
-                current.setBackgroundTintList(getApplicationContext().getResources().getColorStateList(R.color.colorWhite));
-                current.setTextColor(R.color.main2);
+                all.setBackgroundResource(R.drawable.bg_feature_card);
+                all.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+                all.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                history.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                history.setBackgroundResource(R.drawable.bg_feature_card2);
 
 
                 // Create new fragment and transaction
@@ -186,6 +199,16 @@ public class MyOrderActivity extends AppCompatActivity {
                         }
                         else historicOrder.add(response.body().getData().get(i));
                     }
+
+                    // Create new fragment and transaction
+                    Fragment newFragment = new OrderCurrentFragment(currentOrder);
+                    // consider using Java coding conventions (upper first char class names!!!)
+
+                    // Replace whatever is in the fragment_container view with this fragment,
+                    // and add the transaction to the back stack
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, newFragment).commit();
+                    // Commit the transaction
                 }
             }
 

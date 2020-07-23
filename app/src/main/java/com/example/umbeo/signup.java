@@ -65,6 +65,7 @@ public class signup extends AppCompatActivity {
     UserPreference preference;
 TextView login;
 
+ImageView back_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +78,17 @@ TextView login;
 
         dp = (ImageView) findViewById(R.id.dp);
         sign = (Button) findViewById(R.id.button);
+
+        back_btn = findViewById(R.id.back_btn);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                HomeScreenActivity.viewPager.setCurrentItem(0);
+            }
+        });
+
+
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +100,9 @@ TextView login;
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(signup.this,login.class));
+                Intent i = new Intent(signup.this,login.class);
+                startActivity(i);
+
             }
         });
 

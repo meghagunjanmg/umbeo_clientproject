@@ -314,11 +314,9 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
                 Log.e("OrderResponse",response.message()+"");
                 if(response.code()==200){
                     dailog();
-                    Toast.makeText(getApplicationContext(),request.getProducts().get(0).getQuantity()+"    "+ response.body().getData().getOrderId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),response.body().getData().getOrderId(), Toast.LENGTH_SHORT).show();
                 }
-                else if(preference.getUserName()==null){
-                    Toast.makeText(getApplicationContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();
-                }
+               // else if(preference.getUserName()==null){Toast.makeText(getApplicationContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();}
                 else Toast.makeText(getApplicationContext(),"Something went wrong", Toast.LENGTH_SHORT).show();
             }
 

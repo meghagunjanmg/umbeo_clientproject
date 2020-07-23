@@ -86,14 +86,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 if(quant==0){
                     DeleteDB(data.get(i).getProductId());
                     remove.setClickable(false);
+                    notifyDataSetChanged();
                 }
-
-                quantity.setText(quant+"");
-
-                updateDB(quant,data.get(i).getProductId());
-
-                total_amount.setText(quant*price+"");
-                notifyDataSetChanged();
+                else {
+                    quantity.setText(quant + "");
+                    updateDB(quant, data.get(i).getProductId());
+                    total_amount.setText(quant * price + "");
+                    notifyDataSetChanged();
+                }
             }
         });
 

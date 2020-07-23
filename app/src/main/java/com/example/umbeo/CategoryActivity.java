@@ -93,7 +93,8 @@ public class CategoryActivity extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext() ,HomeScreenActivity.class));
+                finish();
+                HomeScreenActivity.viewPager.setCurrentItem(0);
             }
         });
         cart_btn.setOnClickListener(new View.OnClickListener() {
