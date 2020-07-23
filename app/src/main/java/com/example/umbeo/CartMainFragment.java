@@ -28,6 +28,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,9 +39,13 @@ import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.widget.AbsListView.CHOICE_MODE_SINGLE;
 
@@ -68,7 +74,7 @@ public class CartMainFragment extends Fragment {
     CheckBox loyalty;
     UserPreference preference;
     TextView loyalty_point;
-    double sum = 0;
+    double sum = 0,delivery=0;
 
     TextView address,change_address;
     ListView slots;
@@ -129,6 +135,8 @@ public class CartMainFragment extends Fragment {
     }
 
     CardView delivery_card;
+    TextView delivery_charges;
+
     @SuppressLint("FragmentLiveDataObserve")
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
@@ -137,6 +145,7 @@ public class CartMainFragment extends Fragment {
         preference = new UserPreference(getContext());
 
         delivery_card = v.findViewById(R.id.delivery_card);
+        delivery_charges = v.findViewById(R.id.delivery_charges);
 
         if(preference.getTheme()==1){
             delivery_card.setCardBackgroundColor(Color.BLACK);
@@ -151,7 +160,6 @@ public class CartMainFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
          total_amount = v.findViewById(R.id.grand_total);
         subtotal = v.findViewById(R.id.subtotal);
-        slots = v.findViewById(R.id.slots);
 
          loyalty = v.findViewById(R.id.loyalty);
         loyalty_point = v.findViewById(R.id.loyalty_point);
@@ -227,16 +235,24 @@ public class CartMainFragment extends Fragment {
                     sum = sum + (entities.get(i).getQuantity() * entities.get(i).getPrice());
                 }
                 subtotal.setText("$ "+String.format("%.2f",sum));
+                Double d = sum+delivery;
+                total_amount.setText("$ "+String.format("%.2f",d));
             }
         });
 
 
 
         final HashMap<String,Double> slotList = new HashMap<>();
-        slotList.put("9 am - 11 am",1.0);
-      //  slotList.put("1 pm - 3 pm",5.0);
-       // slotList.put("5 pm - 8 pm",5.0);
-        SlotAdapter myAdapter = new SlotAdapter(slotList, getContext());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMM, EEE");
+        Calendar cal = Calendar.getInstance();
+        cal.add( Calendar.DATE, 1 );
+        String convertedDate = dateFormat.format(cal.getTime());
+
+        slotList.put("9 am - 11 am \n"+convertedDate,1.5);
+        slotList.put("1 pm - 3 pm \n"+convertedDate,1.3);
+        slotList.put("5 pm - 8 pm \n"+convertedDate,1.0);
+      /*  SlotAdapter myAdapter = new SlotAdapter(slotList, getContext());
         slots.setChoiceMode(CHOICE_MODE_SINGLE);
         slots.setAdapter(myAdapter);
 
@@ -250,7 +266,75 @@ public class CartMainFragment extends Fragment {
             }
         });
 
+       */
 
+        RadioGroup rgb = v.findViewById(R.id.radio_grp);
+        final RadioButton slot1 = v.findViewById(R.id.slot1);
+        final RadioButton slot2 = v.findViewById(R.id.slot2);
+        final RadioButton slot3 = v.findViewById(R.id.slot3);
+
+        if(preference.getTheme()==1){
+            slot1.setTextColor(Color.WHITE);
+            slot2.setTextColor(Color.WHITE);
+            slot3.setTextColor(Color.WHITE);
+        }
+
+        final ArrayList mData = new ArrayList(slotList.entrySet());
+        final List<Double> price = new ArrayList<>();
+        for(int i=0;i<mData.size();i++){
+            Map.Entry<String, Double> item = (Map.Entry) mData.get(i);
+            if(i==0){
+                slot1.setText(item.getKey());
+                price.add(item.getValue());
+            }
+            if(i==1){
+                slot2.setText(item.getKey());
+                price.add(item.getValue());
+            }
+            if(i==2){
+                slot3.setText(item.getKey());
+                price.add(item.getValue());
+            }
+        }
+        slot1.setChecked(true);
+        delivery_charges.setText("$ "+price.get(0));
+        delivery = price.get(0);
+
+        subtotal.setText("$ "+String.format("%.2f",sum));
+        Double d = sum+delivery;
+        total_amount.setText("$ "+String.format("%.2f",d));
+
+        rgb.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(slot1.isChecked()){
+                    delivery_charges.setText("$ "+price.get(0));
+                    delivery = price.get(0);
+
+                    subtotal.setText("$ "+String.format("%.2f",sum));
+                    Double d = sum+delivery;
+                    total_amount.setText("$ "+String.format("%.2f",d));
+                }
+
+                else if(slot2.isChecked()){
+                    delivery_charges.setText("$ "+price.get(1));
+                    delivery = price.get(1);
+
+                    subtotal.setText("$ "+String.format("%.2f",sum));
+                    Double d = sum+delivery;
+                    total_amount.setText("$ "+String.format("%.2f",d));
+                }
+
+               else if(slot3.isChecked()){
+                    delivery_charges.setText("$ "+price.get(2));
+                    delivery = price.get(2);
+
+                    subtotal.setText("$ "+String.format("%.2f",sum));
+                    Double d = sum+delivery;
+                    total_amount.setText("$ "+String.format("%.2f",d));
+                }
+            }
+        });
 
 
 
@@ -294,9 +378,9 @@ public class CartMainFragment extends Fragment {
                                     no_item_linear.setVisibility(View.GONE);
                                     main_scroll.setVisibility(View.VISIBLE);
                                 }
-
-                               double amt = Double.parseDouble(String.format("%.2f", (sum - preference.getLoyaltyPoints()) + 2));
-                                total_amount.setText("$ " + amt);
+                                subtotal.setText("$ "+String.format("%.2f",sum));
+                                Double d = sum+delivery-preference.getLoyaltyPoints();
+                                total_amount.setText("$ "+String.format("%.2f",d));
                             }
                         });
                     }
@@ -329,8 +413,9 @@ public class CartMainFragment extends Fragment {
                                 main_scroll.setVisibility(View.VISIBLE);
                             }
 
-                            double amt = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
-                            total_amount.setText("$ "+sum);
+                            subtotal.setText("$ "+String.format("%.2f",sum));
+                            Double d = sum+delivery;
+                            total_amount.setText("$ "+String.format("%.2f",d));
                         }
                     });
 
@@ -357,8 +442,9 @@ public class CartMainFragment extends Fragment {
                     main_scroll.setVisibility(View.VISIBLE);
                 }
 
-               double amt = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
-                total_amount.setText("$ "+amt);
+                subtotal.setText("$ "+String.format("%.2f",sum));
+                Double d = sum+delivery;
+                total_amount.setText("$ "+String.format("%.2f",d));
             }
         });
 
@@ -401,8 +487,9 @@ public class CartMainFragment extends Fragment {
                         main_scroll.setVisibility(View.VISIBLE);
                     }
 
-                    double amt = Double.parseDouble(String.format("%.2f",((sum - 1)+2)));
-                    total_amount.setText("$ "+amt);
+                    subtotal.setText("$ "+String.format("%.2f",sum));
+                    Double d = sum+delivery;
+                    total_amount.setText("$ "+String.format("%.2f",d));
                 }
             });
         } catch (Exception e) {

@@ -39,7 +39,8 @@
                 android:layout_marginTop="20dp"
                 android:id="@+id/dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/profile"
+                android:src="@drawable/ic_user"
+                android:tint="@color/colorWhite"
                 android:layout_width="100dp"
                 android:layout_height="100dp">
             </ImageView>

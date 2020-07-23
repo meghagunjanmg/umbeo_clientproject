@@ -3,6 +3,8 @@ package com.example.umbeo;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,13 +12,16 @@ import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.VectorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,7 +44,7 @@ import retrofit2.Response;
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     private static ViewPagerAdapter adapter;
      public static CustomViewPager viewPager;
-    static LinearLayout explore,cart,order,profile;
+    static FrameLayout explore,cart,order,profile;
     AppDatabase db;
     int id;
     public static boolean payment_frag = false;
@@ -47,6 +52,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     static LinearLayout nav_linear;
     static ImageView icon1,icon2,icon3,icon4;
     static TextView text1,text2,text3,text4;
+    static Context context;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
      static UserPreference preference ;
@@ -61,6 +67,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen_activity);
+
+        context = this;
 
         viewPager = findViewById(R.id.pager);
         explore = findViewById(R.id.explore);
@@ -188,54 +196,57 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         if(preference.getTheme()==0) {
             nav_linear.setBackgroundColor(Color.WHITE);
             if (viewPager.getCurrentItem() == 0) {
-                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                DrawableCompat.setTint(icon1.getDrawable(), ContextCompat.getColor(context, R.color.main));
 
-                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+
+                //icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                //text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+
+                DrawableCompat.setTint(icon2.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon3.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon4.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
 
             }
             if (viewPager.getCurrentItem() == 1) {
 
-                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                DrawableCompat.setTint(icon2.getDrawable(), ContextCompat.getColor(context, R.color.main));
                 text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
-                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon1.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon3.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon4.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
             }
             if (viewPager.getCurrentItem() == 2) {
 
-                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                DrawableCompat.setTint(icon3.getDrawable(), ContextCompat.getColor(context, R.color.main));
                 text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
-                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon2.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon1.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon4.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
             }
             if (viewPager.getCurrentItem() == 3) {
 
-                icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                DrawableCompat.setTint(icon4.getDrawable(), ContextCompat.getColor(context, R.color.main));
                 text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
 
-                icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon2.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon3.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+                DrawableCompat.setTint(icon1.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
                 text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
             }
         }

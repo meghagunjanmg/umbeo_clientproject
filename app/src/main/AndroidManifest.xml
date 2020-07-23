@@ -17,12 +17,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Storage.PaymentActivity"></activity>
-        <activity android:name=".MyOrderActivity" />
+        <activity android:name=".Storage.PaymentActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MyOrderActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MyAddresses"
             android:screenOrientation="portrait" />

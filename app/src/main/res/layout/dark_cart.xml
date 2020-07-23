@@ -249,12 +249,8 @@
                             android:textSize="14sp"
                             android:textStyle="bold"
                             android:textColor="@color/colorWhite" />
-                        <ListView
-                            android:choiceMode="singleChoice"
-                            android:id="@+id/slots"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                        </ListView>
+                        <include layout="@layout/time_slots"></include>
+
                         <LinearLayout
                             android:layout_margin="4dp"
                             android:orientation="horizontal"
@@ -270,6 +266,7 @@
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
                             <TextView
+                                android:id="@+id/delivery_charges"
                                 android:gravity="end"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -50,7 +51,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
 
         String productName ="";
         for (int i=0;i<modelList.get(position).getProducts().size();i++){
-            productName = productName+" "+modelList.get(position).getProducts().get(i).getProduct().getName();
+            productName = productName+","+modelList.get(position).getProducts().get(i).getProduct().getName()+" X "+modelList.get(position).getProducts().get(i).getQuantity();
         }
         products.setText(productName+"");
 
@@ -139,6 +140,13 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
             cancel = itemView.findViewById(R.id.cancel);
             card1 = itemView.findViewById(R.id.card1);
             call_btn = itemView.findViewById(R.id.call_btn);
+
+            status.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
 
             if(preference.getTheme()==1){
                 card1.setCardBackgroundColor(Color.parseColor("#F8F8F8"));

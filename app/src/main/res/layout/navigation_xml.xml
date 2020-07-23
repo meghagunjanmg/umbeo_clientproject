@@ -8,15 +8,16 @@
     android:padding="2dp"
     android:layout_height="50dp">
 
-    <LinearLayout
-        android:layout_marginTop="2dp"
+    <FrameLayout
+        android:layout_margin="4dp"
         android:id="@+id/explore"
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <ImageView
+            android:layout_gravity="center"
             android:tint="@color/darker_gray"
             android:id="@+id/icon1"
             android:src="@drawable/ic_icon_explore"
@@ -25,6 +26,7 @@
         </ImageView>
 
         <TextView
+            android:visibility="invisible"
             style="@style/TextViewStyle"
             android:textSize="16sp"
             android:id="@+id/text1"
@@ -33,17 +35,19 @@
             android:gravity="center"
             android:text="Explore">
         </TextView>
-    </LinearLayout>
+    </FrameLayout>
 
-    <LinearLayout
-        android:layout_marginTop="2dp"
+    <FrameLayout
+        android:layout_margin="4dp"
+
         android:id="@+id/cart"
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <ImageView
+            android:layout_gravity="center"
             android:tint="@color/darker_gray"
 
             android:id="@+id/icon2"
@@ -52,6 +56,7 @@
             android:layout_height="25dp">
         </ImageView>
         <TextView
+            android:visibility="invisible"
             style="@style/TextViewStyle"
             android:textSize="16sp"
             android:id="@+id/text2"
@@ -60,16 +65,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="2dp"
+    </FrameLayout>
+    <FrameLayout
+        android:layout_margin="4dp"
+
         android:id="@+id/order"
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <ImageView
+            android:layout_gravity="center"
             android:tint="@color/darker_gray"
             android:id="@+id/icon3"
             android:src="@drawable/ic_diamond"
@@ -77,6 +84,7 @@
             android:layout_height="25dp">
         </ImageView>
         <TextView
+            android:visibility="invisible"
             style="@style/TextViewStyle"
             android:textSize="16sp"
             android:id="@+id/text3"
@@ -85,24 +93,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="2dp"
+    </FrameLayout>
+    <FrameLayout
+        android:layout_margin="4dp"
+
         android:id="@+id/profile"
         android:gravity="center"
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <ImageView
             android:tint="@color/darker_gray"
-
+            android:layout_gravity="center"
             android:id="@+id/icon4"
             android:src="@drawable/ic_icon_profile"
             android:layout_width="25dp"
             android:layout_height="25dp">
         </ImageView>
         <TextView
+            android:visibility="invisible"
             style="@style/TextViewStyle"
             android:textSize="16sp"
             android:id="@+id/text4"
@@ -111,6 +121,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </TextView>
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
