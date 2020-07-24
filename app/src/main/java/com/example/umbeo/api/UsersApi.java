@@ -10,21 +10,19 @@ import com.example.umbeo.response_data.SignUpResquest;
 import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.response_data.forgetpassword_response;
 import com.example.umbeo.response_data.orderRequest.OrderRequest;
+import com.example.umbeo.response_data.shop.ShopResponse;
 
 import org.json.JSONArray;
-
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 
-public interface Api {
+public interface UsersApi {
 
     @FormUrlEncoded
     @POST("signup")
@@ -113,5 +111,11 @@ public interface Api {
     @POST("/api/v1/orders/get-all-orders")
     Call<GetOrderResponse> GetOrder(@Header("Authorization")String token);
 
+
+
+
+    @FormUrlEncoded
+    @POST("/api/v1/shops/get-shop")
+    Call<ShopResponse> getShopProfile(@Field("shop") String shop);
 
 }

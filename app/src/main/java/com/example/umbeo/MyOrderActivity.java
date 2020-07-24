@@ -1,23 +1,19 @@
 package com.example.umbeo;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.umbeo.Storage.UserPreference;
-import com.example.umbeo.api.Api;
+import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.GetOrders.GetOrderResponse;
 import com.example.umbeo.response_data.GetOrders.OrdersList;
@@ -179,7 +175,7 @@ public class MyOrderActivity extends AppCompatActivity {
 
     private void getAllOrder() {
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         String token = "Bearer "+preference.getToken();
         Log.e("GetOrderResponse ",token);

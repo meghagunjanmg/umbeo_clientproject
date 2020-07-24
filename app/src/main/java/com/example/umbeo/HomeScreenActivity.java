@@ -1,41 +1,30 @@
 package com.example.umbeo;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.room.Room;
 import androidx.viewpager.widget.ViewPager;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.VectorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.umbeo.Storage.SharedprefManager;
 import com.example.umbeo.Storage.UserPreference;
-import com.example.umbeo.api.Api;
+import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
-import com.example.umbeo.response_data.SignUpResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
+import com.example.umbeo.response_data.shop.ShopResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -99,6 +88,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
         getProfile();
 
+
+
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
@@ -107,8 +98,6 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         DeleteAllDB();
 
         setupViewPager();
-
-
 
 
         try {
@@ -334,7 +323,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
     private void getProfile(){
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         String token = "Bearer "+preference.getToken();
         Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
@@ -349,6 +338,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                     preference.setProfilePic(response.body().getData().getProfile_pic());
                     preference.setUserId(response.body().getData().getId());
                     preference.setAddresses(response.body().getData().getDeliveryAddresses());
+
+
                 }
             }
 
@@ -358,6 +349,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
         });
     }
+
 
 
 

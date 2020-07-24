@@ -1,22 +1,17 @@
 package com.example.umbeo;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -35,15 +30,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.umbeo.Storage.UserPreference;
-import com.example.umbeo.api.Api;
+import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.SignUpResquest;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -281,7 +274,7 @@ public class ProfileMainFragment extends Fragment {
     private static void updateAddress(final Context context) {
         UserPreference preference = new UserPreference(context);
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
         final SignUpResquest request = new SignUpResquest();
         request.setShop(preference.getShopId());
         request.setProfilePic(preference.getProfilePic());

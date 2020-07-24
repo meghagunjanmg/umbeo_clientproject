@@ -1,11 +1,9 @@
-package com.example.umbeo.Storage;
+package com.example.umbeo;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,10 +14,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.umbeo.HomeScreenActivity;
-import com.example.umbeo.MyOrderActivity;
-import com.example.umbeo.R;
-import com.example.umbeo.api.Api;
+import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.OrderResponse;
 import com.example.umbeo.response_data.orderRequest.OrderRequest;
@@ -273,7 +269,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
 
         final UserPreference preference = new UserPreference(this);
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         String token = "Bearer "+preference.getToken();
 

@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -23,10 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.umbeo.Storage.UserPreference;
-import com.example.umbeo.api.Api;
+import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.SignUpResquest;
-import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -152,7 +150,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private void updateAddress(List<String> addresses) {
 
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
         final SignUpResquest request = new SignUpResquest();
         request.setShop(preference.getShopId());
         request.setProfilePic(preference.getProfilePic());

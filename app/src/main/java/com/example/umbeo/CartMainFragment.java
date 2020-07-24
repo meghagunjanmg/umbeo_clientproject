@@ -3,29 +3,24 @@ package com.example.umbeo;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -33,8 +28,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.umbeo.Storage.PaymentActivity;
 import com.example.umbeo.Storage.UserPreference;
+import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.api.UsersApi;
+import com.example.umbeo.response_data.shop.ShopResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
@@ -42,12 +39,13 @@ import com.example.umbeo.room.CartEntity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.widget.AbsListView.CHOICE_MODE_SINGLE;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,7 +67,7 @@ public class CartMainFragment extends Fragment {
      TextView no_item;
       static LinearLayout main_scroll,no_item_linear;
 
-    static List<Double> amounts = new ArrayList<Double>();
+   static List<Double> amounts = new ArrayList<Double>();
 
     CheckBox loyalty;
     UserPreference preference;
@@ -78,6 +76,9 @@ public class CartMainFragment extends Fragment {
 
     TextView address,change_address;
     ListView slots;
+
+    final HashMap<String,Double> slotList = new HashMap<>();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -136,7 +137,8 @@ public class CartMainFragment extends Fragment {
 
     CardView delivery_card;
     TextView delivery_charges;
-
+RadioGroup rgb;
+    RadioButton slot1,slot2,slot3;
     @SuppressLint("FragmentLiveDataObserve")
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
@@ -144,8 +146,14 @@ public class CartMainFragment extends Fragment {
 
         preference = new UserPreference(getContext());
 
+        shopData();
+
         delivery_card = v.findViewById(R.id.delivery_card);
         delivery_charges = v.findViewById(R.id.delivery_charges);
+        rgb = v.findViewById(R.id.radio_grp);
+         slot1 = v.findViewById(R.id.slot1);
+         slot2 = v.findViewById(R.id.slot2);
+         slot3 = v.findViewById(R.id.slot3);
 
         if(preference.getTheme()==1){
             delivery_card.setCardBackgroundColor(Color.BLACK);
@@ -231,9 +239,16 @@ public class CartMainFragment extends Fragment {
             @Override
             public void onChanged(List<CartEntity> entities) {
                 entityList = entities;
+
+
+                /*'
                 for (int i = 0; i < entityList.size(); i++) {
                     sum = sum + (entities.get(i).getQuantity() * entities.get(i).getPrice());
                 }
+
+                 */
+                cartAdapter.setData(entityList);
+                sum = cartAdapter.grandTotal();
                 subtotal.setText("$ "+String.format("%.2f",sum));
                 Double d = sum+delivery;
                 total_amount.setText("$ "+String.format("%.2f",d));
@@ -242,16 +257,9 @@ public class CartMainFragment extends Fragment {
 
 
 
-        final HashMap<String,Double> slotList = new HashMap<>();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMM, EEE");
-        Calendar cal = Calendar.getInstance();
-        cal.add( Calendar.DATE, 1 );
-        String convertedDate = dateFormat.format(cal.getTime());
 
-        slotList.put("9 am - 11 am \n"+convertedDate,1.5);
-        slotList.put("1 pm - 3 pm \n"+convertedDate,1.3);
-        slotList.put("5 pm - 8 pm \n"+convertedDate,1.0);
+
       /*  SlotAdapter myAdapter = new SlotAdapter(slotList, getContext());
         slots.setChoiceMode(CHOICE_MODE_SINGLE);
         slots.setAdapter(myAdapter);
@@ -265,8 +273,6 @@ public class CartMainFragment extends Fragment {
                 }
             }
         });
-
-       */
 
         RadioGroup rgb = v.findViewById(R.id.radio_grp);
         final RadioButton slot1 = v.findViewById(R.id.slot1);
@@ -335,6 +341,8 @@ public class CartMainFragment extends Fragment {
                 }
             }
         });
+
+       */
 
 
 
@@ -514,4 +522,110 @@ public class CartMainFragment extends Fragment {
             main_scroll.setVisibility(View.VISIBLE);
         }
     }
+
+
+    private void shopData(){
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        Call<ShopResponse> call= retrofit_interface.getShopProfile(preference.getShopId());
+
+        call.enqueue(new Callback<ShopResponse>() {
+            @Override
+            public void onResponse(Call<ShopResponse> call, Response<ShopResponse> response) {
+                try {
+                    Log.e("shopResponse",response+"");
+                    Log.e("shopResponse",response.code()+"");
+                    Log.e("shopResponse",response.message()+"");
+
+                    preference.setShopTimeSlot(response.body().getData().getDeliverySlots());
+                    preference.setShopDeliveryCharges(response.body().getData().getDeliveryCharges());
+                    preference.setShopPh(response.body().getData().getPhone());
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMM, EEE");
+                    Calendar cal = Calendar.getInstance();
+                    cal.add( Calendar.DATE, 1 );
+                    String convertedDate = dateFormat.format(cal.getTime());
+                    Log.e("Slots 00",response.body().getData().getDeliverySlots().toString());
+                    try {
+                        for(int i = 0;i<3;i++){
+                            slotList.put(response.body().getData().getDeliverySlots().get(i)+"\n"+convertedDate,Double.parseDouble(response.body().getData().getDeliveryCharges().get(i)));
+                        }
+                        Log.e("Slots 0",slotList.toString());
+                        setdata();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                } catch (Exception e) {
+                    Log.e("shopResponse",e.getLocalizedMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ShopResponse> call, Throwable t) {
+                Log.e("shopResponse",t.getLocalizedMessage()+"");
+            }
+        });
+    }
+
+    private void setdata() {
+
+        final ArrayList mData = new ArrayList(slotList.entrySet());
+        Log.e("Slots 1",mData.toString());
+        final List<Double> price = new ArrayList<>();
+        for (int i = 0; i < mData.size(); i++) {
+            Map.Entry<String, Double> item = (Map.Entry) mData.get(i);
+            if (i == 0) {
+                slot1.setText(item.getKey());
+                price.add(item.getValue());
+            }
+            if (i == 1) {
+                slot2.setText(item.getKey());
+                price.add(item.getValue());
+            }
+            if (i == 2) {
+                slot3.setText(item.getKey());
+                price.add(item.getValue());
+            }
+        }
+        slot1.setChecked(true);
+        delivery_charges.setText("$ " + price.get(0));
+        delivery = price.get(0);
+
+        subtotal.setText("$ " + String.format("%.2f", sum));
+        Double d = sum + delivery;
+        total_amount.setText("$ " + String.format("%.2f", d));
+
+        rgb.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (slot1.isChecked()) {
+                    delivery_charges.setText("$ " + price.get(0));
+                    delivery = price.get(0);
+
+                    subtotal.setText("$ " + String.format("%.2f", sum));
+                    Double d = sum + delivery;
+                    total_amount.setText("$ " + String.format("%.2f", d));
+                } else if (slot2.isChecked()) {
+                    delivery_charges.setText("$ " + price.get(1));
+                    delivery = price.get(1);
+
+                    subtotal.setText("$ " + String.format("%.2f", sum));
+                    Double d = sum + delivery;
+                    total_amount.setText("$ " + String.format("%.2f", d));
+                } else if (slot3.isChecked()) {
+                    delivery_charges.setText("$ " + price.get(2));
+                    delivery = price.get(2);
+
+                    subtotal.setText("$ " + String.format("%.2f", sum));
+                    Double d = sum + delivery;
+                    total_amount.setText("$ " + String.format("%.2f", d));
+                }
+            }
+        });
+
+    }
+
 }

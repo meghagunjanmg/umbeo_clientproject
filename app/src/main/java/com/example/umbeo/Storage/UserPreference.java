@@ -24,6 +24,9 @@ public class UserPreference {
     private String UserName = "name";
     private String Email = "email";
     private String profilePic = "profilePic";
+    private String shopPh = "1111111111";
+    private String shopTimeSlot = "shopTimeSlot";
+    private String shopDeliveryCharges = "shopDeliveryCharges";
     private Integer LoyaltyPoints = 0;
     private Integer Theme = 0;
     private static final String Addresses = "addresses";
@@ -120,6 +123,50 @@ public class UserPreference {
         }
         return null;
     }
+
+
+    public void setShopTimeSlot(List<String> dataList) {
+        if (dataList != null) {
+            Set<String> set = new HashSet<String>(dataList);
+            editor.putStringSet(shopTimeSlot, set);
+            editor.commit();
+        }
+    }
+
+    public List<String> getShopTimeSlot() {
+        Set<String> list = pref.getStringSet(shopTimeSlot, null);
+        if (list != null) {
+            return new ArrayList<>(list);
+        }
+        return null;
+    }
+
+
+    public void setShopDeliveryCharges(List<String> dataList) {
+        if (dataList != null) {
+            Set<String> set = new HashSet<String>(dataList);
+            editor.putStringSet(shopDeliveryCharges, set);
+            editor.commit();
+        }
+    }
+
+    public List<String> getShopDeliveryCharges() {
+        Set<String> list = pref.getStringSet(shopDeliveryCharges, null);
+        if (list != null) {
+            return new ArrayList<>(list);
+        }
+        return null;
+    }
+
+    public String getShopPh() {
+        return    pref.getString(shopPh, null);
+    }
+
+    public void setShopPh(String ph) {
+        editor.putString(shopPh, ph);
+        editor.apply();
+    }
+
 
     public void logout(){
         editor.clear();

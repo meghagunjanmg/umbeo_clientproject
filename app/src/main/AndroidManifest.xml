@@ -21,7 +21,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Storage.PaymentActivity"
+        <activity android:name=".PaymentActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".MyOrderActivity"
             android:screenOrientation="portrait"/>

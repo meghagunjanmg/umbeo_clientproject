@@ -8,6 +8,7 @@
     android:layout_width="match_parent"
     android:layout_marginBottom="50dp"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/linear1"
         android:orientation="vertical"
@@ -151,9 +152,24 @@
 
 
 
-
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <ProgressBar
+                        android:visibility="visible"
+                        android:layout_gravity="center"
+                        android:id="@+id/simpleProgressBar"
+                        android:indeterminateTint="@color/main"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/item_recycler"
+                        app:spanCount="1"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content"
@@ -170,9 +186,10 @@
                         tools:listitem="@layout/item_category_card">
 
                     </androidx.recyclerview.widget.RecyclerView>
+                        </LinearLayout>
+                    </FrameLayout>
                 </LinearLayout>
 
 
         </androidx.core.widget.NestedScrollView>
-
 </LinearLayout>

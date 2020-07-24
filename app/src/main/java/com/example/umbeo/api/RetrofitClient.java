@@ -7,6 +7,9 @@ public class RetrofitClient {
 
     private static final String BASE_URL1="https://viristore.herokuapp.com/api/v1/users/";
     private static final String BASE_URL="https://viristore.herokuapp.com";
+    private static final String SHOP_URL="https://viristoresh.herokuapp.com";
+
+
     private static RetrofitClient mInstance;
     private Retrofit retrofit;
 
@@ -30,6 +33,19 @@ public class RetrofitClient {
         return retrofit;
     }
 
+
+    public Retrofit shopClient() {
+        if (retrofit == null)
+        {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(SHOP_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+
+
     public static synchronized RetrofitClient getmInstance(){
         if(mInstance==null){
             mInstance=new RetrofitClient();
@@ -37,8 +53,8 @@ public class RetrofitClient {
         return mInstance;
     }
 
-    public Api getApi(){
-        return retrofit.create(com.example.umbeo.api.Api.class);
+    public UsersApi getApi(){
+        return retrofit.create(UsersApi.class);
     }
 }
 

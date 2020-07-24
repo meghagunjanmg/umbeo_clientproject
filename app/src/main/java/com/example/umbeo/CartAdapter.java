@@ -24,6 +24,7 @@ import java.util.List;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     List<CartEntity> data;
     List<Integer> amount = new ArrayList<>();
+    public List<CartEntity> mItems = new ArrayList();
 
 
     Context context;
@@ -31,7 +32,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private String name ="";
     private double price =0;
     AppDatabase db;
-     static int total = 0;
+    Double total=0.0;
 
      UserPreference preference;
     public CartAdapter(List<CartEntity> data, Context context,AppDatabase db) {
@@ -41,7 +42,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         preference = new UserPreference(context);
     }
+    public void setData(List<CartEntity> items) {
+        this.mItems = items;
+        notifyDataSetChanged();
+    }
 
+    public double grandTotal() {
+        double totalPrice = 0;
+        for (int i = 0; i < mItems.size(); i++) {
+            totalPrice += mItems.get(i).getQuantity()*mItems.get(i).getPrice()+0.13;
+        }
+        return totalPrice;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -103,7 +115,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         gst_amount.setText("GST (13%) : $ "+String.format("%.2f",gsts));
 
-        CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString().replace("$","")));
+        CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString().replace("$",""))+gsts);
 
     }
 

@@ -1,25 +1,14 @@
 package com.example.umbeo;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.VectorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,47 +17,37 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.umbeo.Storage.UserPreference;
-import com.example.umbeo.api.Api;
+import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.CategoryResponse;
 import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.room.AppDatabase;
-import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.Gravity.END;
 import static android.view.Gravity.START;
 
@@ -109,6 +88,7 @@ public class DashBoardFragment extends Fragment {
     CardView see_more;
     static CategoryListAdapter categoryListAdapter,categoryListAdapter2;
 
+    ProgressBar simpleProgressBar;
 
     List<CartEntity> entities = new ArrayList<>();
     List<ProductModel> productModels = new ArrayList<>();
@@ -185,8 +165,9 @@ public class DashBoardFragment extends Fragment {
         item_recycler = v.findViewById(R.id.item_recycler);
         category_list = v.findViewById(R.id.category_list);
         list_category = v.findViewById(R.id.list_category);
-        list_category_fruit = v.findViewById(R.id.list_category_fruit);
         welcome = v.findViewById(R.id.welcome);
+        simpleProgressBar = v.findViewById(R.id.simpleProgressBar);
+
         log = (TextView) v.findViewById(R.id.login);
         EditText search = v.findViewById(R.id.search);
         search.clearFocus();
@@ -197,6 +178,9 @@ public class DashBoardFragment extends Fragment {
         if (db == null) {
             db = AppDatabase.getInstance(getContext());
         }
+
+
+        showProgress();
 
         LoadAllDB();
 
@@ -394,8 +378,10 @@ public class DashBoardFragment extends Fragment {
 
     private void getCategoryProduct(final String categoryName, final String categoryId) {
 
+        showProgress();
+
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         Call<ProductResponse> call = retrofit_interface.fetchAllProducts(preference.getShopId(),categoryId);
 
@@ -424,6 +410,7 @@ public class DashBoardFragment extends Fragment {
                     e.printStackTrace();
                 }
                 finally {
+                    HideProgress();
                 }
             }
 
@@ -434,10 +421,10 @@ public class DashBoardFragment extends Fragment {
     }
 
     private void getCategory() {
-
+        showProgress();
 
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         Call<CategoryResponse> call = retrofit_interface.fetchAllCategory();
         call.enqueue(new Callback<CategoryResponse>() {
@@ -467,6 +454,7 @@ public class DashBoardFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    HideProgress();
                 }
             }
 
@@ -491,8 +479,10 @@ public class DashBoardFragment extends Fragment {
 
     private void getFeaturedProducts() {
 
+        showProgress();
+
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         Call<ProductResponse> call = retrofit_interface.fetchFeaturedProducts(preference.getShopId());
 
@@ -515,6 +505,7 @@ public class DashBoardFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    HideProgress();
                 }
             }
 
@@ -526,9 +517,10 @@ public class DashBoardFragment extends Fragment {
 
     private void getTrendingProducts() {
 
+        showProgress();
 
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         Call<ProductResponse> call = retrofit_interface.fetchTrendingProducts(preference.getShopId());
 
@@ -552,6 +544,7 @@ public class DashBoardFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    HideProgress();
                 }
             }
 
@@ -563,8 +556,10 @@ public class DashBoardFragment extends Fragment {
 
     private void getRecommendedProducts() {
 
+        showProgress();
+
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         Call<ProductResponse> call = retrofit_interface.fetchRecommendedProducts(preference.getShopId(),preference.getUserId());
 
@@ -589,6 +584,7 @@ public class DashBoardFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    HideProgress();
                 }
             }
 
@@ -597,5 +593,16 @@ public class DashBoardFragment extends Fragment {
             }
         });
     }
+
+
+
+    private void showProgress(){
+        simpleProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void HideProgress(){
+        simpleProgressBar.setVisibility(View.INVISIBLE);
+    }
+
 
 }

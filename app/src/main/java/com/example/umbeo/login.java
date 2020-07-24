@@ -13,17 +13,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.umbeo.Storage.SharedprefManager;
 import com.example.umbeo.Storage.UserPreference;
-import com.example.umbeo.api.Api;
+import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.LoginResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +26,8 @@ import retrofit2.Response;
 
 public class login extends AppCompatActivity {
 
-    String emailPattern = "^(?:\\d{10}|\\w+@\\w+\\.\\w{2,3})$";
+    String phonePattern = "^(?:\\d{10}|\\w+@\\w+\\.\\w{2,3})$";
+    String emailPattern = "^([0-9]{9})|([A-Za-z0-9._%\\+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,3})$";
     Button  login;
     TextView signu;
     UserPreference preference;
@@ -106,7 +101,7 @@ public class login extends AppCompatActivity {
             login.setEnabled(true);
             return;
         }
-        if (!(email.matches(emailPattern))) {
+        if (!(email.matches(emailPattern)) && !(email.matches(phonePattern))) {
             err.setBackgroundColor(Color.parseColor("#f0f8ff"));
             err.setText("Please Enter valid Email/Phone Number");
             login.setEnabled(true);
@@ -121,7 +116,7 @@ public class login extends AppCompatActivity {
 
 
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
       Call<LoginResponse> call =  retrofit_interface.userLogin(email,password,preference.getShopId());
       call.enqueue(new Callback<LoginResponse>() {
@@ -208,7 +203,7 @@ public class login extends AppCompatActivity {
     }
     private void getProfile(final String tokens){
         RetrofitClient api_manager = new RetrofitClient();
-        Api retrofit_interface =api_manager.usersClient().create(Api.class);
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
         String token = "Bearer "+tokens;
 

@@ -138,6 +138,19 @@
         android:text="Add to Cart"
         android:layout_marginTop="12dp"
         android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/back"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
+            android:textColor="@color/main"
+            android:textStyle="bold"/>
+
     </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>

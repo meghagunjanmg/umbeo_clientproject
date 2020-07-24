@@ -335,6 +335,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         dialog.show();
 
 
+        TextView back = mView.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+
+
+
         final TextView quan = mView.findViewById(R.id.quantity1111);
         quan.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "10000")});
 

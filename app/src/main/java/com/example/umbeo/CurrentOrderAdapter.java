@@ -106,9 +106,13 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
         holder.call_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:12345678900"));
-                context.startActivity(callIntent);
+                try {
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:"+preference.getShopPh()));
+                    context.startActivity(callIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
