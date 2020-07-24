@@ -38,6 +38,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 import static com.example.umbeo.ProfileMainFragment.getBitmapForMediaUri;
 
@@ -92,7 +93,7 @@ ImageView back_btn;
             public void onClick(View v) {
                 Intent i = new Intent(signup.this,login.class);
                 startActivity(i);
-
+                Bungee.fade(signup.this);
             }
         });
 
@@ -293,9 +294,11 @@ ImageView back_btn;
                             Toast.makeText(getApplicationContext(), "You have earned 500 crystal point as reward", Toast.LENGTH_LONG).show();
 
                             startActivity(new Intent(signup.this,MainActivity.class));
+                            Bungee.fade(signup.this);
                         }
                         else {
                             startActivity(new Intent(signup.this,signup.class));
+                            Bungee.fade(signup.this);
                         }
                     }
                     else {

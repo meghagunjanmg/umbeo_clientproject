@@ -16,6 +16,8 @@ import com.google.android.material.button.MaterialButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import spencerstudios.com.bungeelib.Bungee;
+
 public class intro1 extends AppCompatActivity {
 
     private OnboardingAdapter onboardingAdapter;
@@ -56,6 +58,7 @@ public class intro1 extends AppCompatActivity {
                 }
                 else{
                     startActivity(new Intent(getApplicationContext(),HomeScreenActivity.class));
+                    Bungee.fade(intro1.this);
                     finish();
                 }
             }

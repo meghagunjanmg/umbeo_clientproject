@@ -29,6 +29,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -110,6 +111,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                Bungee.fade(CategoryActivity.this);
             }
         });
     }

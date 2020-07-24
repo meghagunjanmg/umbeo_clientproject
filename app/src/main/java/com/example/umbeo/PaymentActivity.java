@@ -32,6 +32,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 public class PaymentActivity extends AppCompatActivity  implements RadioGroup.OnCheckedChangeListener{
     UserPreference preference;
@@ -91,7 +92,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
                 Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
                 i.putExtra("Cat",5);
                 startActivity(i);
-
+                Bungee.fade(PaymentActivity.this);
             }
         });
 
@@ -111,6 +112,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
                 Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
                 //i.putExtra("Cat",5);
                 startActivity(i);
+                Bungee.fade(PaymentActivity.this);
                 dialog.cancel();
             }
         });
@@ -120,6 +122,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MyOrderActivity.class));
+                Bungee.fade(PaymentActivity.this);
             }
         });
 

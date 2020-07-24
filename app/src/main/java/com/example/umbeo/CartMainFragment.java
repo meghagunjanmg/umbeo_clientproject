@@ -46,6 +46,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -192,6 +193,7 @@ RadioGroup rgb;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(),MyAddresses.class));
+                Bungee.fade(getContext());
             }
         });
 
@@ -210,11 +212,13 @@ RadioGroup rgb;
                     Toast.makeText(getContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getContext(), signup.class);
                     startActivity(i);
+                    Bungee.fade(getContext());
                 }
                 else {
                     Intent i = new Intent(getContext(), PaymentActivity.class);
                     i.putExtra("total", total_amount.getText().toString());
                     startActivity(i);
+                    Bungee.fade(getContext());
                 }
             }
         });
@@ -232,6 +236,7 @@ RadioGroup rgb;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(),HomeScreenActivity.class));
+                Bungee.fade(getContext());
             }
         });
 

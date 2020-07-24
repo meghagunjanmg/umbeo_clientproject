@@ -22,6 +22,7 @@ import com.example.umbeo.room.AppExecutors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 public class MainActivity extends AppCompatActivity {
     AppDatabase db;
@@ -82,10 +83,12 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
+                        Bungee.fade(MainActivity.this);
                     }
                     else {
                         Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
                         startActivity(intent);
+                        Bungee.fade(MainActivity.this);
                     }
                 }
             },SPLASH_TIME_OUT);

@@ -41,6 +41,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -150,6 +151,7 @@ public class ProfileMainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                startActivity(new Intent(getContext(),MyOrderActivity.class));
+                Bungee.fade(getContext());
             }
         });
 
@@ -157,6 +159,7 @@ public class ProfileMainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(),MyAddresses.class));
+                Bungee.fade(getContext());
             }
         });
 

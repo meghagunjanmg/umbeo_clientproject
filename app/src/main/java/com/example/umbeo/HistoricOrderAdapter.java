@@ -24,6 +24,8 @@ import com.google.android.material.slider.Slider;
 
 import java.util.List;
 
+import spencerstudios.com.bungeelib.Bungee;
+
 public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdapter.ViewHolder> {
     List<OrdersList> modelList;
     Context context;
@@ -67,6 +69,7 @@ public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdap
                 Intent i = new Intent(context,HomeScreenActivity.class);
                 i.putExtra("Id",1);
                 context.startActivity(i);
+                Bungee.fade(context);
             }
         });
     }

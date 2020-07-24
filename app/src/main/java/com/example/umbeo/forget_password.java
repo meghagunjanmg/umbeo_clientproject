@@ -22,6 +22,7 @@ import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 public class forget_password extends AppCompatActivity {
 
@@ -45,6 +46,7 @@ public class forget_password extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(forget_password.this, com.example.umbeo.signup.class));
+                Bungee.fade(forget_password.this);
             }
         });
 

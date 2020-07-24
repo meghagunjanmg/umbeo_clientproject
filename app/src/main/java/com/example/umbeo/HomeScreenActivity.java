@@ -29,6 +29,7 @@ import com.example.umbeo.room.AppExecutors;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 public class HomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     private static ViewPagerAdapter adapter;
@@ -303,6 +304,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
           }
           if(payment_frag){
               startActivity(new Intent(getApplicationContext(),HomeScreenActivity.class));
+              Bungee.fade(HomeScreenActivity.this);
           }
 
         }

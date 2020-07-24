@@ -47,6 +47,7 @@ import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 import static android.view.Gravity.END;
 import static android.view.Gravity.START;
@@ -204,6 +205,7 @@ public class DashBoardFragment extends Fragment {
             public void onClick(View v) {
                 if(log.getText().toString().contains("Log")) {
                     startActivity(new Intent(getActivity(), login.class));
+                    Bungee.fade(getContext());
                 }
             }
         });

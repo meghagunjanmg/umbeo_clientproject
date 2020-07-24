@@ -22,6 +22,7 @@ import com.example.umbeo.response_data.UserGetProfileResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 
 public class login extends AppCompatActivity {
@@ -58,6 +59,7 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(login.this, com.example.umbeo.signup.class));
+                Bungee.fade(login.this);
             }
         });
         login = (Button) findViewById(R.id.button);
@@ -67,6 +69,7 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(login.this, forget_password.class));
+                Bungee.fade(login.this);
             }
         });
 
@@ -136,6 +139,7 @@ public class login extends AppCompatActivity {
                         i.putExtra("token",response.body().getData());
                         i.putExtra("intent",1);
                         startActivity(i);
+                        Bungee.fade(login.this);
 
                         getProfile(response.body().getData());
                     }
@@ -235,7 +239,6 @@ public class login extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         this.finish();
     }
 

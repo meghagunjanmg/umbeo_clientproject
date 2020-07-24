@@ -52,6 +52,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -119,6 +120,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),MyAddresses.class));
+                Bungee.fade(MapActivity.this);
             }
         });
 
@@ -132,17 +134,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         add_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(preference.getAddresses().size()!=0){
-                    addresses.addAll(preference.getAddresses());
-                    String new_add = line1.getText().toString();
-                    addresses.add(new_add);
-                    preference.getAddresses().clear();
-                    preference.setAddresses(addresses);
+                if(preference.getEmail()!=null) {
+                    if (preference.getAddresses().size() != 0) {
+                        addresses.addAll(preference.getAddresses());
+                        String new_add = line1.getText().toString();
+                        addresses.add(new_add);
+                        preference.getAddresses().clear();
+                        preference.setAddresses(addresses);
+                    }
+                    updateAddress(addresses);
+                    startActivity(new Intent(getApplicationContext(), MyAddresses.class));
+                    Bungee.fade(MapActivity.this);
                 }
-
-                updateAddress(addresses);
-
-                startActivity(new Intent(getApplicationContext(),MyAddresses.class));
+                else {
+                    Toast.makeText(getApplicationContext(),"First login/signup to add new Address",Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getApplicationContext(), signup.class));
+                    Bungee.fade(MapActivity.this);
+                }
             }
         });
     }

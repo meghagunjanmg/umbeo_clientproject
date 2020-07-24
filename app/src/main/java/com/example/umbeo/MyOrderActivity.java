@@ -24,6 +24,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 public class MyOrderActivity extends AppCompatActivity {
     TextView history,current, all;
@@ -52,6 +53,7 @@ public class MyOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext() ,HomeScreenActivity.class));
+                Bungee.fade(MyOrderActivity.this);
             }
         });
 

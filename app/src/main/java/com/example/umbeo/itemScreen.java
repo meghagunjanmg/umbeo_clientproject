@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import spencerstudios.com.bungeelib.Bungee;
+
 public class itemScreen extends AppCompatActivity {
 
     Button buy;
@@ -21,6 +23,7 @@ public class itemScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),login.class));
+                Bungee.fade(itemScreen.this);
             }
         });
     }

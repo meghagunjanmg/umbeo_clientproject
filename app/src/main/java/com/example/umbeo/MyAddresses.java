@@ -27,6 +27,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import spencerstudios.com.bungeelib.Bungee;
 
 import static android.widget.AbsListView.CHOICE_MODE_SINGLE;
 
@@ -69,6 +70,7 @@ public class MyAddresses extends AppCompatActivity {
 
             else if(Objects.requireNonNull(preference.getAddresses()).size()==0 || preference.getAddresses().get(0).equals(" ")){
                 startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                Bungee.fade(MyAddresses.this);
             }
 
         } catch (Exception e) {
