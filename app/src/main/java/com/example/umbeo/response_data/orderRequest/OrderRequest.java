@@ -22,6 +22,18 @@ public class OrderRequest implements Serializable
     @SerializedName("orderStatus")
     @Expose
     private Integer status;
+
+    @SerializedName("deliveryAdress")
+    @Expose
+    private String deliveryAdress;
+
+    @SerializedName("deliverySlot")
+    @Expose
+    private String deliverySlot;
+
+    @SerializedName("deliveryInstructions")
+    @Expose
+    private String deliveryInstructions;
     private final static long serialVersionUID = -2557480166792349327L;
 
     public Integer getStatus() {
@@ -38,6 +50,34 @@ public class OrderRequest implements Serializable
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public String getDeliveryAdress() {
+        return deliveryAdress;
+    }
+
+    public void setDeliveryAdress(String deliveryAdress) {
+        this.deliveryAdress = deliveryAdress;
+    }
+
+    public String getDeliverySlot() {
+        return deliverySlot;
+    }
+
+    public void setDeliverySlot(String deliverySlot) {
+        this.deliverySlot = deliverySlot;
+    }
+
+    public String getDeliveryInstructions() {
+        return deliveryInstructions;
+    }
+
+    public void setDeliveryInstructions(String deliveryInstructions) {
+        this.deliveryInstructions = deliveryInstructions;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getShopId() {

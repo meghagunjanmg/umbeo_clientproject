@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -67,6 +68,7 @@ public class CartMainFragment extends Fragment {
 
      TextView no_item;
       static LinearLayout main_scroll,no_item_linear;
+    int count=0;
 
    static List<Double> amounts = new ArrayList<Double>();
 
@@ -77,6 +79,7 @@ public class CartMainFragment extends Fragment {
 
     TextView address,change_address;
     ListView slots;
+    String selectedSlot;
 
     final HashMap<String,Double> slotList = new HashMap<>();
 
@@ -137,8 +140,9 @@ public class CartMainFragment extends Fragment {
     }
 
     CardView delivery_card;
-    TextView delivery_charges;
-RadioGroup rgb;
+    TextView delivery_charges,instruction_tv;
+    EditText instruction;
+    RadioGroup rgb;
     RadioButton slot1,slot2,slot3;
     @SuppressLint("FragmentLiveDataObserve")
     @Override
@@ -181,12 +185,29 @@ RadioGroup rgb;
         LoadAllDB();
 
         address = v.findViewById(R.id.address);
+        instruction_tv = v.findViewById(R.id.instruction_tv);
+        instruction = v.findViewById(R.id.instruction);
+
         if(preference.getAddresses()!=null && preference.getAddresses().size()>0){
             address.setText(""+preference.getAddresses().get(0));
         }
         else {
             /////
         }
+
+        instruction_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count++;
+                if(count%2==0){
+                    instruction.setVisibility(View.GONE);
+                }
+                else
+                {
+                    instruction.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         change_address=v.findViewById(R.id.change_add);
         change_address.setOnClickListener(new View.OnClickListener() {
@@ -217,8 +238,13 @@ RadioGroup rgb;
                 else {
                     Intent i = new Intent(getContext(), PaymentActivity.class);
                     i.putExtra("total", total_amount.getText().toString());
+                    i.putExtra("deliveryTime",selectedSlot);
+                    i.putExtra("deliveryAdd", address.getText().toString());
+                    i.putExtra("deliveryIns", instruction.getText().toString());
                     startActivity(i);
                     Bungee.fade(getContext());
+
+                    instruction.setText(" ");
                 }
             }
         });
@@ -262,7 +288,11 @@ RadioGroup rgb;
 
 
 
-
+        if(preference.getTheme()==1){
+            slot1.setTextColor(Color.WHITE);
+            slot2.setTextColor(Color.WHITE);
+            slot3.setTextColor(Color.WHITE);
+        }
 
 
       /*  SlotAdapter myAdapter = new SlotAdapter(slotList, getContext());
@@ -284,11 +314,7 @@ RadioGroup rgb;
         final RadioButton slot2 = v.findViewById(R.id.slot2);
         final RadioButton slot3 = v.findViewById(R.id.slot3);
 
-        if(preference.getTheme()==1){
-            slot1.setTextColor(Color.WHITE);
-            slot2.setTextColor(Color.WHITE);
-            slot3.setTextColor(Color.WHITE);
-        }
+
 
         final ArrayList mData = new ArrayList(slotList.entrySet());
         final List<Double> price = new ArrayList<>();
@@ -609,6 +635,7 @@ RadioGroup rgb;
                 if (slot1.isChecked()) {
                     delivery_charges.setText("$ " + price.get(0));
                     delivery = price.get(0);
+                    selectedSlot = slot1.getText().toString();
 
                     subtotal.setText("$ " + String.format("%.2f", sum));
                     Double d = sum + delivery;
@@ -616,14 +643,14 @@ RadioGroup rgb;
                 } else if (slot2.isChecked()) {
                     delivery_charges.setText("$ " + price.get(1));
                     delivery = price.get(1);
-
+                    selectedSlot = slot2.getText().toString();
                     subtotal.setText("$ " + String.format("%.2f", sum));
                     Double d = sum + delivery;
                     total_amount.setText("$ " + String.format("%.2f", d));
                 } else if (slot3.isChecked()) {
                     delivery_charges.setText("$ " + price.get(2));
                     delivery = price.get(2);
-
+                    selectedSlot = slot3.getText().toString();
                     subtotal.setText("$ " + String.format("%.2f", sum));
                     Double d = sum + delivery;
                     total_amount.setText("$ " + String.format("%.2f", d));

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="@color/bg_color"
     android:padding="2dp"
-    android:layout_height="50dp">
+    android:layout_height="40dp">
 
     <FrameLayout
         android:layout_margin="4dp"

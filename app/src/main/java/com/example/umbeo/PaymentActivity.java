@@ -43,7 +43,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
     ImageView back_btn,cart_btn;
     RadioButton cas,amazonpay,applepay,paypal,amazonupi,googleupi;
     Button sendd;
-    String Total;
+    String Total,deliveryTime,deliveryAdd,deliveryIns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,9 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
         else setContentView(R.layout.activity_payment);
 
         Total = getIntent().getStringExtra("total");
+        deliveryTime = getIntent().getStringExtra("deliveryTime");
+        deliveryAdd = getIntent().getStringExtra("deliveryAdd");
+        deliveryIns = getIntent().getStringExtra("deliveryIns");
 
 
         radioGroup = findViewById(R.id.role_radioGroup_ID);
@@ -302,6 +305,12 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
 
         request.setProducts(products);
         request.setStatus(0);
+        request.setDeliveryAdress(deliveryAdd);
+        if(deliveryIns.equals("")||deliveryIns.isEmpty()){
+            deliveryIns = " ";
+        }
+        request.setDeliveryInstructions(deliveryIns);
+        request.setDeliverySlot(deliveryTime);
 
         Call<OrderResponse> call = retrofit_interface.CreateOrder(token,request);
 
@@ -314,6 +323,8 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
                 if(response.code()==200){
                     dailog();
                     Toast.makeText(getApplicationContext(),response.body().getData().getOrderId(), Toast.LENGTH_SHORT).show();
+
+                    DBDeleteAll();
                 }
                // else if(preference.getUserName()==null){Toast.makeText(getApplicationContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();}
                 else Toast.makeText(getApplicationContext(),"Something went wrong", Toast.LENGTH_SHORT).show();
@@ -321,7 +332,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
 
             @Override
             public void onFailure(Call<OrderResponse> call, Throwable t) {
-
+                Log.e("OrderResponse",t.getLocalizedMessage()+"");
             }
         });
     }
@@ -333,6 +344,16 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
             public void run() {
                 CartDao dao = AppDatabase.getInstance(getApplicationContext()).cartDao();
                 cartEntities =  dao.loadAll();
+            }
+        });
+    }
+
+    private void DBDeleteAll() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                CartDao dao = AppDatabase.getInstance(getApplicationContext()).cartDao();
+                dao.nukeTable();
             }
         });
     }

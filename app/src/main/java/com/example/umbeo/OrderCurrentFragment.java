@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -90,8 +91,17 @@ public class OrderCurrentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         item_current_order = view.findViewById(R.id.item_current_order);
 
+        List<OrdersList> notcancelled = new ArrayList<>();
+        for(OrdersList ordersList:currentOrder){
+            if(ordersList.getCancelledByUser()){ }
+            else {
+                notcancelled.add(ordersList);
+            }
+        }
+        Log.e("Testing",currentOrder.toString()+" "+currentOrder.size());
+        Log.e("Testing",notcancelled.toString()+" "+notcancelled.size());
         item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
-        CurrentOrderAdapter adapter = new CurrentOrderAdapter(currentOrder, getContext());
+        CurrentOrderAdapter adapter = new CurrentOrderAdapter(notcancelled, getContext());
         item_current_order.setAdapter(adapter);
 
 

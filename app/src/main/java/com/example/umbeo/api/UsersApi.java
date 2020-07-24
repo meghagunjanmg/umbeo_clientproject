@@ -1,5 +1,6 @@
 package com.example.umbeo.api;
 
+import com.example.umbeo.response_data.CancelOrder;
 import com.example.umbeo.response_data.CategoryResponse;
 import com.example.umbeo.response_data.GetOrders.GetOrderResponse;
 import com.example.umbeo.response_data.LoginResponse;
@@ -14,6 +15,7 @@ import com.example.umbeo.response_data.shop.ShopResponse;
 
 import org.json.JSONArray;
 
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -118,4 +120,9 @@ public interface UsersApi {
     @POST("/api/v1/shops/get-shop")
     Call<ShopResponse> getShopProfile(@Field("shop") String shop);
 
+
+
+    @FormUrlEncoded
+    @POST("/api/v1/orders/cancel-order")
+    Call<CancelOrder> CancelOrder (@Header("Authorization")String token, @Field("orderId") String orderId);
 }

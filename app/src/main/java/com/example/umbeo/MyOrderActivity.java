@@ -3,6 +3,7 @@ package com.example.umbeo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -11,10 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.CancelOrder;
 import com.example.umbeo.response_data.GetOrders.GetOrderResponse;
 import com.example.umbeo.response_data.GetOrders.OrdersList;
 
@@ -30,6 +33,7 @@ public class MyOrderActivity extends AppCompatActivity {
     TextView history,current, all;
     ImageView back_btn;
     UserPreference preference;
+    static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,7 @@ public class MyOrderActivity extends AppCompatActivity {
 
         getAllOrder();
 
+        context = this;
 
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -187,26 +192,22 @@ public class MyOrderActivity extends AppCompatActivity {
         call.enqueue(new Callback<GetOrderResponse>() {
             @Override
             public void onResponse(Call<GetOrderResponse> call, Response<GetOrderResponse> response) {
-                Log.e("GetOrderResponse",response+"");
-                Log.e("GetOrderResponse",response.code()+"");
-                Log.e("GetOrderResponse",response.message()+"");
-                if(response.code()==200){
-                    for(int i=0;i<response.body().getData().size();i++){
-                        if(response.body().getData().get(i).getOrderStatus()!=3){
-                            currentOrder.add(response.body().getData().get(i));
+                try {
+                    Log.e("GetOrderResponse",response+"");
+                    Log.e("GetOrderResponse",response.code()+"");
+                    Log.e("GetOrderResponse",response.message()+"");
+                    if(response.code()==200){
+                        for(int i=0;i<response.body().getData().size();i++){
+                            if(response.body().getData().get(i).getOrderStatus()!=3){
+                                currentOrder.add(response.body().getData().get(i));
+                            }
+                            else historicOrder.add(response.body().getData().get(i));
                         }
-                        else historicOrder.add(response.body().getData().get(i));
+                        Fragment newFragment = new OrderCurrentFragment(currentOrder);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, newFragment).commit();
                     }
-
-                    // Create new fragment and transaction
-                    Fragment newFragment = new OrderCurrentFragment(currentOrder);
-                    // consider using Java coding conventions (upper first char class names!!!)
-
-                    // Replace whatever is in the fragment_container view with this fragment,
-                    // and add the transaction to the back stack
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, newFragment).commit();
-                    // Commit the transaction
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
@@ -218,4 +219,36 @@ public class MyOrderActivity extends AppCompatActivity {
     }
 
 
+
+    public static void cancelOrder(String orderId){
+        UserPreference preference = new UserPreference(context);
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        String token = "Bearer "+preference.getToken();
+        Log.e("GetOrderResponse ",token);
+
+        Call<CancelOrder> call = retrofit_interface.CancelOrder(token,orderId);
+
+        call.enqueue(new Callback<CancelOrder>() {
+            @Override
+            public void onResponse(Call<CancelOrder> call, Response<CancelOrder> response) {
+                try {
+                    Log.e("cancelorders",response.code()+"");
+                    Log.e("cancelorders",response.message()+"");
+                    Log.e("cancelorders",response.body().getStatus()+"");
+                    if(response.code()==200){
+                        Toast.makeText(context,"Your Order has been cancelled",Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CancelOrder> call, Throwable t) {
+                Log.e("cancelorders",t.getLocalizedMessage()+"");
+            }
+        });
+    }
 }

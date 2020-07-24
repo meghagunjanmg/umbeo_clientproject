@@ -47,7 +47,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         String productName ="";
         for (int i=0;i<modelList.get(position).getProducts().size();i++){
@@ -85,6 +85,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
                            public void onClick(DialogInterface dialog, int id) {
                                dialog.cancel();
                                holder.card1.setVisibility(View.GONE);
+                               MyOrderActivity.cancelOrder(modelList.get(position).getId());
                            }
                        });
 

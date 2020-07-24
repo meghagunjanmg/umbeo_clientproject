@@ -183,64 +183,60 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     private static void setIcons(){
         nav_linear.setBackgroundColor(Color.WHITE);
 
-        if(preference.getTheme()==0) {
-            nav_linear.setBackgroundColor(Color.WHITE);
-            if (viewPager.getCurrentItem() == 0) {
-                DrawableCompat.setTint(icon1.getDrawable(), ContextCompat.getColor(context, R.color.main));
+        nav_linear.setBackgroundColor(Color.WHITE);
+        if (viewPager.getCurrentItem() == 0) {
+            icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+            text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
 
+            icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
 
-                //icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                //text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-
-                DrawableCompat.setTint(icon2.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                DrawableCompat.setTint(icon3.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                DrawableCompat.setTint(icon4.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-
-            }
-            if (viewPager.getCurrentItem() == 1) {
-
-                DrawableCompat.setTint(icon2.getDrawable(), ContextCompat.getColor(context, R.color.main));
-                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-
-
-                DrawableCompat.setTint(icon1.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                DrawableCompat.setTint(icon3.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                DrawableCompat.setTint(icon4.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            }
-            if (viewPager.getCurrentItem() == 2) {
-
-                DrawableCompat.setTint(icon3.getDrawable(), ContextCompat.getColor(context, R.color.main));
-                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-
-
-                DrawableCompat.setTint(icon2.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                DrawableCompat.setTint(icon1.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                DrawableCompat.setTint(icon4.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            }
-            if (viewPager.getCurrentItem() == 3) {
-
-                DrawableCompat.setTint(icon4.getDrawable(), ContextCompat.getColor(context, R.color.main));
-                text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-
-
-                DrawableCompat.setTint(icon2.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                DrawableCompat.setTint(icon3.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-                DrawableCompat.setTint(icon1.getDrawable(), ContextCompat.getColor(context, R.color.darker_gray));
-                text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
-            }
         }
-       else if (preference.getTheme()==1) {
+        if (viewPager.getCurrentItem() == 1) {
+
+            icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+            text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+
+
+            icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+        }
+        if (viewPager.getCurrentItem() == 2) {
+
+            icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+            text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+
+
+            icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+        }
+        if (viewPager.getCurrentItem() == 3) {
+
+            icon4.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+            text4.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+
+
+            icon2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text2.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            icon3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text3.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+            text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#1E1E1E")));
+        }
+
+        if (preference.getTheme()==1) {
             nav_linear.setBackgroundColor(Color.BLACK);
             if (viewPager.getCurrentItem() == 0) {
                 icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));

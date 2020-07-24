@@ -88,10 +88,17 @@ public class OrderAllFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        List<OrdersList> notcancelled = new ArrayList<>();
+        for(OrdersList ordersList:currentOrder){
+            if(ordersList.getCancelledByUser()){ }
+            else {
+                notcancelled.add(ordersList);
+            }
+        }
 
         item_current_order = view.findViewById(R.id.item_current_order);
         item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
-        CurrentOrderAdapter adapter = new CurrentOrderAdapter(currentOrder, getContext());
+        CurrentOrderAdapter adapter = new CurrentOrderAdapter(notcancelled, getContext());
         item_current_order.setAdapter(adapter);
 
 
