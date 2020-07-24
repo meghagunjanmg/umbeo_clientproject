@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,7 @@ public class UserPreference {
     private Integer LoyaltyPoints = 0;
     private Integer Theme = 0;
     private static final String Addresses = "addresses";
+    private static final Boolean achievments = false;
     private static final String ShopId = "5f131026a7cd970017e7b655";
 
 
@@ -124,6 +126,24 @@ public class UserPreference {
         return null;
     }
 
+    public void setAchievments(List<Boolean> dataList) {
+        if (dataList != null) {
+            editor.putInt(dataList + "_size", dataList.size());
+
+            for (int i = 0; i < dataList.size(); i++) {
+                editor.putBoolean(achievments + "_" + i, dataList.get(i));
+                editor.commit();
+            }
+        }
+    }
+
+    public Boolean[] getAchievments() {
+        int size = pref.getInt(achievments + "_size", 0);
+        Boolean array[] = new Boolean[size];
+        for(int i=0;i<size;i++)
+            array[i] = pref.getBoolean(achievments + "_" + i, false);
+        return array;
+    }
 
     public void setShopTimeSlot(List<String> dataList) {
         if (dataList != null) {

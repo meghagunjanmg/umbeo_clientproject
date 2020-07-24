@@ -1,10 +1,14 @@
 package com.example.umbeo;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.umbeo.Storage.UserPreference;
@@ -20,9 +29,11 @@ import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.response_data.ProductResponse;
+import com.example.umbeo.response_data.UserGetProfileResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,10 +44,10 @@ import retrofit2.Response;
  * Use the {@link LoyaltyPointsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoyaltyPointsFragment extends Fragment {
+public class LoyaltyPointsFragment extends Fragment implements View.OnClickListener {
 
 
-    UserPreference preference;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,12 +88,30 @@ public class LoyaltyPointsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    UserPreference preference;
+
+    List<Boolean> results;
+    ProgressBar progress;
+
+
+    TextView my_points;
+    RecyclerView item_recycler;
+    List<ItemModel> mPersonalItems;
+
+    TextView text1,text2,text3;
+    CardView card_view1,card_view2,card_view3;
+    ImageView circular1,circular2,circular3;
+    ImageView gem1,gem2,gem3;
+    GridLayout grid;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         preference = new UserPreference(getContext());
+
+        results = new ArrayList<>();
 
         if(preference.getTheme()==1){
             return inflater.inflate(R.layout.dark_loyalty, container, false);
@@ -92,23 +121,38 @@ public class LoyaltyPointsFragment extends Fragment {
       else   return inflater.inflate(R.layout.fragment_loyalty_points, container, false);
     }
 
-
-    TextView my_points;
-    RecyclerView item_recycler;
-    List<ItemModel> mPersonalItems;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         preference = new UserPreference(getContext());
 
+        if(preference.getEmail()!=null){
+            getProfile();
+        }
+
+        progress = view.findViewById(R.id.progress);
+        grid = view.findViewById(R.id.grid);
+
+        text1 = view.findViewById(R.id.text1);
+        text2 = view.findViewById(R.id.text2);
+        text3 = view.findViewById(R.id.text3);
+
+        card_view1 = view.findViewById(R.id.card_view1);
+        card_view2 = view.findViewById(R.id.card_view2);
+        card_view3 = view.findViewById(R.id.card_view3);
+
+        circular1 = view.findViewById(R.id.circular1);
+        circular2 = view.findViewById(R.id.circular2);
+        circular3 = view.findViewById(R.id.circular3);
+
+        gem1 = view.findViewById(R.id.gem1);
+        gem2 = view.findViewById(R.id.gem2);
+        gem3 = view.findViewById(R.id.gem3);
 
         if(preference.getTheme()==1){
-            TextView text1 = view.findViewById(R.id.text1);
             text1.setTextColor(Color.WHITE);
-            TextView text2 = view.findViewById(R.id.text2);
             text2.setTextColor(Color.WHITE);
-            TextView text3 = view.findViewById(R.id.text3);
             text3.setTextColor(Color.WHITE);
         }
 
@@ -117,6 +161,8 @@ public class LoyaltyPointsFragment extends Fragment {
         if(preference.getLoyaltyPoints()!=0){
             my_points.setText(preference.getLoyaltyPoints()+"");
         }
+
+
 
 
         item_recycler = view.findViewById(R.id.item_recycler);
@@ -139,6 +185,10 @@ public class LoyaltyPointsFragment extends Fragment {
         item_recycler.setAdapter(categoryListAdapter);
 
     */
+
+
+
+
     }
 
     private void getTrendingProducts() {
@@ -176,6 +226,132 @@ public class LoyaltyPointsFragment extends Fragment {
             }
         });
     }
+    private void getProfile(){
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        String token = "Bearer "+preference.getToken();
+        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
+
+        call.enqueue(new Callback<UserGetProfileResponse>() {
+            @Override
+            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
+                if(response.code()==200) {
+                    results = response.body().getData().getAchievements();
+                    Log.e("Achievements",results.toString());
+                    setColor();
+
+                    progress.setVisibility(View.GONE);
+                    grid.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setColor() {
+        if(results.get(0) && results.get(1) && results.get(2)){
+            card_view1.setOnClickListener(this);
+            card_view2.setOnClickListener(this);
+            card_view3.setOnClickListener(this);
+        }
+       else if(results.get(0) && results.get(1)){
+            card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+
+            circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+
+            gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
 
 
+            card_view1.setOnClickListener(this);
+            card_view2.setOnClickListener(this);
+        }
+       else if(results.get(0)){
+            card_view2.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+            card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+
+            circular2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+            circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+
+            gem2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+            gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+
+            card_view1.setOnClickListener(this);
+        }
+        else {
+            card_view1.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+            card_view2.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+            card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+
+            circular1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+            circular2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+            circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+
+            gem1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+            gem2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+            gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.card_view1:{
+                dailog(text1,card_view1,"Early Starter","100",circular1,gem1,R.drawable.ic_crystal);
+            }break;
+            case R.id.card_view2:{
+                dailog(text2,card_view2,"Sparkling Star","500",circular2,gem2,R.drawable.new_three_crystal);
+            }break;
+            case R.id.card_view3:{
+                dailog(text3,card_view3,"Hidden Gem","1000",circular3,gem3,R.drawable.new_five_crystal);
+            }break;
+        }
+    }
+
+
+    private void dailog(TextView textview, CardView card, String name, String points, ImageView circular1, ImageView gem1, int ic_crystal){
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        assert li != null;
+        View mView = li.inflate(R.layout.loyalty_dailog, null);
+        CardView card_view = mView.findViewById(R.id.card_view);
+        LinearLayout main_linear = mView.findViewById(R.id.main_linear);
+        TextView text = mView.findViewById(R.id.text);
+        TextView title = mView.findViewById(R.id.title);
+        TextView point = mView.findViewById(R.id.points);
+        ImageView circular = mView.findViewById(R.id.circular);
+        ImageView gem = mView.findViewById(R.id.gem);
+        title.setText(name+"");
+        point.setText(points+" Crystals");
+        card_view.setCardBackgroundColor(card.getCardBackgroundColor());
+        circular.setImageTintList(circular1.getImageTintList());
+        gem.setImageTintList(gem1.getImageTintList());
+        gem.setImageResource(ic_crystal);
+
+        int width = (int)(getResources().getDisplayMetrics().widthPixels*0.50);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.50);
+
+        text.setText(textview.getText().toString());
+
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+
+        dialog.getWindow().setLayout(width, height);
+        dialog.show();
+
+        main_linear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+    }
 }

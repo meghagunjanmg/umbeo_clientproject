@@ -39,6 +39,13 @@ public class UserGetProfileResponse implements Serializable
         @SerializedName("delivery_addresses")
         @Expose
         private List<String> deliveryAddresses = null;
+
+        @SerializedName("achievements")
+        @Expose
+        private List<Boolean> achievements = null;
+
+
+
         @SerializedName("loyalty_points")
         @Expose
         private Integer loyaltyPoints;
@@ -150,5 +157,12 @@ public class UserGetProfileResponse implements Serializable
             this.id = id;
         }
 
+        public List<Boolean> getAchievements() {
+            return achievements;
+        }
+
+        public void setAchievements(List<Boolean> achievements) {
+            this.achievements = achievements;
+        }
     }
 }

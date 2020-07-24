@@ -338,7 +338,10 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                     preference.setProfilePic(response.body().getData().getProfile_pic());
                     preference.setUserId(response.body().getData().getId());
                     preference.setAddresses(response.body().getData().getDeliveryAddresses());
+                    preference.setAchievments(response.body().getData().getAchievements());
 
+                    Log.e("Achievement",response.body().getData().getAchievements().toString());
+                    Log.e("Achievement",preference.getAchievments().toString());
 
                 }
             }

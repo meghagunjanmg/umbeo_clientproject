@@ -43,21 +43,25 @@
                 android:gravity="center"
                 android:text="Achievements"
                 android:textColor="@color/colorPrimaryText" />
+<ProgressBar
+    android:id="@+id/progress"
+    android:layout_gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+</ProgressBar>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
+                <GridLayout
+                    android:visibility="gone"
+                    android:columnCount="2"
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/grid"
+                    android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content">
                     <include layout="@layout/card_one"></include>
                     <include layout="@layout/card_two"></include>
                     <include layout="@layout/card_three"></include>
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
+                </GridLayout>
         </LinearLayout>
     </ScrollView>
 

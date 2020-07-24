@@ -145,7 +145,10 @@ public class MainActivity extends AppCompatActivity {
                     preference.setUserId(response.body().getData().getId());
                     preference.setToken(tokens);
 
-                    Log.e("UserGetProfileResponse",response.body().getData().getDeliveryAddresses().toString());
+                    preference.setAchievments(response.body().getData().getAchievements());
+
+                    Log.e("UserGetProfileResponse ",response.body().getData().getAchievements().toString());
+                    Log.e("UserGetProfileResponse ",preference.getAchievments().length+"");
 
                 }
             }
