@@ -3,7 +3,6 @@
     android:background="@color/bg_color"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginBottom="60dp"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -67,7 +66,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
         <ImageView
@@ -98,24 +97,39 @@
                 android:src="@drawable/map"/>
 <LinearLayout
     android:orientation="horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-            <TextView
+    <TextView
+                android:padding="12dp"
+                android:background="@drawable/bg_feature_card"
                 android:id="@+id/current_location"
                 android:layout_weight="1"
                 android:layout_marginTop="12dp"
-                android:drawableStart="@drawable/home"
-                android:drawablePadding="12dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTint="@color/main"
                 android:textColor="@color/main"
                 android:text="Get Current Address"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:textStyle="bold"
                 style="@style/TextViewStyle"
-                android:textSize="14sp"
-                android:drawableLeft="@drawable/home" />
+                android:textSize="14sp" />
+    <TextView
+        android:padding="12dp"
+        android:background="@drawable/bg_feature_card"
+        android:id="@+id/my_addresses"
+        android:layout_weight="1"
+        android:layout_marginTop="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTint="@color/main"
+        android:textColor="@color/main"
+        android:text="My Addresses"
+        android:gravity="center"
+        android:textStyle="bold"
+        style="@style/TextViewStyle"
+        android:textSize="14sp" />
+
 </LinearLayout>
             <EditText
                 style="@style/TextViewStyle"
@@ -124,26 +138,73 @@
                 android:padding="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="address line 1" />
-
+                android:hint="Address line 1" />
             <EditText
-                android:id="@+id/line2"
-                android:padding="12dp"
                 style="@style/TextViewStyle"
                 android:textSize="14sp"
+                android:id="@+id/line2"
+                android:padding="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="address line 2" />
+                android:hint="Address line 2" />
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <EditText
+                android:layout_margin="2dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
                 android:id="@+id/line3"
                 android:padding="12dp"
                 style="@style/TextViewStyle"
                 android:textSize="14sp"
-                android:layout_width="match_parent"
+                android:inputType="number"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="address line 3" />
+                android:hint="Postal code" />
 
+            <EditText
+                android:layout_margin="2dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:id="@+id/line4"
+                android:padding="12dp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="City" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:layout_margin="2dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:id="@+id/line5"
+                android:padding="12dp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="state/province" />
+            <EditText
+                android:layout_margin="2dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:id="@+id/line6"
+                android:padding="12dp"
+                style="@style/TextViewStyle"
+                android:textSize="14sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Country" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -161,20 +222,6 @@
                 android:textStyle="bold"
                 android:text="Add"/>
             </RelativeLayout>
-            <TextView
-                android:layout_weight="2"
-                android:gravity="center"
-                android:id="@+id/my_addresses"
-                android:layout_marginTop="12dp"
-                android:drawablePadding="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="My Addresses"
-                android:textColor="@color/main"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                />
 
         </LinearLayout>
     </LinearLayout>

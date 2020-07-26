@@ -325,7 +325,6 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
                 Log.e("OrderResponse",response.message()+"");
                 if(response.code()==200){
                     dailog();
-                    Toast.makeText(getApplicationContext(),response.body().getData().getOrderId(), Toast.LENGTH_SHORT).show();
 
                     DBDeleteAll();
                 }

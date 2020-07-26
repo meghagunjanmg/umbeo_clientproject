@@ -42,6 +42,7 @@ public class CustomPagerAdapter extends PagerAdapter {
 
         TextView textView = (TextView) itemView.findViewById(R.id.text);
         textView.setText(strings[position]);
+        textView.setVisibility(View.GONE);
 
         container.addView(itemView);
 

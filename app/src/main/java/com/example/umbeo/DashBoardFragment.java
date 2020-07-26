@@ -353,10 +353,8 @@ public class DashBoardFragment extends Fragment {
 
 // This is just an example. You can use whatever collection of images.
         int[] mResources = {
-                R.drawable.bananas1,
-                R.drawable.strawberries,
-                R.drawable.orange,
-                R.drawable.lichi,
+                R.drawable.banner1,
+                R.drawable.banner2,
         };
 
         CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);

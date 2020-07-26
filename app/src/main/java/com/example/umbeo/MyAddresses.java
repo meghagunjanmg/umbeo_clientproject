@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.umbeo.Storage.UserPreference;
@@ -36,12 +37,13 @@ import static android.widget.AbsListView.CHOICE_MODE_SINGLE;
 
 public class MyAddresses extends AppCompatActivity {
     static ListView address_list;
+    static TextView no_add;
     static UserPreference preference;
     Button add;
     ImageView back_btn;
     static AdapterAddress adapterAddress;
     public static Activity activity = null;
-
+    static RecyclerView address_recycler;
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +57,16 @@ public class MyAddresses extends AppCompatActivity {
         activity = this;
 
         address_list = findViewById(R.id.address_list);
+        no_add = findViewById(R.id.no_add);
         add = findViewById(R.id.add);
         //getProfile();
 
+
+        if(preference.getAddresses()!=null && preference.getAddresses().size()==0){
+            no_add.setVisibility(View.VISIBLE);
+        }
+
+        address_recycler = findViewById(R.id.address_recycler);
 
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +78,6 @@ public class MyAddresses extends AppCompatActivity {
 
         try {
             if(preference.getAddresses()!=null && preference.getAddresses().size()!=0 ){
-                RecyclerView address_recycler = findViewById(R.id.address_recycler);
                 address_recycler.setLayoutManager(new LinearLayoutManager(this));
                 adapterAddress = new AdapterAddress(preference.getAddresses(),MyAddresses.this);
                 address_recycler.setAdapter(adapterAddress);
@@ -81,9 +89,11 @@ public class MyAddresses extends AppCompatActivity {
             }
 
             else if(Objects.requireNonNull(preference.getAddresses()).size()==0 || preference.getAddresses().get(0).equals(" ")){
-                startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                finish();
-                Bungee.fade(MyAddresses.this);
+                //startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                //finish();
+                //Bungee.fade(MyAddresses.this);
+
+                no_add.setVisibility(View.VISIBLE);
             }
 
         } catch (Exception e) {
@@ -141,19 +151,23 @@ public class MyAddresses extends AppCompatActivity {
             }
         }
         preference.setAddresses(addressList);
-        adapterAddress.notifyDataSetChanged();
+
+
+        //adapterAddress.notifyDataSetChanged();
 
         //AddressAdapter myAdapter = new AddressAdapter(context, R.layout.my_address_lists, addressList);
         //address_list.setAdapter(myAdapter);
 
-
         updateAddress(context);
+
+        AdapterAddress newAdapter = new AdapterAddress(addressList,context);
+        address_recycler.setAdapter(newAdapter);
+
+        //activity.recreate();
     }
 
 
     public static void Back(){
-
-
         activity.finish();
     }
 
@@ -181,6 +195,7 @@ public class MyAddresses extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code()==200){
                     Toast.makeText(context,"Address Updated",Toast.LENGTH_LONG).show();
+
                 }
                 else Toast.makeText(context,response.code()+" "+response.message(),Toast.LENGTH_LONG).show();
             }
@@ -197,6 +212,16 @@ public class MyAddresses extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(preference.getAddresses()!=null && preference.getAddresses().size()==0){
+            no_add.setVisibility(View.VISIBLE);
+        }
+
     }
 }
 

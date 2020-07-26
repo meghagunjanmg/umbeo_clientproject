@@ -1,6 +1,7 @@
 package com.example.umbeo;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,12 +47,13 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+
         addressText.setText(address.get(position)+"");
 
         try {
-            if(preference!=null && preference.getdeliveryAddress().equals(address.get(position))){
+            if(preference.getdeliveryAddress()!=null && preference.getdeliveryAddress().equals(address.get(position))){
                 addressText.setChecked(true);
-            }
+        }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,8 +94,10 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
             @Override
             public void onClick(View v) {
                 MyAddresses.removeAdd(position,context);
-                address.remove(position);
-                notifyItemChanged(position);
+                if(position==0){
+                    MyAddresses.no_add.setVisibility(View.VISIBLE);
+                    preference.setdeliveryAddress(null);
+                }
             }
         });
 
@@ -120,6 +124,9 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
 
             if(preference.getTheme()==1){
                 addressText.setTextColor(Color.WHITE);
+                edit.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                remove.setImageTintList(ColorStateList.valueOf(Color.WHITE));
+                address_et.setTextColor(Color.WHITE);
             }
 
         }

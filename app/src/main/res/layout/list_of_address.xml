@@ -60,6 +60,16 @@
         android:layout_height="wrap_content">
     </ListView>
 
+    <TextView
+        android:id="@+id/no_add"
+        android:visibility="gone"
+        style="@style/TextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="There are no saved addresses"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="20sp"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/address_recycler"

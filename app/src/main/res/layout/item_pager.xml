@@ -17,6 +17,7 @@
             android:src="@drawable/bananas1" />
 
         <ImageView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:src="@color/semidark" />

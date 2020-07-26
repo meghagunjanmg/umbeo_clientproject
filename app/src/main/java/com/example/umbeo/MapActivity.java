@@ -14,6 +14,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,7 +62,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private GoogleMap mMap;
     TextView current_location,my_addresses;
-    EditText line1,line2,line3;
+    EditText line1,line2,line3,line4,line5,line6;
     double latitude, longitude;
     private GoogleApiClient mGoogleApiClient;
     private final static int REQUEST_CHECK_SETTINGS = 2000;
@@ -94,6 +95,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         line1 = findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
         line3 = findViewById(R.id.line3);
+        line4 = findViewById(R.id.line4);
+        line5 = findViewById(R.id.line5);
+        line6 = findViewById(R.id.line6);
         add_address = findViewById(R.id.add_address);
 
         back_btn = findViewById(R.id.back_btn);
@@ -101,6 +105,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+
+        line5.setText("Ontario");
+        line6.setText("Canada");
+        line5.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+        line6.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
             }
         });
 
@@ -254,6 +274,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         // Add a marker in Sydney and move the camera
       //  LatLng sydney = new LatLng(latitude, longitude);
 
+        LatLng latLng = new LatLng(51.2538,85.3232);//ontario
+        mMap.addMarker(new MarkerOptions().position(latLng).title("My location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        mMap.setMaxZoomPreference(18);
     }
         private void getLocation() {
 
@@ -273,7 +298,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                         latitude = mLastLocation.getLatitude();
                         longitude = mLastLocation.getLongitude();
 
-                        LatLng latLng = new LatLng(latitude,longitude);
+                        LatLng latLng = new LatLng(51.2538,85.3232);//ontario
                         mMap.addMarker(new MarkerOptions().position(latLng).title("My location"));
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                         getAddress();
@@ -313,46 +338,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 String country = locationAddress.getCountryName();
                 String postalCode = locationAddress.getPostalCode();
 
-                line1.setText(address);
-                if (city != null /*&& TextUtils.isEmpty(mTextViewLocality.getText())*/)
-                {
-                    line2.setText(city);
-                }
-                if (postalCode != null /*&& TextUtils.isEmpty(mTextViewPinCode.getText())*/)
+                if(country.equalsIgnoreCase("Canada") && state.equalsIgnoreCase("Ontario")){
+                    line1.setText(address);
+                    if(address1.isEmpty()){
+                        line2.setVisibility(View.GONE);
+                    }
+                    else line2.setText(address1);
+
                     line3.setText(postalCode);
-
-                String currentLocation;
-
-                if (!TextUtils.isEmpty(address)) {
-                    currentLocation = address;
-
-                    if (!TextUtils.isEmpty(address1)) {
-
-                        currentLocation += "\n" + address1;
-                    }
-
-                    if (!TextUtils.isEmpty(city)) {
-                        currentLocation += "\n" + city;
-
-                        if (!TextUtils.isEmpty(postalCode)) {
-                            currentLocation += " - " + postalCode;
-                        }
-                    } else {
-                        if (!TextUtils.isEmpty(postalCode)) {
-
-                            currentLocation += "\n" + postalCode;
-                        }
-                    }
-
-                    if (!TextUtils.isEmpty(state)) {
-                        currentLocation += "\n" + state;
-                    }
-                    if (!TextUtils.isEmpty(country)) {
-                        currentLocation += "\n" + country;
-                    }
-
+                    line4.setText(city);
 
                 }
+                else{
+                    Toast.makeText(getApplicationContext(),"Our service is not available in your area",Toast.LENGTH_LONG).show();
+                }
+
+
+
             }
         } catch (Exception e) {
             e.printStackTrace();
