@@ -1,8 +1,11 @@
 package com.example.umbeo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,10 +36,11 @@ import static android.widget.AbsListView.CHOICE_MODE_SINGLE;
 
 public class MyAddresses extends AppCompatActivity {
     static ListView address_list;
-    UserPreference preference;
+    static UserPreference preference;
     Button add;
-    AddressAdapter myAdapter;
     ImageView back_btn;
+    static AdapterAddress adapterAddress;
+    public static Activity activity = null;
 
     @SuppressLint("NewApi")
     @Override
@@ -47,6 +51,8 @@ public class MyAddresses extends AppCompatActivity {
             setContentView(R.layout.dark_addresses);
         }
         else setContentView(R.layout.list_of_address);
+
+        activity = this;
 
         address_list = findViewById(R.id.address_list);
         add = findViewById(R.id.add);
@@ -63,13 +69,20 @@ public class MyAddresses extends AppCompatActivity {
 
         try {
             if(preference.getAddresses()!=null && preference.getAddresses().size()!=0 ){
-                myAdapter = new AddressAdapter(this, R.layout.my_address_lists, preference.getAddresses());
-                address_list.setChoiceMode(CHOICE_MODE_SINGLE);
-                address_list.setAdapter(myAdapter);
+                RecyclerView address_recycler = findViewById(R.id.address_recycler);
+                address_recycler.setLayoutManager(new LinearLayoutManager(this));
+                adapterAddress = new AdapterAddress(preference.getAddresses(),MyAddresses.this);
+                address_recycler.setAdapter(adapterAddress);
+
+
+                //myAdapter = new AddressAdapter(this, R.layout.my_address_lists, preference.getAddresses());
+                //address_list.setChoiceMode(CHOICE_MODE_SINGLE);
+                //address_list.setAdapter(myAdapter);
             }
 
             else if(Objects.requireNonNull(preference.getAddresses()).size()==0 || preference.getAddresses().get(0).equals(" ")){
                 startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                finish();
                 Bungee.fade(MyAddresses.this);
             }
 
@@ -81,6 +94,8 @@ public class MyAddresses extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                finish();
+                Bungee.fade(MyAddresses.this);
             }
         });
     }
@@ -97,7 +112,6 @@ public class MyAddresses extends AppCompatActivity {
 
 
     public static void changeAdd(final int i, final String newstring, final Context context) {
-        UserPreference preference = new UserPreference(context);
         List<String> addressList = new ArrayList<>();
         for (int j = 0; j < preference.getAddresses().size(); j++) {
             if (j == i) {
@@ -107,15 +121,17 @@ public class MyAddresses extends AppCompatActivity {
             }
         }
         preference.setAddresses(addressList);
-        AddressAdapter myAdapter = new AddressAdapter(context, R.layout.my_address_lists, addressList);
-        address_list.setAdapter(myAdapter);
+        //AddressAdapter myAdapter = new AddressAdapter(context, R.layout.my_address_lists, addressList);
+        //address_list.setAdapter(myAdapter);
+
+        adapterAddress.notifyDataSetChanged();
+
 
         updateAddress(context);
     }
 
 
     public static void removeAdd(int i, Context context) {
-        UserPreference preference = new UserPreference(context);
         List<String> addressList = new ArrayList<>();
         for (int j = 0; j < preference.getAddresses().size(); j++) {
             if (j == i) {
@@ -125,50 +141,23 @@ public class MyAddresses extends AppCompatActivity {
             }
         }
         preference.setAddresses(addressList);
-        AddressAdapter myAdapter = new AddressAdapter(context, R.layout.my_address_lists, addressList);
-        address_list.setAdapter(myAdapter);
+        adapterAddress.notifyDataSetChanged();
+
+        //AddressAdapter myAdapter = new AddressAdapter(context, R.layout.my_address_lists, addressList);
+        //address_list.setAdapter(myAdapter);
+
 
         updateAddress(context);
     }
 
 
-    private void getProfile(){
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+    public static void Back(){
 
-        final String token = "Bearer "+preference.getToken();
 
-        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
-
-        call.enqueue(new Callback<UserGetProfileResponse>() {
-            @Override
-            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
-                Log.e("UserGetProfileResponse",response.code()+"");
-                Log.e("UserGetProfileResponse",response.message()+"");
-
-                if(response.code()==200) {
-                    preference.setUserName(response.body().getData().getName());
-                    preference.setEmail(response.body().getData().getEmail());
-                    preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
-                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
-                    preference.setProfilePic(response.body().getData().getProfile_pic());
-                    preference.setToken(token);
-
-                    Log.e("UserGetProfileResponse",response.body().getData().getDeliveryAddresses().toString());
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
-
-            }
-        });
+        activity.finish();
     }
 
-
     private static void updateAddress(final Context context) {
-        UserPreference preference = new UserPreference(context);
         RetrofitClient api_manager = new RetrofitClient();
         UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
         final SignUpResquest request = new SignUpResquest();

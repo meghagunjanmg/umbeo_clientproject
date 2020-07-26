@@ -1,4 +1,5 @@
 <LinearLayout
+    android:id="@+id/main_linear"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -6,7 +7,7 @@
     android:layout_height="wrap_content"
     >
 
-    <CheckBox
+    <RadioButton
         style="@style/TextViewStyle"
         android:textSize="14sp"
         android:layout_weight="1"

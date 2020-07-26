@@ -91,6 +91,7 @@ public class CartMainFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String noAddress = "No address selected";
 
     public CartMainFragment() {
         // Required empty public constructor
@@ -188,11 +189,14 @@ public class CartMainFragment extends Fragment {
         instruction_tv = v.findViewById(R.id.instruction_tv);
         instruction = v.findViewById(R.id.instruction);
 
-        if(preference.getAddresses()!=null && preference.getAddresses().size()>0){
-            address.setText(""+preference.getAddresses().get(0));
+        if(preference.getdeliveryAddress()!=null){
+            address.setText(preference.getdeliveryAddress());
         }
         else {
-            /////
+            if(preference.getAddresses()!=null && preference.getAddresses().size()>0){
+                address.setText(preference.getAddresses().get(0));
+            }
+            else address.setText(noAddress);
         }
 
         instruction_tv.setOnClickListener(new View.OnClickListener() {
@@ -229,16 +233,19 @@ public class CartMainFragment extends Fragment {
         paym.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(preference.getUserName()==null){
-                    Toast.makeText(getContext(),"First SignUp/Login", Toast.LENGTH_SHORT).show();
+                if (preference.getUserName() == null) {
+                    Toast.makeText(getContext(), "First SignUp/Login", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getContext(), signup.class);
                     startActivity(i);
                     Bungee.fade(getContext());
                 }
+                else if (address.getText().toString().equalsIgnoreCase(noAddress)) {
+                    Toast.makeText(getContext(), "Select Delivery Address", Toast.LENGTH_LONG).show();
+                }
                 else {
                     Intent i = new Intent(getContext(), PaymentActivity.class);
                     i.putExtra("total", total_amount.getText().toString());
-                    i.putExtra("deliveryTime",selectedSlot);
+                    i.putExtra("deliveryTime", selectedSlot);
                     i.putExtra("deliveryAdd", address.getText().toString());
                     i.putExtra("deliveryIns", instruction.getText().toString());
                     startActivity(i);
@@ -551,6 +558,16 @@ public class CartMainFragment extends Fragment {
         else {
             no_item_linear.setVisibility(View.GONE);
             main_scroll.setVisibility(View.VISIBLE);
+        }
+
+        if(preference.getdeliveryAddress()!=null){
+            address.setText(preference.getdeliveryAddress());
+        }
+        else {
+            if(preference.getAddresses()!=null && preference.getAddresses().size()>0){
+                address.setText(preference.getAddresses().get(0));
+            }
+            else address.setText("No address selected");
         }
     }
 

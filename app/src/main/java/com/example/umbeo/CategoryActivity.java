@@ -11,8 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.umbeo.Storage.UserPreference;
@@ -48,6 +51,7 @@ public class CategoryActivity extends AppCompatActivity {
     TextView category_name, quantity, quantity3, quantity2;
 
     String category_id="",categoryName="";
+    ProgressBar simpleProgressBar;
 
     List<CartEntity> entities = new ArrayList<>();
     @Override
@@ -60,9 +64,16 @@ public class CategoryActivity extends AppCompatActivity {
         else
         setContentView(R.layout.activity_category);
 
+        EditText search = findViewById(R.id.search);
+        search.clearFocus();
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+
+
         category_name = findViewById(R.id.category_name);
+        simpleProgressBar = findViewById(R.id.simpleProgressBar);
 
-
+        simpleProgressBar.setVisibility(View.VISIBLE);
         try {
             category_id = getIntent().getStringExtra("category_id");
             categoryName = getIntent().getStringExtra("category_name");
@@ -150,6 +161,9 @@ public class CategoryActivity extends AppCompatActivity {
                         item_recycler.setLayoutManager(gridLayoutManager);
                         myAdapter = new ItemAdapter(productModels,CategoryActivity.this);
                         item_recycler.setAdapter(myAdapter);
+
+
+                        simpleProgressBar.setVisibility(View.INVISIBLE);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

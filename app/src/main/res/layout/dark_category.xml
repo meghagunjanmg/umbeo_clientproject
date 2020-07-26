@@ -50,6 +50,7 @@
             </ImageView>
         </FrameLayout>
         <EditText
+            android:id="@+id/search"
             android:layout_marginBottom="8dp"
             android:maxLines="1"
             android:singleLine="true"
@@ -417,6 +418,19 @@
                 </LinearLayout>
 
             </LinearLayout>
+<FrameLayout
+    android:background="@color/colorPrimaryText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/simpleProgressBar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/main"
+                android:visibility="invisible" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:background="@color/colorPrimaryText"
                 android:layout_marginBottom="50dp"
@@ -427,6 +441,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </androidx.recyclerview.widget.RecyclerView>
+</FrameLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

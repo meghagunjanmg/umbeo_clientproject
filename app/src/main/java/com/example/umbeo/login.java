@@ -134,22 +134,13 @@ public class login extends AppCompatActivity {
                         login.setEnabled(true);
 
                         Toast.makeText(com.example.umbeo.login.this,"Login Successful",Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                        //i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        i.putExtra("token",response.body().getData());
-                        i.putExtra("intent",1);
-                        startActivity(i);
-                        Bungee.fade(login.this);
 
                         getProfile(response.body().getData());
+
+
+
                     }
-                    else if(response.code()==401){
-                        Toast.makeText(com.example.umbeo.login.this,"Invalid email/password",Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        login.setEnabled(true);
-                        Toast.makeText(getApplicationContext(), "Error: " + response.body().getMessage(), Toast.LENGTH_LONG).show();
-                    }
+                    else Toast.makeText(com.example.umbeo.login.this,response.body().getMessage(),Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     login.setEnabled(true);
                     e.printStackTrace();
@@ -205,27 +196,39 @@ public class login extends AppCompatActivity {
 
          */
     }
-    private void getProfile(final String tokens){
+    private void getProfile(final String Token){
         RetrofitClient api_manager = new RetrofitClient();
         UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
-        String token = "Bearer "+tokens;
-
+        final String token = "Bearer "+Token;
         Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
 
         call.enqueue(new Callback<UserGetProfileResponse>() {
             @Override
             public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
-                Log.e("UserGetProfileResponse",response.code()+"");
-                Log.e("UserGetProfileResponse",response.message()+"");
-
+                Log.e("Get_Profile_data",response+"");
+                Log.e("Get_Profile_data",response.code()+"");
+                Log.e("Get_Profile_data",response.message()+"");
+                Log.e("Get_Profile_data",response.body().getStatus()+"");
                 if(response.code()==200) {
                     preference.setUserName(response.body().getData().getName());
                     preference.setEmail(response.body().getData().getEmail());
                     preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
-                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
                     preference.setProfilePic(response.body().getData().getProfile_pic());
-                    preference.setToken(tokens);
+                    preference.setUserId(response.body().getData().getId());
+                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
+                    //preference.setAchievments(response.body().getData().getAchievements());
+                    preference.setToken(Token);
+
+
+
+                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                    //i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    i.putExtra("token",response.body().getData());
+                    i.putExtra("intent",1);
+                    startActivity(i);
+                    Bungee.fade(login.this);
+
                 }
             }
 

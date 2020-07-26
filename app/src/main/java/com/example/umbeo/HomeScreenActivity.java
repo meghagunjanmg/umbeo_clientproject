@@ -87,7 +87,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
          text4 = findViewById(R.id.text4);
 
 
-        getProfile();
+        //getProfile();
 
 
 
@@ -318,40 +318,5 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             }
         });
     }
-
-    private void getProfile(){
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
-
-        String token = "Bearer "+preference.getToken();
-        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
-
-        call.enqueue(new Callback<UserGetProfileResponse>() {
-            @Override
-            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
-                if(response.code()==200) {
-                    preference.setUserName(response.body().getData().getName());
-                    preference.setEmail(response.body().getData().getEmail());
-                    preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
-                    preference.setProfilePic(response.body().getData().getProfile_pic());
-                    preference.setUserId(response.body().getData().getId());
-                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
-                    preference.setAchievments(response.body().getData().getAchievements());
-
-                    Log.e("Achievement",response.body().getData().getAchievements().toString());
-                    Log.e("Achievement",preference.getAchievments().toString());
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-
-
 
 }

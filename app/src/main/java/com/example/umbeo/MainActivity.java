@@ -26,7 +26,7 @@ import spencerstudios.com.bungeelib.Bungee;
 
 public class MainActivity extends AppCompatActivity {
     AppDatabase db;
-    private int SPLASH_TIME_OUT=1599;
+    private int SPLASH_TIME_OUT=1600;
     UserPreference preference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,25 +60,10 @@ public class MainActivity extends AppCompatActivity {
         if(!isFirstRun)
         {
 
-            try {
-                String token = getIntent().getStringExtra("token");
-                getProfile(token);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     int i = getIntent().getIntExtra("intent",0);
-                    try {
-                        String token = getIntent().getStringExtra("token");
-                        getProfile(token);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                     if(i==1) {
                         Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -123,44 +108,6 @@ public class MainActivity extends AppCompatActivity {
         if(permissionGranted){
         }else {
         }
-    }
-
-    private void getProfile(final String tokens){
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
-
-        String token = "Bearer "+tokens;
-
-        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
-
-        call.enqueue(new Callback<UserGetProfileResponse>() {
-            @Override
-            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
-                Log.e("UserGetProfileResponse",response.code()+"");
-                Log.e("UserGetProfileResponse",response.message()+"");
-
-                if(response.code()==200) {
-                    preference.setUserName(response.body().getData().getName());
-                    preference.setEmail(response.body().getData().getEmail());
-                    preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
-                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
-                    preference.setProfilePic(response.body().getData().getProfile_pic());
-                    preference.setUserId(response.body().getData().getId());
-                    preference.setToken(tokens);
-
-                    preference.setAchievments(response.body().getData().getAchievements());
-
-                    Log.e("UserGetProfileResponse ",response.body().getData().getAchievements().toString());
-                    Log.e("UserGetProfileResponse ",preference.getAchievments().length+"");
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
-
-            }
-        });
     }
 
     private void DeleteAllDB(){

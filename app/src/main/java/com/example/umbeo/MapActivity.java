@@ -135,16 +135,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onClick(View v) {
                 if(preference.getEmail()!=null) {
-                    if (preference.getAddresses().size() != 0) {
-                        addresses.addAll(preference.getAddresses());
+                        List<String> addresses = new ArrayList<>(preference.getAddresses());
                         String new_add = line1.getText().toString();
                         addresses.add(new_add);
+
                         preference.getAddresses().clear();
                         preference.setAddresses(addresses);
-                    }
-                    updateAddress(addresses);
-                    startActivity(new Intent(getApplicationContext(), MyAddresses.class));
-                    Bungee.fade(MapActivity.this);
+                        updateAddress(addresses);
+                        startActivity(new Intent(getApplicationContext(), MyAddresses.class));
+                        Bungee.fade(MapActivity.this);
+
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"First login/signup to add new Address",Toast.LENGTH_LONG).show();
@@ -180,7 +180,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                    if(response.code()==200){
                        Toast.makeText(getApplicationContext(),"Address Added",Toast.LENGTH_LONG).show();
-                       startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                       //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                       onBackPressed();
                    }
                    else Toast.makeText(getApplicationContext(),response.code()+" "+response.message(),Toast.LENGTH_LONG).show();
 

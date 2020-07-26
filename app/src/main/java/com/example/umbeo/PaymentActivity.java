@@ -108,6 +108,9 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
 
+
+        dialog.setCancelable(false);
+
         Button shopping=(Button) mView.findViewById(R.id.send);
         shopping.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +119,6 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
                 //i.putExtra("Cat",5);
                 startActivity(i);
                 Bungee.fade(PaymentActivity.this);
-                dialog.cancel();
             }
         });
 
@@ -128,6 +130,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
                 Bungee.fade(PaymentActivity.this);
             }
         });
+
 
     }
 

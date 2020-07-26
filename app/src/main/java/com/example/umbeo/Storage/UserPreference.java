@@ -28,6 +28,7 @@ public class UserPreference {
     private String shopPh = "1111111111";
     private String shopTimeSlot = "shopTimeSlot";
     private String shopDeliveryCharges = "shopDeliveryCharges";
+    private String deliveryAddress = "deliveryAddress";
     private Integer LoyaltyPoints = 0;
     private Integer Theme = 0;
     private static final String Addresses = "addresses";
@@ -54,6 +55,15 @@ public class UserPreference {
 
     public void setUserId(String userId) {
         editor.putString(UserId, userId);
+        editor.apply();
+    }
+
+    public String getdeliveryAddress() {
+        return pref.getString(deliveryAddress, null);
+    }
+
+    public void setdeliveryAddress(String deliveryaddress) {
+        editor.putString(deliveryAddress, deliveryaddress);
         editor.apply();
     }
 

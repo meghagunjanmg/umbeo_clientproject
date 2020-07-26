@@ -53,11 +53,21 @@
 
 
     <ListView
+        android:visibility="gone"
         android:layout_marginTop="70dp"
         android:id="@+id/address_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/address_recycler"
+        tools:listitem="@layout/my_address_lists"
+        android:layout_marginTop="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_gravity="center|bottom"

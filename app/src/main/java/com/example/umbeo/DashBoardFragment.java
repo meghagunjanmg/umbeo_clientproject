@@ -174,6 +174,18 @@ public class DashBoardFragment extends Fragment {
         search.clearFocus();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+        if (preference.getUserName() != null) {
+            log.setText(preference.getUserName());
+            log.setTextSize(20);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.gravity = START;
+            params.setMargins(0,40,0,0);
+            log.setLayoutParams(params);
+        } else {
+            log.setText("Log in / Signup");
+            log.setGravity(END);
+        }
+
 
 
         if (db == null) {
@@ -187,18 +199,6 @@ public class DashBoardFragment extends Fragment {
 
         getCategory();
 
-
-        if (preference.getUserName() != null) {
-            log.setText(preference.getUserName());
-            log.setTextSize(20);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.gravity = START;
-            params.setMargins(0,40,0,0);
-            log.setLayoutParams(params);
-        } else {
-            log.setText("Log in / Signup");
-            log.setGravity(END);
-        }
 
         log.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -606,5 +606,21 @@ public class DashBoardFragment extends Fragment {
         simpleProgressBar.setVisibility(View.INVISIBLE);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        if (preference.getUserName() != null) {
+            log.setText(preference.getUserName());
+            log.setTextSize(20);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.gravity = START;
+            params.setMargins(0,40,0,0);
+            log.setLayoutParams(params);
+        } else {
+            log.setText("Log in / Signup");
+            log.setGravity(END);
+        }
+
+    }
 }
