@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrdersList implements Serializable
 {
-
     @SerializedName("confirmedByUser")
     @Expose
     private Boolean confirmedByUser;
@@ -21,12 +20,15 @@ public class OrdersList implements Serializable
     @SerializedName("cancelledByShop")
     @Expose
     private Boolean cancelledByShop;
-    @SerializedName("_id")
+    @SerializedName("deliveryAdress")
     @Expose
-    private String id;
-    @SerializedName("products")
+    private String deliveryAdress;
+    @SerializedName("deliveryInstructions")
     @Expose
-    private List<Product> products = null;
+    private String deliveryInstructions;
+    @SerializedName("deliverySlot")
+    @Expose
+    private String deliverySlot;
     @SerializedName("shopId")
     @Expose
     private String shopId;
@@ -35,7 +37,7 @@ public class OrdersList implements Serializable
     private Integer orderStatus;
     @SerializedName("totalAmount")
     @Expose
-    private double totalAmount;
+    private Double totalAmount;
     @SerializedName("user")
     @Expose
     private String user;
@@ -51,7 +53,13 @@ public class OrdersList implements Serializable
     @SerializedName("__v")
     @Expose
     private Integer v;
-    private final static long serialVersionUID = 5554102151593117099L;
+    @SerializedName("id")
+    @Expose
+    private String id;
+    @SerializedName("products")
+    @Expose
+    private List<Product> products = null;
+    private final static long serialVersionUID = 3325227120411228757L;
 
     public Boolean getConfirmedByUser() {
         return confirmedByUser;
@@ -85,20 +93,28 @@ public class OrdersList implements Serializable
         this.cancelledByShop = cancelledByShop;
     }
 
-    public String getId() {
-        return id;
+    public String getDeliveryAdress() {
+        return deliveryAdress;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setDeliveryAdress(String deliveryAdress) {
+        this.deliveryAdress = deliveryAdress;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public String getDeliveryInstructions() {
+        return deliveryInstructions;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setDeliveryInstructions(String deliveryInstructions) {
+        this.deliveryInstructions = deliveryInstructions;
+    }
+
+    public String getDeliverySlot() {
+        return deliverySlot;
+    }
+
+    public void setDeliverySlot(String deliverySlot) {
+        this.deliverySlot = deliverySlot;
     }
 
     public String getShopId() {
@@ -117,11 +133,11 @@ public class OrdersList implements Serializable
         this.orderStatus = orderStatus;
     }
 
-    public double getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(double totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
@@ -163,6 +179,22 @@ public class OrdersList implements Serializable
 
     public void setV(Integer v) {
         this.v = v;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
 }

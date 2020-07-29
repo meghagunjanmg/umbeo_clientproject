@@ -159,7 +159,9 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
         my_points = view.findViewById(R.id.my_points);
 
         if(preference.getLoyaltyPoints()!=0){
-            my_points.setText(preference.getLoyaltyPoints()+"");
+            int loyaltyPoint = preference.getLoyaltyPoints();
+            int dollar = preference.getLoyaltyPoints()/100;
+            my_points.setText(loyaltyPoint+" = $ "+dollar);
         }
 
 
@@ -269,7 +271,8 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
 
             card_view1.setOnClickListener(this);
             card_view2.setOnClickListener(this);
-        }
+            card_view3.setOnClickListener(this);
+       }
        else if(results.get(0)){
             card_view2.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
             card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
@@ -281,6 +284,8 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
             gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
 
             card_view1.setOnClickListener(this);
+            card_view2.setOnClickListener(this);
+            card_view3.setOnClickListener(this);
         }
         else {
             card_view1.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
@@ -294,6 +299,10 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
             gem1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
             gem2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
             gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+
+            card_view1.setOnClickListener(this);
+            card_view2.setOnClickListener(this);
+            card_view3.setOnClickListener(this);
         }
     }
 

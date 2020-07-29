@@ -136,7 +136,6 @@ public class MyAddresses extends AppCompatActivity {
 
         adapterAddress.notifyDataSetChanged();
 
-
         updateAddress(context);
     }
 

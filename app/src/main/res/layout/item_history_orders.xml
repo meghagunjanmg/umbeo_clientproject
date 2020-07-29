@@ -75,6 +75,23 @@
                 android:layout_height="wrap_content"
                 android:text="$ 8"
                 android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Delivery Instruction"
+            android:textColor="@color/grey"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/instruction"
+            style="@style/TextViewStyle"
+            android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Instruction"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:orientation="horizontal"

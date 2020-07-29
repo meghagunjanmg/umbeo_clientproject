@@ -59,6 +59,9 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
         time.setText(date[0]+"");
         amount.setText("$"+modelList.get(position).getTotalAmount()+"");
 
+
+        instruction.setText(modelList.get(position).getDeliveryInstructions()+"");
+
         if(modelList.get(position).getOrderStatus()==0){
             status.setValue(0);
         }
@@ -128,7 +131,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
 
 
     //CardView card1;
-    TextView products,time,amount;
+    TextView products,time,amount,instruction;
     Slider status;
     Button cancel;
 
@@ -144,6 +147,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
             status = itemView.findViewById(R.id.slider);
             cancel = itemView.findViewById(R.id.cancel);
             card1 = itemView.findViewById(R.id.card1);
+            instruction = itemView.findViewById(R.id.instruction);
             call_btn = itemView.findViewById(R.id.call_btn);
 
             status.setOnTouchListener(new View.OnTouchListener() {

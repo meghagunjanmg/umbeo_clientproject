@@ -56,6 +56,8 @@ public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdap
         }
         products.setText(productName+"");
 
+        instruction.setText(modelList.get(position).getDeliveryInstructions()+"");
+
         String[] date = modelList.get(position).getUpdatedAt().split("T");
         time.setText(date[0]+"");
 
@@ -80,7 +82,7 @@ public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdap
     }
 
 
-    TextView products,time,amount,status;
+    TextView products,time,amount,status,instruction;
     Button repeat;
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView card1;
@@ -93,6 +95,7 @@ public class HistoricOrderAdapter extends RecyclerView.Adapter<HistoricOrderAdap
             status = itemView.findViewById(R.id.status);
             repeat = itemView.findViewById(R.id.repeat);
             card1 = itemView.findViewById(R.id.card1);
+            instruction = itemView.findViewById(R.id.instruction);
 
             if(preference.getTheme()==1){
                 card1.setCardBackgroundColor(Color.parseColor("#F8F8F8"));

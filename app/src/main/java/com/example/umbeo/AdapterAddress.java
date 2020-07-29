@@ -1,8 +1,10 @@
 package com.example.umbeo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +79,7 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count++;
+        /*        count++;
                 addressText.setVisibility(View.GONE);
                 address_et.setVisibility(View.VISIBLE);
                 //address_et.setText(address.get(position));
@@ -87,8 +89,19 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
 
                     MyAddresses.changeAdd(position,  address_et.getText().toString(),context);
                 }
+
+         */
+                Log.e("Testing789","0.  "+position);
+                Intent i = new Intent(context,MapActivity.class);
+                i.putExtra("Edit",1);
+                i.putExtra("address",address.get(position));
+                i.putExtra("position",String.valueOf(position));
+                context.startActivity(i);
+
+
             }
         });
+
 
         remove.setOnClickListener(new View.OnClickListener() {
             @Override

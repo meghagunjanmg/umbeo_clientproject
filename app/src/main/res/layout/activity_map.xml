@@ -160,7 +160,6 @@
                 android:padding="12dp"
                 style="@style/TextViewStyle"
                 android:textSize="14sp"
-                android:inputType="number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="Postal code" />
