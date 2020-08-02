@@ -14,8 +14,7 @@
         android:layout_height="60dp">
 
         <TextView
-            style="@style/TextViewStyle"
-            android:textSize="20sp"
+            style="@style/TextViewStyleHeading"
             android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,8 +45,7 @@
             </ImageView>
 
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 android:padding="8dp"
                 android:id="@+id/profile_edit"
                 android:layout_marginTop="12dp"
@@ -66,8 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:padding="8dp"
                     android:layout_weight="1"
                     android:layout_marginTop="20dp"
@@ -77,8 +74,7 @@
                     android:text="Profile Name"
                     />
                 <TextView
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:padding="8dp"
                     android:layout_weight="2"
                     android:id="@+id/name_edit"
@@ -95,8 +91,7 @@
                     android:textStyle="bold"/>
             </LinearLayout>
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="16sp"
+                style="@style/TextViewStyleNormal"
                 android:id="@+id/myname"
                 android:paddingLeft="8dp"
                 android:layout_marginTop="12dp"
@@ -118,8 +113,7 @@
 
 
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="16sp"
+                style="@style/TextViewStyleSubHeading"
                 android:padding="8dp"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
@@ -130,8 +124,7 @@
             <TextView
                 android:paddingLeft="8dp"
                 android:id="@+id/myemail"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="example12@gmail.com"
@@ -146,11 +139,9 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
                 android:text="Loyalty Points"
-                style="@style/TextViewStyle"
-                android:textSize="16sp" />
+                style="@style/TextViewStyleSubHeading" />
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:paddingLeft="8dp"
                 android:id="@+id/loyalty_point"
                 android:layout_width="match_parent"
@@ -169,8 +160,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
                 android:text="My Orders"
-                style="@style/TextViewStyle"
-                android:textSize="16sp" />
+                style="@style/TextViewStyleSubHeading"
+                />
             <TextView
                 android:id="@+id/my_addresses"
                 android:padding="8dp"
@@ -179,8 +170,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
                 android:text="Delivery Addresses"
-                style="@style/TextViewStyle"
-                android:textSize="16sp" />
+                style="@style/TextViewStyleSubHeading" />
 
             <LinearLayout
                 android:layout_marginBottom="12dp"
@@ -188,8 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:padding="8dp"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -198,8 +187,6 @@
                     android:text="Dark Theme"
                     />
                 <Switch
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
                     android:padding="8dp"
                     android:layout_weight="2"
                     android:id="@+id/theme"
@@ -222,12 +209,10 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/main2"
-                    android:fontFamily="sans-serif"
                     android:layout_gravity="center|bottom"
                     android:id="@+id/logout"
                     android:text="Logout"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleHeading"
                     android:textStyle="bold"/>
             </LinearLayout>
 

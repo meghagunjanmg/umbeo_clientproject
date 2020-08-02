@@ -37,14 +37,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Strawberry"
-            style="@style/TextViewStyle"
-            android:textSize="16sp"
+            style="@style/TextViewStyleHeading"
             android:textColor="@color/main"
             android:textStyle="bold"/>
 
         <TextView
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleSubHeading"
             android:id="@+id/price"
             android:gravity="center"
             android:layout_weight="1"
@@ -75,8 +73,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 android:gravity="center_vertical"
                 android:layout_weight="2"
                 android:layout_width="match_parent"
@@ -100,8 +97,7 @@
                     android:src="@drawable/ic_remove">
                 </ImageView>
                 <TextView
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:padding="8dp"
                     android:id="@+id/quantity1111"
                     android:layout_width="wrap_content"
@@ -133,8 +129,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:backgroundTint="@color/main"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleHeading"
         android:text="Add to Cart"
         android:layout_marginTop="12dp"
         android:textStyle="bold"/>
@@ -146,8 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Back"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleSubHeading"
             android:textColor="@color/main"
             android:textStyle="bold"/>
 

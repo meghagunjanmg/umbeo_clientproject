@@ -25,14 +25,13 @@
                 android:padding="8dp">
                 <TextView
                     android:layout_weight="1"
-                    style="@style/TextViewStyle"
+                    style="@style/TextViewStyleHeading"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Sparkling Star"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    />
 
                 <FrameLayout
                     android:layout_weight="0.7"
@@ -62,14 +61,14 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="500 crystals"
-                    android:textSize="14sp" />
+                    style="@style/TextViewStyleSubHeading" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:visibility="gone"
             android:id="@+id/text2"
-            style="@style/TextViewStyle"
+            style="@style/TextViewStyleNormal"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view1"

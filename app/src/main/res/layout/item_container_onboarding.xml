@@ -19,7 +19,7 @@
         android:contentDescription="@string/app_name"/>
     
     <TextView
-        style="@style/TextViewStyle"
+        style="@style/TextViewStyleHeading"
         android:textSize="24sp"
         android:id="@+id/textTitle"
         android:layout_width="match_parent"

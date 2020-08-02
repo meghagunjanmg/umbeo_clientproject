@@ -13,7 +13,9 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,7 +62,7 @@ import spencerstudios.com.bungeelib.Bungee;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, TextWatcher {
 
     private GoogleMap mMap;
     TextView current_location, my_addresses;
@@ -117,11 +119,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         if (i == 1) {
             getLocationFromAddress(getApplicationContext(), address);
             add_address.setText("Update");
-            add_address.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });
+            //line1.addTextChangedListener(this);
         }
 
 
@@ -140,6 +138,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
+
+        line1.addTextChangedListener(this);
 
         try {
             if (preference.getAddresses().size() == 0) {
@@ -341,6 +341,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     LatLng latLng = new LatLng(latitude, longitude);
                     mMap.addMarker(new MarkerOptions().position(latLng).title("My location"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.setMaxZoomPreference(18);
                     getAddress();
 
                 } catch (Exception e) {
@@ -460,9 +461,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             Address location = address.get(0);
             p1 = new LatLng(location.getLatitude(), location.getLongitude());
+            ///mMap.clear();
 
             Log.e("Testing123",location.getLatitude()+"  "+location.getLongitude());
             Address locationAddress = getAddress(location.getLatitude(),location.getLongitude());
+
+
             if (locationAddress != null) {
                 String address0 = locationAddress.getAddressLine(0);
                 String address1 = locationAddress.getAddressLine(1);
@@ -487,14 +491,56 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                         line2.setText(address1);
                     }
 
+
+                    mMap.addMarker(new MarkerOptions().position(p1).title("My location"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(p1));
+                    mMap.setMaxZoomPreference(18);
+
                 } else {
-                    Toast.makeText(getApplicationContext(), "Our service is not available in your area", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Our service is not available in your area", Toast.LENGTH_LONG).show();
                 }
             }
         }catch (Exception e){
 
         }
         return p1;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+        getmapmarker(s.toString());
+    }
+
+    private void getmapmarker(String strAddress) {
+        Geocoder coder = new Geocoder(MapActivity.this);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+            }
+
+            Address location = address.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
+            mMap.clear();
+            mMap.addMarker(new MarkerOptions().position(p1).title("My location"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(p1));
+            mMap.setMaxZoomPreference(18);
+        }catch (Exception e){}
     }
 
 }

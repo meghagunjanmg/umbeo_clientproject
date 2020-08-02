@@ -38,21 +38,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        style="@style/TextViewStyle"
-        android:textSize="20sp"
+        style="@style/TextViewStyleHeading"
         android:gravity="center"
         android:text="Welcome Back "
         android:textAlignment="center"
-        android:textColor="@color/colorTextSecondary"
-        android:textStyle="bold"/>
+        android:textColor="@color/colorTextSecondary"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleSubHeading"
         android:text="You are one step away from dicovering" />
 
     <TextView
@@ -61,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="16sp"
+        style="@style/TextViewStyleSubHeading"
         android:text="the best around you" />
     <TextView
         android:layout_marginTop="8dp"
@@ -69,17 +66,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Mobile No./Email Address*"
-        android:textStyle="bold"
-        style="@style/TextViewStyle"
-        android:textSize="16sp"        />
+        style="@style/TextViewStyleSubHeading" />
     <EditText
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:id="@+id/username"
         android:maxLines="1"
         android:layout_width="match_parent"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleNormal"
         android:layout_height="wrap_content"
         android:hint="Enter E-mail Address*"/>
 
@@ -88,10 +82,8 @@
         android:layout_marginLeft="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextViewStyle"
-        android:textSize="16sp"
-        android:text="Password"
-        android:textStyle="bold"/>
+        style="@style/TextViewStyleSubHeading"
+        android:text="Password" />
 
     <EditText
         android:layout_marginLeft="8dp"
@@ -101,8 +93,7 @@
         android:layout_height="wrap_content"
         android:hint="Password"
         android:maxLines="1"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleNormal"
         android:inputType="textPassword" />
 
     <TextView
@@ -118,10 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@color/main2"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleHeading"
             android:text="Sign In"
-            android:textStyle="bold"
             app:cornerRadius="20dp" />
 
     <TextView
@@ -129,8 +118,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleNormal"
         android:text="forgot your password?" />
     <LinearLayout
         android:id="@+id/belowme"
@@ -180,15 +168,13 @@
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleNormal"
         android:text="Don't have an Account?  " />
 
     <TextView
         android:gravity="center"
         android:id="@+id/signin"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleNormal"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:text="Sign Up"

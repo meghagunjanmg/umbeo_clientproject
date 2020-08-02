@@ -8,8 +8,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonOnboardingAction"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorButton"

@@ -26,4 +26,9 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/gilroybold" />
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/robotocondensed" />
 </font-family>

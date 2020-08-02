@@ -33,14 +33,12 @@
             </ImageView>
 
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="20sp"
+                style="@style/TextViewStyleSubHeading"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Payment"
-                android:textColor="@color/colorPrimaryText"
-                android:textStyle="bold" />
+                android:textColor="@color/colorPrimaryText" />
             <ImageView
                 android:visibility="gone"
                 android:id="@+id/cart_btn"
@@ -75,8 +73,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Payable Amount "
-                style="@style/TextViewStyle"
-                android:textSize="14sp" />
+                style="@style/TextViewStyleHeading"
+                />
 
             <TextView
                 android:layout_weight="1"
@@ -85,10 +83,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:paddingRight="8dp"
-                style="@style/TextViewStyle"
-                android:textSize="16sp"
-                android:text="$ 31.47"
-                android:textStyle="bold" />
+                style="@style/TextViewStyleHeading"
+                android:text="$ 31.47" />
         </LinearLayout>
 
             <RadioGroup
@@ -101,14 +97,12 @@
                 <TextView
                     android:padding="8dp"
                     android:text="Cash On Delivery"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </TextView>
                         <RadioButton
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
+                            style="@style/TextViewStyleNormal"
                             android:layout_margin="8dp"
                             android:background="@drawable/payment_outline"
                             android:padding="12dp"
@@ -120,8 +114,7 @@
                             android:layout_height="wrap_content" />
                 <TextView
                     android:visibility="gone"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleNormal"
                     android:padding="8dp"
                     android:text="Wallet"
                     android:layout_width="match_parent"
@@ -132,8 +125,7 @@
                             android:layout_margin="8dp"
                             android:background="@drawable/payment_outline"
                             android:padding="12dp"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
+                            style="@style/TextViewStyleNormal"
                             android:id="@+id/amazonPay"
                             android:drawableLeft="@drawable/amazonpay"
                             android:drawablePadding="8dp"
@@ -142,8 +134,7 @@
                             android:layout_height="wrap_content" />
                         <RadioButton
                             android:visibility="gone"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
+                            style="@style/TextViewStyleNormal"
                             android:layout_margin="8dp"
                             android:background="@drawable/payment_outline"
                             android:padding="12dp"
@@ -155,8 +146,7 @@
                             android:layout_height="wrap_content" />
                         <RadioButton
                             android:visibility="gone"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
+                            style="@style/TextViewStyleNormal"
                             android:layout_margin="8dp"
                             android:padding="12dp"
                             android:id="@+id/payPal"
@@ -170,8 +160,7 @@
                     android:visibility="gone"
                     android:padding="8dp"
                     android:text="UPI"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleNormal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </TextView>
@@ -184,8 +173,7 @@
                         android:drawableLeft="@drawable/amazonpay"
                         android:drawablePadding="8dp"
                         android:text="Amazon pay UPI"
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        style="@style/TextViewStyleNormal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
@@ -198,8 +186,7 @@
                         android:drawableLeft="@drawable/googlepay"
                         android:drawablePadding="8dp"
                         android:text="Google pay"
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        style="@style/TextViewStyleNormal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
             </RadioGroup>
@@ -208,8 +195,7 @@
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleHeading"
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/main2"
             android:text="Continue"

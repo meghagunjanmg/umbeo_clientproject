@@ -32,7 +32,7 @@
                 <TextView
                     android:id="@+id/title"
                     android:layout_weight="1"
-                    style="@style/TextViewStyle"
+                    style="@style/TextViewStyleHeading"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -62,7 +62,7 @@
                 </FrameLayout>
 
                 <TextView
-                    style="@style/TextViewStyle"
+                    style="@style/TextViewStyleSubHeading"
                     android:id="@+id/points"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
@@ -77,7 +77,7 @@
 
         <TextView
             android:id="@+id/text"
-            style="@style/TextViewStyle"
+            style="@style/TextViewStyleNormal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view"

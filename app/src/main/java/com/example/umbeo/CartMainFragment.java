@@ -24,6 +24,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -80,6 +81,8 @@ public class CartMainFragment extends Fragment {
     TextView address,change_address;
     ListView slots;
     String selectedSlot;
+
+    ProgressBar simpleProgressBar;
 
     final HashMap<String,Double> slotList = new HashMap<>();
 
@@ -160,6 +163,8 @@ public class CartMainFragment extends Fragment {
          slot1 = v.findViewById(R.id.slot1);
          slot2 = v.findViewById(R.id.slot2);
          slot3 = v.findViewById(R.id.slot3);
+        simpleProgressBar = v.findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.VISIBLE);
 
         if(preference.getTheme()==1){
             delivery_card.setCardBackgroundColor(Color.BLACK);
@@ -601,6 +606,9 @@ public class CartMainFragment extends Fragment {
                         }
                         Log.e("Slots 0",slotList.toString());
                         setdata();
+
+
+                        simpleProgressBar.setVisibility(View.GONE);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

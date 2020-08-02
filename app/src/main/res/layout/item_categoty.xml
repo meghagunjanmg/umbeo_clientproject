@@ -13,10 +13,8 @@
     <TextView
         android:padding="8dp"
         android:id="@+id/category_name"
-        style="@style/TextViewStyle"
-        android:textSize="18sp"
+        style="@style/TextViewStyleHeading"
         android:textStyle="bold"
-        android:fontFamily="@font/opensans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"

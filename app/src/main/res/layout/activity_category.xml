@@ -36,8 +36,7 @@
             android:gravity="center"
             android:text="Fruits"
             android:textColor="@color/colorPrimaryText"
-            style="@style/TextViewStyle"
-            android:textSize="20sp"
+            style="@style/TextViewStyleHeading"
             android:textStyle="bold" />
             <ImageView
                 android:id="@+id/cart_btn"
@@ -55,8 +54,7 @@
             android:singleLine="true"
             android:padding="8dp"
             android:hint="Search"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleNormal"
             android:textColorHint="@color/colorTextSecondary"
             android:drawableLeft="@drawable/ic_search"
             android:drawableTint="@color/main"

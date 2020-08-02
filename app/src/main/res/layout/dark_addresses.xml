@@ -31,8 +31,7 @@
             </ImageView>
 
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="20sp"
+                style="@style/TextViewStyleHeading"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -62,7 +61,7 @@
 <TextView
     android:id="@+id/no_add"
     android:visibility="gone"
-    style="@style/TextViewStyle"
+    style="@style/TextViewStyleNormal"
     android:textSize="20sp"
     android:textColor="@color/colorWhite"
     android:text="There are no saved addresses"
@@ -86,13 +85,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleHeading"
             android:layout_margin="8dp"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/main2"
-            android:fontFamily="sans-serif"
             android:layout_gravity="center|bottom"
             android:id="@+id/add"
             android:text="Add new Address"

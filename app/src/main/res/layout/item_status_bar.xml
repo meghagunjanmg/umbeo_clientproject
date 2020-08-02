@@ -22,8 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleNormal"
             android:layout_weight="1"
             android:id="@+id/ordered_text"
             android:text="Ordered"
@@ -32,8 +31,7 @@
             android:layout_height="wrap_content">
         </TextView>
         <TextView
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleNormal"
             android:layout_weight="1"
             android:id="@+id/packed_text"
             android:text="Packed"
@@ -42,8 +40,7 @@
             android:layout_height="wrap_content">
         </TextView>
         <TextView
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleNormal"
             android:layout_weight="1"
             android:id="@+id/intransit_text"
             android:gravity="center"
@@ -52,8 +49,7 @@
             android:layout_height="wrap_content">
         </TextView>
         <TextView
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleNormal"
             android:layout_weight="1"
             android:id="@+id/delivered_text"
             android:text="Delivered"

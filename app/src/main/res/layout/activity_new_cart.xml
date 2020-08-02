@@ -21,9 +21,7 @@
             android:gravity="center"
             android:text="Cart"
             android:textColor="@color/colorPrimaryText"
-            style="@style/TextViewStyle"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            style="@style/TextViewStyleHeading" />
 
 
         <LinearLayout
@@ -40,9 +38,8 @@
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/TextViewStyleSubHeading"
                 android:text="Delivery At : "
-                android:textSize="16sp"
-                android:textStyle="bold"
                 android:textColor="@color/colorPrimaryText"/>
             <EditText
                 android:layout_width="345dp"
@@ -53,9 +50,7 @@
                 android:drawablePadding="12dp"
                 android:hint="Address"
                 android:textColorHint="@color/colorPrimaryText"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                style="@style/TextViewStyleSubHeading" />
             <ImageView
                 android:tint="@color/main"
                 android:layout_gravity="center"
@@ -78,7 +73,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:textSize="24sp"
+            style="@style/TextViewStyleHeading"
             android:text="There are no items in your cart"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -91,6 +86,7 @@
             android:id="@+id/shop"
             android:gravity="center"
             android:text="Start Shopping"
+            style="@style/TextViewStyleSubHeading"
             android:layout_marginBottom="70dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -134,10 +130,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Sub total"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textStyle="bold" />
+                    style="@style/TextViewStyleSubHeading"
+                    android:textColor="@color/colorPrimaryText" />
                 <TextView
                     android:id="@+id/subtotal"
                     android:gravity="end"
@@ -147,9 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="$ 1"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    style="@style/TextViewStyleHeading" />
             </LinearLayout>
 
             <LinearLayout
@@ -160,16 +152,14 @@
                 android:layout_height="wrap_content">
                 <CheckBox
                     android:layout_marginTop="8dp"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleHeading"
                     android:id="@+id/loyalty"
                     android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Redeem Crystals (100 crystal = $ 1)"
-                    android:textColor="@color/colorTextSecondary"
-                    android:textStyle="bold" />
+                    android:textColor="@color/colorTextSecondary"/>
                 <TextView
                     android:id="@+id/loyalty_point"
                     android:gravity="center_vertical|end"
@@ -178,9 +168,7 @@
                     android:layout_height="match_parent"
                     android:text="- $ 1"
                     android:textColor="@color/colorTextSecondary"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    style="@style/TextViewStyleSubHeading" />
             </LinearLayout>
             <TextView
                 android:layout_weight="1"
@@ -189,10 +177,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Delivery"
-                style="@style/TextViewStyle"
-                android:textSize="16sp"
-                android:textColor="@color/colorPrimaryText"
-                android:textStyle="bold" />
+                style="@style/TextViewStyleHeading"
+                android:textColor="@color/colorPrimaryText" />
             <androidx.cardview.widget.CardView
                 android:id="@+id/delivery_card"
                android:layout_margin="8dp"
@@ -217,18 +203,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Delivery Address"
-                                style="@style/TextViewStyle"
-                                android:textSize="14sp"
-                                android:textStyle="bold"
+                                style="@style/TextViewStyleSubHeading"
                                 android:textColor="@color/colorPrimaryText" />
                             <TextView
                                 android:id="@+id/address"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Delivery Address: "
-                                style="@style/TextViewStyle"
-                                android:textSize="14sp"
-                                android:textStyle="bold"/>
+                                style="@style/TextViewStyleNormal"/>
                         </LinearLayout>
                         <TextView
                             android:layout_weight="2"
@@ -239,18 +221,14 @@
                             android:layout_height="match_parent"
                             android:text="Change"
                             android:gravity="end|center"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
+                            style="@style/TextViewStyleNormal"
                             android:textColor="@color/main" />
                     </LinearLayout>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Delivery Slot"
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
+                        style="@style/TextViewStyleSubHeading"
                         android:textColor="@color/colorPrimaryText" />
                  <include layout="@layout/time_slots"></include>
                     <LinearLayout
@@ -264,9 +242,7 @@
                             android:layout_height="wrap_content"
                             android:text="Delivery Charges"
                             android:textColor="@color/lightgrey"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            style="@style/TextViewStyleSubHeading" />
                         <TextView
                             android:id="@+id/delivery_charges"
                             android:gravity="end"
@@ -275,8 +251,7 @@
                             android:layout_height="wrap_content"
                             android:text="$ 1"
                             android:textColor="@android:color/black"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
+                            style="@style/TextViewStyleNormal"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -291,18 +266,14 @@
                             android:layout_height="wrap_content"
                             android:text="Delivery Instructions"
                             android:textColor="@color/main"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            style="@style/TextViewStyleSubHeading" />
                         <EditText
                             android:visibility="gone"
                             android:id="@+id/instruction"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@android:color/black"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
+                            style="@style/TextViewStyleNormal"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -326,17 +297,13 @@
             android:layout_height="wrap_content"
             android:text="Taxes &amp; Charges"
             android:textColor="@color/lightgrey"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            style="@style/TextViewStyleHeading" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="GST\nHST"
                 android:textColor="@color/lightgrey"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                style="@style/TextViewStyleSubHeading"
                 android:layout_marginLeft="8dp" />
         </LinearLayout>
         <TextView
@@ -347,9 +314,7 @@
             android:layout_height="wrap_content"
             android:text="$ 1"
             android:textColor="@android:color/black"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            style="@style/TextViewStyleNormal" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginLeft="8dp"
@@ -365,9 +330,7 @@
             android:layout_height="wrap_content"
             android:text="Discounts"
             android:textColor="@color/lightgrey"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            style="@style/TextViewStyleSubHeading"/>
         <TextView
             android:gravity="end"
             android:layout_weight="1"
@@ -376,9 +339,7 @@
             android:layout_height="wrap_content"
             android:text="$ 1"
             android:textColor="@android:color/black"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            style="@style/TextViewStyleNormal" />
     </LinearLayout>
 
 
@@ -395,9 +356,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Grand Total"
-            style="@style/TextViewStyle"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            style="@style/TextViewStyleHeading"/>
         <TextView
             android:id="@+id/grand_total"
             android:gravity="end"
@@ -407,9 +366,7 @@
             android:layout_height="wrap_content"
             android:text="$ 1"
             android:textColor="@android:color/black"
-            style="@style/TextViewStyle"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            style="@style/TextViewStyleHeading" />
     </LinearLayout>
 
 
@@ -417,7 +374,7 @@
                 android:visibility="gone"
                 android:layout_marginBottom="8dp"
                 android:id="@+id/note"
-                style="@style/TextViewStyle"
+                style="@style/TextViewStyleSubHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -425,16 +382,14 @@
                 android:layout_marginRight="8dp"
                 android:gravity="center"
                 android:text="Please note after placing the order on \n cancelation charges might apply"
-                android:textColor="@color/lightgrey"
-                android:textSize="14sp" />
+                android:textColor="@color/lightgrey" />
 
             <Button
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="20dp"
                 android:id="@+id/payment"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Proceed to pay"

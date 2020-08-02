@@ -24,14 +24,13 @@
 
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/TextViewStyleSubHeading"
             android:layout_marginTop="20dp"
             android:id="@+id/additem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add more items"
             android:textAllCaps="false"
-            android:textSize="16sp"
             android:textColor="@color/main" />
     </LinearLayout>
 

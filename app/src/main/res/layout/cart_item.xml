@@ -16,15 +16,14 @@
     android:layout_height="wrap_content">
 
     <TextView
-        style="@style/TextViewStyle"
-        android:textSize="16sp"
+        style="@style/TextViewStyleSubHeading"
         android:id="@+id/item_name"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:text="Strawberries"
-        android:textStyle="bold" />
+        />
 
     <LinearLayout
         android:layout_marginTop="4dp"
@@ -42,15 +41,13 @@
             android:src="@drawable/ic_remove">
         </ImageView>
         <TextView
-            style="@style/TextViewStyle"
-            android:textSize="16sp"
+            style="@style/TextViewStyleHeading"
             android:padding="8dp"
             android:id="@+id/quantity1111"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:textColor="@android:color/black"
             android:gravity="center"
-            android:textStyle="bold"
             android:text="1">
         </TextView>
         <ImageView
@@ -72,25 +69,21 @@
 
     <TextView
         android:layout_weight="1"
-        style="@style/TextViewStyle"
-        android:textSize="14sp"
+        style="@style/TextViewStyleSubHeading"
         android:id="@+id/total_amount"
         android:gravity="end"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="$ 5/-"
-        android:textStyle="bold"/>
+        android:text="$ 5/-" />
             <TextView
                 android:layout_weight="1"
-                style="@style/TextViewStyle"
-                android:textSize="12sp"
+                style="@style/TextViewStyleNormal"
                 android:id="@+id/gst_amount"
                 android:gravity="end"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/lightgrey"
-                android:text="GST(13%):"
-                android:textStyle="bold"/>
+                android:text="GST(13%):" />
         </LinearLayout>
 
     </LinearLayout>

@@ -34,8 +34,7 @@
             </ImageView>
 
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="20sp"
+                style="@style/TextViewStyleHeading"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -111,9 +110,7 @@
                 android:textColor="@color/main"
                 android:text="Get Current Address"
                 android:gravity="center"
-                android:textStyle="bold"
-                style="@style/TextViewStyle"
-                android:textSize="14sp" />
+                style="@style/TextViewStyleSubHeading" />
     <TextView
         android:padding="12dp"
         android:background="@drawable/bg_feature_card"
@@ -126,22 +123,18 @@
         android:textColor="@color/main"
         android:text="My Addresses"
         android:gravity="center"
-        android:textStyle="bold"
-        style="@style/TextViewStyle"
-        android:textSize="14sp" />
+        style="@style/TextViewStyleSubHeading" />
 
 </LinearLayout>
             <EditText
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:id="@+id/line1"
                 android:padding="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Address line 1" />
             <EditText
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:id="@+id/line2"
                 android:padding="12dp"
                 android:layout_width="match_parent"
@@ -158,8 +151,7 @@
                 android:layout_weight="1"
                 android:id="@+id/line3"
                 android:padding="12dp"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="Postal code" />
@@ -170,8 +162,7 @@
                 android:layout_weight="1"
                 android:id="@+id/line4"
                 android:padding="12dp"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="City" />
@@ -187,8 +178,7 @@
                 android:layout_weight="1"
                 android:id="@+id/line5"
                 android:padding="12dp"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="state/province" />
@@ -198,8 +188,7 @@
                 android:layout_weight="1"
                 android:id="@+id/line6"
                 android:padding="12dp"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="Country" />
@@ -209,8 +198,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <Button
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleHeading"
                 android:id="@+id/add_address"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"

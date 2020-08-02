@@ -21,8 +21,7 @@
             android:gravity="center"
             android:text="Cart"
             android:textColor="@color/colorWhite"
-            style="@style/TextViewStyle"
-            android:textSize="20sp"
+            style="@style/TextViewStyleHeading"
             android:textStyle="bold" />
 
 
@@ -41,8 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Delivery At : "
-                android:textSize="16sp"
-                android:textStyle="bold"
+style="@style/TextViewStyleSubHeading"                android:textStyle="bold"
                 android:textColor="@color/colorPrimaryText"/>
             <EditText
                 android:layout_width="345dp"
@@ -53,8 +51,7 @@
                 android:drawablePadding="12dp"
                 android:hint="Address"
                 android:textColorHint="@color/colorPrimaryText"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
                 android:textStyle="bold" />
             <ImageView
                 android:tint="@color/main"
@@ -75,17 +72,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            style="@style/TextViewStyleHeading"
             android:id="@+id/no_item"
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:textSize="24sp"
             android:textColor="@color/colorWhite"
             android:text="There are no items in your cart"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </TextView>
         <Button
+            style="@style/TextViewStyleHeading"
             android:backgroundTint="@color/main"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
@@ -133,10 +131,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Sub total"
-                        style="@style/TextViewStyle"
+                        style="@style/TextViewStyleSubHeading"
                         android:textColor="@color/colorWhite"
-                        android:textSize="16sp"                        android:textStyle="bold" />
-                    <TextView
+/>                    <TextView
                         android:id="@+id/subtotal"
                         android:gravity="end"
                         android:layout_weight="1"
@@ -144,10 +141,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="$ 1"
-                        style="@style/TextViewStyle"
+                        style="@style/TextViewStyleSubHeading"
                         android:textColor="@color/colorWhite"
-                        android:textSize="16sp"                        android:textStyle="bold" />
-                </LinearLayout>
+/>                </LinearLayout>
 
                 <LinearLayout
                     android:background="@color/colorPrimaryText"
@@ -157,8 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <CheckBox
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        style="@style/TextViewStyleSubHeading"
                         android:id="@+id/loyalty"
                         android:layout_weight="2"
                         android:layout_width="match_parent"
@@ -174,8 +169,7 @@
                         android:layout_height="match_parent"
                         android:text="- $ 1"
                         android:textColor="@color/colorWhite"
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        style="@style/TextViewStyleSubHeading"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <TextView
@@ -185,9 +179,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Delivery"
-                    style="@style/TextViewStyle"
+                    style="@style/TextViewStyleSubHeading"
                     android:textColor="@color/colorWhite"
-                    android:textSize="16sp"
                     android:textStyle="bold" />
                 <androidx.cardview.widget.CardView
                     android:id="@+id/delivery_card"
@@ -213,8 +206,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Delivery Address"
-                                    style="@style/TextViewStyle"
-                                    android:textSize="14sp"
+                                    style="@style/TextViewStyleSubHeading"
                                     android:textStyle="bold"
                                     android:textColor="@color/colorWhite" />
                                 <TextView
@@ -223,8 +215,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Delivery Address: "
-                                    style="@style/TextViewStyle"
-                                    android:textSize="14sp"
+                                    style="@style/TextViewStyleNormal"
                                     android:textStyle="bold"/>
                             </LinearLayout>
                             <TextView
@@ -236,8 +227,7 @@
                                 android:layout_height="match_parent"
                                 android:text="Change"
                                 android:gravity="end|center"
-                                style="@style/TextViewStyle"
-                                android:textSize="14sp"
+                                style="@style/TextViewStyleNormal"
                                 android:textStyle="bold"
                                 android:textColor="@color/main" />
                         </LinearLayout>
@@ -245,8 +235,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Delivery Slot"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
+                            style="@style/TextViewStyleSubHeading"
                             android:textStyle="bold"
                             android:textColor="@color/colorWhite" />
                         <include layout="@layout/time_slots"></include>
@@ -262,8 +251,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Delivery Charges"
                                 android:textColor="@color/lightgrey"
-                                style="@style/TextViewStyle"
-                                android:textSize="14sp"
+                                style="@style/TextViewStyleSubHeading"
                                 android:textStyle="bold" />
                             <TextView
                                 android:id="@+id/delivery_charges"
@@ -273,8 +261,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="$ 1"
                                 android:textColor="@color/colorWhite"
-                                style="@style/TextViewStyle"
-                                android:textSize="14sp"
+                                style="@style/TextViewStyleNormal"
                                 android:textStyle="bold" />
                         </LinearLayout>
                         <LinearLayout
@@ -288,8 +275,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Delivery Instructions"
                                 android:textColor="@color/main"
-                                style="@style/TextViewStyle"
-                                android:textSize="14sp"
+                                style="@style/TextViewStyleSubHeading"
                                 android:textStyle="bold" />
                             <EditText
                                 android:visibility="gone"
@@ -297,8 +283,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/colorWhite"
-                                style="@style/TextViewStyle"
-                                android:textSize="14sp"
+                                style="@style/TextViewStyleNormal"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -319,8 +304,7 @@
                         android:layout_height="wrap_content"
                         android:text="Delivery Charges"
                         android:textColor="@color/colorWhite"
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        style="@style/TextViewStyleSubHeading"
                         android:textStyle="bold" />
                     <TextView
                         android:gravity="end"
@@ -329,8 +313,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="$ 1"
-                        android:textColor="@color/colorWhite"                       style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        android:textColor="@color/colorWhite"                       style="@style/TextViewStyleNormal"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <LinearLayout
@@ -351,16 +334,14 @@
                             android:layout_height="wrap_content"
                             android:text="Taxes &amp; Charges"
                             android:textColor="@color/colorWhite"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
+                            style="@style/TextViewStyleSubHeading"
                             android:textStyle="bold" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="GST\nHST"
                             android:textColor="@color/colorWhite"
-                            style="@style/TextViewStyle"
-                            android:textSize="14sp"
+                            style="@style/TextViewStyleSubHeading"
                             android:textStyle="bold"
                             android:layout_marginLeft="8dp" />
                     </LinearLayout>
@@ -372,8 +353,7 @@
                         android:layout_height="wrap_content"
                         android:text="$ 1"
                         android:textColor="@color/colorWhite"
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        style="@style/TextViewStyleNormal"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <LinearLayout
@@ -390,8 +370,7 @@
                         android:layout_height="wrap_content"
                         android:text="Discounts"
                         android:textColor="@color/lightgrey"
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        style="@style/TextViewStyleSubHeading"
                         android:textStyle="bold" />
                     <TextView
                         android:gravity="end"
@@ -401,8 +380,7 @@
                         android:layout_height="wrap_content"
                         android:text="$ 1"
                         android:textColor="@android:color/black"
-                        style="@style/TextViewStyle"
-                        android:textSize="14sp"
+                        style="@style/TextViewStyleNormal"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -420,10 +398,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Grand Total"
-                        style="@style/TextViewStyle"
+                        style="@style/TextViewStyleHeading"
                         android:textColor="@color/colorWhite"
-                        android:textSize="16sp"                        android:textStyle="bold" />
-                    <TextView
+/>                    <TextView
                         android:id="@+id/grand_total"
                         android:gravity="end"
                         android:layout_weight="1"
@@ -432,7 +409,7 @@
                         android:layout_height="wrap_content"
                         android:text="$ 1"
                         android:textColor="@color/colorWhite"
-                        android:textSize="16sp"                        style="@style/TextViewStyle"
+                    style="@style/TextViewStyleHeading"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -446,8 +423,7 @@
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleNormal"
                     android:text="Please note after placing the order on \n cancelation charges might apply"
                     android:textColor="@color/colorWhite"/>
 
@@ -456,8 +432,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="20dp"
                     android:id="@+id/payment"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleHeading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/main"

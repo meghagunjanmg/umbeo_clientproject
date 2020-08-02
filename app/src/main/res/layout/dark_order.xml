@@ -29,13 +29,12 @@
             </ImageView>
 
             <TextView
-                style="@style/TextViewStyle"
+                style="@style/TextViewStyleHeading"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Orders"
                 android:textColor="@color/colorWhite"
-                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -64,8 +63,7 @@
                 android:background="@drawable/bg_feature_card"
                 android:text="Current"
                 android:textColor="@color/main"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -78,8 +76,7 @@
                 android:background="@drawable/bg_feature_card"
                 android:text="History"
                 android:textColor="@color/main"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -92,8 +89,7 @@
                 android:background="@drawable/bg_feature_card"
                 android:text="All"
                 android:textColor="@color/main"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 app:cornerRadius="20dp" />
         </LinearLayout>
 

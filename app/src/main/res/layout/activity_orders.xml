@@ -34,9 +34,7 @@
                 android:gravity="center"
                 android:text="Orders"
                 android:textColor="@color/colorPrimaryText"
-                style="@style/TextViewStyle"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                style="@style/TextViewStyleHeading" />
             <ImageView
                 android:visibility="gone"
                 android:id="@+id/cart_btn"
@@ -63,8 +61,7 @@
                 android:background="@drawable/bg_feature_card"
                 android:text="Current"
                 android:textColor="@color/main"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -77,8 +74,7 @@
                 android:background="@drawable/bg_feature_card"
                 android:text="History"
                 android:textColor="@color/main"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 app:cornerRadius="20dp" />
 
             <TextView
@@ -91,8 +87,7 @@
                 android:background="@drawable/bg_feature_card"
                 android:text="All"
                 android:textColor="@color/main"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 app:cornerRadius="20dp" />
         </LinearLayout>
 

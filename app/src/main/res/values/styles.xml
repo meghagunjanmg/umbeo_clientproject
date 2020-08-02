@@ -30,9 +30,39 @@
     </style>
 
 
-    <style name="TextViewStyle" parent="android:Widget.DeviceDefault.Light.TextView">
-        <item name="android:fontFamily">@font/gilroy</item>
+    <style name="TextViewStyleNormal" parent="android:Widget.DeviceDefault.Light.TextView">
+        <item name="android:fontFamily">@font/robotocondensed</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="TextViewStyleHeading" parent="android:Widget.DeviceDefault.Light.TextView">
+        <item name="android:fontFamily">@font/robotocondensed</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextViewStyleSubHeading" parent="android:Widget.DeviceDefault.Light.TextView">
+        <item name="android:fontFamily">@font/robotocondensed</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <style name="TextViewStyle.1" parent="android:Widget.DeviceDefault.Light.TextView">
         <item name="android:fontFamily">@font/gilroy</item>
@@ -40,13 +70,13 @@
     </style>
 
 
-    <style name="DarkTheme" parent="TextViewStyle">
+    <style name="DarkTheme" parent="TextViewStyleNormal">
         <!-- change themeBackground manually here -->
         <item name="android:backgroundTint" tools:ignore="NewApi">@color/colorPrimaryText</item>
         <item name="android:textColor" tools:ignore="NewApi">@color/colorWhite</item>
     </style>
 
-    <style name="LightTheme" parent="TextViewStyle">
+    <style name="LightTheme" parent="TextViewStyleNormal">
         <!-- change themeBackground manually here -->
         <item name="android:backgroundTint" tools:ignore="NewApi">@color/grey</item>
         <item name="android:textColor" tools:ignore="NewApi">@color/colorPrimaryText</item>

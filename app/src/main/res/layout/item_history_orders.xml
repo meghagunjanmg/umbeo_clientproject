@@ -21,56 +21,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
             <TextView
-                style="@style/TextViewStyle"
+                style="@style/TextViewStyleSubHeading"
                 android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ITEMS"
-                android:textColor="@color/grey"
+                android:text="Items"
            />
 
             <TextView
                 android:id="@+id/products"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
+                android:textColor="@color/grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1 x dairymilk, 1 x frazen food, Sauce"
                 android:textStyle="bold" />
 
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Ordered ON"
-                android:textColor="@color/grey"
                />
 
             <TextView
                 android:id="@+id/time"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
+                android:textColor="@color/grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="12 Jan 2020 at 7:30 PM"
                 android:textStyle="bold" />
 
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="Total Amount"
-                android:textColor="@color/grey"
                 />
 
             <TextView
                 android:id="@+id/amount"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleNormal"
+                android:textColor="@color/grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="$ 8"
@@ -80,14 +75,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:text="Delivery Instruction"
-            android:textColor="@color/grey"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"/>
+            style="@style/TextViewStyleSubHeading" />
 
         <TextView
             android:id="@+id/instruction"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleNormal"
+            android:textColor="@color/grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Instruction"
@@ -98,14 +91,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Status"
                 android:padding="4dp"
-                android:textColor="@color/grey"
             />
         <TextView
             android:id="@+id/status"
@@ -113,8 +104,8 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            style="@style/TextViewStyle"
-            android:textSize="14sp"
+            style="@style/TextViewStyleNormal"
+            android:textColor="@color/grey"
             android:text="Delivered"
             android:textStyle="bold" />
         </LinearLayout>
@@ -127,8 +118,7 @@
 
                 <Button
                     android:visibility="gone"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:id="@+id/repeat"
                     android:layout_weight="1"
                     android:layout_width="match_parent"

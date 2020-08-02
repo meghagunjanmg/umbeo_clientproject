@@ -22,7 +22,7 @@
             android:layout_height="150dp"
             android:src="@color/semidark" />
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/TextViewStyleHeading"
             android:textSize="20sp"
             android:layout_gravity="bottom"
             android:id="@+id/text"

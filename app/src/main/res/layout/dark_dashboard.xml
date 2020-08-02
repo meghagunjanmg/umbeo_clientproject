@@ -30,22 +30,19 @@
                     android:gravity="start"
                     android:text="Welcome"
                     android:textColor="@color/colorWhite"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </TextView>
                 <TextView
                     android:id="@+id/login"
-                    style="@style/TextViewStyle"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/opensans"
                     android:layout_gravity="end|bottom"
                     android:text="Log in / Signup"
                     android:textColor="@color/colorWhite"
-                    android:textSize="14sp"
                     android:textStyle="bold">
                 </TextView>
             </FrameLayout>
@@ -53,7 +50,7 @@
 
         <EditText
             android:id="@+id/search"
-            style="@style/TextViewStyle"
+            style="@style/TextViewStyleNormal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/search_outline"
@@ -65,7 +62,6 @@
             android:paddingStart="12dp"
             android:singleLine="true"
             android:textColorHint="@color/colorWhite"
-            android:textSize="14sp"
             android:paddingLeft="12dp">
         </EditText>
     </LinearLayout>
@@ -110,7 +106,7 @@
 
                 <TextView
                     android:id="@+id/popular_txt"
-                    style="@style/TextViewStyle"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
@@ -118,13 +114,16 @@
                     android:background="@drawable/bg_feature_card"
                     android:gravity="center"
                     android:padding="2dp"
+                    android:textSize="12sp"
+
                     android:text="Recommended"
-                    android:textColor="@color/main"
-                    android:textSize="12sp" />
+                    android:textColor="@color/main" />
 
                 <TextView
+                    android:textSize="12sp"
+
                     android:id="@+id/feature_txt"
-                    style="@style/TextViewStyle"
+                    style="@style/TextViewStyleSubHeading"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -135,11 +134,13 @@
                     android:padding="2dp"
                     android:text="Feature"
                     android:textColor="@color/main"
-                    android:textSize="12sp" />
+                    />
 
                 <TextView
+                    android:textSize="12sp"
+
                     android:id="@+id/trending_txt"
-                    style="@style/TextViewStyle"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
@@ -148,8 +149,7 @@
                     android:gravity="center"
                     android:padding="2dp"
                     android:text="Trending"
-                    android:textColor="@color/main"
-                    android:textSize="12sp" />
+                    android:textColor="@color/main" />
 
             </LinearLayout>
 

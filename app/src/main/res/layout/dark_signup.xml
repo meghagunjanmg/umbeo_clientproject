@@ -32,14 +32,12 @@
                 android:layout_height="85dp">
             </ImageView>
             <TextView
-                style="@style/TextViewStyle"
-                android:textSize="20sp"
+                style="@style/TextViewStyleHeading"
                 android:padding="4dp"
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:fontFamily="sans-serif"
                 android:gravity="center"
                 android:text="Create An Account "
                 android:textAlignment="center"
@@ -48,8 +46,7 @@
 
             <TextView
                 android:textColor="@color/colorWhite"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 android:paddingTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,8 +56,7 @@
 
             <TextView
                 android:textColor="@color/colorWhite"
-                style="@style/TextViewStyle"
-                android:textSize="14sp"
+                style="@style/TextViewStyleSubHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -77,8 +73,7 @@
                 android:orientation="vertical">
                 <TextView
                     android:textColor="@color/colorWhite"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Name"/>
@@ -86,8 +81,7 @@
                 <EditText
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhite"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleNormal"
                     android:maxLines="1"
                     android:id="@+id/name"
                     android:layout_width="match_parent"
@@ -96,8 +90,7 @@
 
                 <TextView
                     android:textColor="@color/colorWhite"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -107,16 +100,14 @@
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhite"
                     android:maxLines="1"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleNormal"
                     android:id="@+id/mail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Email Address*" />
                 <TextView
                     android:textColor="@color/colorWhite"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,8 +116,7 @@
                 <EditText
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhite"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleNormal"
                     android:maxLines="1"
                     android:inputType="number"
                     android:id="@+id/phone"
@@ -134,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Enter Mobile No*" />
                 <TextView
+                    style="@style/TextViewStyleSubHeading"
                     android:textColor="@color/colorWhite"
                     android:visibility="gone"
                     android:layout_marginTop="8dp"
@@ -142,6 +133,7 @@
                     android:text="Address"/>
 
                 <EditText
+                    style="@style/TextViewStyleNormal"
                     android:textColor="@color/colorWhite"
                     android:textColorHint="@color/colorWhite"
                     android:visibility="gone"
@@ -153,16 +145,14 @@
                 <TextView
                     android:textColorHint="@color/colorWhite"
                     android:textColor="@color/colorWhite"
-                    style="@style/TextViewStyle"
-                    android:textSize="16sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Password"/>
 
                 <EditText
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleNormal"
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -177,15 +167,13 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center">
                 <Button
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleHeading"
                     android:layout_margin="8dp"
                     android:id="@+id/button"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/main2"
-                    android:fontFamily="sans-serif"
                     android:text="Sign Up"
                     android:textStyle="bold"/>
             </LinearLayout>
@@ -197,16 +185,14 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:textColor="@color/colorWhite"
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:text="Already have an Account " />
 
                 <TextView
-                    style="@style/TextViewStyle"
-                    android:textSize="14sp"
+                    style="@style/TextViewStyleSubHeading"
                     android:gravity="center"
                     android:id="@+id/login"
                     android:layout_width="wrap_content"
