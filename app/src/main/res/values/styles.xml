@@ -31,19 +31,19 @@
 
 
     <style name="TextViewStyleNormal" parent="android:Widget.DeviceDefault.Light.TextView">
-        <item name="android:fontFamily">@font/robotocondensed</item>
+        <item name="android:fontFamily">@font/gilroy</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextViewStyleHeading" parent="android:Widget.DeviceDefault.Light.TextView">
-        <item name="android:fontFamily">@font/robotocondensed</item>
+        <item name="android:fontFamily">@font/gilroy</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextViewStyleSubHeading" parent="android:Widget.DeviceDefault.Light.TextView">
-        <item name="android:fontFamily">@font/robotocondensed</item>
+        <item name="android:fontFamily">@font/gilroy</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>

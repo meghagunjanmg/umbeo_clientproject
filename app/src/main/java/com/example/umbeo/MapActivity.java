@@ -19,9 +19,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +68,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private GoogleMap mMap;
     TextView current_location, my_addresses;
-    EditText line1, line2, line3, line4, line5, line6;
+    EditText line1, line2, line3, line4;
+    Spinner line5, line6;
     double latitude, longitude;
     private GoogleApiClient mGoogleApiClient;
     private final static int REQUEST_CHECK_SETTINGS = 2000;
@@ -123,21 +126,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
 
 
-        line5.setText("Ontario");
-        line6.setText("Canada");
-        line5.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-        line6.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+        String[] state = {"Ontario"};
+        String[] country = {"Canada"};
+        ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,state);
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,country);
+        line5.setAdapter(stateAdapter);
+        line6.setAdapter(countryAdapter);
 
+        //line5.setText("Ontario");
+       // line6.setText("Canada");
 
         line1.addTextChangedListener(this);
 

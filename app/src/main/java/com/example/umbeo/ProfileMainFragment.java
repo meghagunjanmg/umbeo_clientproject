@@ -105,7 +105,7 @@ public class ProfileMainFragment extends Fragment {
 
     Switch darkTheme;
     Button logout;
-    TextView my_addresses,myemail,myname,name_edit,profile_edit,loyalty_point,my_order;
+    TextView my_addresses,myemail,myname,name_edit,profile_edit,loyalty_point,my_order,feedback;
     UserPreference preference;
     EditText myname_et;
     int count = 0;
@@ -246,6 +246,21 @@ public class ProfileMainFragment extends Fragment {
                 startActivity(new Intent(getContext(),HomeScreenActivity.class));
             }
         });
+
+
+        feedback = view.findViewById(R.id.feedback);
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),Feedback.class);
+                startActivity(intent);
+                Bungee.fade(getContext());
+            }
+        });
+
+
+
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

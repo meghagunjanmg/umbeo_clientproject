@@ -183,7 +183,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <EditText
+                    <Spinner
                         android:textColor="@color/colorWhite"
                         android:textColorHint="@color/colorWhite"
                         android:layout_margin="2dp"
@@ -193,9 +193,9 @@
                         android:padding="12dp"
                         style="@style/TextViewStyleNormal"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
                         android:hint="state/province" />
-                    <EditText
+                    <Spinner
                         android:textColor="@color/colorWhite"
                         android:textColorHint="@color/colorWhite"
                         android:layout_margin="2dp"
@@ -205,7 +205,7 @@
                         android:padding="12dp"
                         style="@style/TextViewStyleNormal"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="45dp"
                         android:hint="Country" />
                 </LinearLayout>
 
