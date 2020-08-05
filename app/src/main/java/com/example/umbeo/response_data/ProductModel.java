@@ -32,7 +32,7 @@ public class ProductModel implements Serializable
     @SerializedName("price")
     @Expose
     private String price;
-    @SerializedName("description")
+    @SerializedName("unit")
     @Expose
     private String description;
     @SerializedName("shopId")

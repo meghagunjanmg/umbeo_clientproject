@@ -48,19 +48,21 @@
             </ImageView>
         </FrameLayout>
         <EditText
+            android:layout_margin="8dp"
             android:id="@+id/search"
-            android:layout_marginBottom="8dp"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:padding="8dp"
-            android:hint="Search"
             style="@style/TextViewStyleNormal"
-            android:textColorHint="@color/colorTextSecondary"
-            android:drawableLeft="@drawable/ic_search"
-            android:drawableTint="@color/main"
-            android:background="@drawable/search_outline"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:background="@drawable/search_outline"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawableTint="@color/colorPrimaryText"
+            android:hint="Search"
+            android:drawablePadding="8dp"
+            android:maxLines="1"
+            android:paddingStart="12dp"
+            android:singleLine="true"
+            android:textColorHint="@color/colorTextSecondary"
+            android:paddingLeft="12dp">
         </EditText>
     </LinearLayout>
 
@@ -428,6 +430,7 @@
                 android:visibility="invisible" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_margin="8dp"
                 android:layout_marginBottom="50dp"
                 app:spanCount="2"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

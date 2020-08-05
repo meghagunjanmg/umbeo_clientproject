@@ -77,6 +77,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         holder.quantity.setFilters(new InputFilter[]{ new InputFilterMinMax("1", modelList.get(position).getQuantityAvailable().toString())});
 
+        description.setText(modelList.get(position).getDescription()+"");
+
+
         for(int i = 0;i<cartEntities.size();i++){
             if(cartEntities.get(i).getProductId().equals(modelList.get(position).getId())){
                 holder.quantity.setText(cartEntities.get(i).getQuantity()+"");
@@ -209,6 +212,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     TextView strawberry_name;
+    TextView description;
     ImageView staryberry_image;
     CardView strawberry_plus;
     ImageView remove;
@@ -225,6 +229,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             super(itemView);
 
             strawberry_name = itemView.findViewById(R.id.strawberry_name);
+            description = itemView.findViewById(R.id.description);
             staryberry_image = itemView.findViewById(R.id.staryberry_image);
             price = itemView.findViewById(R.id.price);
             crossed = itemView.findViewById(R.id.crossed);
@@ -328,6 +333,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         final CardView cardView = mView.findViewById(R.id.cardview);
         cardView.setBackgroundDrawable(Objects.requireNonNull(context).getDrawable(R.drawable.bg_dailog));
         Button addtocart = mView.findViewById(R.id.button);
+        TextView descrip = mView.findViewById(R.id.description);
+
+        descrip.setText(description+"");
 
 
         mBuilder.setView(mView);

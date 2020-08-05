@@ -1,12 +1,14 @@
 package com.example.umbeo;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -252,9 +255,13 @@ public class ProfileMainFragment extends Fragment {
         feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),Feedback.class);
+               /* Intent intent = new Intent(getContext(),Feedback.class);
                 startActivity(intent);
                 Bungee.fade(getContext());
+
+                */
+
+                feedbackDailog();
             }
         });
 
@@ -339,6 +346,62 @@ public class ProfileMainFragment extends Fragment {
     {
         byte[] imageAsBytes = Base64.decode(encodedImage.getBytes(), Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+    }
+
+
+    private void feedbackDailog(){
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        assert li != null;
+        View mView = li.inflate(R.layout.activity_feedback, null);
+
+
+       EditText editTextMessage = mView.findViewById(R.id.feedback_et);
+
+       Button buttonSend = mView.findViewById(R.id.send);
+
+      LinearLayout linearLayout =  mView.findViewById(R.id.main_linear);
+
+        final String message = editTextMessage.getText().toString().trim();
+
+        if(preference.getTheme()==1)
+        {
+            editTextMessage.setTextColor(Color.WHITE);
+            editTextMessage.setHintTextColor(Color.WHITE);
+            linearLayout.setBackgroundColor(Color.BLACK);
+        }
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    sendEmail(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(),"Something went wrong... Try again",Toast.LENGTH_LONG).show();
+                } finally {
+                    dialog.cancel();
+                }
+
+            }
+        });
+
+
+
+    }
+    private void sendEmail(String message) {
+
+        //Creating SendMail object
+        SendMail sm = new SendMail(getContext(),  message);
+
+        //Executing sendmail to send email
+        sm.execute();
     }
 
 }

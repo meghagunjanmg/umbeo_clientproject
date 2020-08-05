@@ -60,7 +60,19 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="20dp"/>
 
-    <LinearLayout
+        <TextView
+            android:padding="8dp"
+            android:layout_margin="4dp"
+            android:id="@+id/description"
+            style="@style/TextViewStyleSubHeading"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Quantities"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
         android:id="@+id/a4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
