@@ -300,6 +300,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
             p.setDescription(cartEntities.get(i).getDescription());
             p.setPrice(cartEntities.get(i).getPrice());
             p.setSubCategory(cartEntities.get(i).getSubCategoryId());
+            p.setProductId(cartEntities.get(i).getProductId());
 
             product.setQuantity(cartEntities.get(i).getQuantity());
             product.setProduct(p);

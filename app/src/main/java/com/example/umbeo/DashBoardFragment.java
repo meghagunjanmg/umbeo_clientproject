@@ -37,6 +37,7 @@ import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.CategoryResponse;
 import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.response_data.ProductResponse;
+import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.CartEntity;
 
@@ -179,7 +180,7 @@ public class DashBoardFragment extends Fragment {
             log.setTextSize(20);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.gravity = START;
-            params.setMargins(0,40,0,0);
+            params.setMargins(0,50,0,0);
             log.setLayoutParams(params);
         } else {
             log.setText("Log in / Signup");
@@ -608,12 +609,15 @@ public class DashBoardFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        getProfile(preference.getToken());
+        Log.e("signup",preference.getToken()+"      token");
+
         if (preference.getUserName() != null) {
             log.setText(preference.getUserName());
             log.setTextSize(20);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.gravity = START;
-            params.setMargins(0,40,0,0);
+            params.setMargins(0,50,0,0);
             log.setLayoutParams(params);
         } else {
             log.setText("Log in / Signup");
@@ -621,4 +625,49 @@ public class DashBoardFragment extends Fragment {
         }
 
     }
+
+    public void getProfile(final String tokens){
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        final String token = "Bearer "+tokens;
+        Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
+
+        call.enqueue(new Callback<UserGetProfileResponse>() {
+
+            @Override
+            public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
+                Log.e("signup",response.code()+"");
+                Log.e("signup",response.message()+"");
+                if(response.code()==200) {
+                    preference.setUserName(response.body().getData().getName());
+                    preference.setEmail(response.body().getData().getEmail());
+                    preference.setLoyaltyPoints(response.body().getData().getLoyaltyPoints());
+                    preference.setAddresses(response.body().getData().getDeliveryAddresses());
+                    preference.setUserId(response.body().getData().getId());
+                    preference.setProfilePic(response.body().getData().getProfile_pic());
+                    preference.setToken(tokens);
+
+                    if (preference.getUserName() != null) {
+                        log.setText(preference.getUserName());
+                        log.setTextSize(20);
+                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.gravity = START;
+                        params.setMargins(0,50,0,0);
+                        log.setLayoutParams(params);
+                    } else {
+                        log.setText("Log in / Signup");
+                        log.setGravity(END);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

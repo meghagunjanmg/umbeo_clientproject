@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_margin="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <WebView
+        android:padding="4dp"
+        android:id="@+id/webview"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </WebView>
+
+    <Button
+        android:id="@+id/accept"
+        android:layout_gravity="end"
+        android:text="Accept"
+        android:backgroundTint="@color/main"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </Button>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

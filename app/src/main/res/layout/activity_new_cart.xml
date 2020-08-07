@@ -267,13 +267,29 @@
                             android:text="Delivery Instructions"
                             android:textColor="@color/main"
                             style="@style/TextViewStyleSubHeading" />
-                        <EditText
+
+
+                        <FrameLayout
                             android:visibility="gone"
+                            android:orientation="horizontal"
+                            android:id="@+id/instructionLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp">
+                        <EditText
                             android:id="@+id/instruction"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/black"
+                            android:layout_height="wrap_content" android:textColor="@android:color/black"
                             style="@style/TextViewStyleNormal"/>
+                            <ImageView
+                                android:tint="@color/colorPrimaryText"
+                                android:id="@+id/check"
+                                android:layout_gravity="end|center_vertical"
+
+                                android:layout_margin="8dp"
+                                android:layout_width="30dp"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_check"/>
+                        </FrameLayout>
                     </LinearLayout>
 
                 </LinearLayout>

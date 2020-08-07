@@ -26,15 +26,17 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
 
     //Information to send email
     private String message;
+    private String subject;
 
     //Progressdialog to show while sending email
    // private ProgressDialog progressDialog;
 
     //Class Constructor
-    public SendMail(Context context, String message){
+    public SendMail(Context context,String subject, String message){
         //Initializing variables
         this.context = context;
         this.message = message;
+        this.subject = subject;
     }
 
     @Override
@@ -85,6 +87,8 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
             mm.setSubject("FeedBack");
             //Adding message
             mm.setText(message);
+
+            mm.setSubject(subject);
 
             //Sending email
             Transport.send(mm);

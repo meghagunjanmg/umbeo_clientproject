@@ -1,5 +1,7 @@
 package com.example.umbeo;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -9,8 +11,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +33,7 @@ import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.SignUpResponse;
 import com.example.umbeo.response_data.SignUpResquest;
 import com.example.umbeo.response_data.UserGetProfileResponse;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -56,10 +64,16 @@ public class signup extends AppCompatActivity {
     UserPreference preference;
 TextView login;
 
+String token;
 ImageView back_btn;
+        TextView terms_tv;
+        CheckBox terms;
+
+    static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         preference = new UserPreference(getApplicationContext());
 
         if(preference.getTheme()==1){
@@ -69,6 +83,15 @@ ImageView back_btn;
 
         dp = (ImageView) findViewById(R.id.dp);
         sign = (Button) findViewById(R.id.button);
+        terms_tv = findViewById(R.id.terms_tv);
+        terms = findViewById(R.id.terms);
+
+        terms_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               termsdailog();
+            }
+        });
 
         back_btn = findViewById(R.id.back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +106,12 @@ ImageView back_btn;
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                upload();
+
+                if(terms.isChecked()) {
+                    upload();
+                    getProfile(token);
+                }
+                else Toast.makeText(getApplicationContext(),"Agree terms & conditions",Toast.LENGTH_LONG).show();
             }
         });
         login = findViewById(R.id.login);
@@ -110,6 +138,37 @@ ImageView back_btn;
         });
 
  */
+
+    }
+
+    private void termsdailog() {
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+        LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        assert li != null;
+        View mView = li.inflate(R.layout.terms_condition, null);
+
+        WebView webView = mView.findViewById(R.id.webview);
+        Button accept = mView.findViewById(R.id.accept);
+
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("file:///android_asset/terms.html");
+
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                terms.setChecked(true);
+                dialog.cancel();
+            }
+        });
+
 
     }
 
@@ -286,15 +345,19 @@ ImageView back_btn;
             public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
 
                 try {
+                    Log.e("signup",response.code()+"");
+                    Log.e("signup",response.message()+"");
                     if(response.code()==201){
                         if(response.body().getStatus().equalsIgnoreCase("success")){
                             String userId = response.body().getData().getUserId();
-                            String token = response.body().getData().getToken();
-                            getProfile(token);
+                            token = response.body().getData().getToken();
                             Toast.makeText(getApplicationContext(), "You have earned 500 crystal point as reward", Toast.LENGTH_LONG).show();
 
-                            startActivity(new Intent(signup.this,MainActivity.class));
-                            Bungee.fade(signup.this);
+                            preference.setToken(token);
+
+                            finish();
+                            HomeScreenActivity.viewPager.setCurrentItem(0);
+
                         }
                         else {
                             startActivity(new Intent(signup.this,signup.class));
@@ -306,6 +369,7 @@ ImageView back_btn;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.e("signup",e.getLocalizedMessage()+"");
                 }
             }
 
@@ -377,7 +441,7 @@ ImageView back_btn;
         this.finish();
     }
 
-    private void getProfile(final String tokens){
+    public void getProfile(final String tokens){
         RetrofitClient api_manager = new RetrofitClient();
         UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
@@ -385,8 +449,11 @@ ImageView back_btn;
         Call<UserGetProfileResponse> call= retrofit_interface.getProfile(token);
 
         call.enqueue(new Callback<UserGetProfileResponse>() {
+
             @Override
             public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
+                Log.e("signup",response.code()+"");
+                Log.e("signup",response.message()+"");
                 if(response.code()==200) {
                     preference.setUserName(response.body().getData().getName());
                     preference.setEmail(response.body().getData().getEmail());

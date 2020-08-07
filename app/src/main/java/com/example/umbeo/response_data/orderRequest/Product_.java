@@ -14,6 +14,12 @@ public class Product_ implements Serializable
     @SerializedName("categoryId")
     @Expose
     private String categoryId;
+
+
+    @SerializedName("_id")
+    @Expose
+    private String productId;
+
     @SerializedName("subCategory")
     @Expose
     private String subCategory;
@@ -31,6 +37,14 @@ public class Product_ implements Serializable
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getCategoryId() {

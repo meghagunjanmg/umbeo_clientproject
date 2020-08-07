@@ -142,7 +142,31 @@
                     android:hint="Enter Password*" />
             </LinearLayout>
 
-        <LinearLayout
+
+
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+            <CheckBox
+                style="@style/TextViewStyleNormal"
+                android:id="@+id/terms"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:text="Accept" />
+            <TextView
+                android:textColor="@color/main"
+                android:layout_marginLeft="4dp"
+                style="@style/TextViewStyleNormal"
+                android:id="@+id/terms_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:maxLines="1"
+                android:gravity="center_vertical"
+                android:text="terms and condition" />
+</LinearLayout>
+            <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

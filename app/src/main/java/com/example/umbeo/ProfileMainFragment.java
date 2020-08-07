@@ -24,10 +24,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -348,7 +351,7 @@ public class ProfileMainFragment extends Fragment {
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
-
+    String OptionSelected;
     private void feedbackDailog(){
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
         LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -362,6 +365,28 @@ public class ProfileMainFragment extends Fragment {
        Button buttonSend = mView.findViewById(R.id.send);
 
       LinearLayout linearLayout =  mView.findViewById(R.id.main_linear);
+
+      Spinner type_spinner =  mView.findViewById(R.id.type_spinner);
+
+
+
+        final String[] options = {"Suggestion","Problem"};
+
+        ArrayAdapter<String> optionAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,options);
+
+        type_spinner.setAdapter(optionAdapter);
+
+        type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                OptionSelected = options[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         final String message = editTextMessage.getText().toString().trim();
 
@@ -398,7 +423,7 @@ public class ProfileMainFragment extends Fragment {
     private void sendEmail(String message) {
 
         //Creating SendMail object
-        SendMail sm = new SendMail(getContext(),  message);
+        SendMail sm = new SendMail(getContext(),OptionSelected, message);
 
         //Executing sendmail to send email
         sm.execute();

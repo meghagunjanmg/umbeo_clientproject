@@ -1,6 +1,7 @@
 package com.example.umbeo;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,10 +19,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -146,6 +151,8 @@ public class CartMainFragment extends Fragment {
     CardView delivery_card;
     TextView delivery_charges,instruction_tv;
     EditText instruction;
+    FrameLayout instructionLayout;
+    ImageView check;
     RadioGroup rgb;
     RadioButton slot1,slot2,slot3;
     @SuppressLint("FragmentLiveDataObserve")
@@ -158,6 +165,8 @@ public class CartMainFragment extends Fragment {
         shopData();
 
         delivery_card = v.findViewById(R.id.delivery_card);
+        instructionLayout = v.findViewById(R.id.instructionLayout);
+        check = v.findViewById(R.id.check);
         delivery_charges = v.findViewById(R.id.delivery_charges);
         rgb = v.findViewById(R.id.radio_grp);
          slot1 = v.findViewById(R.id.slot1);
@@ -209,12 +218,24 @@ public class CartMainFragment extends Fragment {
             public void onClick(View v) {
                 count++;
                 if(count%2==0){
-                    instruction.setVisibility(View.GONE);
+                    instructionLayout.setVisibility(View.GONE);
                 }
                 else
                 {
-                    instruction.setVisibility(View.VISIBLE);
+                    instructionLayout.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                instruction.clearFocus();
+                InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                keyboard.hideSoftInputFromWindow(
+                        instruction.getWindowToken(), 0);
+                        instruction_tv.requestFocus();
+
             }
         });
 

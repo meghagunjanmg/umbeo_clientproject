@@ -107,6 +107,10 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
             @Override
             public void onClick(View v) {
                 MyAddresses.removeAdd(position,context);
+
+                if(address.get(position).equalsIgnoreCase(preference.getdeliveryAddress())){
+                    preference.setdeliveryAddress("No address selected");
+                }
                 if(position==0){
                     MyAddresses.no_add.setVisibility(View.VISIBLE);
                     preference.setdeliveryAddress(null);

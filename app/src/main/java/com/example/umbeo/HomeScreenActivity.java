@@ -153,6 +153,8 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             case R.id.explore:{
                 viewPager.setCurrentItem(0);
                 setIcons();
+
+                //getProfile(preference.getToken());
             }break;
             case R.id.cart:{
                 viewPager.setCurrentItem(1);

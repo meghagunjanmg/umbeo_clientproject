@@ -54,7 +54,7 @@ private void sendEmail() {
         String message = editTextMessage.getText().toString().trim();
 
         //Creating SendMail object
-        SendMail sm = new SendMail(this,  message);
+        SendMail sm = new SendMail(this,"" , message);
 
         //Executing sendmail to send email
         sm.execute();
