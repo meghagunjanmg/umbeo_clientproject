@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutUsActivity">
+
+
+    <FrameLayout
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/back_btn"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:tint="@color/colorPrimaryText"
+            android:layout_gravity="center_vertical"
+            android:layout_width="30dp"
+            android:layout_height="30dp">
+        </ImageView>
+
+        <TextView
+            style="@style/TextViewStyleHeading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="About Us"
+            android:textColor="@color/colorPrimaryText" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:textColor="@color/colorPrimaryText"
+        style="@style/TextViewStyleSubHeading"
+        android:text="An e-commerce platform with an ease to grow your business online. For consumers,   App is easy to use with 3 steps i.e. Sign Up, shop and earn. For store owners, setup your store with MyViristore and make your consumer app ready to use."
+        android:layout_marginBottom="12dp"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <TextView
+        style="@style/TextViewStyleSubHeading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="bottom|center"
+        android:text="Minimum Android Version 4.1"
+        android:textColor="@color/colorPrimaryText">
+    </TextView>
+</LinearLayout>

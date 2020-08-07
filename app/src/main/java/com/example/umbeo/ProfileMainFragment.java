@@ -24,6 +24,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -111,7 +113,7 @@ public class ProfileMainFragment extends Fragment {
 
     Switch darkTheme;
     Button logout;
-    TextView my_addresses,myemail,myname,name_edit,profile_edit,loyalty_point,my_order,feedback;
+    TextView my_addresses,myemail,myname,name_edit,profile_edit,loyalty_point,my_order,feedback,about,privacy;
     UserPreference preference;
     EditText myname_et;
     int count = 0;
@@ -250,6 +252,7 @@ public class ProfileMainFragment extends Fragment {
                 preference.logout();
                 Toast.makeText(getContext(),"Logout Successfully",Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getContext(),HomeScreenActivity.class));
+                Bungee.fade(getContext());
             }
         });
 
@@ -269,9 +272,56 @@ public class ProfileMainFragment extends Fragment {
         });
 
 
+        about = view.findViewById(R.id.about);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),AboutUsActivity.class));
+                Bungee.fade(getContext());
+            }
+        });
+
+
+        privacy = view.findViewById(R.id.privacy);
+        privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrivacyDailog();
+            }
+        });
+
+    }
+
+    private void PrivacyDailog() {
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        assert li != null;
+        View mView = li.inflate(R.layout.terms_condition, null);
+
+        WebView webView = mView.findViewById(R.id.webview);
+        Button accept = mView.findViewById(R.id.accept);
+
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("file:///android_asset/privacy.html");
+
+        accept.setText("Back");
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
 
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

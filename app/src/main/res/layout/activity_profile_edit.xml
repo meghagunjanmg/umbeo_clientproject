@@ -162,6 +162,7 @@
         android:text="Delivery Addresses"
         style="@style/TextViewStyleSubHeading" />
     <TextView
+        android:layout_marginBottom="12dp"
         android:id="@+id/feedback"
         android:padding="8dp"
         android:layout_width="match_parent"
@@ -196,6 +197,26 @@
             android:drawablePadding="8dp"
             android:textStyle="bold"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_marginBottom="12dp"
+        android:id="@+id/about"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryText"
+        android:text="About Us"
+        style="@style/TextViewStyleSubHeading" />
+
+    <TextView
+        android:layout_marginBottom="12dp"
+        android:id="@+id/privacy"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryText"
+        android:text="Privacy Policy"
+        style="@style/TextViewStyleSubHeading" />
 
 
     <LinearLayout

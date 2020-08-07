@@ -30,7 +30,7 @@ public class UserPreference {
     private String shopDeliveryCharges = "shopDeliveryCharges";
     private String deliveryAddress = "deliveryAddress";
     private Integer LoyaltyPoints = 0;
-    private Integer Theme = 0;
+    private Integer Theme = 1;
     private static final String Addresses = "addresses";
     private static final Boolean achievments = false;
     private static final String ShopId = "5f131026a7cd970017e7b655";

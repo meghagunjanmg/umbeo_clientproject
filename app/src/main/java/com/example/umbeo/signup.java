@@ -1,18 +1,22 @@
 package com.example.umbeo;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -25,6 +29,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.umbeo.Storage.UserPreference;
@@ -56,6 +61,7 @@ public class signup extends AppCompatActivity {
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String PasswordPattern = "(/^(?=.*\\d)(?=.*[A-Z])([@$%&#])[0-9a-zA-Z]{4,}$/)\n";
     EditText nam, pno, mail, pass, add;
     Button sign, imageset;
     ImageView dp;
@@ -104,6 +110,7 @@ ImageView back_btn;
 
 
         sign.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
 
@@ -111,7 +118,7 @@ ImageView back_btn;
                     upload();
                     getProfile(token);
                 }
-                else Toast.makeText(getApplicationContext(),"Agree terms & conditions",Toast.LENGTH_LONG).show();
+                else Toast.makeText(getApplicationContext(),"Accept our terms & conditions to continue",Toast.LENGTH_LONG).show();
             }
         });
         login = findViewById(R.id.login);
@@ -279,6 +286,7 @@ ImageView back_btn;
         mail = (EditText) findViewById(R.id.mail);
         pass = (EditText) findViewById(R.id.password);
         add = (EditText) findViewById(R.id.address);
+        TextView passwordTv = findViewById(R.id.passwordTv);
 
 
 
@@ -312,6 +320,12 @@ ImageView back_btn;
             Toast.makeText(signup.this,"Please enter a password",Toast.LENGTH_LONG).show();
             return;
         }
+
+        if( !password.matches(PasswordPattern)){
+            passwordTv.setVisibility(View.VISIBLE);
+        } else  passwordTv.setVisibility(View.GONE);
+
+
         // GPS API implementation is left...that's why taking pre-defined values of gps and latitude and longitude...
         String gps = "Delhi";
         String latlong = "112.00 78.015";

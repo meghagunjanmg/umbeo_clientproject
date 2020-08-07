@@ -153,8 +153,6 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
             case R.id.explore:{
                 viewPager.setCurrentItem(0);
                 setIcons();
-
-                //getProfile(preference.getToken());
             }break;
             case R.id.cart:{
                 viewPager.setCurrentItem(1);
@@ -240,6 +238,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
 
         if (preference.getTheme()==1) {
             nav_linear.setBackgroundColor(Color.BLACK);
+
             if (viewPager.getCurrentItem() == 0) {
                 icon1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
                 text1.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
