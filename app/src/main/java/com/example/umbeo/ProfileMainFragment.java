@@ -1,6 +1,7 @@
 package com.example.umbeo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +35,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -401,7 +406,7 @@ public class ProfileMainFragment extends Fragment {
         return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
     }
 
-    String OptionSelected;
+    String OptionSelected,message;
     private void feedbackDailog(){
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
         LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -410,36 +415,45 @@ public class ProfileMainFragment extends Fragment {
         View mView = li.inflate(R.layout.activity_feedback, null);
 
 
-       EditText editTextMessage = mView.findViewById(R.id.feedback_et);
+       final EditText editTextMessage = mView.findViewById(R.id.feedback_et);
 
        Button buttonSend = mView.findViewById(R.id.send);
 
       LinearLayout linearLayout =  mView.findViewById(R.id.main_linear);
 
-      Spinner type_spinner =  mView.findViewById(R.id.type_spinner);
 
-
-
-        final String[] options = {"Suggestion","Problem"};
-
-        ArrayAdapter<String> optionAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,options);
-
-        type_spinner.setAdapter(optionAdapter);
-
-        type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+       RadioGroup radioGroup = (RadioGroup) mView.findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                OptionSelected = options[position];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = (RadioButton) group.findViewById(checkedId);
+                if(checkedId==R.id.suggestion){
+                    OptionSelected = "Suggestion";
+                    editTextMessage.setHint("Enter your suggestion");
+                }
+                if(checkedId==R.id.problem){
+                    OptionSelected = "Problem";
+                    editTextMessage.setHint("Enter your problem");
+                }
             }
         });
 
-        final String message = editTextMessage.getText().toString().trim();
+        editTextMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                    message = s.toString();
+            }
+        });
         if(preference.getTheme()==1)
         {
             editTextMessage.setTextColor(Color.WHITE);

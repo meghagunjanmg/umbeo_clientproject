@@ -10,15 +10,40 @@
     android:layout_height="match_parent"
     tools:context=".Feedback">
     <TextView
-        style="@style/TextViewStyleHeading"
+        android:textColor="@color/colorPrimaryText"
+        style="@style/TextViewStyleSubHeading"
         android:text="Have a feedback for us ? Tell us if you have any suggestion/problem"
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </TextView>
+
+    <RadioGroup
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:checked="true"
+            android:layout_weight="1"
+            style="@style/TextViewStyleNormal"
+            android:text="Suggestion"
+            android:id="@+id/suggestion"
+            android:layout_width="match_parent"
+            android:layout_height="36dp">
+        </RadioButton>
+        <RadioButton
+            android:layout_weight="1"
+            style="@style/TextViewStyleNormal"
+            android:text="Problem"
+            android:id="@+id/problem"
+            android:layout_width="match_parent"
+            android:layout_height="36dp">
+        </RadioButton>
+    </RadioGroup>
     <EditText
-        android:hint="Enter your feedback"
+        android:hint="Enter your suggestion"
         android:layout_margin="8dp"
         style="@style/TextViewStyleNormal"
         android:paddingLeft="8dp"
@@ -28,17 +53,6 @@
         android:layout_height="wrap_content"
         android:minHeight="60dp"
         android:textColor="@color/colorPrimaryText" />
-
-
-    <Spinner
-        android:layout_margin="8dp"
-        style="@style/TextViewStyleNormal"
-        android:paddingLeft="8dp"
-        android:id="@+id/type_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:textColor="@color/colorPrimaryText" />
-
     <Button
         style="@style/TextViewStyleHeading"
         android:layout_margin="12dp"

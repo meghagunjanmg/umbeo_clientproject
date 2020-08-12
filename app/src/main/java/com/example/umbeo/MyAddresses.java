@@ -72,7 +72,7 @@ public class MyAddresses extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -104,8 +104,8 @@ public class MyAddresses extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                finish();
                 Bungee.fade(MyAddresses.this);
+                finish();
             }
         });
     }

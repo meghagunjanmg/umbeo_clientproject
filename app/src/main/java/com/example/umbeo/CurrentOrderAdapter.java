@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,6 +55,9 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
             productName = productName+","+modelList.get(position).getProducts().get(i).getProduct().getName()+" X "+modelList.get(position).getProducts().get(i).getQuantity();
         }
         products.setText(productName+"");
+
+
+
 
         String[] date = modelList.get(position).getUpdatedAt().split("T");
         time.setText(date[0]+"");

@@ -29,7 +29,7 @@ public class Product_ implements Serializable
     @SerializedName("description")
     @Expose
     private String description;
-    private final static long serialVersionUID = -8369855938056626447L;
+
 
     public String getName() {
         return name;

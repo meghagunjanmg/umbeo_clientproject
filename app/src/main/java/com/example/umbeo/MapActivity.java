@@ -54,6 +54,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -64,7 +67,7 @@ import spencerstudios.com.bungeelib.Bungee;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, TextWatcher {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     TextView current_location, my_addresses;
@@ -79,7 +82,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     List<String> addresses;
     String address;
     ImageView back_btn;
-    int position,i;
+    int position, i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,17 +129,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
 
 
+        line1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    getmapmarker(line1.getText().toString());
+            }
+        });
+
         String[] state = {"Ontario"};
         String[] country = {"Canada"};
-        ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,state);
-        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,country);
+        ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, state);
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, country);
         line5.setAdapter(stateAdapter);
         line6.setAdapter(countryAdapter);
 
         //line5.setText("Ontario");
-       // line6.setText("Canada");
+        // line6.setText("Canada");
 
-        line1.addTextChangedListener(this);
+
 
         try {
             if (preference.getAddresses().size() == 0) {
@@ -186,6 +197,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     preference.setAddresses(addressList);
                     updateAddress(addressList);
 
+                    finish();
+
+
                 } else {
 
                     if (preference.getEmail() != null) {
@@ -199,12 +213,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                             updateAddress(addresses);
                             startActivity(new Intent(getApplicationContext(), MyAddresses.class));
                             Bungee.fade(MapActivity.this);
+                            finish();
                         } else
                             Toast.makeText(getApplicationContext(), "Please enter your address", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "First login/signup to add new Address", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(getApplicationContext(), signup.class));
                         Bungee.fade(MapActivity.this);
+                        finish();
                     }
                 }
             }
@@ -236,7 +252,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Address Added", Toast.LENGTH_LONG).show();
                     //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    startActivity(new Intent(getApplicationContext(),MyAddresses.class));
+                    startActivity(new Intent(getApplicationContext(), MyAddresses.class));
                     finish();
                 } else
                     Toast.makeText(getApplicationContext(), response.code() + " " + response.message(), Toast.LENGTH_LONG).show();
@@ -383,14 +399,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 if (country.equalsIgnoreCase("Canada") && state.equalsIgnoreCase("Ontario")) {
 
-                    line1.setText(address);
+
                     line3.setText(postalCode);
                     line4.setText(city);
 
-                    if (address1.isEmpty()) {
-                        line2.setVisibility(View.GONE);
-                    } else {
-                        line2.setText(address1);
+                    int commas = 0;
+                    for(int i = 0; i < address.length(); i++) {
+                        if(address.charAt(i) == ',') commas++;
+                    }
+                    try {
+                        String[] addres = address.split(",",commas/2);
+                        line1.setText(addres[0]);
+                        line2.setText(addres[1]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                 } else {
@@ -460,8 +482,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             p1 = new LatLng(location.getLatitude(), location.getLongitude());
             ///mMap.clear();
 
-            Log.e("Testing123",location.getLatitude()+"  "+location.getLongitude());
-            Address locationAddress = getAddress(location.getLatitude(),location.getLongitude());
+            Log.e("Testing123", location.getLatitude() + "  " + location.getLongitude());
+            Address locationAddress = getAddress(location.getLatitude(), location.getLongitude());
 
 
             if (locationAddress != null) {
@@ -497,27 +519,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     //Toast.makeText(getApplicationContext(), "Our service is not available in your area", Toast.LENGTH_LONG).show();
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return p1;
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-        getmapmarker(s.toString());
     }
 
     private void getmapmarker(String strAddress) {
