@@ -16,6 +16,11 @@ public class CategoryModel {
         CategoryItems = categoryItems;
     }
 
+    public CategoryModel(String categoryName, List<ProductModel> productModels) {
+        this.categoryName = categoryName;
+        CategoryItems = productModels;
+    }
+
     public String getCategoryName() {
         return categoryName;
     }

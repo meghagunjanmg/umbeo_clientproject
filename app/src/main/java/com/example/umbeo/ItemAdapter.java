@@ -75,6 +75,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
+        if(modelList.get(position).getDiscount()==null){
+            modelList.get(position).setDiscount(0);
+        }
+
+
         holder.quantity.setFilters(new InputFilter[]{ new InputFilterMinMax("1", modelList.get(position).getQuantityAvailable().toString())});
 
         description.setText(modelList.get(position).getDescription()+"");

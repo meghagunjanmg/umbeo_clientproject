@@ -615,6 +615,8 @@ public class CartMainFragment extends Fragment {
                     preference.setShopTimeSlot(response.body().getData().getDeliverySlots());
                     preference.setShopDeliveryCharges(response.body().getData().getDeliveryCharges());
                     preference.setShopPh(response.body().getData().getPhone());
+                    preference.setShopCategory(response.body().getData().getCategories());
+
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMM, EEE");
                     Calendar cal = Calendar.getInstance();

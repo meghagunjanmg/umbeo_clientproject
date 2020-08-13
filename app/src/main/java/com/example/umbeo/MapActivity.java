@@ -407,13 +407,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     for(int i = 0; i < address.length(); i++) {
                         if(address.charAt(i) == ',') commas++;
                     }
-                    try {
-                        String[] addres = address.split(",",commas/2);
+                    if(commas%2==0) {
+                        String[] addres = address.split(",", commas / 2);
                         line1.setText(addres[0]);
                         line2.setText(addres[1]);
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+                    else {
+                        String[] addres = address.split(",", commas+1 / 2);
+                        line1.setText(addres[0]);
+                        line2.setText(addres[1]);
+                    }
+
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Our service is not available in your area", Toast.LENGTH_LONG).show();
@@ -500,16 +504,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 if (country.equalsIgnoreCase("Canada") && state.equalsIgnoreCase("Ontario")) {
 
-                    line1.setText(address0);
+
                     line3.setText(postalCode);
                     line4.setText(city);
 
-                    if (address1.isEmpty()) {
-                        line2.setVisibility(View.GONE);
-                    } else {
-                        line2.setText(address1);
+                    int commas = 0;
+                    for(int i = 0; i < address0.length(); i++) {
+                        if(address0.charAt(i) == ',') commas++;
                     }
-
+                    if(commas%2==0) {
+                        String[] addres = address0.split(",", commas / 2);
+                        line1.setText(addres[0]);
+                        line2.setText(addres[1]);
+                    }
+                    else {
+                        String[] addres = address0.split(",", commas+1/ 2);
+                        line1.setText(addres[0]);
+                        line2.setText(addres[1]);
+                    }
 
                     mMap.addMarker(new MarkerOptions().position(p1).title("My location"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(p1));
