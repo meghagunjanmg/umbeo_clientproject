@@ -35,13 +35,14 @@ import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
+import com.example.umbeo.room.ProductEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    List<ProductModel> modelList;
+    List<ProductEntity> modelList;
     List<CartEntity> cartEntities;
     Context context;
     AppDatabase db;
@@ -50,7 +51,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     UserPreference preference;
-    public ItemAdapter(List<ProductModel> modelList, Context context) {
+    public ItemAdapter(List<ProductEntity> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
 
@@ -139,7 +140,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
 
         final ViewHolder viewHolderFinal = holder;
-        final ProductModel finalRowItem = modelList.get(position);
+        final ProductEntity finalRowItem = modelList.get(position);
         strawberry_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +159,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
         final ViewHolder viewHolderFinal1 = holder;
-        final ProductModel finalRowItem1 = modelList.get(position);
+        final ProductEntity finalRowItem1 = modelList.get(position);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +174,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
         final ViewHolder viewHolderFinal2 = holder;
-        final ProductModel finalRowItem2 = modelList.get(position);
+        final ProductEntity finalRowItem2 = modelList.get(position);
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

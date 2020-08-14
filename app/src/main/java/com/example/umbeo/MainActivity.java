@@ -11,17 +11,23 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
+import com.example.umbeo.response_data.ProductModel;
+import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.response_data.shop.ShopResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
+import com.example.umbeo.room.ProductEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
             db = AppDatabase.getInstance(getApplicationContext());
         }
         /// DeleteAllDB();
+
+        getProducts(preference.getShopId());
 
         Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
@@ -118,10 +126,56 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    db.cartDao().nukeTable();
+                    db.productDao().nukeTable();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+    }
+
+    private void InsertAllDB(final List<ProductEntity> productEntities){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    db.productDao().insertAll(productEntities);
+                    Log.e("ProductResponse","DB INSERT");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+
+    private void getProducts(String shopId) {
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(shopId);
+
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                try {
+                    Log.e("ProductResponse",response+"");
+                    Log.e("ProductResponse",response.code()+"");
+                    Log.e("ProductResponse",response.message()+"");
+                    if(response.code()==200){
+                        List<ProductEntity> productModels = response.body().getData().getProducts();
+                        DeleteAllDB();
+                        InsertAllDB(productModels);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
             }
         });
     }

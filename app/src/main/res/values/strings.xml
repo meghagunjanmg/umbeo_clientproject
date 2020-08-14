@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">ViRi Store</string>
     <string name="title_activity_main_page_user">MainPageUser</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

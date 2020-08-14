@@ -82,7 +82,7 @@
         android:layout_height="wrap_content">
     </TextView>
     <ScrollView
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="100dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <LinearLayout
@@ -99,15 +99,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/farmers" />
+                android:src="@drawable/imagesfashion" />
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:src="@color/semidark" />
 
         </FrameLayout>
-
-
 
         <LinearLayout
             android:visibility="gone"
@@ -431,7 +429,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_margin="8dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="100dp"
                 app:spanCount="2"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:id="@+id/item_recycler"

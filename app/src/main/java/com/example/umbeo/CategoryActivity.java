@@ -24,7 +24,9 @@ import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
+import com.example.umbeo.room.ProductEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,7 @@ public class CategoryActivity extends AppCompatActivity {
     ProgressBar simpleProgressBar;
 
     List<CartEntity> entities = new ArrayList<>();
+    List<ProductEntity> productModels = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,7 +156,7 @@ public class CategoryActivity extends AppCompatActivity {
                     Log.e("ProductResponse",response.code()+"");
                     Log.e("ProductResponse",response.message()+"");
                     if(response.code()==200){
-                        List<ProductModel> productModels = response.body().getData().getProducts();
+                        List<ProductEntity> productModels = response.body().getData().getProducts();
                         Log.e("ProductResponse",productModels+"");
 
                         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2, LinearLayoutManager.VERTICAL,false);
@@ -173,6 +176,17 @@ public class CategoryActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        productModels = AppDatabase.getInstance(CategoryActivity.this).productDao().findById(category_id);
+                        Log.e("ProductResponse",productModels+"");
+                    }
+                });
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2, LinearLayoutManager.VERTICAL,false);
+                item_recycler.setLayoutManager(gridLayoutManager);
+                myAdapter = new ItemAdapter(productModels,CategoryActivity.this);
+                item_recycler.setAdapter(myAdapter);
             }
         });
     }

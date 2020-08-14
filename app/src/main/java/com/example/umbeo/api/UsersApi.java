@@ -85,6 +85,9 @@ public interface UsersApi {
     @POST("/api/v1/products/get-products-by-category")
     Call<ProductResponse> fetchAllProducts(@Field("shopId") String shopId,
                                            @Field("categoryId") String categoryId);
+    @FormUrlEncoded
+    @POST("/api/v1/products/get-all-products")
+    Call<ProductResponse> fetchAllProducts(@Field("shopId") String shopId);
 
 
 

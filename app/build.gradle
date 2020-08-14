@@ -16,13 +16,33 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "userType"
+    productFlavors {
+        fashion {
+            dimension "userType"
+            buildConfigField "String", "USER_TYPE", '"fashion"'
+            resValue "string", "app_name", "Viri Store Fashion"
 
+            applicationId "com.example.umbeo.fashion"
+            versionName "1.0"
+
+        }
+        grocery {
+            dimension "userType"
+            buildConfigField "String", "USER_TYPE", '"grocery"'
+            resValue "string", "app_name", "Viri Store Grocery"
+
+            applicationId "com.example.umbeo.grocery"
+            versionName "1.0"
+        }
+    }
 }
 
 dependencies {

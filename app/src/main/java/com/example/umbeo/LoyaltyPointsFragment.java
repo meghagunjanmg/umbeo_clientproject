@@ -30,6 +30,7 @@ import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
+import com.example.umbeo.room.ProductEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -208,7 +209,7 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
                     Log.e("TrendingProduct",response.code()+"");
                     Log.e("TrendingProduct",response.message()+"");
                     if(response.code()==200){
-                        List<ProductModel> productModels = response.body().getData().getProducts();
+                        List<ProductEntity> productModels = response.body().getData().getProducts();
                         Log.e("TrendingProduct",productModels.get(0).getName()+"");
 
                         List<CategoryModel> categoryModelList = new ArrayList<>();

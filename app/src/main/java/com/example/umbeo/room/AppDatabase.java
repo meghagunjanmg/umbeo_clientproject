@@ -6,11 +6,16 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.umbeo.response_data.CategoryModel;
+
 import java.util.concurrent.Executors;
 
-@Database(entities = {CartEntity.class}, version = 2)
+@Database(entities = {CartEntity.class,ProductEntity.class, CategoryModel.class}, version = 2)
     public abstract class AppDatabase extends RoomDatabase {
+
         public abstract CartDao cartDao();
+        public abstract ProductDao productDao();
+
     private static final Object LOCK = new Object();
     private static final String DATABASE_NAME = "cartDB";
     private static AppDatabase sInstance;

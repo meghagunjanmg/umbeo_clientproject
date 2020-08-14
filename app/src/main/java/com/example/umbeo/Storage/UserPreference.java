@@ -28,6 +28,7 @@ public class UserPreference {
     private String shopTimeSlot = "shopTimeSlot";
     private String shopDeliveryCharges = "shopDeliveryCharges";
     private String shopCategory = "shopCategory";
+    private String shopCategoryName = "shopCategoryName";
     private String deliveryAddress = "deliveryAddress";
     private Integer LoyaltyPoints = 0;
     private Integer Theme = 1;
@@ -152,6 +153,24 @@ public class UserPreference {
         }
         return null;
     }
+
+
+    public void setShopCategoryName(List<String> dataList) {
+        if (dataList != null) {
+            Set<String> set = new HashSet<String>(dataList);
+            editor.putStringSet(shopCategoryName, set);
+            editor.commit();
+        }
+    }
+
+    public List<String> getShopCategoryName() {
+        Set<String> list = pref.getStringSet(shopCategoryName, null);
+        if (list != null) {
+            return new ArrayList<>(list);
+        }
+        return null;
+    }
+
 
     public void setAchievments(List<Boolean> dataList) {
         if (dataList != null) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -40,9 +41,12 @@ import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.response_data.shop.ShopResponse;
 import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
+import com.example.umbeo.room.ProductEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
@@ -62,18 +66,19 @@ import static android.view.Gravity.START;
 public class DashBoardFragment extends Fragment {
 
     /////LinearLayout trending, popular, feature;
-
+    List<com.example.umbeo.response_data.CategoryModel> modelList = new ArrayList<>();
     LinearLayout lichi, strawberry;
     AutoScrollViewPager mViewPager;
     CardView cat1, cat2, cat3, cat4;
     ImageView orange_plus, lichi_plus;
     FrameLayout strawberry_plus;
 
-List<String> categoryList = new ArrayList<>();
+    List<String> categoryList = new ArrayList<>();
     TextView log, fruit;
     TextView address;
     CardView fruits;
     TextView welcome, trending_txt, popular_txt, feature_txt;
+    List<com.example.umbeo.response_data.CategoryModel> categoryModels = new ArrayList<>();
 
     static AppDatabase db;
     static int staw_count = 0, lichi_count = 0, orange_count = 0, quant = 0;
@@ -82,19 +87,19 @@ List<String> categoryList = new ArrayList<>();
     TextView quantity, quantity3, quantity2;
     ViewPager viewPager2;
     List<ItemModel> mMainItemsList, mFruitsItem, mPersonalItems;
-     RecyclerView category_list, item_recycler, list_category,list_category_fruit;
-     ItemAdapter myAdapter;
+    RecyclerView category_list, item_recycler, list_category, list_category_fruit;
+    ItemAdapter myAdapter;
 
-     List<com.example.umbeo.response_data.CategoryModel> categoryModel = new ArrayList<>();
+    static List<com.example.umbeo.response_data.CategoryModel> categoryModel = new ArrayList<>();
     private float total = 0;
     List<CategoryModel> categoryModelList = new ArrayList<>();
     CardView see_more;
-    static CategoryListAdapter categoryListAdapter,categoryListAdapter2;
+    static CategoryListAdapter categoryListAdapter, categoryListAdapter2;
 
     ProgressBar simpleProgressBar;
 
     List<CartEntity> entities = new ArrayList<>();
-    List<ProductModel> productModels = new ArrayList<>();
+    List<ProductEntity> productModels = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -106,7 +111,7 @@ List<String> categoryList = new ArrayList<>();
     private String mParam2;
 
     List<CartEntity> entitiesList;
-   UserPreference preference;
+    UserPreference preference;
 
 
     private Context Context;
@@ -155,10 +160,9 @@ List<String> categoryList = new ArrayList<>();
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         preference = new UserPreference(getContext());
-        if(preference.getTheme()==1){
+        if (preference.getTheme() == 1) {
             return inflater.inflate(R.layout.dark_dashboard, container, false);
-        }
-        else return inflater.inflate(R.layout.activity_dashboard, container, false);
+        } else return inflater.inflate(R.layout.activity_dashboard, container, false);
     }
 
     @Override
@@ -181,14 +185,13 @@ List<String> categoryList = new ArrayList<>();
             log.setTextSize(20);
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.gravity = START;
-            params.setMargins(0,50,0,0);
+            params.setMargins(0, 50, 0, 0);
             log.setLayoutParams(params);
         } else {
             log.setText("Log in / Signup");
             log.setGravity(END);
         }
         shopData();
-
 
 
         if (db == null) {
@@ -198,15 +201,15 @@ List<String> categoryList = new ArrayList<>();
 
         showProgress();
 
-        LoadAllDB();
+        //LoadAllDB();
 
-       // getCategory();
+        // getCategory();
 
 
         log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(log.getText().toString().contains("Log")) {
+                if (log.getText().toString().contains("Log")) {
                     startActivity(new Intent(getActivity(), login.class));
                     Bungee.fade(getContext());
                 }
@@ -214,17 +217,14 @@ List<String> categoryList = new ArrayList<>();
         });
 
 
-
         trending_txt = v.findViewById(R.id.trending_txt);
         feature_txt = v.findViewById(R.id.feature_txt);
         popular_txt = v.findViewById(R.id.popular_txt);
 
 
-
-
         getFeaturedProducts();
 
-        if(preference.getTheme()==1){
+        if (preference.getTheme() == 1) {
             trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
@@ -233,8 +233,6 @@ List<String> categoryList = new ArrayList<>();
             feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
             popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
-
-
 
 
             trending_txt.setOnClickListener(new View.OnClickListener() {
@@ -281,14 +279,12 @@ List<String> categoryList = new ArrayList<>();
                     feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
-                    if(preference.getEmail()!=null){
+                    if (preference.getEmail() != null) {
                         getRecommendedProducts();
-                    }
-                    else getTrendingProducts();
+                    } else getTrendingProducts();
                 }
             });
-        }
-        else {
+        } else {
             trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
             trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
@@ -343,10 +339,9 @@ List<String> categoryList = new ArrayList<>();
                     feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
-                    if(preference.getEmail()!=null){
+                    if (preference.getEmail() != null) {
                         getRecommendedProducts();
-                    }
-                    else getTrendingProducts();
+                    } else getTrendingProducts();
                 }
             });
         }
@@ -363,18 +358,19 @@ List<String> categoryList = new ArrayList<>();
         CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
 
         mViewPager.setAdapter(mCustomPagerAdapter);
-        mViewPager.setPageTransformer(true,new ZoomOutPageTransformer());
+        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setScrollFactor(4);
         mViewPager.startAutoScroll(5000);
 
     }
+
     private void hideDefaultKeyboard(View et) {
         getMethodManager().hideSoftInputFromWindow(et.getWindowToken(), 0);
     }
 
     private InputMethodManager getMethodManager() {
         if (this.imm == null) {
-            this.imm = (InputMethodManager)  getContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+            this.imm = (InputMethodManager) getContext().getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
         }
         return this.imm;
     }
@@ -384,25 +380,25 @@ List<String> categoryList = new ArrayList<>();
         showProgress();
 
         RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+        UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
 
-        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(preference.getShopId(),categoryId);
+        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(preference.getShopId(), categoryId);
 
         call.enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 try {
-                    Log.e("ProductResponse",response+"");
-                    Log.e("ProductResponse",response.code()+"");
-                    Log.e("ProductResponse",response.message()+"");
-                    Log.e("ProductResponse",response.body().getStatus()+"");
-                    if(response.code()==200){
+                    Log.e("ProductResponse", response + "");
+                    Log.e("ProductResponse", response.code() + "");
+                    Log.e("ProductResponse", response.message() + "");
+                    Log.e("ProductResponse", response.body().getStatus() + "");
+                    if (response.code() == 200) {
                         productModels = new ArrayList<>();
                         //categoryModelList = new ArrayList<>();
 
                         productModels = response.body().getData().getProducts();
 
-                        categoryModelList.add(new CategoryModel(categoryId,categoryName, productModels));
+                        categoryModelList.add(new CategoryModel(categoryId, categoryName, productModels));
 
                         GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
                         list_category.setLayoutManager(mGridLayoutManager2);
@@ -411,14 +407,15 @@ List<String> categoryList = new ArrayList<>();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
-                finally {
+                    //LoadAllDB();
+                } finally {
                     HideProgress();
                 }
             }
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                //LoadAllDB();
             }
         });
     }
@@ -427,7 +424,7 @@ List<String> categoryList = new ArrayList<>();
         showProgress();
 
         RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+        UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
 
         Call<CategoryResponse> call = retrofit_interface.fetchAllCategory();
         call.enqueue(new Callback<CategoryResponse>() {
@@ -441,25 +438,39 @@ List<String> categoryList = new ArrayList<>();
                         categoryModel = new ArrayList<>();
                         categoryModel = response.body().getData().getCategories();
 
-                        List<com.example.umbeo.response_data.CategoryModel> shotCat = new ArrayList<>();
+                        final List<com.example.umbeo.response_data.CategoryModel> shotCat = new ArrayList<>();
 
-                        for (int k = 0; k< categoryList.size(); k++) {
+                        for (int k = 0; k < categoryList.size(); k++) {
                             for (int i = 0; i < categoryModel.size(); i++) {
 
-                                if(DashBoardFragment.this.categoryList.get(k).equalsIgnoreCase(categoryModel.get(i).getCategoryId())) {
+                                if (DashBoardFragment.this.categoryList.get(k).equalsIgnoreCase(categoryModel.get(i).getCategoryId())) {
                                     getCategoryProduct(categoryModel.get(i).getCategoryName(), categoryModel.get(i).getCategoryId());
                                     shotCat.add(categoryModel.get(i));
                                 }
                             }
                         }
+                        List<String> strings = new ArrayList<>();
+                        for (int k = 0; k < shotCat.size(); k++) {
+                            strings.add(shotCat.get(k).getCategoryName());
+                        }
+                        preference.setShopCategoryName(strings);
+
+                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                db.productDao().nukeCategory();
+                                db.productDao().insertAllCategory(shotCat);
+                            }
+                        });
+
 
                         Log.e("CategoryResponse", DashBoardFragment.this.categoryList.toString() + "");
-                        Log.e("CategoryResponse", shotCat.toString() + "");
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                    linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                    MainCategoriesAdapter adapter = new MainCategoriesAdapter(shotCat, getContext());
-                    category_list.setLayoutManager(linearLayoutManager);
-                    category_list.setAdapter(adapter);
+                        Log.e("CategoryResponse", preference.getShopCategoryName().toString() + "");
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                        MainCategoriesAdapter adapter = new MainCategoriesAdapter(shotCat, getContext());
+                        category_list.setLayoutManager(linearLayoutManager);
+                        category_list.setAdapter(adapter);
 
                     }
                 } catch (Exception e) {
@@ -471,20 +482,111 @@ List<String> categoryList = new ArrayList<>();
 
             @Override
             public void onFailure(Call<CategoryResponse> call, Throwable t) {
+                Loadall();
             }
+
+
         });
 
     }
 
+    private void Loadall() {
+        Log.e("CategoryResponse", DashBoardFragment.this.categoryList.toString() + "");
+        Log.e("CategoryResponse", preference.getShopCategoryName().toString() + "");
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
 
 
-    private void LoadAllDB() {
-        db.cartDao().getAll().observe(DashBoardFragment.this, new Observer<List<CartEntity>>() {
+        com.example.umbeo.response_data.CategoryModel model = new com.example.umbeo.response_data.CategoryModel();
+        /*com.example.umbeo.response_data.CategoryModel model1 = new com.example.umbeo.response_data.CategoryModel();
+        com.example.umbeo.response_data.CategoryModel model2 = new com.example.umbeo.response_data.CategoryModel();
+
+        model.setCategoryId(preference.getShopCategory().get(0));
+        model.setCategoryName(preference.getShopCategoryName().get(0));
+
+        model1.setCategoryId(preference.getShopCategory().get(1));
+        model1.setCategoryName(preference.getShopCategoryName().get(1));
+
+        model2.setCategoryId(preference.getShopCategory().get(2));
+        model2.setCategoryName(preference.getShopCategoryName().get(2));
+
+        modelList.add(model);
+        modelList.add(model1);
+        modelList.add(model2);
+        */
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
-            public void onChanged(List<CartEntity> cartEntities) {
-                entities = cartEntities;
+            public void run() {
+              modelList =  db.productDao().loadAllCategory();
             }
         });
+
+        MainCategoriesAdapter adapter = new MainCategoriesAdapter(modelList, getContext());
+        category_list.setLayoutManager(linearLayoutManager);
+        category_list.setAdapter(adapter);
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    categoryModels = db.productDao().loadAllCategory();
+                    for (int i = 0; i < preference.getShopCategory().size(); i++) {
+                        productModels = new ArrayList<>();
+                        productModels = db.productDao().findById(categoryModels.get(i).getCategoryId());
+                        categoryModelList.add(new CategoryModel(categoryModels.get(i).getCategoryId(), categoryModels.get(i).getCategoryName(), productModels));
+                    }
+                }
+            });
+
+        GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+        list_category.setLayoutManager(mGridLayoutManager2);
+        categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+        list_category.setAdapter(categoryListAdapter);
+    }
+
+    private void LoadAllDB() {
+        try {
+            db.cartDao().getAll().observe(DashBoardFragment.this, new Observer<List<CartEntity>>() {
+                @Override
+                public void onChanged(List<CartEntity> cartEntities) {
+                    entities = cartEntities;
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+            linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+            List<com.example.umbeo.response_data.CategoryModel> modelList = new ArrayList<>();
+            com.example.umbeo.response_data.CategoryModel model = new com.example.umbeo.response_data.CategoryModel();
+
+            for(int k = 0;k<preference.getShopCategory().size();k++){
+                model.setCategoryId(preference.getShopCategory().get(k));
+                model.setCategoryName(preference.getShopCategoryName().get(k));
+
+                modelList.add(model);
+            }
+
+
+            MainCategoriesAdapter adapter = new MainCategoriesAdapter(modelList, getContext());
+            category_list.setLayoutManager(linearLayoutManager);
+            category_list.setAdapter(adapter);
+
+
+            for (int i = 0;i<preference.getShopCategory().size();i++) {
+                productModels = new ArrayList<>();
+                productModels = db.productDao().findById(preference.getShopCategory().get(i));
+                categoryModelList.add(new CategoryModel(preference.getShopCategory().get(i), preference.getShopCategoryName().get(i), productModels));
+            }
+                    GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+                    list_category.setLayoutManager(mGridLayoutManager2);
+                    categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+                    list_category.setAdapter(categoryListAdapter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -504,15 +606,18 @@ List<String> categoryList = new ArrayList<>();
                     Log.e("FeaturedProducts",response+"");
                     Log.e("FeaturedProducts",response.code()+"");
                     Log.e("FeaturedProducts",response.message()+"");
-                    if(response.code()==200){
-                        List<ProductModel> productModels = response.body().getData().getProducts();
-                        Log.e("FeaturedProducts",productModels.get(0).getName()+"");
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
+                    if(response.code()==200) {
+                        List<ProductEntity> productModels = response.body().getData().getProducts();
+                        Log.e("FeaturedProducts", productModels.get(0).getName() + "");
+                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
 
                         item_recycler.setLayoutManager(mGridLayoutManager);
 
                         myAdapter = new ItemAdapter(productModels, getContext());
                         item_recycler.setAdapter(myAdapter);
+
+
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -523,6 +628,20 @@ List<String> categoryList = new ArrayList<>();
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        productModels = db.productDao().findByFeature(true);
+
+                                Log.e("FeaturedProducts", productModels.get(0).getName() + "");
+                                GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+                                item_recycler.setLayoutManager(mGridLayoutManager);
+
+                                myAdapter = new ItemAdapter(productModels, getContext());
+                                item_recycler.setAdapter(myAdapter);
+                            }
+                });
             }
         });
     }
@@ -544,7 +663,7 @@ List<String> categoryList = new ArrayList<>();
                     Log.e("TrendingProduct",response.code()+"");
                     Log.e("TrendingProduct",response.message()+"");
                     if(response.code()==200){
-                       List<ProductModel> productModels = response.body().getData().getProducts();
+                       final List<ProductEntity> productModels = response.body().getData().getProducts();
                         Log.e("TrendingProduct",productModels.get(0).getName()+"");
 
                         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
@@ -552,6 +671,16 @@ List<String> categoryList = new ArrayList<>();
 
                        ItemAdapter myAdapter = new ItemAdapter(productModels, getContext());
                         item_recycler.setAdapter(myAdapter);
+
+
+                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = 0;i<productModels.size();i++){
+                                    db.productDao().UpdateTrending(productModels.get(i).getId(),true);
+                                }
+                            }
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -562,6 +691,18 @@ List<String> categoryList = new ArrayList<>();
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        productModels = db.productDao().findByTrending(true);
+                    }
+                });
+                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+                        item_recycler.setLayoutManager(mGridLayoutManager);
+                        myAdapter = new ItemAdapter(productModels, getContext());
+                        item_recycler.setAdapter(myAdapter);
+
             }
         });
     }
@@ -584,7 +725,7 @@ List<String> categoryList = new ArrayList<>();
                     Log.e("RecommendedProducts",response.message()+"");
                     if(response.code()==200){
 
-                       List<ProductModel> productModels = response.body().getData().getProducts();
+                       final List<ProductEntity> productModels = response.body().getData().getProducts();
                         Log.e("RecommendedProducts",productModels.get(0).getName()+"");
                         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
 
@@ -592,6 +733,14 @@ List<String> categoryList = new ArrayList<>();
 
                         ItemAdapter myAdapter = new ItemAdapter(productModels, getContext());
                         item_recycler.setAdapter(myAdapter);
+                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = 0;i<productModels.size();i++){
+                                    db.productDao().UpdateRecommended(productModels.get(i).getId(),true);
+                                }
+                            }
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -602,11 +751,21 @@ List<String> categoryList = new ArrayList<>();
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        productModels = db.productDao().findByRecommended(true);
+                    }
+                });
+                GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+                item_recycler.setLayoutManager(mGridLayoutManager);
+                myAdapter = new ItemAdapter(productModels, getContext());
+                item_recycler.setAdapter(myAdapter);
+
             }
         });
     }
-
-
 
     private void showProgress(){
         simpleProgressBar.setVisibility(View.VISIBLE);
@@ -701,6 +860,7 @@ List<String> categoryList = new ArrayList<>();
                     preference.setShopCategory(response.body().getData().getCategories());
                     categoryList.addAll(response.body().getData().getCategories());
                     getCategory(categoryList);
+                    Log.e("shopResponse",preference.getShopCategory().toString());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -710,6 +870,9 @@ List<String> categoryList = new ArrayList<>();
             @Override
             public void onFailure(Call<ShopResponse> call, Throwable t) {
                 Log.e("shopResponse",t.getLocalizedMessage()+"");
+                getCategory(preference.getShopCategory());
+                Log.e("shopResponse",preference.getShopCategory().toString());
+
             }
         });
     }
