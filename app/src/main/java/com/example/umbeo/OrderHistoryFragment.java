@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.umbeo.response_data.GetOrders.OrdersList;
+import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
+import com.example.umbeo.room.OrderEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,7 @@ import java.util.List;
 public class OrderHistoryFragment extends Fragment {
 
     List<OrdersList> historicOrder = new ArrayList<>();
+    List<OrderEntity> historicOrders = new ArrayList<>();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,12 +84,25 @@ public class OrderHistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         item_history_orders = view.findViewById(R.id.item_history_orders);
+        if(historicOrder.size()>0) {
+            item_history_orders.setLayoutManager(new LinearLayoutManager(getContext()));
+            HistoricOrderAdapter adapter = new HistoricOrderAdapter(historicOrder, getContext());
+            item_history_orders.setAdapter(adapter);
+        }
+        else {
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    historicOrders = AppDatabase.getInstance(getContext()).orderDao().loadHistoryAll();
+                }
+            });
+            item_history_orders.setLayoutManager(new LinearLayoutManager(getContext()));
+            HistoricRoomOrderAdapter adapter = new HistoricRoomOrderAdapter(historicOrders, getContext());
+            item_history_orders.setAdapter(adapter);
+        }
 
-        item_history_orders.setLayoutManager(new LinearLayoutManager(getContext()));
-        HistoricOrderAdapter adapter = new HistoricOrderAdapter(historicOrder, getContext());
-        item_history_orders.setAdapter(adapter);
+
 
      /*   Button repeat = view.findViewById(R.id.repeat);
         repeat.setOnClickListener(new View.OnClickListener() {

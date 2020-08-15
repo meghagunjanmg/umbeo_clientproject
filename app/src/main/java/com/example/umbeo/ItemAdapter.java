@@ -83,7 +83,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         holder.quantity.setFilters(new InputFilter[]{ new InputFilterMinMax("1", modelList.get(position).getQuantityAvailable().toString())});
 
-        description.setText(modelList.get(position).getDescription()+"");
+        description.setText(modelList.get(position).getUnit()+"");
 
 
         for(int i = 0;i<cartEntities.size();i++){

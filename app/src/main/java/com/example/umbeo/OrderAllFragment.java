@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +22,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.umbeo.response_data.GetOrders.OrdersList;
+import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
+import com.example.umbeo.room.OrderEntity;
 import com.google.android.material.slider.Slider;
 
 import java.util.ArrayList;
@@ -35,6 +39,11 @@ public class OrderAllFragment extends Fragment {
 
     List<OrdersList> currentOrder = new ArrayList<>();
     List<OrdersList> historicOrder = new ArrayList<>();
+
+    List<OrderEntity> currentOrders = new ArrayList<>();
+    List<OrderEntity> historicOrders = new ArrayList<>();
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -88,24 +97,55 @@ public class OrderAllFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<OrdersList> notcancelled = new ArrayList<>();
-        for(OrdersList ordersList:currentOrder){
-            if(ordersList.getCancelledByUser()){ }
-            else {
-                notcancelled.add(ordersList);
-            }
+        item_current_order = view.findViewById(R.id.item_current_order);
+        item_history_orders = view.findViewById(R.id.item_history_orders);
+
+       if(currentOrder.size()>0) {
+           List<OrdersList> notcancelled = new ArrayList<>();
+           for (OrdersList ordersList : currentOrder) {
+               if (ordersList.getCancelledByUser()) {
+               } else {
+                   notcancelled.add(ordersList);
+               }
+           }
+
+
+           item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
+           CurrentOrderAdapter adapter = new CurrentOrderAdapter(notcancelled, getContext());
+           item_current_order.setAdapter(adapter);
+       }
+       else {
+           AppExecutors.getInstance().diskIO().execute(new Runnable() {
+               @Override
+               public void run() {
+                   currentOrders = AppDatabase.getInstance(getContext()).orderDao().loadCurrentAll();
+               }
+           });
+           Log.e("Testing", currentOrders.size()+"");
+           item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
+           CurrentRoomOrderAdapter adapter = new CurrentRoomOrderAdapter(currentOrders, getContext());
+           item_current_order.setAdapter(adapter);
+       }
+
+
+        if(historicOrder.size()>0) {
+            item_history_orders.setLayoutManager(new LinearLayoutManager(getContext()));
+            HistoricOrderAdapter adapter = new HistoricOrderAdapter(historicOrder, getContext());
+            item_history_orders.setAdapter(adapter);
+        }
+        else {
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    historicOrders = AppDatabase.getInstance(getContext()).orderDao().loadHistoryAll();
+
+                }
+            });
+            item_history_orders.setLayoutManager(new LinearLayoutManager(getContext()));
+            HistoricRoomOrderAdapter adapter = new HistoricRoomOrderAdapter(historicOrders, getContext());
+            item_history_orders.setAdapter(adapter);
         }
 
-        item_current_order = view.findViewById(R.id.item_current_order);
-        item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
-        CurrentOrderAdapter adapter = new CurrentOrderAdapter(notcancelled, getContext());
-        item_current_order.setAdapter(adapter);
-
-
-        item_history_orders = view.findViewById(R.id.item_history_orders);
-        item_history_orders.setLayoutManager(new LinearLayoutManager(getContext()));
-        HistoricOrderAdapter adapter2= new HistoricOrderAdapter(historicOrder, getContext());
-        item_history_orders.setAdapter(adapter2);
 
 
 

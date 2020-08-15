@@ -7,14 +7,17 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.umbeo.response_data.CategoryModel;
+import com.example.umbeo.response_data.shop.Shop;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {CartEntity.class,ProductEntity.class, CategoryModel.class}, version = 2)
+@Database(entities = {CartEntity.class,ProductEntity.class, CategoryModel.class,OrderEntity.class,UserEntity.class, ShopEntity.class}, version = 2)
     public abstract class AppDatabase extends RoomDatabase {
 
         public abstract CartDao cartDao();
         public abstract ProductDao productDao();
+        public abstract OrderDao orderDao();
+        public abstract PreferenceDao preferenceDao();
 
     private static final Object LOCK = new Object();
     private static final String DATABASE_NAME = "cartDB";

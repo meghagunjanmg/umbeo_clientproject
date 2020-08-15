@@ -42,6 +42,7 @@ import com.example.umbeo.response_data.shop.ShopResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
+import com.example.umbeo.room.ShopEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +69,8 @@ public class CartMainFragment extends Fragment {
 
     AppDatabase db;
     List<CartEntity> entityList;
+    List<ShopEntity> shopEntityList = new ArrayList<>();
+    ShopEntity shopEntity;
     RecyclerView recyclerView;
     CartAdapter cartAdapter;
     MutableLiveData<List<CartEntity>> data;
@@ -617,7 +620,6 @@ public class CartMainFragment extends Fragment {
                     preference.setShopPh(response.body().getData().getPhone());
                     preference.setShopCategory(response.body().getData().getCategories());
 
-
                     SimpleDateFormat dateFormat = new SimpleDateFormat( "dd MMM, EEE");
                     Calendar cal = Calendar.getInstance();
                     cal.add( Calendar.DATE, 1 );
@@ -626,12 +628,30 @@ public class CartMainFragment extends Fragment {
                     try {
                         for(int i = 0;i<3;i++){
                             slotList.put(response.body().getData().getDeliverySlots().get(i)+"\n"+convertedDate,Double.parseDouble(response.body().getData().getDeliveryCharges().get(i)));
+
+                            shopEntityList.add(new ShopEntity(response.body().getData().getDeliverySlots().get(i),Double.parseDouble(response.body().getData().getDeliveryCharges().get(i))));
                         }
+
+                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppDatabase.getInstance(getContext()).preferenceDao().nukeShopTable();
+                                AppDatabase.getInstance(getContext()).preferenceDao().insertShopAll(shopEntityList);
+                                for(int i = 0;i<shopEntityList.size();i++){
+                                    Log.e("shopResponse","room-----"+shopEntityList.get(i).getDeliveryCharge()+" "+shopEntityList.get(i).getDeliverySlots());
+                                }
+                            }
+                        });
+
+
                         Log.e("Slots 0",slotList.toString());
                         setdata();
 
 
                         simpleProgressBar.setVisibility(View.GONE);
+
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -644,7 +664,31 @@ public class CartMainFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ShopResponse> call, Throwable t) {
-                Log.e("shopResponse",t.getLocalizedMessage()+"");
+                Log.e("shopResponse", t.getLocalizedMessage() + "");
+
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                       shopEntityList = AppDatabase.getInstance(getContext()).preferenceDao().loadAll();
+                        for(int i = 0;i<shopEntityList.size();i++){
+                            Log.e("shopResponse","room get -----"+shopEntityList.get(i).getDeliveryCharge()+" "+shopEntityList.get(i).getDeliverySlots());
+                        }
+                    }
+                });
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, EEE");
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, 1);
+                String convertedDate = dateFormat.format(cal.getTime());
+                try {
+                    for (int i = 0; i < shopEntityList.size(); i++) {
+                        slotList.put(shopEntityList.get(i).getDeliverySlots() + "\n" + convertedDate, Double.parseDouble(String.valueOf(shopEntityList.get(i).getDeliveryCharge())));
+                    }
+
+                    setdata();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }

@@ -90,11 +90,11 @@ public class DashBoardFragment extends Fragment {
     RecyclerView category_list, item_recycler, list_category, list_category_fruit;
     ItemAdapter myAdapter;
 
-    static List<com.example.umbeo.response_data.CategoryModel> categoryModel = new ArrayList<>();
+    List<com.example.umbeo.response_data.CategoryModel> categoryModel = new ArrayList<>();
     private float total = 0;
     List<CategoryModel> categoryModelList = new ArrayList<>();
     CardView see_more;
-    static CategoryListAdapter categoryListAdapter, categoryListAdapter2;
+    CategoryListAdapter categoryListAdapter, categoryListAdapter2;
 
     ProgressBar simpleProgressBar;
 
@@ -350,17 +350,32 @@ public class DashBoardFragment extends Fragment {
         mViewPager = v.findViewById(R.id.pager);
 
 // This is just an example. You can use whatever collection of images.
-        int[] mResources = {
-                R.drawable.banner1,
-                R.drawable.banner2,
-        };
 
-        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
+        if(BuildConfig.USER_TYPE.equalsIgnoreCase("fashion")){
+            int[] mResources1 = {
+                    R.drawable.banner1,
+                    R.drawable.banner2,
+            };
+            CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources1);
 
-        mViewPager.setAdapter(mCustomPagerAdapter);
-        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        mViewPager.setScrollFactor(4);
-        mViewPager.startAutoScroll(5000);
+            mViewPager.setAdapter(mCustomPagerAdapter);
+            mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+            mViewPager.setScrollFactor(4);
+            mViewPager.startAutoScroll(5000);
+        }
+        else {
+            int[] mResources = {
+                    R.drawable.banner1_1,
+                    R.drawable.banner2_1,
+            };
+            CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
+
+            mViewPager.setAdapter(mCustomPagerAdapter);
+            mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+            mViewPager.setScrollFactor(4);
+            mViewPager.startAutoScroll(5000);
+        }
+
 
     }
 
@@ -491,29 +506,13 @@ public class DashBoardFragment extends Fragment {
     }
 
     private void Loadall() {
-        Log.e("CategoryResponse", DashBoardFragment.this.categoryList.toString() + "");
-        Log.e("CategoryResponse", preference.getShopCategoryName().toString() + "");
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
 
-
-        com.example.umbeo.response_data.CategoryModel model = new com.example.umbeo.response_data.CategoryModel();
-        /*com.example.umbeo.response_data.CategoryModel model1 = new com.example.umbeo.response_data.CategoryModel();
-        com.example.umbeo.response_data.CategoryModel model2 = new com.example.umbeo.response_data.CategoryModel();
-
-        model.setCategoryId(preference.getShopCategory().get(0));
-        model.setCategoryName(preference.getShopCategoryName().get(0));
-
-        model1.setCategoryId(preference.getShopCategory().get(1));
-        model1.setCategoryName(preference.getShopCategoryName().get(1));
-
-        model2.setCategoryId(preference.getShopCategory().get(2));
-        model2.setCategoryName(preference.getShopCategoryName().get(2));
-
-        modelList.add(model);
-        modelList.add(model1);
-        modelList.add(model2);
-        */
+        modelList = new ArrayList<>();
+        productModels = new ArrayList<>();
+        categoryModelList = new ArrayList<>();
 
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -529,10 +528,10 @@ public class DashBoardFragment extends Fragment {
                 @Override
                 public void run() {
                     categoryModels = db.productDao().loadAllCategory();
-                    for (int i = 0; i < preference.getShopCategory().size(); i++) {
+                    for (int i = 0; i < modelList.size(); i++) {
                         productModels = new ArrayList<>();
-                        productModels = db.productDao().findById(categoryModels.get(i).getCategoryId());
-                        categoryModelList.add(new CategoryModel(categoryModels.get(i).getCategoryId(), categoryModels.get(i).getCategoryName(), productModels));
+                        productModels = db.productDao().findById(modelList.get(i).getCategoryId());
+                        categoryModelList.add(new CategoryModel(modelList.get(i).getCategoryId(), modelList.get(i).getCategoryName(), productModels));
                     }
                 }
             });
@@ -541,53 +540,6 @@ public class DashBoardFragment extends Fragment {
         list_category.setLayoutManager(mGridLayoutManager2);
         categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
         list_category.setAdapter(categoryListAdapter);
-    }
-
-    private void LoadAllDB() {
-        try {
-            db.cartDao().getAll().observe(DashBoardFragment.this, new Observer<List<CartEntity>>() {
-                @Override
-                public void onChanged(List<CartEntity> cartEntities) {
-                    entities = cartEntities;
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-            linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-            List<com.example.umbeo.response_data.CategoryModel> modelList = new ArrayList<>();
-            com.example.umbeo.response_data.CategoryModel model = new com.example.umbeo.response_data.CategoryModel();
-
-            for(int k = 0;k<preference.getShopCategory().size();k++){
-                model.setCategoryId(preference.getShopCategory().get(k));
-                model.setCategoryName(preference.getShopCategoryName().get(k));
-
-                modelList.add(model);
-            }
-
-
-            MainCategoriesAdapter adapter = new MainCategoriesAdapter(modelList, getContext());
-            category_list.setLayoutManager(linearLayoutManager);
-            category_list.setAdapter(adapter);
-
-
-            for (int i = 0;i<preference.getShopCategory().size();i++) {
-                productModels = new ArrayList<>();
-                productModels = db.productDao().findById(preference.getShopCategory().get(i));
-                categoryModelList.add(new CategoryModel(preference.getShopCategory().get(i), preference.getShopCategoryName().get(i), productModels));
-            }
-                    GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-                    list_category.setLayoutManager(mGridLayoutManager2);
-                    categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-                    list_category.setAdapter(categoryListAdapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void getFeaturedProducts() {
@@ -628,20 +580,21 @@ public class DashBoardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                productModels = new ArrayList<>();
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
                         productModels = db.productDao().findByFeature(true);
 
-                                Log.e("FeaturedProducts", productModels.get(0).getName() + "");
-                                GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
 
-                                item_recycler.setLayoutManager(mGridLayoutManager);
-
-                                myAdapter = new ItemAdapter(productModels, getContext());
-                                item_recycler.setAdapter(myAdapter);
                             }
                 });
+                GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+                item_recycler.setLayoutManager(mGridLayoutManager);
+
+                myAdapter = new ItemAdapter(productModels, getContext());
+                item_recycler.setAdapter(myAdapter);
             }
         });
     }
@@ -691,6 +644,7 @@ public class DashBoardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                productModels = new ArrayList<>();
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -751,6 +705,7 @@ public class DashBoardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                productModels = new ArrayList<>();
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -762,7 +717,6 @@ public class DashBoardFragment extends Fragment {
                 item_recycler.setLayoutManager(mGridLayoutManager);
                 myAdapter = new ItemAdapter(productModels, getContext());
                 item_recycler.setAdapter(myAdapter);
-
             }
         });
     }
@@ -860,8 +814,6 @@ public class DashBoardFragment extends Fragment {
                     preference.setShopCategory(response.body().getData().getCategories());
                     categoryList.addAll(response.body().getData().getCategories());
                     getCategory(categoryList);
-                    Log.e("shopResponse",preference.getShopCategory().toString());
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -871,7 +823,6 @@ public class DashBoardFragment extends Fragment {
             public void onFailure(Call<ShopResponse> call, Throwable t) {
                 Log.e("shopResponse",t.getLocalizedMessage()+"");
                 getCategory(preference.getShopCategory());
-                Log.e("shopResponse",preference.getShopCategory().toString());
 
             }
         });

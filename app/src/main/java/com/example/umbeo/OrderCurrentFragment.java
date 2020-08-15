@@ -22,6 +22,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.umbeo.response_data.GetOrders.OrdersList;
+import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
+import com.example.umbeo.room.OrderEntity;
 import com.google.android.material.slider.Slider;
 
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ import java.util.List;
 public class OrderCurrentFragment extends Fragment {
 
     List<OrdersList> currentOrder = new ArrayList<>();
+    List<OrderEntity> currentOrders = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,19 +95,33 @@ public class OrderCurrentFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         item_current_order = view.findViewById(R.id.item_current_order);
 
-        List<OrdersList> notcancelled = new ArrayList<>();
-        for(OrdersList ordersList:currentOrder){
-            if(ordersList.getCancelledByUser()){ }
-            else {
-                notcancelled.add(ordersList);
-            }
-        }
-        Log.e("Testing",currentOrder.toString()+" "+currentOrder.size());
-        Log.e("Testing",notcancelled.toString()+" "+notcancelled.size());
-        item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
-        CurrentOrderAdapter adapter = new CurrentOrderAdapter(notcancelled, getContext());
-        item_current_order.setAdapter(adapter);
 
+        if(currentOrder.size()>0) {
+            List<OrdersList> notcancelled = new ArrayList<>();
+            for (OrdersList ordersList : currentOrder) {
+                if (ordersList.getCancelledByUser()) {
+                } else {
+                    notcancelled.add(ordersList);
+                }
+            }
+            Log.e("Testing", currentOrder.toString() + " " + currentOrder.size());
+            Log.e("Testing", notcancelled.toString() + " " + notcancelled.size());
+            item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
+            CurrentOrderAdapter adapter = new CurrentOrderAdapter(notcancelled, getContext());
+            item_current_order.setAdapter(adapter);
+        }
+        else {
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    currentOrders = AppDatabase.getInstance(getContext()).orderDao().loadCurrentAll();
+                }
+            });
+            Log.e("Testing", currentOrders.size()+"");
+            item_current_order.setLayoutManager(new LinearLayoutManager(getContext()));
+            CurrentRoomOrderAdapter adapter = new CurrentRoomOrderAdapter(currentOrders, getContext());
+            item_current_order.setAdapter(adapter);
+        }
 
      /*   final Slider slider = view.findViewById(R.id.slider);
         slider.setValue(60);

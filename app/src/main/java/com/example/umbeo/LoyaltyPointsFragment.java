@@ -30,7 +30,10 @@ import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
+import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.ProductEntity;
+import com.example.umbeo.room.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +107,7 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
     ImageView circular1,circular2,circular3;
     ImageView gem1,gem2,gem3;
     GridLayout grid;
-
+    List<UserEntity> entityList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -241,6 +244,22 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
             public void onResponse(Call<UserGetProfileResponse> call, Response<UserGetProfileResponse> response) {
                 if(response.code()==200) {
                     results = response.body().getData().getAchievements();
+
+                    final List<UserEntity> entityList = new ArrayList<>();
+
+                    for(int i =0;i<results.size();i++){
+                        entityList.add(new UserEntity(results.get(i)));
+                    }
+
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppDatabase.getInstance(getContext()).preferenceDao().insertLoyaltyAll(entityList);
+                            for(int i = 0;i<entityList.size();i++){
+                                Log.e("loyalty","room in  -----"+entityList.get(i).getLoyalty());
+                            }
+                        }
+                    });
                     Log.e("Achievements",results.toString());
                     setColor();
 
@@ -251,60 +270,78 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
 
             @Override
             public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        entityList =  AppDatabase.getInstance(getContext()).preferenceDao().loadLoyaltyAll();
+                        for(int i = 0;i<entityList.size();i++){
+                            Log.e("loyalty","room get -----"+entityList.get(i).getLoyalty());
+                        }
+                    }
+                });
+                results = new ArrayList<>();
+                for(int i =0;i<entityList.size();i++){
+                    results.add(entityList.get(i).getLoyalty());
+                }
+                Log.e("loyalty","room get -----"+results.toString());
 
+                setColor();
+                progress.setVisibility(View.GONE);
+                grid.setVisibility(View.VISIBLE);
             }
         });
     }
 
     private void setColor() {
-        if(results.get(0) && results.get(1) && results.get(2)){
-            card_view1.setOnClickListener(this);
-            card_view2.setOnClickListener(this);
-            card_view3.setOnClickListener(this);
-        }
-       else if(results.get(0) && results.get(1)){
-            card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+            if(results.size()>0 && results.get(0) && results.get(1) && results.get(2)) {
+                card_view1.setOnClickListener(this);
+                card_view2.setOnClickListener(this);
+                card_view3.setOnClickListener(this);
+            }
+           else if(results.size()>0 && results.get(0) && results.get(1)){
+                card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
 
-            circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+                circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
 
-            gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
 
 
-            card_view1.setOnClickListener(this);
-            card_view2.setOnClickListener(this);
-            card_view3.setOnClickListener(this);
-       }
-       else if(results.get(0)){
-            card_view2.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
-            card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+                card_view1.setOnClickListener(this);
+                card_view2.setOnClickListener(this);
+                card_view3.setOnClickListener(this);
+           }
+           else if(results.size()>0 && results.get(0)){
+                card_view2.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+                card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
 
-            circular2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
-            circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+                circular2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+                circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
 
-            gem2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
-            gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                gem2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
 
-            card_view1.setOnClickListener(this);
-            card_view2.setOnClickListener(this);
-            card_view3.setOnClickListener(this);
-        }
-        else {
-            card_view1.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
-            card_view2.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
-            card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+                card_view1.setOnClickListener(this);
+                card_view2.setOnClickListener(this);
+                card_view3.setOnClickListener(this);
+            }
+            else {
+                card_view1.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+                card_view2.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
+                card_view3.setCardBackgroundColor(ColorStateList.valueOf(Color.parseColor("#555555")));
 
-            circular1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
-            circular2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
-            circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+                circular1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+                circular2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
+                circular3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#FF202020")));
 
-            gem1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
-            gem2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
-            gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                gem1.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                gem2.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
+                gem3.setImageTintList(ColorStateList.valueOf(Color.parseColor("#000000")));
 
-            card_view1.setOnClickListener(this);
-            card_view2.setOnClickListener(this);
-            card_view3.setOnClickListener(this);
-        }
+                card_view1.setOnClickListener(this);
+                card_view2.setOnClickListener(this);
+                card_view3.setOnClickListener(this);
+            }
+
     }
 
 

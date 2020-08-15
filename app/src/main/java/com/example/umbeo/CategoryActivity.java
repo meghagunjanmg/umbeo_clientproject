@@ -49,7 +49,7 @@ public class CategoryActivity extends AppCompatActivity {
     AppDatabase db;
     static int staw_count = 0, lichi_count = 0, orange_count = 0 ,quant = 0;
     LinearLayout straw_linear, orange_linear, lichi_linear;
-    ImageView back_btn,cart_btn, add, remove, add2, remove2, add3, remove3;
+    ImageView title_img,back_btn,cart_btn, add, remove, add2, remove2, add3, remove3;
     TextView category_name, quantity, quantity3, quantity2;
 
     String category_id="",categoryName="";
@@ -74,6 +74,13 @@ public class CategoryActivity extends AppCompatActivity {
 
 
         category_name = findViewById(R.id.category_name);
+        title_img = findViewById(R.id.title_img);
+
+        if(BuildConfig.USER_TYPE.equalsIgnoreCase("fashion")){
+            title_img.setImageResource(R.drawable.imagesfashion);
+        }
+        else title_img.setImageResource(R.drawable.farmers);
+
         simpleProgressBar = findViewById(R.id.simpleProgressBar);
 
         simpleProgressBar.setVisibility(View.VISIBLE);

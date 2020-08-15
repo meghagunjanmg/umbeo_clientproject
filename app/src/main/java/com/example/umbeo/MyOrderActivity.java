@@ -20,6 +20,9 @@ import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.CancelOrder;
 import com.example.umbeo.response_data.GetOrders.GetOrderResponse;
 import com.example.umbeo.response_data.GetOrders.OrdersList;
+import com.example.umbeo.room.AppDatabase;
+import com.example.umbeo.room.AppExecutors;
+import com.example.umbeo.room.OrderEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -191,13 +194,22 @@ public class MyOrderActivity extends AppCompatActivity {
 
         call.enqueue(new Callback<GetOrderResponse>() {
             @Override
-            public void onResponse(Call<GetOrderResponse> call, Response<GetOrderResponse> response) {
+            public void onResponse(Call<GetOrderResponse> call, final Response<GetOrderResponse> response) {
                 try {
                     Log.e("GetOrderResponse",response+"");
                     Log.e("GetOrderResponse",response.code()+"");
                     Log.e("GetOrderResponse",response.message()+"");
                     if(response.code()==200){
+                        final List<OrderEntity> entities = new ArrayList<>();
                         for(int i=0;i<response.body().getData().size();i++){
+
+                            OrdersList ordersList = response.body().getData().get(i);
+                            String productName ="";
+                            for (int j=0;j<response.body().getData().get(i).getProducts().size();j++){
+                                productName = productName+","+response.body().getData().get(i).getProducts().get(j).getProduct().getName()+" X "+response.body().getData().get(i).getProducts().get(j).getQuantity();
+                            }
+                            entities.add(new OrderEntity(ordersList.getId(),ordersList.getOrderStatus(),productName,ordersList.getTotalAmount(),ordersList.getCreatedAt(),ordersList.getDeliveryInstructions()));
+
                             if(response.body().getData().get(i).getOrderStatus()!=3){
                                 currentOrder.add(response.body().getData().get(i));
                             }
@@ -205,6 +217,18 @@ public class MyOrderActivity extends AppCompatActivity {
                         }
                         Fragment newFragment = new OrderCurrentFragment(currentOrder);
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, newFragment).commit();
+
+
+                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppDatabase appDatabase = AppDatabase.getInstance(MyOrderActivity.this);
+                                appDatabase.orderDao().nukeTable();
+                                appDatabase.orderDao().insertAll(entities);
+
+                                Log.e("oder","rooom insert "+entities.get(0).getStatus());
+                            }
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -214,6 +238,8 @@ public class MyOrderActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<GetOrderResponse> call, Throwable t) {
                 Log.e("GetOrderResponse",t.getLocalizedMessage()+"");
+                Fragment newFragment = new OrderCurrentFragment(currentOrder);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, newFragment).commit();
             }
         });
     }
