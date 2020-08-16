@@ -174,8 +174,6 @@ public class MainActivity extends AppCompatActivity {
                         List<ProductEntity> productModels = response.body().getData().getProducts();
                         DeleteAllDB();
                         InsertAllDB(productModels);
-
-                        intent();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -190,7 +190,7 @@ public class MyOrderActivity extends AppCompatActivity {
         String token = "Bearer "+preference.getToken();
         Log.e("GetOrderResponse ",token);
 
-        Call<GetOrderResponse> call = retrofit_interface.GetOrder(token);
+        Call<GetOrderResponse> call = retrofit_interface.GetOrder(token,preference.getShopId());
 
         call.enqueue(new Callback<GetOrderResponse>() {
             @Override

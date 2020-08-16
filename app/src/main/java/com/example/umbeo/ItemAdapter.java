@@ -206,7 +206,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     quant_1 =0;
                 }
                 dailog(modelList.get(position).getName(),quant_1,modelList.get(position).getImage(),Double.parseDouble(modelList.get(position).getPrice()),
-                        modelList.get(position).getDescription(),modelList.get(position).getCategoryId(),modelList.get(position).getSubCategoryId(),modelList.get(position).getId(),modelList.get(position).getDiscount());
+                        modelList.get(position).getUnit(),modelList.get(position).getCategoryId(),modelList.get(position).getSubCategoryId(),modelList.get(position).getId(),modelList.get(position).getDiscount());
             }
         });
     }

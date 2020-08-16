@@ -3,6 +3,8 @@ package com.example.umbeo.response_data;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.example.umbeo.room.CategoryModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

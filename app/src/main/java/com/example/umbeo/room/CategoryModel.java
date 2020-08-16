@@ -1,5 +1,5 @@
 
-package com.example.umbeo.response_data;
+package com.example.umbeo.room;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -20,7 +20,7 @@ public class CategoryModel implements Serializable
     @SerializedName("categoryName")
     @Expose
     private String categoryName;
-    @SerializedName("categoryId")
+    @SerializedName("_id")
     @Expose
     private String categoryId;
 

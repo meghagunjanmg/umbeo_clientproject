@@ -7,8 +7,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.umbeo.response_data.CategoryModel;
-
 import java.util.List;
 
 @Dao
@@ -23,6 +21,11 @@ public interface ProductDao {
 
     @Query("SELECT * FROM categorymodel")
     List<CategoryModel> loadAllCategory();
+
+
+    @Query("SELECT * FROM categorymodel")
+    LiveData<List<CategoryModel>> liveLoadAllCategory();
+
 
 
     @Query("SELECT * FROM products WHERE categoryId =:id")

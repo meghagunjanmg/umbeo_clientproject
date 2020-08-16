@@ -112,9 +112,10 @@ public class AdapterAddress extends RecyclerView.Adapter<AdapterAddress.ViewHold
                     preference.setdeliveryAddress("No address selected");
                 }
                 if(position==0){
-                    MyAddresses.no_add.setVisibility(View.VISIBLE);
+                   // MyAddresses.no_add.setVisibility(View.VISIBLE);
                     preference.setdeliveryAddress(null);
                 }
+
             }
         });
 

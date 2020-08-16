@@ -89,8 +89,6 @@ public class CategoryActivity extends AppCompatActivity {
             categoryName = getIntent().getStringExtra("category_name");
             category_name.setText(categoryName+"");
 
-            getProducts(preference.getShopId());
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,21 +133,7 @@ public class CategoryActivity extends AppCompatActivity {
                 Bungee.fade(CategoryActivity.this);
             }
         });
-    }
 
-    private void LoadAllDB() {
-
-
-        db.cartDao().getAll().observe(CategoryActivity.this, new Observer<List<CartEntity>>() {
-            @Override
-            public void onChanged(List<CartEntity> cartEntities) {
-                entities = cartEntities;
-            }
-        });
-
-    }
-
-    private void getProducts(final String shopId) {
         productModels = new ArrayList<>();
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -165,6 +149,23 @@ public class CategoryActivity extends AppCompatActivity {
 
 
         if (productModels.size() == 0) {
+            getProducts(preference.getShopId());
+        }
+        }
+
+    private void LoadAllDB() {
+
+
+        db.cartDao().getAll().observe(CategoryActivity.this, new Observer<List<CartEntity>>() {
+            @Override
+            public void onChanged(List<CartEntity> cartEntities) {
+                entities = cartEntities;
+            }
+        });
+
+    }
+
+    private void getProducts(final String shopId) {
 
             RetrofitClient api_manager = new RetrofitClient();
             UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
@@ -203,5 +204,4 @@ public class CategoryActivity extends AppCompatActivity {
                 }
             });
         }
-    }
 }

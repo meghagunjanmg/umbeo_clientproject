@@ -15,16 +15,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.umbeo.Storage.UserPreference;
-import com.example.umbeo.response_data.CategoryModel;
+import com.example.umbeo.room.CategoryModel;
 
 import java.util.List;
 
 public class MainCategoriesAdapter extends RecyclerView.Adapter<MainCategoriesAdapter.ViewHolder> {
 
-    List<com.example.umbeo.response_data.CategoryModel> modelList;
+    List<com.example.umbeo.room.CategoryModel> modelList;
     Context context;
     UserPreference preference;
-    public MainCategoriesAdapter(List<CategoryModel> modelList, Context context) {
+    public MainCategoriesAdapter(List<com.example.umbeo.room.CategoryModel> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
         preference = new UserPreference(context);

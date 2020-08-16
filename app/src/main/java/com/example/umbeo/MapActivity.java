@@ -116,6 +116,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public void onClick(View v) {
                 onBackPressed();
+
             }
         });
 
@@ -164,6 +165,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MyAddresses.class));
                 Bungee.fade(MapActivity.this);
+                finish();
             }
         });
 
@@ -251,8 +253,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.code() == 200) {
                     Toast.makeText(getApplicationContext(), "Address Added", Toast.LENGTH_LONG).show();
+                    preference.setAddresses(addresses);
+
                     //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    startActivity(new Intent(getApplicationContext(), MyAddresses.class));
                     finish();
                 } else
                     Toast.makeText(getApplicationContext(), response.code() + " " + response.message(), Toast.LENGTH_LONG).show();

@@ -6,11 +6,6 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.umbeo.response_data.CategoryModel;
-import com.example.umbeo.response_data.shop.Shop;
-
-import java.util.concurrent.Executors;
-
 @Database(entities = {CartEntity.class,ProductEntity.class, CategoryModel.class,OrderEntity.class,UserEntity.class, ShopEntity.class}, version = 2)
     public abstract class AppDatabase extends RoomDatabase {
 

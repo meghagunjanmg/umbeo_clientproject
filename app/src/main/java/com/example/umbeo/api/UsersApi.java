@@ -113,8 +113,11 @@ public interface UsersApi {
                                     @Body OrderRequest orderRequest);
 
 
+
+    @FormUrlEncoded
     @POST("/api/v1/orders/get-all-orders")
-    Call<GetOrderResponse> GetOrder(@Header("Authorization")String token);
+    Call<GetOrderResponse> GetOrder(@Header("Authorization")String token,
+                                    @Field("shopId") String shopId);
 
 
 

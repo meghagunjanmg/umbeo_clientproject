@@ -103,9 +103,11 @@ public class MyAddresses extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                Bungee.fade(MyAddresses.this);
+                Intent i = new Intent(getApplicationContext(), MapActivity.class);
+                startActivity(i);
                 finish();
+                Bungee.fade(MyAddresses.this);
+
             }
         });
     }

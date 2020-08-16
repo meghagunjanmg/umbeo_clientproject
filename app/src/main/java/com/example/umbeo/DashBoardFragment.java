@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,7 +35,6 @@ import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.CategoryResponse;
-import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.response_data.shop.ShopResponse;
@@ -46,7 +44,6 @@ import com.example.umbeo.room.CartEntity;
 import com.example.umbeo.room.ProductEntity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
@@ -66,8 +63,8 @@ import static android.view.Gravity.START;
 public class DashBoardFragment extends Fragment {
 
     /////LinearLayout trending, popular, feature;
-    List<com.example.umbeo.response_data.CategoryModel> modelList = new ArrayList<>();
-    List<com.example.umbeo.response_data.CategoryModel> shotCat = new ArrayList<>();
+    List<com.example.umbeo.room.CategoryModel> modelList = new ArrayList<>();
+    List<com.example.umbeo.room.CategoryModel> shotCat = new ArrayList<>();
 
     LinearLayout lichi, strawberry;
     AutoScrollViewPager mViewPager;
@@ -80,7 +77,7 @@ public class DashBoardFragment extends Fragment {
     TextView address;
     CardView fruits;
     TextView welcome, trending_txt, popular_txt, feature_txt;
-    List<com.example.umbeo.response_data.CategoryModel> categoryModels = new ArrayList<>();
+    List<com.example.umbeo.room.CategoryModel> categoryModels = new ArrayList<>();
 
     static AppDatabase db;
     static int staw_count = 0, lichi_count = 0, orange_count = 0, quant = 0;
@@ -92,7 +89,7 @@ public class DashBoardFragment extends Fragment {
     RecyclerView category_list, item_recycler, list_category, list_category_fruit;
     ItemAdapter myAdapter;
 
-    List<com.example.umbeo.response_data.CategoryModel> categoryModel = new ArrayList<>();
+    List<com.example.umbeo.room.CategoryModel> categoryModel = new ArrayList<>();
     private float total = 0;
     List<CategoryModel> categoryModelList = new ArrayList<>();
     CardView see_more;
@@ -170,6 +167,7 @@ public class DashBoardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
+        categoryModelList = new ArrayList<>();
 
         item_recycler = v.findViewById(R.id.item_recycler);
         category_list = v.findViewById(R.id.category_list);
@@ -207,7 +205,7 @@ public class DashBoardFragment extends Fragment {
 
         // getCategory();
 
-        Loadall();
+        //Loadall();
 
 
         log.setOnClickListener(new View.OnClickListener() {
@@ -355,7 +353,7 @@ public class DashBoardFragment extends Fragment {
 
 // This is just an example. You can use whatever collection of images.
 
-        if(BuildConfig.USER_TYPE.equalsIgnoreCase("fashion")){
+        if (BuildConfig.USER_TYPE.equalsIgnoreCase("fashion")) {
             int[] mResources1 = {
                     R.drawable.banner1,
                     R.drawable.banner2,
@@ -366,8 +364,7 @@ public class DashBoardFragment extends Fragment {
             mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
             mViewPager.setScrollFactor(4);
             mViewPager.startAutoScroll(5000);
-        }
-        else {
+        } else {
             int[] mResources = {
                     R.drawable.banner1_1,
                     R.drawable.banner2_1,
@@ -396,7 +393,7 @@ public class DashBoardFragment extends Fragment {
 
     private void getCategoryProduct(final String categoryName, final String categoryId) {
 
-        if(productModels.size()==0 || categoryModelList.size()==0) {
+        if (productModels.size() == 0 || categoryModelList.size() == 0) {
             showProgress();
             RetrofitClient api_manager = new RetrofitClient();
             UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
@@ -432,13 +429,13 @@ public class DashBoardFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<ProductResponse> call, Throwable t) {
-                    getCategoryProduct(categoryName,categoryId);
+                    getCategoryProduct(categoryName, categoryId);
                 }
             });
         }
     }
 
-    private void getCategory(final List<String> categoryList) {
+  /*  private void getCategory(final List<String> categoryList) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -468,7 +465,7 @@ public class DashBoardFragment extends Fragment {
                             categoryModel = new ArrayList<>();
                             categoryModel = response.body().getData().getCategories();
 
-                            final List<com.example.umbeo.response_data.CategoryModel> shotCat = new ArrayList<>();
+                            final List<com.example.umbeo.room.CategoryModel> shotCat = new ArrayList<>();
 
                             for (int k = 0; k < categoryList.size(); k++) {
                                 for (int i = 0; i < categoryModel.size(); i++) {
@@ -515,41 +512,41 @@ public class DashBoardFragment extends Fragment {
         }
     }
 
+   */
+
     private void Loadall() {
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-
         modelList = new ArrayList<>();
         productModels = new ArrayList<>();
         categoryModelList = new ArrayList<>();
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-              modelList =  db.productDao().loadAllCategory();
-            }
-        });
+        db.productDao().liveLoadAllCategory()
+                .observe(DashBoardFragment.this, new Observer<List<com.example.umbeo.room.CategoryModel>>() {
+                    @Override
+                    public void onChanged(final List<com.example.umbeo.room.CategoryModel> categoryModels) {
+                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                        MainCategoriesAdapter adapter = new MainCategoriesAdapter(categoryModels, getContext());
+                        category_list.setLayoutManager(linearLayoutManager);
+                        category_list.setAdapter(adapter);
 
-        MainCategoriesAdapter adapter = new MainCategoriesAdapter(modelList, getContext());
-        category_list.setLayoutManager(linearLayoutManager);
-        category_list.setAdapter(adapter);
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    categoryModels = db.productDao().loadAllCategory();
-                    for (int i = 0; i < modelList.size(); i++) {
-                        productModels = new ArrayList<>();
-                        productModels = db.productDao().findById(modelList.get(i).getCategoryId());
-                        categoryModelList.add(new CategoryModel(modelList.get(i).getCategoryId(), modelList.get(i).getCategoryName(), productModels));
+                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = 0; i < categoryModels.size(); i++) {
+                                    productModels = new ArrayList<>();
+                                    productModels = db.productDao().findById(categoryModels.get(i).getCategoryId());
+                                    categoryModelList.add(new CategoryModel(categoryModels.get(i).getCategoryId(), categoryModels.get(i).getCategoryName(), productModels));
+                                }
+
+                                Log.e("CategorySize",categoryModels.size()+" "+categoryModelList.size());
+                            }
+                        });
+                        GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+                        list_category.setLayoutManager(mGridLayoutManager2);
+                        categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+                        list_category.setAdapter(categoryListAdapter);
                     }
-                }
-            });
-
-        GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-        list_category.setLayoutManager(mGridLayoutManager2);
-        categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-        list_category.setAdapter(categoryListAdapter);
+                });
     }
 
     private void getFeaturedProducts() {
@@ -789,7 +786,7 @@ public class DashBoardFragment extends Fragment {
 
         call.enqueue(new Callback<ShopResponse>() {
             @Override
-            public void onResponse(Call<ShopResponse> call, Response<ShopResponse> response) {
+            public void onResponse(Call<ShopResponse> call, final Response<ShopResponse> response) {
                 try {
                     Log.e("shopResponse", response.body().getStatus() + "");
                     Log.e("shopResponse", response.code() + "");
@@ -800,8 +797,17 @@ public class DashBoardFragment extends Fragment {
                     preference.setShopDeliveryCharges(response.body().getData().getDeliveryCharges());
                     preference.setShopPh(response.body().getData().getPhone());
                     preference.setShopCategory(response.body().getData().getCategories());
-                    categoryList.addAll(response.body().getData().getCategories());
-                    getCategory(categoryList);
+
+
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            db.productDao().nukeCategory();
+                            db.productDao().insertAllCategory(response.body().getCategories());
+                        }
+                    });
+                    Loadall();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
