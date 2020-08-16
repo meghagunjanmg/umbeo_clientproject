@@ -149,53 +149,59 @@ public class CategoryActivity extends AppCompatActivity {
 
     }
 
-    private void getProducts(String shopId) {
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
-
-        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(shopId,category_id);
-
-        call.enqueue(new Callback<ProductResponse>() {
+    private void getProducts(final String shopId) {
+        productModels = new ArrayList<>();
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                try {
-                    Log.e("ProductResponse",response+"");
-                    Log.e("ProductResponse",response.code()+"");
-                    Log.e("ProductResponse",response.message()+"");
-                    if(response.code()==200){
-                        List<ProductEntity> productModels = response.body().getData().getProducts();
-                        Log.e("ProductResponse",productModels+"");
-
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2, LinearLayoutManager.VERTICAL,false);
-
-                        item_recycler.setLayoutManager(gridLayoutManager);
-                        myAdapter = new ItemAdapter(productModels,CategoryActivity.this);
-                        item_recycler.setAdapter(myAdapter);
-
-
-                        simpleProgressBar.setVisibility(View.INVISIBLE);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        productModels = AppDatabase.getInstance(CategoryActivity.this).productDao().findById(category_id);
-                        Log.e("ProductResponse",productModels+"");
-                    }
-                });
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2, LinearLayoutManager.VERTICAL,false);
-                item_recycler.setLayoutManager(gridLayoutManager);
-                myAdapter = new ItemAdapter(productModels,CategoryActivity.this);
-                item_recycler.setAdapter(myAdapter);
+            public void run() {
+                productModels = AppDatabase.getInstance(CategoryActivity.this).productDao().findById(category_id);
+                Log.e("ProductResponse", productModels + "");
             }
         });
-    }
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.VERTICAL, false);
+        item_recycler.setLayoutManager(gridLayoutManager);
+        myAdapter = new ItemAdapter(productModels, CategoryActivity.this);
+        item_recycler.setAdapter(myAdapter);
 
+
+        if (productModels.size() == 0) {
+
+            RetrofitClient api_manager = new RetrofitClient();
+            UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
+
+            Call<ProductResponse> call = retrofit_interface.fetchAllProducts(shopId, category_id);
+
+            call.enqueue(new Callback<ProductResponse>() {
+                @Override
+                public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                    try {
+                        Log.e("ProductResponse", response + "");
+                        Log.e("ProductResponse", response.code() + "");
+                        Log.e("ProductResponse", response.message() + "");
+                        if (response.code() == 200) {
+                            List<ProductEntity> productModels = response.body().getData().getProducts();
+                            Log.e("ProductResponse", productModels + "");
+
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.VERTICAL, false);
+
+                            item_recycler.setLayoutManager(gridLayoutManager);
+                            myAdapter = new ItemAdapter(productModels, CategoryActivity.this);
+                            item_recycler.setAdapter(myAdapter);
+
+
+                            simpleProgressBar.setVisibility(View.INVISIBLE);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProductResponse> call, Throwable t) {
+                getProducts(shopId);
+                }
+            });
+        }
+    }
 }

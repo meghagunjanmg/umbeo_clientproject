@@ -67,6 +67,8 @@ public class DashBoardFragment extends Fragment {
 
     /////LinearLayout trending, popular, feature;
     List<com.example.umbeo.response_data.CategoryModel> modelList = new ArrayList<>();
+    List<com.example.umbeo.response_data.CategoryModel> shotCat = new ArrayList<>();
+
     LinearLayout lichi, strawberry;
     AutoScrollViewPager mViewPager;
     CardView cat1, cat2, cat3, cat4;
@@ -204,6 +206,8 @@ public class DashBoardFragment extends Fragment {
         //LoadAllDB();
 
         // getCategory();
+
+        Loadall();
 
 
         log.setOnClickListener(new View.OnClickListener() {
@@ -392,117 +396,123 @@ public class DashBoardFragment extends Fragment {
 
     private void getCategoryProduct(final String categoryName, final String categoryId) {
 
-        showProgress();
+        if(productModels.size()==0 || categoryModelList.size()==0) {
+            showProgress();
+            RetrofitClient api_manager = new RetrofitClient();
+            UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
+            Call<ProductResponse> call = retrofit_interface.fetchAllProducts(preference.getShopId(), categoryId);
+            call.enqueue(new Callback<ProductResponse>() {
+                @Override
+                public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                    try {
+                        Log.e("ProductResponse", response + "");
+                        Log.e("ProductResponse", response.code() + "");
+                        Log.e("ProductResponse", response.message() + "");
+                        Log.e("ProductResponse", response.body().getStatus() + "");
+                        if (response.code() == 200) {
+                            productModels = new ArrayList<>();
+                            //categoryModelList = new ArrayList<>();
 
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
+                            productModels = response.body().getData().getProducts();
 
-        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(preference.getShopId(), categoryId);
+                            categoryModelList.add(new CategoryModel(categoryId, categoryName, productModels));
 
-        call.enqueue(new Callback<ProductResponse>() {
-            @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                try {
-                    Log.e("ProductResponse", response + "");
-                    Log.e("ProductResponse", response.code() + "");
-                    Log.e("ProductResponse", response.message() + "");
-                    Log.e("ProductResponse", response.body().getStatus() + "");
-                    if (response.code() == 200) {
-                        productModels = new ArrayList<>();
-                        //categoryModelList = new ArrayList<>();
-
-                        productModels = response.body().getData().getProducts();
-
-                        categoryModelList.add(new CategoryModel(categoryId, categoryName, productModels));
-
-                        GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-                        list_category.setLayoutManager(mGridLayoutManager2);
-                        categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-                        list_category.setAdapter(categoryListAdapter);
+                            GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+                            list_category.setLayoutManager(mGridLayoutManager2);
+                            categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+                            list_category.setAdapter(categoryListAdapter);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        //LoadAllDB();
+                    } finally {
+                        HideProgress();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    //LoadAllDB();
-                } finally {
-                    HideProgress();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
-                //LoadAllDB();
-            }
-        });
+                @Override
+                public void onFailure(Call<ProductResponse> call, Throwable t) {
+                    getCategoryProduct(categoryName,categoryId);
+                }
+            });
+        }
     }
 
     private void getCategory(final List<String> categoryList) {
-        showProgress();
-
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
-
-        Call<CategoryResponse> call = retrofit_interface.fetchAllCategory();
-        call.enqueue(new Callback<CategoryResponse>() {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
-            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
-                try {
-                    Log.e("CategoryResponse", response + "");
-                    Log.e("CategoryResponse", response.code() + "");
-                    Log.e("CategoryResponse", response.message() + "");
-                    if (response.code() == 200) {
-                        categoryModel = new ArrayList<>();
-                        categoryModel = response.body().getData().getCategories();
+            public void run() {
+              shotCat =  db.productDao().loadAllCategory();
+            }
+        });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        MainCategoriesAdapter adapter = new MainCategoriesAdapter(shotCat, getContext());
+        category_list.setLayoutManager(linearLayoutManager);
+        category_list.setAdapter(adapter);
 
-                        final List<com.example.umbeo.response_data.CategoryModel> shotCat = new ArrayList<>();
+        if(shotCat.size()==0) {
+            showProgress();
+            RetrofitClient api_manager = new RetrofitClient();
+            UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
 
-                        for (int k = 0; k < categoryList.size(); k++) {
-                            for (int i = 0; i < categoryModel.size(); i++) {
+            Call<CategoryResponse> call = retrofit_interface.fetchAllCategory();
+            call.enqueue(new Callback<CategoryResponse>() {
+                @Override
+                public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                    try {
+                        Log.e("CategoryResponse", response + "");
+                        Log.e("CategoryResponse", response.code() + "");
+                        Log.e("CategoryResponse", response.message() + "");
+                        if (response.code() == 200) {
+                            categoryModel = new ArrayList<>();
+                            categoryModel = response.body().getData().getCategories();
 
-                                if (DashBoardFragment.this.categoryList.get(k).equalsIgnoreCase(categoryModel.get(i).getCategoryId())) {
-                                    getCategoryProduct(categoryModel.get(i).getCategoryName(), categoryModel.get(i).getCategoryId());
-                                    shotCat.add(categoryModel.get(i));
+                            final List<com.example.umbeo.response_data.CategoryModel> shotCat = new ArrayList<>();
+
+                            for (int k = 0; k < categoryList.size(); k++) {
+                                for (int i = 0; i < categoryModel.size(); i++) {
+
+                                    if (DashBoardFragment.this.categoryList.get(k).equalsIgnoreCase(categoryModel.get(i).getCategoryId())) {
+                                        getCategoryProduct(categoryModel.get(i).getCategoryName(), categoryModel.get(i).getCategoryId());
+                                        shotCat.add(categoryModel.get(i));
+                                    }
                                 }
                             }
-                        }
-                        List<String> strings = new ArrayList<>();
-                        for (int k = 0; k < shotCat.size(); k++) {
-                            strings.add(shotCat.get(k).getCategoryName());
-                        }
-                        preference.setShopCategoryName(strings);
-
-                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                db.productDao().nukeCategory();
-                                db.productDao().insertAllCategory(shotCat);
+                            List<String> strings = new ArrayList<>();
+                            for (int k = 0; k < shotCat.size(); k++) {
+                                strings.add(shotCat.get(k).getCategoryName());
                             }
-                        });
+                            preference.setShopCategoryName(strings);
 
+                            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    db.productDao().nukeCategory();
+                                    db.productDao().insertAllCategory(shotCat);
+                                }
+                            });
 
-                        Log.e("CategoryResponse", DashBoardFragment.this.categoryList.toString() + "");
-                        Log.e("CategoryResponse", preference.getShopCategoryName().toString() + "");
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                        linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                        MainCategoriesAdapter adapter = new MainCategoriesAdapter(shotCat, getContext());
-                        category_list.setLayoutManager(linearLayoutManager);
-                        category_list.setAdapter(adapter);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                            linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+                            MainCategoriesAdapter adapter = new MainCategoriesAdapter(shotCat, getContext());
+                            category_list.setLayoutManager(linearLayoutManager);
+                            category_list.setAdapter(adapter);
 
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        HideProgress();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    HideProgress();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<CategoryResponse> call, Throwable t) {
-                Loadall();
-            }
-
-
-        });
-
+                @Override
+                public void onFailure(Call<CategoryResponse> call, Throwable t) {
+                    getCategory(categoryList);
+                }
+            });
+        }
     }
 
     private void Loadall() {
@@ -543,60 +553,60 @@ public class DashBoardFragment extends Fragment {
     }
 
     private void getFeaturedProducts() {
-
-        showProgress();
-
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
-
-        Call<ProductResponse> call = retrofit_interface.fetchFeaturedProducts(preference.getShopId());
-
-        call.enqueue(new Callback<ProductResponse>() {
+        productModels = new ArrayList<>();
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                try {
-                    Log.e("FeaturedProducts",response+"");
-                    Log.e("FeaturedProducts",response.code()+"");
-                    Log.e("FeaturedProducts",response.message()+"");
-                    if(response.code()==200) {
-                        List<ProductEntity> productModels = response.body().getData().getProducts();
-                        Log.e("FeaturedProducts", productModels.get(0).getName() + "");
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
-
-                        item_recycler.setLayoutManager(mGridLayoutManager);
-
-                        myAdapter = new ItemAdapter(productModels, getContext());
-                        item_recycler.setAdapter(myAdapter);
-
-
-
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    HideProgress();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
-                productModels = new ArrayList<>();
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        productModels = db.productDao().findByFeature(true);
-
-
-                            }
-                });
-                GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
-
-                item_recycler.setLayoutManager(mGridLayoutManager);
-
-                myAdapter = new ItemAdapter(productModels, getContext());
-                item_recycler.setAdapter(myAdapter);
+            public void run() {
+                productModels = db.productDao().findByFeature(true);
             }
         });
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+        item_recycler.setLayoutManager(mGridLayoutManager);
+
+        myAdapter = new ItemAdapter(productModels, getContext());
+        item_recycler.setAdapter(myAdapter);
+
+        if(productModels.size()==0) {
+            showProgress();
+
+            RetrofitClient api_manager = new RetrofitClient();
+            UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
+
+            Call<ProductResponse> call = retrofit_interface.fetchFeaturedProducts(preference.getShopId());
+
+            call.enqueue(new Callback<ProductResponse>() {
+                @Override
+                public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                    try {
+                        Log.e("FeaturedProducts", response + "");
+                        Log.e("FeaturedProducts", response.code() + "");
+                        Log.e("FeaturedProducts", response.message() + "");
+                        if (response.code() == 200) {
+                            List<ProductEntity> productModels = response.body().getData().getProducts();
+                            Log.e("FeaturedProducts", productModels.get(0).getName() + "");
+                            GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+                            item_recycler.setLayoutManager(mGridLayoutManager);
+
+                            myAdapter = new ItemAdapter(productModels, getContext());
+                            item_recycler.setAdapter(myAdapter);
+
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        HideProgress();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProductResponse> call, Throwable t) {
+                    getFeaturedProducts();
+                }
+            });
+        }
     }
 
     private void getTrendingProducts() {
@@ -644,18 +654,7 @@ public class DashBoardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-                productModels = new ArrayList<>();
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        productModels = db.productDao().findByTrending(true);
-                    }
-                });
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
-
-                        item_recycler.setLayoutManager(mGridLayoutManager);
-                        myAdapter = new ItemAdapter(productModels, getContext());
-                        item_recycler.setAdapter(myAdapter);
+               getTrendingProducts();
 
             }
         });
@@ -705,18 +704,7 @@ public class DashBoardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-                productModels = new ArrayList<>();
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        productModels = db.productDao().findByRecommended(true);
-                    }
-                });
-                GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
-
-                item_recycler.setLayoutManager(mGridLayoutManager);
-                myAdapter = new ItemAdapter(productModels, getContext());
-                item_recycler.setAdapter(myAdapter);
+                getRecommendedProducts();
             }
         });
     }
@@ -789,7 +777,7 @@ public class DashBoardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UserGetProfileResponse> call, Throwable t) {
-
+                    getProfile(tokens);
             }
         });
     }
@@ -822,7 +810,7 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onFailure(Call<ShopResponse> call, Throwable t) {
                 Log.e("shopResponse",t.getLocalizedMessage()+"");
-                getCategory(preference.getShopCategory());
+                shopData();
 
             }
         });

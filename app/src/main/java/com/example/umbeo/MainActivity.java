@@ -49,48 +49,14 @@ public class MainActivity extends AppCompatActivity {
         }
         /// DeleteAllDB();
 
-        getProducts(preference.getShopId());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                getProducts(preference.getShopId());
+            }
+        });
 
-        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                .getBoolean("isFirstRun", true);
-
-        if (isFirstRun) {
-            //show start activity
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent= new Intent(MainActivity.this,intro1.class);
-                    startActivity(intent);
-                    finish();
-                }
-            },SPLASH_TIME_OUT);
-        }
-        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).commit();
-
-        if(!isFirstRun)
-        {
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    int i = getIntent().getIntExtra("intent",0);
-                    if(i==1) {
-                        Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        startActivity(intent);
-                        Bungee.fade(MainActivity.this);
-                    }
-                    else {
-                        Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
-                        startActivity(intent);
-                        Bungee.fade(MainActivity.this);
-                    }
-                }
-            },SPLASH_TIME_OUT);
-        }
-
-
+        intent();
     }
 
 
@@ -149,8 +115,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void intent(){
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
 
-    private void getProducts(String shopId) {
+        if (isFirstRun) {
+            //show start activity
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent= new Intent(MainActivity.this,intro1.class);
+                    startActivity(intent);
+                    finish();
+                }
+            },SPLASH_TIME_OUT);
+        }
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).commit();
+
+        if(!isFirstRun)
+        {
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int i = getIntent().getIntExtra("intent",0);
+                    if(i==1) {
+                        Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                        Bungee.fade(MainActivity.this);
+                    }
+                    else {
+                        Intent intent = new Intent(MainActivity.this, HomeScreenActivity.class);
+                        startActivity(intent);
+                        Bungee.fade(MainActivity.this);
+                    }
+                }
+            },SPLASH_TIME_OUT);
+        }
+    }
+
+
+    private void getProducts(final String shopId) {
         RetrofitClient api_manager = new RetrofitClient();
         UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
@@ -167,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
                         List<ProductEntity> productModels = response.body().getData().getProducts();
                         DeleteAllDB();
                         InsertAllDB(productModels);
+
+                        intent();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -176,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
+                getProducts(shopId);
             }
         });
     }
