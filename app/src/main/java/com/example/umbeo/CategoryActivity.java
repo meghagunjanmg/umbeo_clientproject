@@ -138,7 +138,7 @@ public class CategoryActivity extends AppCompatActivity {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                productModels = AppDatabase.getInstance(CategoryActivity.this).productDao().findById(category_id);
+                productModels = AppDatabase.getInstance(CategoryActivity.this).productDao().findById(category_id,true);
                 Log.e("ProductResponse", productModels + "");
             }
         });
@@ -151,7 +151,7 @@ public class CategoryActivity extends AppCompatActivity {
         if (productModels.size() == 0) {
             getProducts(preference.getShopId());
         }
-        }
+    }
 
     private void LoadAllDB() {
 

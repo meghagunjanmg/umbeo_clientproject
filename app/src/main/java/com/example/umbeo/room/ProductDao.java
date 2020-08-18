@@ -11,11 +11,11 @@ import java.util.List;
 
 @Dao
 public interface ProductDao {
-    @Query("SELECT * FROM products")
-    LiveData<List<ProductEntity>> getAll();
+    @Query("SELECT * FROM products WHERE isActive =:active")
+    LiveData<List<ProductEntity>> getAll(Boolean active);
 
-    @Query("SELECT * FROM products")
-    List<ProductEntity> loadAll();
+    @Query("SELECT * FROM products WHERE isActive =:active")
+    List<ProductEntity> loadAll(Boolean active);
 
 
 
@@ -28,18 +28,18 @@ public interface ProductDao {
 
 
 
-    @Query("SELECT * FROM products WHERE categoryId =:id")
-    List<ProductEntity> findById(String id);
+    @Query("SELECT * FROM products WHERE categoryId =:id AND isActive =:active")
+    List<ProductEntity> findById(String id,Boolean active);
 
 
-    @Query("SELECT * FROM products WHERE isRecommended =:id")
-    List<ProductEntity> findByRecommended(Boolean id);
+    @Query("SELECT * FROM products WHERE isRecommended =:id AND isActive =:active")
+    List<ProductEntity> findByRecommended(Boolean id,Boolean active);
 
-    @Query("SELECT * FROM products WHERE isTrending =:id")
-    List<ProductEntity> findByTrending(Boolean id);
+    @Query("SELECT * FROM products WHERE isTrending =:id AND isActive =:active")
+    List<ProductEntity> findByTrending(Boolean id,Boolean active);
 
-    @Query("SELECT * FROM products WHERE isFeatured =:id")
-    List<ProductEntity> findByFeature(Boolean id);
+    @Query("SELECT * FROM products WHERE isFeatured =:id AND isActive =:active")
+    List<ProductEntity> findByFeature(Boolean id,Boolean active);
 
     @Insert
     void insertAll(List<ProductEntity> entities);

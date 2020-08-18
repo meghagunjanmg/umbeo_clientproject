@@ -534,7 +534,7 @@ public class DashBoardFragment extends Fragment {
                             public void run() {
                                 for (int i = 0; i < categoryModels.size(); i++) {
                                     productModels = new ArrayList<>();
-                                    productModels = db.productDao().findById(categoryModels.get(i).getCategoryId());
+                                    productModels = db.productDao().findById(categoryModels.get(i).getCategoryId(),true);
                                     categoryModelList.add(new CategoryModel(categoryModels.get(i).getCategoryId(), categoryModels.get(i).getCategoryName(), productModels));
                                 }
 
@@ -554,7 +554,7 @@ public class DashBoardFragment extends Fragment {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                productModels = db.productDao().findByFeature(true);
+                productModels = db.productDao().findByFeature(true,true);
             }
         });
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
@@ -608,102 +608,134 @@ public class DashBoardFragment extends Fragment {
 
     private void getTrendingProducts() {
 
-        showProgress();
-
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
-
-        Call<ProductResponse> call = retrofit_interface.fetchTrendingProducts(preference.getShopId());
-
-        call.enqueue(new Callback<ProductResponse>() {
+        productModels = new ArrayList<>();
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                try {
-                    Log.e("TrendingProduct",response+"");
-                    Log.e("TrendingProduct",response.code()+"");
-                    Log.e("TrendingProduct",response.message()+"");
-                    if(response.code()==200){
-                       final List<ProductEntity> productModels = response.body().getData().getProducts();
-                        Log.e("TrendingProduct",productModels.get(0).getName()+"");
-
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
-                        item_recycler.setLayoutManager(mGridLayoutManager);
-
-                       ItemAdapter myAdapter = new ItemAdapter(productModels, getContext());
-                        item_recycler.setAdapter(myAdapter);
-
-
-                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (int i = 0;i<productModels.size();i++){
-                                    db.productDao().UpdateTrending(productModels.get(i).getId(),true);
-                                }
-                            }
-                        });
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    HideProgress();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
-               getTrendingProducts();
-
+            public void run() {
+                productModels = db.productDao().findByTrending(true,true);
             }
         });
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+        item_recycler.setLayoutManager(mGridLayoutManager);
+
+        myAdapter = new ItemAdapter(productModels, getContext());
+        item_recycler.setAdapter(myAdapter);
+
+        if(productModels.size()==0) {
+            showProgress();
+
+            RetrofitClient api_manager = new RetrofitClient();
+            UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
+
+            Call<ProductResponse> call = retrofit_interface.fetchTrendingProducts(preference.getShopId());
+
+            call.enqueue(new Callback<ProductResponse>() {
+                @Override
+                public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                    try {
+                        Log.e("TrendingProduct", response + "");
+                        Log.e("TrendingProduct", response.code() + "");
+                        Log.e("TrendingProduct", response.message() + "");
+                        if (response.code() == 200) {
+                            final List<ProductEntity> productModels = response.body().getData().getProducts();
+                            Log.e("TrendingProduct", productModels.get(0).getName() + "");
+
+                            GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+                            item_recycler.setLayoutManager(mGridLayoutManager);
+
+                            ItemAdapter myAdapter = new ItemAdapter(productModels, getContext());
+                            item_recycler.setAdapter(myAdapter);
+
+
+                            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    for (int i = 0; i < productModels.size(); i++) {
+                                        db.productDao().UpdateTrending(productModels.get(i).getId(), true);
+                                    }
+                                }
+                            });
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        HideProgress();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProductResponse> call, Throwable t) {
+                    getTrendingProducts();
+
+                }
+            });
+        }
     }
 
     private void getRecommendedProducts() {
 
-        showProgress();
-
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
-
-        Call<ProductResponse> call = retrofit_interface.fetchRecommendedProducts(preference.getShopId(),preference.getUserId());
-
-        call.enqueue(new Callback<ProductResponse>() {
+        productModels = new ArrayList<>();
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                try {
-                    Log.e("RecommendedProducts",response+"");
-                    Log.e("RecommendedProducts",response.code()+"");
-                    Log.e("RecommendedProducts",response.message()+"");
-                    if(response.code()==200){
-
-                       final List<ProductEntity> productModels = response.body().getData().getProducts();
-                        Log.e("RecommendedProducts",productModels.get(0).getName()+"");
-                        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(),1 ,LinearLayoutManager.HORIZONTAL, false);
-
-                        item_recycler.setLayoutManager(mGridLayoutManager);
-
-                        ItemAdapter myAdapter = new ItemAdapter(productModels, getContext());
-                        item_recycler.setAdapter(myAdapter);
-                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (int i = 0;i<productModels.size();i++){
-                                    db.productDao().UpdateRecommended(productModels.get(i).getId(),true);
-                                }
-                            }
-                        });
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    HideProgress();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
-                getRecommendedProducts();
+            public void run() {
+                productModels = db.productDao().findByRecommended(true,true);
             }
         });
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+        item_recycler.setLayoutManager(mGridLayoutManager);
+
+        myAdapter = new ItemAdapter(productModels, getContext());
+        item_recycler.setAdapter(myAdapter);
+
+        if(productModels.size()==0) {
+            showProgress();
+
+            RetrofitClient api_manager = new RetrofitClient();
+            UsersApi retrofit_interface = api_manager.usersClient().create(UsersApi.class);
+
+            Call<ProductResponse> call = retrofit_interface.fetchRecommendedProducts(preference.getShopId(), preference.getUserId());
+
+            call.enqueue(new Callback<ProductResponse>() {
+                @Override
+                public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                    try {
+                        Log.e("RecommendedProducts", response + "");
+                        Log.e("RecommendedProducts", response.code() + "");
+                        Log.e("RecommendedProducts", response.message() + "");
+                        if (response.code() == 200) {
+
+                            final List<ProductEntity> productModels = response.body().getData().getProducts();
+                            Log.e("RecommendedProducts", productModels.get(0).getName() + "");
+                            GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
+
+                            item_recycler.setLayoutManager(mGridLayoutManager);
+
+                            ItemAdapter myAdapter = new ItemAdapter(productModels, getContext());
+                            item_recycler.setAdapter(myAdapter);
+                            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    for (int i = 0; i < productModels.size(); i++) {
+                                        db.productDao().UpdateRecommended(productModels.get(i).getId(), true);
+                                    }
+                                }
+                            });
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        HideProgress();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProductResponse> call, Throwable t) {
+                    getRecommendedProducts();
+                }
+            });
+        }
     }
 
     private void showProgress(){

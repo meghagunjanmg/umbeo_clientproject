@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
+        DeleteAllDB();
         /// DeleteAllDB();
 
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
