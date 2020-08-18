@@ -142,6 +142,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         String[] country = {"Canada"};
         ArrayAdapter<String> stateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, state);
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, country);
+        stateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         line5.setAdapter(stateAdapter);
         line6.setAdapter(countryAdapter);
 
@@ -406,20 +409,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     line3.setText(postalCode);
                     line4.setText(city);
 
-                    int commas = 0;
-                    for(int i = 0; i < address.length(); i++) {
-                        if(address.charAt(i) == ',') commas++;
-                    }
-                    if(commas%2==0) {
-                        String[] addres = address.split(",", commas / 2);
-                        line1.setText(addres[0]);
-                        line2.setText(addres[1]);
-                    }
-                    else {
-                        String[] addres = address.split(",", commas+1 / 2);
-                        line1.setText(addres[0]);
-                        line2.setText(addres[1]);
-                    }
+                    String s = address;
+
+                    int i = s.indexOf(',', 1 + s.indexOf(',', 1 + s.indexOf(',')));
+
+                    String firstPart = s.substring(0, i);
+                    String secondPart = s.substring(i+1);
+
+                    System.out.println(firstPart);
+                    System.out.println(secondPart);
+                    line1.setText(firstPart);
+                    line2.setText(secondPart);
+
 
 
                 } else {
@@ -511,20 +512,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     line3.setText(postalCode);
                     line4.setText(city);
 
-                    int commas = 0;
-                    for(int i = 0; i < address0.length(); i++) {
-                        if(address0.charAt(i) == ',') commas++;
-                    }
-                    if(commas%2==0) {
-                        String[] addres = address0.split(",", commas / 2);
-                        line1.setText(addres[0]);
-                        line2.setText(addres[1]);
-                    }
-                    else {
-                        String[] addres = address0.split(",", commas+1/ 2);
-                        line1.setText(addres[0]);
-                        line2.setText(addres[1]);
-                    }
+                    String s = address0;
+
+                    int i = s.indexOf(',', 1 + s.indexOf(',', 1 + s.indexOf(',')));
+
+                    String firstPart = s.substring(0, i);
+                    String secondPart = s.substring(i+1);
+
+                    System.out.println(firstPart);
+                    System.out.println(secondPart);
+                    line1.setText(firstPart);
+                    line2.setText(secondPart);
 
                     mMap.addMarker(new MarkerOptions().position(p1).title("My location"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(p1));

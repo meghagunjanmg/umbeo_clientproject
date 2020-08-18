@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.umbeo.BuildConfig;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,7 +36,7 @@ public class UserPreference {
     private Integer Theme = 1;
     private static final String Addresses = "addresses";
     private static final Boolean achievments = false;
-    private static final String ShopId = "5f131026a7cd970017e7b655";
+    private static final String ShopId = "shopId";
 
 
     @SuppressLint("CommitPrefEdits")
@@ -46,7 +48,13 @@ public class UserPreference {
 
 
     public String getShopId() {
-        return pref.getString(ShopId, "5f131026a7cd970017e7b655");
+
+        if(BuildConfig.USER_TYPE.equalsIgnoreCase("fashion")) {
+            return pref.getString(ShopId, "5f33d77ee10e3a0017c72aea");
+        }
+        else {
+            return pref.getString(ShopId, "5f131026a7cd970017e7b655");
+        }
     }
 
 
