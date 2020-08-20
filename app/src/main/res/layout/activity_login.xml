@@ -128,41 +128,27 @@
         android:layout_gravity="center"
         android:paddingTop="4dp">
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/facebook"
+            android:layout_margin="8dp"
+            android:id="@+id/fb_sign_in_button"
             android:layout_width="250dp"
-            android:layout_height="57dp"
-            android:textColor="@color/colorTextSecondary"
-            android:textSize="14sp"
-            android:fontFamily="@font/fon"
+            android:layout_height="50dp"
             android:backgroundTint="@color/colorWhite"
-            app:icon="@drawable/facebook"
-            app:iconPadding="4dp"
-            app:iconTint="@color/empty"
-            android:text="Login with Facebook"
-            app:cornerRadius="20dp"
-            app:iconSize="20dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-            />
-        <com.google.android.gms.common.SignInButton
+            android:drawableLeft="@drawable/facebook"
+            android:text="Connect with Facebook"
+            android:textColor="@color/colorTextSecondary"
             style="@style/TextViewStyleHeading"
+            android:padding="8dp" />
+        <com.google.android.material.button.MaterialButton
+            android:layout_margin="8dp"
             android:id="@+id/google_sign_in_button"
             android:layout_width="250dp"
-            android:layout_height="wrap_content" />
-        <com.google.android.material.button.MaterialButton
-            android:visibility="gone"
-            android:layout_width="250dp"
-            android:layout_height="57dp"
-            android:textColor="@color/colorTextSecondary"
+            android:layout_height="50dp"
             android:backgroundTint="@color/colorWhite"
-            app:icon="@drawable/googlelogo"
-            app:iconPadding="4dp"
-            android:fontFamily="@font/fon"
-            android:textSize="14sp"
-            app:iconTint="@color/empty"
+            android:drawableLeft="@drawable/googlelogo"
             android:text="Connect with Google"
-            app:cornerRadius="20dp"
-            app:iconSize="20dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon" />
+            android:textColor="@color/colorTextSecondary"
+            style="@style/TextViewStyleHeading"
+            android:padding="8dp" />
     </LinearLayout>
 <LinearLayout
     android:gravity="center"

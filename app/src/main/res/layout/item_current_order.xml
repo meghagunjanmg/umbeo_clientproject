@@ -93,6 +93,18 @@
             android:layout_marginTop="6dp"
             android:text="Status"
          />
+
+        <TextView
+            android:visibility="gone"
+            android:gravity="center"
+            android:id="@+id/Waiting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Request sent to the shop"
+            style="@style/TextViewStyleSubHeading"
+            />
+
         <include layout="@layout/item_status_bar"></include>
         <LinearLayout
 

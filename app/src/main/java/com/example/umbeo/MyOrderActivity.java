@@ -208,7 +208,7 @@ public class MyOrderActivity extends AppCompatActivity {
                             for (int j=0;j<response.body().getData().get(i).getProducts().size();j++){
                                 productName = productName+","+response.body().getData().get(i).getProducts().get(j).getProduct().getName()+" X "+response.body().getData().get(i).getProducts().get(j).getQuantity();
                             }
-                            entities.add(new OrderEntity(ordersList.getId(),ordersList.getOrderStatus(),productName,ordersList.getTotalAmount(),ordersList.getCreatedAt(),ordersList.getDeliveryInstructions()));
+                            entities.add(new OrderEntity(ordersList.getConfirmedByUser(),ordersList.getConfirmedByShop(),ordersList.getCancelledByUser(),ordersList.getCancelledByShop(),ordersList.getId(),ordersList.getOrderStatus(),ordersList.getTotalAmount(),productName,ordersList.getCreatedAt(),ordersList.getDeliveryInstructions()));
 
                             if(response.body().getData().get(i).getOrderStatus()!=3){
                                 currentOrder.add(response.body().getData().get(i));

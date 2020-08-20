@@ -22,27 +22,38 @@ import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.LoginResponse;
-import com.example.umbeo.response_data.SignUpResponse;
-import com.example.umbeo.response_data.SignUpResquest;
 import com.example.umbeo.response_data.UserGetProfileResponse;
-import com.google.android.gms.auth.api.Auth;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.Login;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,16 +67,22 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
     String phonePattern = "^(?:\\d{10}|\\w+@\\w+\\.\\w{2,3})$";
     String emailPattern = "^([0-9]{9})|([A-Za-z0-9._%\\+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,3})$";
     Button  login;
-    SignInButton google_sign_in_button;
+    MaterialButton google_sign_in_button;
+    MaterialButton fb_sign_in_button;
     TextView signu;
     UserPreference preference;
     ImageView back_btn;
     private GoogleApiClient googleApiClient;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 1;
+    private static final int FB_SIGN_IN = 1;
+    private CallbackManager callbackManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+  //      FacebookSdk.sdkInitialize(getApplicationContext());
+//        AppEventsLogger.activateApp(this);
+
         preference = new UserPreference(getApplicationContext());
 
         if(preference.getTheme()==1){
@@ -75,13 +92,8 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
         setContentView(R.layout.activity_login);
         signu=(TextView)findViewById(R.id.signin);
 
+        fb_sign_in_button = findViewById(R.id.fb_sign_in_button);
         google_sign_in_button = findViewById(R.id.google_sign_in_button);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
 
 
         back_btn = findViewById(R.id.back_btn);
@@ -122,8 +134,43 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
         google_sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestEmail()
+                        .build();
+                mGoogleSignInClient = GoogleSignIn.getClient(login.this, gso);
+
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        fb_sign_in_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                callbackManager = CallbackManager.Factory.create();
+
+//                fb_sign_in_button.setPermissions(Arrays.asList("email","public_profile"));
+                LoginManager.getInstance().logInWithReadPermissions(login.this,Arrays.asList("email","public_profile"));
+                LoginManager.getInstance().registerCallback(callbackManager,
+                        new FacebookCallback<LoginResult>() {
+                            @Override
+                            public void onSuccess(LoginResult loginResult) {
+                                Log.e("facebookLogin"," "+loginResult.getAccessToken()+" "+loginResult.toString());
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                // App code
+                            }
+
+                            @Override
+                            public void onError(FacebookException exception) {
+                                Log.e("facebookLogin"," "+exception.getLocalizedMessage());
+                            }
+                        });
             }
         });
     }
@@ -324,6 +371,8 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
@@ -334,21 +383,62 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
             handleSignInResult(task);
         }
     }
+
+
+    AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+            Log.e("facebookLogin"," "+currentAccessToken);
+            if(currentAccessToken!=null)
+                facebookLogin(currentAccessToken);
+        }
+    };
+
+    String personName,personEmail;
+
+    private void facebookLogin(AccessToken acct) {
+        if (acct != null) {
+
+            GraphRequest graphRequest = GraphRequest.newMeRequest(acct, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        personName = object.getString("first_name");
+                        personEmail = object.getString("email");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.e("facebookLogin"," "+personName+" "+personEmail+" "+e.getLocalizedMessage());
+                    }
+                }
+            });
+
+            Bundle parameter = new Bundle();
+            parameter.putString("fields","first_name,last_name,email,id");
+            graphRequest.setParameters(parameter);
+            graphRequest.executeAsync();
+
+            Log.e("facebookLogin"," "+personName+" "+personEmail);
+            HomeScreenActivity.viewPager.setCurrentItem(0);
+            finish();
+        }
+    }
+
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            updateUI(account);
+            googleLogin(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.e("googleSignIn", "signInResult:failed code=" + e.getStatusCode());
-            updateUI(null);
+            googleLogin(null);
         }
     }
 
-    private void updateUI(GoogleSignInAccount acct) {
+    private void googleLogin(GoogleSignInAccount acct) {
         if (acct != null) {
             String personName = acct.getDisplayName();
             String personGivenName = acct.getGivenName();

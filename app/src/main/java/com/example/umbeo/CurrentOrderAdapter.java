@@ -66,19 +66,21 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
 
         instruction.setText(modelList.get(position).getDeliveryInstructions()+"");
 
-        if(modelList.get(position).getOrderStatus()==0){
-            status.setValue(0);
+        if(modelList.get(position).getConfirmedByShop()) {
+            if (modelList.get(position).getOrderStatus() == 0) {
+                status.setValue(0);
+            } else if (modelList.get(position).getOrderStatus() == 1) {
+                status.setValue(30);
+            } else if (modelList.get(position).getOrderStatus() == 2) {
+                status.setValue(60);
+            } else if (modelList.get(position).getOrderStatus() == 3) {
+                status.setValue(90);
+            }
         }
-       else if(modelList.get(position).getOrderStatus()==1){
-            status.setValue(30);
+        else {
+            status.setVisibility(View.GONE);
+            Waiting.setVisibility(View.VISIBLE);
         }
-       else if(modelList.get(position).getOrderStatus()==2){
-            status.setValue(60);
-        }
-       else if(modelList.get(position).getOrderStatus()==3){
-            status.setValue(90);
-        }
-
 
        cancel.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -135,7 +137,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
 
 
     //CardView card1;
-    TextView products,time,amount,instruction;
+    TextView products,time,amount,instruction,Waiting;
     Slider status;
     Button cancel;
 
@@ -146,6 +148,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
             super(itemView);
 
             products = itemView.findViewById(R.id.products);
+            Waiting = itemView.findViewById(R.id.Waiting);
             time = itemView.findViewById(R.id.time);
             amount = itemView.findViewById(R.id.amount);
             status = itemView.findViewById(R.id.slider);
