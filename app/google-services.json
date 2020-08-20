@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "343447536450",
+    "firebase_url": "https://e-shopping-280515.firebaseio.com",
+    "project_id": "e-shopping-280515",
+    "storage_bucket": "e-shopping-280515.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343447536450:android:23f3ff8c3817cc7fd43edb",
+        "android_client_info": {
+          "package_name": "com.example.umbeo.fashion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343447536450-0fq4v0o3289ba16rpgpvp97s2a83b2pu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.umbeo.fashion",
+            "certificate_hash": "d1caa0b5ff1b7aa8830fa28004749663e77771a3"
+          }
+        },
+        {
+          "client_id": "343447536450-dtdjecv37fsaagro8g60a1nbcm6ba80g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAGt7hfbfkHhZF2_CeJ_Wxyan6njlLt70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343447536450-dtdjecv37fsaagro8g60a1nbcm6ba80g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343447536450:android:6ac2f8a2b0b7cdf7d43edb",
+        "android_client_info": {
+          "package_name": "com.example.umbeo.grocery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343447536450-t6qima2qki9c520277k4nll8mlt0glut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.umbeo.grocery",
+            "certificate_hash": "d1caa0b5ff1b7aa8830fa28004749663e77771a3"
+          }
+        },
+        {
+          "client_id": "343447536450-dtdjecv37fsaagro8g60a1nbcm6ba80g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAGt7hfbfkHhZF2_CeJ_Wxyan6njlLt70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343447536450-dtdjecv37fsaagro8g60a1nbcm6ba80g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

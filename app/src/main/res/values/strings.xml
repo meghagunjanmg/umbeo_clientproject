@@ -1,4 +1,10 @@
 <resources>
+    <string name="server_client_id">343447536450-h9b5s441pbafaj42h22ss5o7dfrge9cc.apps.googleusercontent.com</string>
+
+
+
+
+
     <string name="title_activity_main_page_user">MainPageUser</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
