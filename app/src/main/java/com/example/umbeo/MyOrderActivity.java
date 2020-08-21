@@ -226,7 +226,6 @@ public class MyOrderActivity extends AppCompatActivity {
                                 appDatabase.orderDao().nukeTable();
                                 appDatabase.orderDao().insertAll(entities);
 
-                                Log.e("oder","rooom insert "+entities.get(0).getStatus());
                             }
                         });
                     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.umbeo.BuildConfig;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -243,6 +244,8 @@ public class UserPreference {
 
 
     public void logout(){
+        LoginManager.getInstance().logOut();
+
         editor.clear();
         editor.commit();
     }

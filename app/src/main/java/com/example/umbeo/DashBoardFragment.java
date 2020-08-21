@@ -206,7 +206,7 @@ public class DashBoardFragment extends Fragment {
         // getCategory();
 
         //Loadall();
-
+        Loadall();
 
         log.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -408,6 +408,7 @@ public class DashBoardFragment extends Fragment {
                         Log.e("ProductResponse", response.body().getStatus() + "");
                         if (response.code() == 200) {
                             productModels = new ArrayList<>();
+                            categoryModelList = new ArrayList<>();
                             //categoryModelList = new ArrayList<>();
 
                             productModels = response.body().getData().getProducts();
@@ -518,6 +519,7 @@ public class DashBoardFragment extends Fragment {
         modelList = new ArrayList<>();
         productModels = new ArrayList<>();
         categoryModelList = new ArrayList<>();
+        categoryModelList.clear();
 
         db.productDao().liveLoadAllCategory()
                 .observe(DashBoardFragment.this, new Observer<List<com.example.umbeo.room.CategoryModel>>() {
@@ -532,15 +534,27 @@ public class DashBoardFragment extends Fragment {
                         AppExecutors.getInstance().diskIO().execute(new Runnable() {
                             @Override
                             public void run() {
+                                categoryModelList = new ArrayList<>();
+                                categoryModelList.clear();
                                 for (int i = 0; i < categoryModels.size(); i++) {
                                     productModels = new ArrayList<>();
                                     productModels = db.productDao().findById(categoryModels.get(i).getCategoryId(),true);
                                     categoryModelList.add(new CategoryModel(categoryModels.get(i).getCategoryId(), categoryModels.get(i).getCategoryName(), productModels));
                                 }
-
-                                Log.e("CategorySize",categoryModels.size()+" "+categoryModelList.size());
                             }
                         });
+
+                        try {
+                            for(int i=0;i<=categoryModelList.size()+1;i++){
+                                if(categoryModelList.get(i).getCategoryName().equalsIgnoreCase(categoryModelList.get(i+1).getCategoryName())){
+                                    categoryModelList.remove(i);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        Log.e("CategorySize",categoryModels.size()+" "+categoryModelList.size());
+
                         GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
                         list_category.setLayoutManager(mGridLayoutManager2);
                         categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
@@ -838,8 +852,6 @@ public class DashBoardFragment extends Fragment {
                             db.productDao().insertAllCategory(response.body().getCategories());
                         }
                     });
-                    Loadall();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

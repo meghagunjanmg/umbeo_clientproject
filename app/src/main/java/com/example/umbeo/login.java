@@ -1,6 +1,9 @@
 package com.example.umbeo;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -22,6 +25,7 @@ import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.LoginResponse;
+import com.example.umbeo.response_data.SignUpResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -31,6 +35,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.LoggingBehavior;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.Login;
 import com.facebook.login.LoginManager;
@@ -53,6 +58,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import retrofit2.Call;
@@ -70,6 +77,7 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
     MaterialButton google_sign_in_button;
     MaterialButton fb_sign_in_button;
     TextView signu;
+    String ThirdToken;
     UserPreference preference;
     ImageView back_btn;
     private GoogleApiClient googleApiClient;
@@ -77,12 +85,10 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private static final int RC_SIGN_IN = 1;
     private static final int FB_SIGN_IN = 1;
     private CallbackManager callbackManager;
+    Boolean facebookClicked = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-  //      FacebookSdk.sdkInitialize(getApplicationContext());
-//        AppEventsLogger.activateApp(this);
-
         preference = new UserPreference(getApplicationContext());
 
         if(preference.getTheme()==1){
@@ -90,6 +96,29 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
         }
         else
         setContentView(R.layout.activity_login);
+
+
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.example.umbeo.fashion",                  //Insert your own package name.
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
+        if (BuildConfig.DEBUG) {
+            FacebookSdk.setIsDebugEnabled(true);
+            FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
+        }
+
         signu=(TextView)findViewById(R.id.signin);
 
         fb_sign_in_button = findViewById(R.id.fb_sign_in_button);
@@ -144,21 +173,23 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
-
+       FacebookSdk.sdkInitialize(getApplicationContext());
+        //AppEventsLogger.activateApp(this);
         fb_sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
                 callbackManager = CallbackManager.Factory.create();
+                facebookClicked = true;
 
 //                fb_sign_in_button.setPermissions(Arrays.asList("email","public_profile"));
-                LoginManager.getInstance().logInWithReadPermissions(login.this,Arrays.asList("email","public_profile"));
+                LoginManager.getInstance().logInWithReadPermissions(login.this,Arrays.asList("public_profile"));
                 LoginManager.getInstance().registerCallback(callbackManager,
                         new FacebookCallback<LoginResult>() {
                             @Override
                             public void onSuccess(LoginResult loginResult) {
                                 Log.e("facebookLogin"," "+loginResult.getAccessToken()+" "+loginResult.toString());
+                                facebookLogin(loginResult.getAccessToken());
                             }
 
                             @Override
@@ -326,7 +357,6 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 Log.e("Get_Profile_data",response+"");
                 Log.e("Get_Profile_data",response.code()+"");
                 Log.e("Get_Profile_data",response.message()+"");
-                Log.e("Get_Profile_data",response.body().getStatus()+"");
                 if(response.code()==200) {
                     preference.setUserName(response.body().getData().getName());
                     preference.setEmail(response.body().getData().getEmail());
@@ -371,10 +401,7 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
@@ -382,29 +409,43 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
+
+         if(facebookClicked) callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        accessTokenTracker.startTracking();
+    }
 
     AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
         @Override
         protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
             Log.e("facebookLogin"," "+currentAccessToken);
-            if(currentAccessToken!=null)
-                facebookLogin(currentAccessToken);
+
+            if(currentAccessToken==null)
+            {
+            }
+            else facebookLogin(currentAccessToken);
         }
     };
+
 
     String personName,personEmail;
 
     private void facebookLogin(AccessToken acct) {
         if (acct != null) {
-
             GraphRequest graphRequest = GraphRequest.newMeRequest(acct, new GraphRequest.GraphJSONObjectCallback() {
                 @Override
                 public void onCompleted(JSONObject object, GraphResponse response) {
                     try {
                         personName = object.getString("first_name");
                         personEmail = object.getString("email");
+                        thirdLogin(personName,personEmail);
+
+                        Log.e("facebookLogin"," "+personName+" "+personEmail+" ");
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.e("facebookLogin"," "+personName+" "+personEmail+" "+e.getLocalizedMessage());
@@ -417,9 +458,6 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
             graphRequest.setParameters(parameter);
             graphRequest.executeAsync();
 
-            Log.e("facebookLogin"," "+personName+" "+personEmail);
-            HomeScreenActivity.viewPager.setCurrentItem(0);
-            finish();
         }
     }
 
@@ -446,14 +484,55 @@ public class login extends AppCompatActivity implements GoogleApiClient.OnConnec
             String personEmail = acct.getEmail();
             String personId = acct.getId();
             Uri personPhoto = acct.getPhotoUrl();
+
+            thirdLogin(personName,personEmail);
+
             Log.e("googleSignIn"," "+personName+" "+personGivenName+" "+personEmail+" "+personId+" "+personPhoto);
-            HomeScreenActivity.viewPager.setCurrentItem(0);
-            finish();
         }
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+
+
+    private void thirdLogin(String name,String email){
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        Call<SignUpResponse> call =  retrofit_interface.userThirdLogin(email,name,preference.getShopId());
+        call.enqueue(new Callback<SignUpResponse>() {
+            @Override
+            public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
+                try {
+                    Log.e("ThirdLoginResponse",""+response);
+                    Log.e("ThirdLoginResponse",response.code()+"");
+                    Log.e("ThirdLoginResponse",response.message()+"");
+                    if (response.code() == 201) {
+                        login.setEnabled(true);
+
+                        Toast.makeText(com.example.umbeo.login.this,"Login Successful",Toast.LENGTH_LONG).show();
+
+                        getProfile(response.body().getData().getToken());
+
+                    }
+                    else Toast.makeText(com.example.umbeo.login.this,response.body().getMessage(),Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    login.setEnabled(true);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SignUpResponse> call, Throwable t) {
+                login.setEnabled(true);
+                Toast.makeText(com.example.umbeo.login.this,t.getMessage(),Toast.LENGTH_LONG).show();
+
+            }
+        });
 
     }
 }

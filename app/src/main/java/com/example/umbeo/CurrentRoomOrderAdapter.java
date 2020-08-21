@@ -74,7 +74,7 @@ public class CurrentRoomOrderAdapter extends RecyclerView.Adapter<com.example.um
             }
         }
         else {
-            status.setVisibility(View.GONE);
+            status_linear.setVisibility(View.GONE);
             Waiting.setVisibility(View.VISIBLE);
         }
 
@@ -136,6 +136,7 @@ public class CurrentRoomOrderAdapter extends RecyclerView.Adapter<com.example.um
     TextView products,time,amount,instruction,Waiting;
     Slider status;
     Button cancel;
+    LinearLayout status_linear;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView card1;
@@ -144,6 +145,7 @@ public class CurrentRoomOrderAdapter extends RecyclerView.Adapter<com.example.um
             super(itemView);
 
             products = itemView.findViewById(R.id.products);
+            status_linear = itemView.findViewById(R.id.status_linear);
             Waiting = itemView.findViewById(R.id.Waiting);
             time = itemView.findViewById(R.id.time);
             amount = itemView.findViewById(R.id.amount);

@@ -52,6 +52,14 @@ public interface UsersApi {
             @Field("password") String password,
             @Field("shopId") String shop
     );
+
+    @FormUrlEncoded
+    @POST("/api/v1/users/loginthird")
+    Call<SignUpResponse> userThirdLogin(
+            @Field("email") String email,
+            @Field("name") String name,
+            @Field("shopId") String shop
+    );
     @FormUrlEncoded
     @POST("forgot-password")
     Call<forgetpassword_response> forgetPassword(
