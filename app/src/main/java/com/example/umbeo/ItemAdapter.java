@@ -228,6 +228,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     CardView card;
     TextView crossed,saved;
 
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView quantity;
 
@@ -278,7 +280,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         });
     }
 
-    private void addDB(final CartEntity entity){
+    public void addDB(final CartEntity entity){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -291,7 +293,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             }
         });
     }
-    private void updateDB(final int quantity,final String prodId){
+    public void updateDB(final int quantity, final String prodId){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -305,7 +307,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         });
     }
 
-    private void DeleteDB(final String prodId){
+    public void DeleteDB(final String prodId){
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

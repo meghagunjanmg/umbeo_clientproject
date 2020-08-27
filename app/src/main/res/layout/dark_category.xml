@@ -49,6 +49,8 @@
             </ImageView>
         </FrameLayout>
         <EditText
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:id="@+id/search"
             style="@style/TextViewStyleNormal"
             android:layout_width="match_parent"

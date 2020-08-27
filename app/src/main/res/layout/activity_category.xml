@@ -48,6 +48,8 @@
             </ImageView>
         </FrameLayout>
         <EditText
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:layout_margin="8dp"
             android:id="@+id/search"
             style="@style/TextViewStyleNormal"

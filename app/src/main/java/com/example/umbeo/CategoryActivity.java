@@ -7,11 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +32,11 @@ import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
 import com.example.umbeo.room.ProductEntity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +44,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import spencerstudios.com.bungeelib.Bungee;
+
+import static com.example.umbeo.HomeScreenActivity.preference;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -67,10 +78,29 @@ public class CategoryActivity extends AppCompatActivity {
         else
         setContentView(R.layout.activity_category);
 
-        EditText search = findViewById(R.id.search);
+        final EditText search = findViewById(R.id.search);
         search.clearFocus();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length()==0){
+                    LoadAllProduct();
+                }
+                if(s.toString().contains(" ") ||s.toString().length()>3)
+                filter(s.toString());
+            }
+        });
 
 
         category_name = findViewById(R.id.category_name);
@@ -84,21 +114,38 @@ public class CategoryActivity extends AppCompatActivity {
         simpleProgressBar = findViewById(R.id.simpleProgressBar);
 
         simpleProgressBar.setVisibility(View.VISIBLE);
+        item_recycler = findViewById(R.id.item_recycler);
+
         try {
             category_id = getIntent().getStringExtra("category_id");
             categoryName = getIntent().getStringExtra("category_name");
             category_name.setText(categoryName+"");
+            if (db == null) {
+                db = AppDatabase.getInstance(getApplicationContext());
+            }
+
+            LoadAllProduct();
+            LoadAllDB();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(category_id == null)
+        if(category_id.equalsIgnoreCase("0"))
         {
-            category_name.setText("Deals");
+            simpleProgressBar.setVisibility(View.GONE);
+            category_name.setText("Searched: "+ categoryName);
+            String carListAsString = getIntent().getStringExtra("category_prods");
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<ProductEntity>>(){}.getType();
+            List<ProductEntity> productEntities = gson.fromJson(carListAsString, type);
+            Log.e("Testing"," "+categoryName+" "+productEntities.get(0).getName());
+            productModels = productEntities;
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.VERTICAL, false);
+            item_recycler.setLayoutManager(gridLayoutManager);
+            ItemAdapter myAdapter = new ItemAdapter(productModels, CategoryActivity.this);
+            item_recycler.setAdapter(myAdapter);
+
         }
-
-
-
         back_btn = findViewById(R.id.back_btn);
         cart_btn = findViewById(R.id.cart_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
@@ -115,16 +162,6 @@ public class CategoryActivity extends AppCompatActivity {
                 HomeScreenActivity.viewPager.setCurrentItem(1);
             }
         });
-
-        if (db == null) {
-            db = AppDatabase.getInstance(getApplicationContext());
-        }
-
-        LoadAllDB();
-
-        item_recycler = findViewById(R.id.item_recycler);
-
-
         editAddress = findViewById(R.id.editAddress);
         editAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +171,9 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void LoadAllProduct() {
         productModels = new ArrayList<>();
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -149,6 +189,7 @@ public class CategoryActivity extends AppCompatActivity {
 
 
         if (productModels.size() == 0) {
+            UserPreference preference = new UserPreference(this);
             getProducts(preference.getShopId());
         }
     }
@@ -204,4 +245,30 @@ public class CategoryActivity extends AppCompatActivity {
                 }
             });
         }
+
+
+
+    void filter(String text){
+        List<ProductEntity> temp = new ArrayList();
+        for(ProductEntity p: productModels){
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if(p.getName().toLowerCase().contains(text.toLowerCase().replace(" ",""))){
+                temp.add(p);
+            }
+        }
+        //update recyclerview
+        updateList(temp);
+    }
+
+    public void updateList(List<ProductEntity> list){
+        productModels = list;
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.VERTICAL, false);
+        item_recycler.setLayoutManager(gridLayoutManager);
+        myAdapter = new ItemAdapter(productModels, CategoryActivity.this);
+        item_recycler.setAdapter(myAdapter);
+
+        myAdapter.notifyDataSetChanged();
+    }
 }

@@ -1,8 +1,12 @@
 package com.example.umbeo;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -16,12 +20,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
@@ -31,10 +42,12 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
 import com.example.umbeo.response_data.CategoryResponse;
+import com.example.umbeo.response_data.GetOrders.Product;
 import com.example.umbeo.response_data.ProductResponse;
 import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.response_data.shop.ShopResponse;
@@ -42,9 +55,12 @@ import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
 import com.example.umbeo.room.CartEntity;
 import com.example.umbeo.room.ProductEntity;
+import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import me.angeldevil.autoscrollviewpager.AutoScrollViewPager;
 import retrofit2.Call;
@@ -60,7 +76,7 @@ import static android.view.Gravity.START;
  * Use the {@link DashBoardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashBoardFragment extends Fragment {
+public class DashBoardFragment extends Fragment implements TextWatcher{
 
     /////LinearLayout trending, popular, feature;
     List<com.example.umbeo.room.CategoryModel> modelList = new ArrayList<>();
@@ -117,7 +133,7 @@ public class DashBoardFragment extends Fragment {
     HorizontalScrollView scroll;
     ScrollView main_scroll;
     private InputMethodManager imm;
-
+    EditText search;
     public DashBoardFragment() {
         // Required empty public constructor
     }
@@ -176,9 +192,11 @@ public class DashBoardFragment extends Fragment {
         simpleProgressBar = v.findViewById(R.id.simpleProgressBar);
 
         log = (TextView) v.findViewById(R.id.login);
-        EditText search = v.findViewById(R.id.search);
+        search = v.findViewById(R.id.search);
         search.clearFocus();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        search.addTextChangedListener(this);
 
         if (preference.getUserName() != null) {
             log.setText(preference.getUserName());
@@ -764,6 +782,7 @@ public class DashBoardFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        search.setText("");
         getProfile(preference.getToken());
         Log.e("signup",preference.getToken()+"      token");
 
@@ -866,4 +885,65 @@ public class DashBoardFragment extends Fragment {
         });
     }
 
+
+    void filter(String text){
+        List<CategoryModel> temp = new ArrayList<>();
+        List<ProductEntity> product = new ArrayList<>();
+        for(CategoryModel d: categoryModelList){
+            if(d.getCategoryName().toLowerCase().contains(text.toLowerCase().replace(" ",""))){
+                temp.add(d);
+            }
+
+            for(ProductEntity p:d.getCategoryItems()){
+                if(p.getName().toLowerCase().contains(text.toLowerCase().replace(" ",""))){
+                   // temp.add(d);
+                    product.add(p);
+                }
+            }
+        }
+        updateList(temp,product,text);
+    }
+
+    public void updateList(List<CategoryModel> list,List<ProductEntity> product, String text){
+        if(list.size()>0) {
+            categoryModelList = list;
+            Log.e("Testing", "4 " + categoryModelList.toString() + " " + list.toString());
+            GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+            list_category.setLayoutManager(mGridLayoutManager2);
+            categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+            list_category.setAdapter(categoryListAdapter);
+            categoryListAdapter.notifyDataSetChanged();
+        }
+        if(product.size()>0){
+            Intent intent = new Intent(getContext(),CategoryActivity.class);
+            intent.putExtra("category_id","0");
+            intent.putExtra("category_name",text);
+            Gson gson = new Gson();
+            String products = gson.toJson(product);
+            intent.putExtra("category_prods",products);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if(s.length()==0){
+            Loadall();
+        }
+
+        if(s.toString().contains(" ") || s.toString().length()>3)
+         filter(s.toString());
+    }
 }
