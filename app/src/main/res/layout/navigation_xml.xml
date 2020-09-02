@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_linear"
     android:orientation="horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,14 +16,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_gravity="center"
-            android:tint="@color/darker_gray"
             android:id="@+id/icon1"
-            android:src="@drawable/ic_icon_explore"
+            app:srcCompat="@drawable/ic_icon_explore"
             android:layout_width="25dp"
-            android:layout_height="25dp">
-        </ImageView>
+            android:layout_height="25dp"
+            app:tint="@color/darker_gray">
+        </androidx.appcompat.widget.AppCompatImageView>
 
         <TextView
             android:visibility="invisible"
@@ -45,15 +45,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_gravity="center"
-            android:tint="@color/darker_gray"
 
             android:id="@+id/icon2"
-            android:src="@drawable/ic_icon_cart"
+            app:srcCompat="@drawable/ic_icon_cart"
             android:layout_width="25dp"
-            android:layout_height="25dp">
-        </ImageView>
+            android:layout_height="25dp"
+            app:tint="@color/darker_gray">
+        </androidx.appcompat.widget.AppCompatImageView>
         <TextView
             android:visibility="invisible"
             style="@style/TextViewStyleHeading"
@@ -74,14 +74,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_gravity="center"
-            android:tint="@color/darker_gray"
             android:id="@+id/icon3"
-            android:src="@drawable/ic_diamond"
+            app:srcCompat="@drawable/ic_diamond"
             android:layout_width="25dp"
-            android:layout_height="25dp">
-        </ImageView>
+            android:layout_height="25dp"
+            app:tint="@color/darker_gray">
+        </androidx.appcompat.widget.AppCompatImageView>
         <TextView
             android:visibility="invisible"
             style="@style/TextViewStyleHeading"
@@ -103,12 +103,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
-            android:tint="@color/darker_gray"
             android:layout_gravity="center"
             android:id="@+id/icon4"
-            android:src="@drawable/ic_icon_profile"
+            app:srcCompat="@drawable/ic_icon_profile"
             android:layout_width="25dp"
-            android:layout_height="25dp">
+            android:layout_height="25dp"
+            app:tint="@color/darker_gray">
         </ImageView>
         <TextView
             android:visibility="invisible"

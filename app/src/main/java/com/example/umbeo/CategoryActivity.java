@@ -17,6 +17,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,7 +67,8 @@ public class CategoryActivity extends AppCompatActivity {
 
     String category_id="",categoryName="";
     ProgressBar simpleProgressBar;
-
+    List<String> itemList = new ArrayList<String>();
+    AutoCompleteTextView autoComplete;
     List<CartEntity> entities = new ArrayList<>();
     List<ProductEntity> productModels = new ArrayList<>();
     @Override
@@ -77,32 +80,6 @@ public class CategoryActivity extends AppCompatActivity {
         }
         else
         setContentView(R.layout.activity_category);
-
-        final EditText search = findViewById(R.id.search);
-        search.clearFocus();
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s.length()==0){
-                    LoadAllProduct();
-                }
-                if(s.toString().contains(" ") ||s.toString().length()>3)
-                filter(s.toString());
-            }
-        });
-
-
         category_name = findViewById(R.id.category_name);
         title_img = findViewById(R.id.title_img);
 
@@ -171,6 +148,35 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
 
+        autoComplete = findViewById(R.id.search);
+        autoComplete.clearFocus();
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+
+        autoComplete.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length()==0){
+                    LoadAllProduct();
+                }
+                if(s.toString().contains(" ") ||s.toString().length()>3)
+                filter(s.toString());
+            }
+        });
+
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
+                (getApplicationContext(),android.R.layout.select_dialog_item,itemList);
+        autoComplete.setThreshold(1);//will start working from first character
+        autoComplete.setAdapter(adapter1);
     }
 
     private void LoadAllProduct() {
@@ -180,6 +186,13 @@ public class CategoryActivity extends AppCompatActivity {
             public void run() {
                 productModels = AppDatabase.getInstance(CategoryActivity.this).productDao().findById(category_id,true);
                 Log.e("ProductResponse", productModels + "");
+                for (ProductEntity p :productModels){
+                    itemList.add(p.getName());
+                }
+
+                Log.e("SEARCHLIST","12...  "+itemList.toString());
+
+
             }
         });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2, LinearLayoutManager.VERTICAL, false);

@@ -36,7 +36,7 @@ import spencerstudios.com.bungeelib.Bungee;
 
 public class MainActivity extends AppCompatActivity {
     AppDatabase db;
-    private int SPLASH_TIME_OUT=1600;
+    private int SPLASH_TIME_OUT=1800;
     UserPreference preference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +47,14 @@ public class MainActivity extends AppCompatActivity {
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
-        DeleteAllDB();
+        //DeleteAllDB();
         /// DeleteAllDB();
 
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 getProducts(preference.getShopId());
+                shopData();
             }
         });
 
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     db.productDao().insertAll(productEntities);
                     Log.e("ProductResponse","DB INSERT");
+                    Log.e("SEARCHLIST","123  "+productEntities.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -115,6 +117,51 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void shopData(){
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        Call<ShopResponse> call= retrofit_interface.getShopProfile(preference.getShopId());
+
+        call.enqueue(new Callback<ShopResponse>() {
+            @Override
+            public void onResponse(Call<ShopResponse> call, final Response<ShopResponse> response) {
+                try {
+                    Log.e("shopResponse", response.body().getStatus() + "");
+                    Log.e("shopResponse", response.code() + "");
+                    Log.e("shopResponse", response.message() + "");
+                    Log.e("shopResponse",response.body().getData().getCategories().toString());
+
+                    preference.setShopTimeSlot(response.body().getData().getDeliverySlots());
+                    preference.setShopDeliveryCharges(response.body().getData().getDeliveryCharges());
+                    preference.setShopPh(response.body().getData().getPhone());
+                    preference.setShopCategory(response.body().getData().getCategories());
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            db.productDao().nukeCategory();
+                        }
+                    });
+
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            db.productDao().insertAllCategory(response.body().getCategories());
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ShopResponse> call, Throwable t) {
+                Log.e("shopResponse",t.getLocalizedMessage()+"");
+                shopData();
+
+            }
+        });
+    }
 
     private void intent(){
         Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)

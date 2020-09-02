@@ -6,6 +6,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -180,6 +181,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     }
 
 
+    @SuppressLint("NewApi")
     private static void setIcons(){
         nav_linear.setBackgroundColor(Color.WHITE);
 

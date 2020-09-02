@@ -8,10 +8,12 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -32,6 +34,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -41,6 +46,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.umbeo.Storage.UserPreference;
@@ -70,6 +76,7 @@ import spencerstudios.com.bungeelib.Bungee;
 
 import static android.view.Gravity.END;
 import static android.view.Gravity.START;
+import static android.view.View.VISIBLE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -115,6 +122,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
     List<CartEntity> entities = new ArrayList<>();
     List<ProductEntity> productModels = new ArrayList<>();
+    List<ProductEntity> productEntityList = new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -179,6 +187,8 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             return inflater.inflate(R.layout.dark_dashboard, container, false);
         } else return inflater.inflate(R.layout.activity_dashboard, container, false);
     }
+    public static AppCompatAutoCompleteTextView autoComplete;
+    List<String> itemList = new ArrayList<String>();
 
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
@@ -191,13 +201,25 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         welcome = v.findViewById(R.id.welcome);
         simpleProgressBar = v.findViewById(R.id.simpleProgressBar);
 
+
+        if (db == null) {
+            db = AppDatabase.getInstance(getContext());
+        }
+        Loadall();
+
+        showProgress();
+
+        //LoadAllDB();
+
+        // getCategory();
+
+        //Loadall();
+
+
         log = (TextView) v.findViewById(R.id.login);
-        search = v.findViewById(R.id.search);
-        search.clearFocus();
+        autoComplete = v.findViewById(R.id.search);
+        autoComplete.clearFocus();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-        search.addTextChangedListener(this);
-
         if (preference.getUserName() != null) {
             log.setText(preference.getUserName());
             log.setTextSize(20);
@@ -209,22 +231,22 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             log.setText("Log in / Signup");
             log.setGravity(END);
         }
-        shopData();
 
 
-        if (db == null) {
-            db = AppDatabase.getInstance(getContext());
-        }
+        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
+                (getContext(),android.R.layout.select_dialog_item,itemList);
+        autoComplete.setThreshold(1);//will start working from first character
+        autoComplete.setAdapter(adapter1);
+        autoComplete.addTextChangedListener(this);
 
+        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("SEARCHLIST","select: "+autoComplete.getText().toString());
+                filter(autoComplete.getText().toString());
+            }
+        });
 
-        showProgress();
-
-        //LoadAllDB();
-
-        // getCategory();
-
-        //Loadall();
-        Loadall();
 
         log.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -395,7 +417,37 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             mViewPager.startAutoScroll(5000);
         }
 
+    }
 
+    private void setItemList() {
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                categoryModel = db.productDao().loadAllCategory();
+
+            }
+        });
+        for (com.example.umbeo.room.CategoryModel c: categoryModel){
+            itemList.add(c.getCategoryName());
+        }
+        Log.e("SEARCHLIST","1  "+categoryModel.toString());
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < categoryModel.size(); i++) {
+                    productModels = new ArrayList<>();
+                    productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
+                    Log.e("SEARCHLIST","2  "+productModels.toString());
+                    productEntityList.addAll(productModels);
+                    for (ProductEntity p : productModels){
+                        itemList.add(p.getName());
+                    }
+                    Log.e("SEARCHLIST",i+" "+itemList.toString());
+                }
+            }
+        });
+        Log.e("SEARCHLIST",itemList.toString());
     }
 
     private void hideDefaultKeyboard(View et) {
@@ -537,7 +589,18 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         modelList = new ArrayList<>();
         productModels = new ArrayList<>();
         categoryModelList = new ArrayList<>();
-        categoryModelList.clear();
+        categoryModel = new ArrayList<>();
+
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                categoryModel = db.productDao().loadAllCategory();
+                productModels = db.productDao().loadAll(true);
+
+            }
+        });
+
 
         db.productDao().liveLoadAllCategory()
                 .observe(DashBoardFragment.this, new Observer<List<com.example.umbeo.room.CategoryModel>>() {
@@ -553,7 +616,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                             @Override
                             public void run() {
                                 categoryModelList = new ArrayList<>();
-                                categoryModelList.clear();
+
                                 for (int i = 0; i < categoryModels.size(); i++) {
                                     productModels = new ArrayList<>();
                                     productModels = db.productDao().findById(categoryModels.get(i).getCategoryId(),true);
@@ -577,8 +640,13 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                         list_category.setLayoutManager(mGridLayoutManager2);
                         categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
                         list_category.setAdapter(categoryListAdapter);
+
                     }
                 });
+
+
+
+        setItemList();
     }
 
     private void getFeaturedProducts() {
@@ -771,7 +839,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
     }
 
     private void showProgress(){
-        simpleProgressBar.setVisibility(View.VISIBLE);
+        simpleProgressBar.setVisibility(VISIBLE);
     }
 
     private void HideProgress(){
@@ -781,8 +849,6 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
     @Override
     public void onResume() {
         super.onResume();
-
-        search.setText("");
         getProfile(preference.getToken());
         Log.e("signup",preference.getToken()+"      token");
 
@@ -843,63 +909,34 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             }
         });
     }
-    private void shopData(){
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
-
-        Call<ShopResponse> call= retrofit_interface.getShopProfile(preference.getShopId());
-
-        call.enqueue(new Callback<ShopResponse>() {
-            @Override
-            public void onResponse(Call<ShopResponse> call, final Response<ShopResponse> response) {
-                try {
-                    Log.e("shopResponse", response.body().getStatus() + "");
-                    Log.e("shopResponse", response.code() + "");
-                    Log.e("shopResponse", response.message() + "");
-                    Log.e("shopResponse",response.body().getData().getCategories().toString());
-
-                    preference.setShopTimeSlot(response.body().getData().getDeliverySlots());
-                    preference.setShopDeliveryCharges(response.body().getData().getDeliveryCharges());
-                    preference.setShopPh(response.body().getData().getPhone());
-                    preference.setShopCategory(response.body().getData().getCategories());
-
-
-                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            db.productDao().nukeCategory();
-                            db.productDao().insertAllCategory(response.body().getCategories());
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ShopResponse> call, Throwable t) {
-                Log.e("shopResponse",t.getLocalizedMessage()+"");
-                shopData();
-
-            }
-        });
-    }
 
 
     void filter(String text){
+        if(autoComplete.getText().toString().equals("")){
+            Loadall();
+        }
         List<CategoryModel> temp = new ArrayList<>();
         List<ProductEntity> product = new ArrayList<>();
-        for(CategoryModel d: categoryModelList){
-            if(d.getCategoryName().toLowerCase().contains(text.toLowerCase().replace(" ",""))){
-                temp.add(d);
-            }
 
-            for(ProductEntity p:d.getCategoryItems()){
-                if(p.getName().toLowerCase().contains(text.toLowerCase().replace(" ",""))){
-                   // temp.add(d);
-                    product.add(p);
-                }
+        for(CategoryModel d: categoryModelList) {
+            if (d.getCategoryName().toLowerCase().equalsIgnoreCase(text.toLowerCase())){
+                temp.add(d);
+                categoryModelList = temp;
+                Log.e("SEARCHLIST", "4 " + categoryModelList.toString() + " " + temp.toString());
+                GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+                list_category.setLayoutManager(mGridLayoutManager2);
+                categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+                list_category.setAdapter(categoryListAdapter);
+                categoryListAdapter.notifyDataSetChanged();
             }
+        }
+        for (ProductEntity p : productEntityList) {
+            Log.e("SEARCHLIST", "5 " + productEntityList.toString());
+                if (p.getName().toLowerCase().equalsIgnoreCase(text.toLowerCase())) {
+                    // temp.add(d);
+                    product.add(p);
+                    Log.e("SEARCHLIST", "511 " + p.getName());
+                }
         }
         updateList(temp,product,text);
     }
@@ -938,12 +975,9 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
     }
 
     @Override
-    public void afterTextChanged(Editable s) {
-        if(s.length()==0){
+    public void afterTextChanged(final Editable s) {
+        if(s.toString().length()==0){
             Loadall();
         }
-
-        if(s.toString().contains(" ") || s.toString().length()>3)
-         filter(s.toString());
     }
 }

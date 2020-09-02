@@ -47,7 +47,7 @@
         </FrameLayout>
     </LinearLayout>
 
-        <EditText
+        <AutoCompleteTextView
             android:imeOptions="actionDone"
             android:inputType="text"
             android:id="@+id/search"
@@ -64,7 +64,7 @@
             android:singleLine="true"
             android:textColorHint="@color/colorTextSecondary"
             android:paddingLeft="12dp">
-        </EditText>
+        </AutoCompleteTextView>
     </LinearLayout>
 
         <androidx.core.widget.NestedScrollView
