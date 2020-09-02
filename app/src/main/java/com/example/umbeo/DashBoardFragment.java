@@ -112,7 +112,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
     RecyclerView category_list, item_recycler, list_category, list_category_fruit;
     ItemAdapter myAdapter;
 
-    List<com.example.umbeo.room.CategoryModel> categoryModel = new ArrayList<>();
+    static List<com.example.umbeo.room.CategoryModel> categoryModel;
     private float total = 0;
     List<CategoryModel> categoryModelList = new ArrayList<>();
     CardView see_more;
@@ -421,17 +421,10 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
     private void setItemList() {
 
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                categoryModel = db.productDao().loadAllCategory();
-
-            }
-        });
         for (com.example.umbeo.room.CategoryModel c: categoryModel){
             itemList.add(c.getCategoryName());
         }
-        Log.e("SEARCHLIST","1  "+categoryModel.toString());
+        Log.e("SEARCHLIST","1  "+categoryModel.toString()+"  "+itemList.toString());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -589,18 +582,6 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         modelList = new ArrayList<>();
         productModels = new ArrayList<>();
         categoryModelList = new ArrayList<>();
-        categoryModel = new ArrayList<>();
-
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-
-                categoryModel = db.productDao().loadAllCategory();
-                productModels = db.productDao().loadAll(true);
-
-            }
-        });
-
 
         db.productDao().liveLoadAllCategory()
                 .observe(DashBoardFragment.this, new Observer<List<com.example.umbeo.room.CategoryModel>>() {
@@ -612,35 +593,33 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                         category_list.setLayoutManager(linearLayoutManager);
                         category_list.setAdapter(adapter);
 
-                        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        {     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                             @Override
                             public void run() {
                                 categoryModelList = new ArrayList<>();
 
-                                for (int i = 0; i < categoryModels.size(); i++) {
+                                for (int i = 0; i < categoryModel.size(); i++) {
                                     productModels = new ArrayList<>();
-                                    productModels = db.productDao().findById(categoryModels.get(i).getCategoryId(),true);
-                                    categoryModelList.add(new CategoryModel(categoryModels.get(i).getCategoryId(), categoryModels.get(i).getCategoryName(), productModels));
+                                    productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
+                                    categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
+                                            categoryModel.get(i).getCategoryName(), productModels));
                                 }
                             }
                         });
-
-                        try {
-                            for(int i=0;i<=categoryModelList.size()+1;i++){
-                                if(categoryModelList.get(i).getCategoryName().equalsIgnoreCase(categoryModelList.get(i+1).getCategoryName())){
-                                    categoryModelList.remove(i);
+                            try {
+                                for(int i=0;i<=categoryModelList.size()+1;i++){
+                                    if(categoryModelList.get(i).getCategoryName().equalsIgnoreCase(categoryModelList.get(i+1).getCategoryName())){
+                                        categoryModelList.remove(i);
+                                    }
                                 }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+                            list_category.setLayoutManager(mGridLayoutManager2);
+                            categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+                            list_category.setAdapter(categoryListAdapter);
                         }
-                        Log.e("CategorySize",categoryModels.size()+" "+categoryModelList.size());
-
-                        GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-                        list_category.setLayoutManager(mGridLayoutManager2);
-                        categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-                        list_category.setAdapter(categoryListAdapter);
-
                     }
                 });
 
@@ -912,14 +891,11 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
 
     void filter(String text){
-        if(autoComplete.getText().toString().equals("")){
-            Loadall();
-        }
         List<CategoryModel> temp = new ArrayList<>();
         List<ProductEntity> product = new ArrayList<>();
 
         for(CategoryModel d: categoryModelList) {
-            if (d.getCategoryName().toLowerCase().equalsIgnoreCase(text.toLowerCase())){
+            if (d.getCategoryName().toLowerCase().equalsIgnoreCase(text.toLowerCase())) {
                 temp.add(d);
                 categoryModelList = temp;
                 Log.e("SEARCHLIST", "4 " + categoryModelList.toString() + " " + temp.toString());
@@ -928,15 +904,27 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                 categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
                 list_category.setAdapter(categoryListAdapter);
                 categoryListAdapter.notifyDataSetChanged();
+            } else {
+                product = new ArrayList<>();
+                for (ProductEntity p : productEntityList) {
+                    Log.e("SEARCHLIST", "5 " + productEntityList.toString());
+                    if (p.getName().toLowerCase().equalsIgnoreCase(text.toLowerCase())) {
+                        //temp.add(d);
+                        product.add(p);
+                        Log.e("SEARCHLIST", "511 " + p.getName());
+                    }
+                }
             }
         }
-        for (ProductEntity p : productEntityList) {
-            Log.e("SEARCHLIST", "5 " + productEntityList.toString());
-                if (p.getName().toLowerCase().equalsIgnoreCase(text.toLowerCase())) {
-                    // temp.add(d);
-                    product.add(p);
-                    Log.e("SEARCHLIST", "511 " + p.getName());
+
+        try {
+            for(int i=0;i<=product.size()+1;i++){
+                if(product.get(i).getName().equalsIgnoreCase(product.get(i+1).getName())){
+                    product.remove(i);
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         updateList(temp,product,text);
     }
@@ -952,6 +940,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             categoryListAdapter.notifyDataSetChanged();
         }
         if(product.size()>0){
+            Log.e("SEARCH","prod:   "+product.toString());
             Intent intent = new Intent(getContext(),CategoryActivity.class);
             intent.putExtra("category_id","0");
             intent.putExtra("category_name",text);
@@ -976,8 +965,33 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
     @Override
     public void afterTextChanged(final Editable s) {
-        if(s.toString().length()==0){
-            Loadall();
+        if(s.toString().length()==0)
+        {     AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                categoryModelList = new ArrayList<>();
+
+                for (int i = 0; i < categoryModel.size(); i++) {
+                    productModels = new ArrayList<>();
+                    productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
+                    categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
+                            categoryModel.get(i).getCategoryName(), productModels));
+                }
+            }
+        });
+            try {
+                for(int i=0;i<=categoryModelList.size()+1;i++){
+                    if(categoryModelList.get(i).getCategoryName().equalsIgnoreCase(categoryModelList.get(i+1).getCategoryName())){
+                        categoryModelList.remove(i);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+            list_category.setLayoutManager(mGridLayoutManager2);
+            categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+            list_category.setAdapter(categoryListAdapter);
         }
     }
 }

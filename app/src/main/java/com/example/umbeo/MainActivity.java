@@ -7,26 +7,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.umbeo.Storage.UserPreference;
 import com.example.umbeo.api.UsersApi;
 import com.example.umbeo.api.RetrofitClient;
-import com.example.umbeo.response_data.ProductModel;
 import com.example.umbeo.response_data.ProductResponse;
-import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.response_data.shop.ShopResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
+import com.example.umbeo.room.CategoryModel;
 import com.example.umbeo.room.ProductEntity;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -47,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
+        shopData();
+
         //DeleteAllDB();
         /// DeleteAllDB();
 
@@ -54,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 getProducts(preference.getShopId());
-                shopData();
             }
         });
 
@@ -143,10 +139,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
+                    DashBoardFragment.categoryModel = new ArrayList<>();
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
                             db.productDao().insertAllCategory(response.body().getCategories());
+                            DashBoardFragment.categoryModel = db.productDao().loadAllCategory();
+                            Log.e("SEARCHLIST","1.0  "+response.body().getCategories().toString()+"\n"+DashBoardFragment.categoryModel.toString());
+
                         }
                     });
                 } catch (Exception e) {
@@ -157,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ShopResponse> call, Throwable t) {
                 Log.e("shopResponse",t.getLocalizedMessage()+"");
-                shopData();
-
             }
         });
     }

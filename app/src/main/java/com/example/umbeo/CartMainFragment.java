@@ -609,7 +609,7 @@ public class CartMainFragment extends Fragment {
 
         call.enqueue(new Callback<ShopResponse>() {
             @Override
-            public void onResponse(Call<ShopResponse> call, Response<ShopResponse> response) {
+            public void onResponse(Call<ShopResponse> call, final Response<ShopResponse> response) {
                 try {
                     Log.e("shopResponse",response+"");
                     Log.e("shopResponse",response.code()+"");

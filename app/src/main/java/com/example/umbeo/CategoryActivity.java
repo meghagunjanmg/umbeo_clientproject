@@ -130,6 +130,7 @@ public class CategoryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 HomeScreenActivity.viewPager.setCurrentItem(0);
+                DashBoardFragment.autoComplete.setText("");
             }
         });
         cart_btn.setOnClickListener(new View.OnClickListener() {
