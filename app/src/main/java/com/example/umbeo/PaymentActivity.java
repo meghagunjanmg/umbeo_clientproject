@@ -282,7 +282,7 @@ public class PaymentActivity extends AppCompatActivity  implements RadioGroup.On
 
         String token = "Bearer "+preference.getToken();
 
-        String amt = total.replace("$","");
+        String amt = total.replace(preference.getCurrency(),"");
         double amount = Double.parseDouble(amt.trim());
 
         final OrderRequest request = new OrderRequest();
