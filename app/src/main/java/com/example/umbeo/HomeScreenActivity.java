@@ -9,9 +9,13 @@ import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -26,6 +30,9 @@ import com.example.umbeo.response_data.UserGetProfileResponse;
 import com.example.umbeo.response_data.shop.ShopResponse;
 import com.example.umbeo.room.AppDatabase;
 import com.example.umbeo.room.AppExecutors;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,7 +67,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.homescreen_activity);
 
         context = this;
-
+        printHashKey(context);
         viewPager = findViewById(R.id.pager);
         explore = findViewById(R.id.explore);
         cart = findViewById(R.id.cart);
@@ -320,6 +327,22 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
                 }
             }
         });
+    }
+    public static void printHashKey(Context pContext) {
+        try {
+
+            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.e("TAG", "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("TAG", "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e("TAG", "printHashKey()", e);
+        }
     }
 
 }

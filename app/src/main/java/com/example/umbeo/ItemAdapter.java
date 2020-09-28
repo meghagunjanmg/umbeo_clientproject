@@ -102,13 +102,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         }
 
         strawberry_name.setText(modelList.get(position).getName()+"");
-        price.setText("$"+modelList.get(position).getPrice());
+        price.setText(preference.getCurrency()+" "+modelList.get(position).getPrice());
 
         try {
             double PriceOld = Double.parseDouble(modelList.get(position).getPrice())+
                     ((modelList.get(position).getDiscount().floatValue()/100)*Double.parseDouble(modelList.get(position).getPrice()));
 
-            crossed.setText("$"+String.format("%.2f",PriceOld));
+            crossed.setText(preference.getCurrency()+" "+String.format("%.2f",PriceOld));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -374,7 +374,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         final ImageView remove = mView.findViewById(R.id.remove);
 
         final TextView price = mView.findViewById(R.id.price);
-        price.setText("$"+prices);
+        price.setText(preference.getCurrency()+" "+prices);
 
         quant = quantity;
 

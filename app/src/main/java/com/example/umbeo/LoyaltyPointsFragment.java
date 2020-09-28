@@ -165,7 +165,7 @@ public class LoyaltyPointsFragment extends Fragment implements View.OnClickListe
         if(preference.getLoyaltyPoints()!=0){
             int loyaltyPoint = preference.getLoyaltyPoints();
             int dollar = preference.getLoyaltyPoints()/100;
-            my_points.setText(loyaltyPoint+" = $ "+dollar);
+            my_points.setText(loyaltyPoint+" = "+preference.getCurrency()+" "+dollar);
         }
 
 

@@ -57,7 +57,7 @@ public class CurrentRoomOrderAdapter extends RecyclerView.Adapter<com.example.um
 
         String[] date = modelList.get(position).getDate().split("T");
         time.setText(date[0]+"");
-        amount.setText("$"+modelList.get(position).getAmount()+"");
+        amount.setText(preference.getCurrency()+" "+modelList.get(position).getAmount()+"");
 
 
         instruction.setText(modelList.get(position).getInstruction()+"");

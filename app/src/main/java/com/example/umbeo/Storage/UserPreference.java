@@ -38,6 +38,7 @@ public class UserPreference {
     private static final String Addresses = "addresses";
     private static final Boolean achievments = false;
     private static final String ShopId = "shopId";
+    private static final String Currency = "₹";
 
 
     @SuppressLint("CommitPrefEdits")
@@ -47,7 +48,9 @@ public class UserPreference {
         editor = pref.edit();
     }
 
-
+    public String getCurrency() {
+         return pref.getString(Currency, "₹");
+    }
     public String getShopId() {
 
         if(BuildConfig.USER_TYPE.equalsIgnoreCase("fashion")) {

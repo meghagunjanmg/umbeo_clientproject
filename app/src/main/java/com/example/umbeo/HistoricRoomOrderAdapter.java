@@ -59,7 +59,7 @@ import spencerstudios.com.bungeelib.Bungee;
             String[] date = modelList.get(position).getDate().split("T");
             time.setText(date[0]+"");
 
-            amount.setText("$"+modelList.get(position).getAmount()+"");
+            amount.setText(preference.getCurrency()+" "+modelList.get(position).getAmount()+"");
 
             status.setText("Delivered");
 

@@ -110,12 +110,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         });
 
         quantity.setText(data.get(position).getQuantity()+"");
-        total_amount.setText("$"+String.format("%.2f",data.get(position).getQuantity()*data.get(position).getPrice()));
+        total_amount.setText(preference.getCurrency()+" "+String.format("%.2f",data.get(position).getQuantity()*data.get(position).getPrice()));
         double gsts = data.get(position).getPrice()*0.13;
 
-        gst_amount.setText("GST (13%) : $ "+String.format("%.2f",gsts));
+        gst_amount.setText("GST (13%) : "+preference.getCurrency()+" "+String.format("%.2f",gsts));
 
-        CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString().replace("$",""))+gsts);
+        CartMainFragment.amounts.add(Double.parseDouble(total_amount.getText().toString().replace(preference.getCurrency(),""))+gsts);
 
     }
 

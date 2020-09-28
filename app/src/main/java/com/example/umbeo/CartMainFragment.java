@@ -193,6 +193,8 @@ public class CartMainFragment extends Fragment {
         subtotal = v.findViewById(R.id.subtotal);
 
          loyalty = v.findViewById(R.id.loyalty);
+         loyalty.setText("Redeem Crystals (100 crystal ="+ preference.getCurrency() +" 1)");
+
         loyalty_point = v.findViewById(R.id.loyalty_point);
         loyalty_point.setText(""+preference.getLoyaltyPoints());
 
@@ -316,9 +318,9 @@ public class CartMainFragment extends Fragment {
                  */
                 cartAdapter.setData(entityList);
                 sum = cartAdapter.grandTotal();
-                subtotal.setText("$ "+String.format("%.2f",sum));
+                subtotal.setText(preference.getCurrency()+" "+String.format("%.2f",sum));
                 Double d = sum+delivery;
-                total_amount.setText("$ "+String.format("%.2f",d));
+                total_amount.setText(preference.getCurrency()+" "+String.format("%.2f",d));
             }
         });
 
@@ -453,9 +455,9 @@ public class CartMainFragment extends Fragment {
                                     no_item_linear.setVisibility(View.GONE);
                                     main_scroll.setVisibility(View.VISIBLE);
                                 }
-                                subtotal.setText("$ "+String.format("%.2f",sum));
+                                subtotal.setText(preference.getCurrency()+" "+String.format("%.2f",sum));
                                 Double d = sum+delivery-preference.getLoyaltyPoints();
-                                total_amount.setText("$ "+String.format("%.2f",d));
+                                total_amount.setText(preference.getCurrency()+" "+String.format("%.2f",d));
                             }
                         });
                     }
@@ -488,9 +490,9 @@ public class CartMainFragment extends Fragment {
                                 main_scroll.setVisibility(View.VISIBLE);
                             }
 
-                            subtotal.setText("$ "+String.format("%.2f",sum));
+                            subtotal.setText(preference.getCurrency()+" "+String.format("%.2f",sum));
                             Double d = sum+delivery;
-                            total_amount.setText("$ "+String.format("%.2f",d));
+                            total_amount.setText(preference.getCurrency()+" "+String.format("%.2f",d));
                         }
                     });
 
@@ -517,9 +519,9 @@ public class CartMainFragment extends Fragment {
                     main_scroll.setVisibility(View.VISIBLE);
                 }
 
-                subtotal.setText("$ "+String.format("%.2f",sum));
+                subtotal.setText(preference.getCurrency()+" "+String.format("%.2f",sum));
                 Double d = sum+delivery;
-                total_amount.setText("$ "+String.format("%.2f",d));
+                total_amount.setText(preference.getCurrency()+" "+String.format("%.2f",d));
             }
         });
 
@@ -562,9 +564,9 @@ public class CartMainFragment extends Fragment {
                         main_scroll.setVisibility(View.VISIBLE);
                     }
 
-                    subtotal.setText("$ "+String.format("%.2f",sum));
+                    subtotal.setText(preference.getCurrency()+" "+String.format("%.2f",sum));
                     Double d = sum+delivery;
-                    total_amount.setText("$ "+String.format("%.2f",d));
+                    total_amount.setText(preference.getCurrency()+" "+String.format("%.2f",d));
                 }
             });
         } catch (Exception e) {
@@ -714,38 +716,38 @@ public class CartMainFragment extends Fragment {
             }
         }
         slot1.setChecked(true);
-        delivery_charges.setText("$ " + price.get(0));
+        delivery_charges.setText(preference.getCurrency()+" "+ price.get(0));
         delivery = price.get(0);
 
-        subtotal.setText("$ " + String.format("%.2f", sum));
+        subtotal.setText(preference.getCurrency()+" "+ String.format("%.2f", sum));
         Double d = sum + delivery;
-        total_amount.setText("$ " + String.format("%.2f", d));
+        total_amount.setText(preference.getCurrency()+" "+String.format("%.2f", d));
 
         rgb.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (slot1.isChecked()) {
-                    delivery_charges.setText("$ " + price.get(0));
+                    delivery_charges.setText(preference.getCurrency()+" "+ + price.get(0));
                     delivery = price.get(0);
                     selectedSlot = slot1.getText().toString();
 
-                    subtotal.setText("$ " + String.format("%.2f", sum));
+                    subtotal.setText(preference.getCurrency()+" "+ String.format("%.2f", sum));
                     Double d = sum + delivery;
-                    total_amount.setText("$ " + String.format("%.2f", d));
+                    total_amount.setText(preference.getCurrency()+" "+ String.format("%.2f", d));
                 } else if (slot2.isChecked()) {
-                    delivery_charges.setText("$ " + price.get(1));
+                    delivery_charges.setText(preference.getCurrency()+" "+price.get(1));
                     delivery = price.get(1);
                     selectedSlot = slot2.getText().toString();
-                    subtotal.setText("$ " + String.format("%.2f", sum));
+                    subtotal.setText(preference.getCurrency()+" "+String.format("%.2f", sum));
                     Double d = sum + delivery;
-                    total_amount.setText("$ " + String.format("%.2f", d));
+                    total_amount.setText(preference.getCurrency()+" "+String.format("%.2f", d));
                 } else if (slot3.isChecked()) {
-                    delivery_charges.setText("$ " + price.get(2));
+                    delivery_charges.setText(preference.getCurrency()+" "+price.get(2));
                     delivery = price.get(2);
                     selectedSlot = slot3.getText().toString();
-                    subtotal.setText("$ " + String.format("%.2f", sum));
+                    subtotal.setText(preference.getCurrency()+" "+String.format("%.2f", sum));
                     Double d = sum + delivery;
-                    total_amount.setText("$ " + String.format("%.2f", d));
+                    total_amount.setText(preference.getCurrency()+" "+String.format("%.2f", d));
                 }
             }
         });
