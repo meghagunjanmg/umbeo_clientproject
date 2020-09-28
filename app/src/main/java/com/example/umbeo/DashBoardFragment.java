@@ -173,6 +173,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             if (db == null) {
                 db = AppDatabase.getInstance(getContext());
             }
+            setalllist();
 
             //LoadAllDB();
         }
@@ -206,6 +207,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             db = AppDatabase.getInstance(getContext());
         }
         Loadall();
+        setalllist();
 
         showProgress();
 
@@ -234,7 +236,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
 
         final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
-                (getContext(),android.R.layout.select_dialog_item,itemList);
+                (getContext(),R.layout.item_search,itemList);
         autoComplete.setThreshold(1);//will start working from first character
         autoComplete.setAdapter(adapter1);
         autoComplete.addTextChangedListener(this);
@@ -421,8 +423,18 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
     private void setItemList() {
 
-        for (com.example.umbeo.room.CategoryModel c: categoryModel){
-            itemList.add(c.getCategoryName());
+        try {
+            itemList.clear();
+            for (com.example.umbeo.room.CategoryModel c: categoryModel){
+                itemList.add(c.getCategoryName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            itemList.clear();
+            preference = new UserPreference(getContext());
+            for (int c=0;c<preference.getShopCategoryName().size();c++){
+                itemList.add(preference.getShopCategoryName().get(c).toString());
+            }
         }
         Log.e("SEARCHLIST","1  "+categoryModel.toString()+"  "+itemList.toString());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
@@ -831,6 +843,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         getProfile(preference.getToken());
         Log.e("signup",preference.getToken()+"      token");
 
+        autoComplete.setText("");
         if (preference.getUserName() != null) {
             log.setText(preference.getUserName());
             log.setTextSize(20);
@@ -896,7 +909,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
         for(CategoryModel d: categoryModelList) {
             if (d.getCategoryName().toLowerCase().equalsIgnoreCase(text.toLowerCase())) {
-                temp.add(d);
+             /*   temp.add(d);
                 categoryModelList = temp;
                 Log.e("SEARCHLIST", "4 " + categoryModelList.toString() + " " + temp.toString());
                 GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
@@ -904,6 +917,15 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                 categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
                 list_category.setAdapter(categoryListAdapter);
                 categoryListAdapter.notifyDataSetChanged();
+
+              */
+                Intent intent = new Intent(getContext(),CategoryActivity.class);
+                intent.putExtra("category_id",d.getCategoryId());
+                intent.putExtra("category_name",d.getCategoryName());
+                Gson gson = new Gson();
+                String products = gson.toJson(d.getCategoryItems());
+                intent.putExtra("category_prods",products);
+                startActivity(intent);
             } else {
                 product = new ArrayList<>();
                 for (ProductEntity p : productEntityList) {
@@ -938,6 +960,8 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
             list_category.setAdapter(categoryListAdapter);
             categoryListAdapter.notifyDataSetChanged();
+
+
         }
         if(product.size()>0){
             Log.e("SEARCH","prod:   "+product.toString());
@@ -965,7 +989,13 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
     @Override
     public void afterTextChanged(final Editable s) {
-        if(s.toString().length()==0)
+        if(s.toString().length()==0){
+            setalllist();
+        }
+    }
+
+
+    private void setalllist(){
         {     AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {

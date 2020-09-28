@@ -83,6 +83,7 @@ public class CategoryActivity extends AppCompatActivity {
         category_name = findViewById(R.id.category_name);
         title_img = findViewById(R.id.title_img);
 
+
         if(BuildConfig.USER_TYPE.equalsIgnoreCase("fashion")){
             title_img.setImageResource(R.drawable.imagesfashion);
         }
@@ -175,7 +176,7 @@ public class CategoryActivity extends AppCompatActivity {
 
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>
-                (getApplicationContext(),android.R.layout.select_dialog_item,itemList);
+                (getApplicationContext(),R.layout.item_search,itemList);
         autoComplete.setThreshold(1);//will start working from first character
         autoComplete.setAdapter(adapter1);
     }
@@ -264,6 +265,7 @@ public class CategoryActivity extends AppCompatActivity {
 
     void filter(String text){
         List<ProductEntity> temp = new ArrayList();
+
         for(ProductEntity p: productModels){
             //or use .equal(text) with you want equal match
             //use .toLowerCase() for better matches

@@ -52,19 +52,19 @@
             android:imeOptions="actionDone"
             android:inputType="text"
             android:id="@+id/search"
+            android:background="@drawable/search_outline"
             style="@style/TextViewStyleNormal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/search_outline"
-            android:drawableLeft="@drawable/ic_search"
-            android:drawableTint="@color/colorPrimaryText"
-            android:hint="Search"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:drawableLeft="@drawable/ic_baseline_search_24"
             android:drawablePadding="8dp"
+            android:hint="Search"
             android:maxLines="1"
-            android:paddingStart="12dp"
-            android:singleLine="true"
-            android:textColorHint="@color/colorTextSecondary"
-            android:paddingLeft="12dp">
+            android:singleLine="true">
         </AutoCompleteTextView>
     </LinearLayout>
 
