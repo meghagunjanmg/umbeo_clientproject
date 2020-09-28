@@ -332,11 +332,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         // Add a marker in Sydney and move the camera
         //  LatLng sydney = new LatLng(latitude, longitude);
 
-        LatLng latLng = new LatLng(51.2538, 85.3232);//ontario
-        mMap.addMarker(new MarkerOptions().position(latLng).title("My location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+       // LatLng latLng = new LatLng(51.2538, 85.3232);//ontario
+       // mMap.addMarker(new MarkerOptions().position(latLng).title("My location"));
+      //  mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-        mMap.setMaxZoomPreference(18);
+       // mMap.setMaxZoomPreference(18);
     }
 
     private void getLocation() {
@@ -403,7 +403,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 Log.e("Testing", " " + country + " " + locationAddress.getCountryName());
 
 
-                if (country.equalsIgnoreCase("Canada") && state.equalsIgnoreCase("Ontario")) {
+             //   if (country.equalsIgnoreCase("Canada") && state.equalsIgnoreCase("Ontario")) {
 
 
                     line3.setText(postalCode);
@@ -423,9 +423,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "Our service is not available in your area", Toast.LENGTH_LONG).show();
-                }
+              //  } else {
+                //    Toast.makeText(getApplicationContext(), "Our service is not available in your area", Toast.LENGTH_LONG).show();
+                //}
 
 
             }
@@ -506,7 +506,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 Log.e("Testing123", " " + city + " " + locationAddress.getAdminArea());
                 Log.e("Testing123", " " + country + " " + locationAddress.getCountryName());
 
-                if (country.equalsIgnoreCase("Canada") && state.equalsIgnoreCase("Ontario")) {
+           //     if (country.equalsIgnoreCase("Canada") && state.equalsIgnoreCase("Ontario")) {
 
 
                     line3.setText(postalCode);
@@ -524,13 +524,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     line1.setText(firstPart);
                     line2.setText(secondPart);
 
-                    mMap.addMarker(new MarkerOptions().position(p1).title("My location"));
+
+                //getmapmarker(line1.getText().toString());
+
+                mMap.addMarker(new MarkerOptions().position(p1).title("My location"));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(p1));
                     mMap.setMaxZoomPreference(18);
 
-                } else {
+             //   } else {
                     //Toast.makeText(getApplicationContext(), "Our service is not available in your area", Toast.LENGTH_LONG).show();
-                }
+             //   }
             }
         } catch (Exception e) {
 
