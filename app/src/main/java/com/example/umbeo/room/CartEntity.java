@@ -16,9 +16,9 @@ public class CartEntity {
     private String description;
     private int quantity;
     private double price;
-    private int discount;
+    private double discount;
 
-    public CartEntity(String name, String productId, String categoryId, String subCategoryId, String description, int quantity, double price, int discount) {
+    public CartEntity(String name, String productId, String categoryId, String subCategoryId, String description, int quantity, double price, double discount) {
         this.name = name;
         this.productId = productId;
         this.categoryId = categoryId;
@@ -93,11 +93,11 @@ public class CartEntity {
         this.price = price;
     }
 
-    public int getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 }

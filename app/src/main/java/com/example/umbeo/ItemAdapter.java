@@ -76,7 +76,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
-        if(modelList.get(position).getDiscount()==null){
+        if(modelList.get(position).getDiscount()==0||modelList.size()>0){
             modelList.get(position).setDiscount(0);
         }
 
@@ -106,7 +106,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         try {
             double PriceOld = Double.parseDouble(modelList.get(position).getPrice())+
-                    ((modelList.get(position).getDiscount().floatValue()/100)*Double.parseDouble(modelList.get(position).getPrice()));
+                    ((modelList.get(position).getDiscount()/100)*Double.parseDouble(modelList.get(position).getPrice()));
 
             crossed.setText(preference.getCurrency()+" "+String.format("%.2f",PriceOld));
         } catch (Exception e) {
@@ -206,7 +206,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     quant_1 =0;
                 }
                 dailog(modelList.get(position).getName(),quant_1,modelList.get(position).getImage(),Double.parseDouble(modelList.get(position).getPrice()),
-                        modelList.get(position).getUnit(),modelList.get(position).getCategoryId(),modelList.get(position).getSubCategoryId(),modelList.get(position).getId(),modelList.get(position).getDiscount());
+                        modelList.get(position).getDescription(),modelList.get(position).getCategoryId(),modelList.get(position).getSubCategoryId(),modelList.get(position).getId(),modelList.get(position).getDiscount());
             }
         });
     }
@@ -215,7 +215,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public int getItemCount() {
         return modelList.size();
     }
-
 
     TextView strawberry_name;
     TextView description;
@@ -332,7 +331,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
     @SuppressLint("NewApi")
-    private void dailog(final String name, final int quantity, final String image, final double prices, final String description, final String cat, final String subCat, final String prodId, final int discount) {
+    private void dailog(final String name, final int quantity, final String image, final double prices, final String description, final String cat, final String subCat, final String prodId, final double discount) {
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

@@ -113,7 +113,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                 <TextView
-                    android:visibility="gone"
                     style="@style/TextViewStyleNormal"
                     android:padding="8dp"
                     android:text="Wallet"
@@ -121,7 +120,6 @@
                     android:layout_height="wrap_content">
                 </TextView>
                         <RadioButton
-                            android:visibility="gone"
                             android:layout_margin="8dp"
                             android:background="@drawable/payment_outline"
                             android:padding="12dp"
@@ -133,7 +131,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                         <RadioButton
-                            android:visibility="gone"
+
                             style="@style/TextViewStyleNormal"
                             android:layout_margin="8dp"
                             android:background="@drawable/payment_outline"
@@ -145,7 +143,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                         <RadioButton
-                            android:visibility="gone"
+
                             style="@style/TextViewStyleNormal"
                             android:layout_margin="8dp"
                             android:padding="12dp"
@@ -157,7 +155,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                 <TextView
-                    android:visibility="gone"
+
                     android:padding="8dp"
                     android:text="UPI"
                     style="@style/TextViewStyleNormal"
@@ -165,7 +163,7 @@
                     android:layout_height="wrap_content">
                 </TextView>
                     <RadioButton
-                        android:visibility="gone"
+
                         android:layout_margin="8dp"
                         android:padding="12dp"
                         android:background="@drawable/payment_outline"
@@ -178,7 +176,7 @@
                         android:layout_height="wrap_content" />
 
                     <RadioButton
-                        android:visibility="gone"
+
                         android:layout_margin="8dp"
                         android:background="@drawable/payment_outline"
                         android:padding="12dp"

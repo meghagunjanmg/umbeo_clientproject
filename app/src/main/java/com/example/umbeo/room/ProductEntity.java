@@ -67,13 +67,13 @@ public class ProductEntity {
     private String id;
     @SerializedName("discount")
     @Expose
-    private Integer discount;
+    private double discount;
 
-    public Integer getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 

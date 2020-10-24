@@ -112,7 +112,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
     RecyclerView category_list, item_recycler, list_category, list_category_fruit;
     ItemAdapter myAdapter;
 
-    static List<com.example.umbeo.room.CategoryModel> categoryModel;
+    static List<com.example.umbeo.room.CategoryModel> categoryModel = new ArrayList<>();
     private float total = 0;
     List<CategoryModel> categoryModelList = new ArrayList<>();
     CardView see_more;
@@ -206,6 +206,9 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         if (db == null) {
             db = AppDatabase.getInstance(getContext());
         }
+        shopData();
+        //getProducts(preference.getShopId());
+
         Loadall();
         setalllist();
 
@@ -408,8 +411,9 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             mViewPager.startAutoScroll(5000);
         } else {
             int[] mResources = {
-                    R.drawable.banner1_1,
-                    R.drawable.banner2_1,
+                    R.drawable.back_1,
+                    R.drawable.back_2,
+                    R.drawable.back_3
             };
             CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
 
@@ -423,36 +427,35 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
     private void setItemList() {
 
-        try {
-            itemList.clear();
-            for (com.example.umbeo.room.CategoryModel c: categoryModel){
-                itemList.add(c.getCategoryName());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            itemList.clear();
-            preference = new UserPreference(getContext());
-            for (int c=0;c<preference.getShopCategoryName().size();c++){
-                itemList.add(preference.getShopCategoryName().get(c).toString());
-            }
-        }
-        Log.e("SEARCHLIST","1  "+categoryModel.toString()+"  "+itemList.toString());
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < categoryModel.size(); i++) {
-                    productModels = new ArrayList<>();
-                    productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
-                    Log.e("SEARCHLIST","2  "+productModels.toString());
-                    productEntityList.addAll(productModels);
-                    for (ProductEntity p : productModels){
-                        itemList.add(p.getName());
-                    }
-                    Log.e("SEARCHLIST",i+" "+itemList.toString());
+        if(categoryModel!=null) {
+
+            try {
+                itemList.clear();
+                for (com.example.umbeo.room.CategoryModel c : categoryModel) {
+                    itemList.add(c.getCategoryName());
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                shopData();
+
             }
-        });
-        Log.e("SEARCHLIST",itemList.toString());
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < categoryModel.size(); i++) {
+                        productModels = new ArrayList<>();
+                        productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(), true);
+                        Log.e("SEARCHLIST", "2  " + productModels.toString());
+                        productEntityList.addAll(productModels);
+                        for (ProductEntity p : productModels) {
+                            itemList.add(p.getName());
+                        }
+                        Log.e("SEARCHLIST", i + " " + itemList.toString());
+                    }
+                }
+            });
+            Log.e("SEARCHLIST", itemList.toString());
+        }
     }
 
     private void hideDefaultKeyboard(View et) {
@@ -484,7 +487,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                         if (response.code() == 200) {
                             productModels = new ArrayList<>();
                             categoryModelList = new ArrayList<>();
-                            //categoryModelList = new ArrayList<>();
+                            categoryModelList = new ArrayList<>();
 
                             productModels = response.body().getData().getProducts();
 
@@ -610,11 +613,15 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                             public void run() {
                                 categoryModelList = new ArrayList<>();
 
-                                for (int i = 0; i < categoryModel.size(); i++) {
-                                    productModels = new ArrayList<>();
-                                    productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
-                                    categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
-                                            categoryModel.get(i).getCategoryName(), productModels));
+                                try {
+                                    for (int i = 0; i < categoryModel.size(); i++) {
+                                        productModels = new ArrayList<>();
+                                        productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
+                                        categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
+                                                categoryModel.get(i).getCategoryName(), productModels));
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             }
                         });
@@ -638,6 +645,53 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
 
         setItemList();
+    }
+    private void shopData(){
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        Call<ShopResponse> call= retrofit_interface.getShopProfile(preference.getShopId());
+
+        call.enqueue(new Callback<ShopResponse>() {
+            @Override
+            public void onResponse(Call<ShopResponse> call, final Response<ShopResponse> response) {
+                try {
+                    Log.e("shopResponse", response.body().getStatus() + "");
+                    Log.e("shopResponse", response.code() + "");
+                    Log.e("shopResponse", response.message() + "");
+                    Log.e("shopResponse",response.body().getData().getCategories().toString());
+
+                    preference.setShopTimeSlot(response.body().getData().getDeliverySlots());
+                    preference.setShopDeliveryCharges(response.body().getData().getDeliveryCharges());
+                    preference.setShopPh(response.body().getData().getPhone());
+                    preference.setShopCategory(response.body().getData().getCategories());
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            db.productDao().nukeCategory();
+                        }
+                    });
+
+                    DashBoardFragment.categoryModel = new ArrayList<>();
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            db.productDao().insertAllCategory(response.body().getCategories());
+                            DashBoardFragment.categoryModel = db.productDao().loadAllCategory();
+                            Log.e("SEARCHLIST","1.0  "+response.body().getCategories().toString()+"\n"+DashBoardFragment.categoryModel.toString());
+
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ShopResponse> call, Throwable t) {
+                Log.e("shopResponse",t.getLocalizedMessage()+"");
+            }
+        });
     }
 
     private void getFeaturedProducts() {
@@ -909,7 +963,9 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
         for(CategoryModel d: categoryModelList) {
             if (d.getCategoryName().toLowerCase().equalsIgnoreCase(text.toLowerCase())) {
-             /*   temp.add(d);
+
+                /*
+                temp.add(d);
                 categoryModelList = temp;
                 Log.e("SEARCHLIST", "4 " + categoryModelList.toString() + " " + temp.toString());
                 GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
@@ -917,7 +973,6 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                 categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
                 list_category.setAdapter(categoryListAdapter);
                 categoryListAdapter.notifyDataSetChanged();
-
               */
                 Intent intent = new Intent(getContext(),CategoryActivity.class);
                 intent.putExtra("category_id",d.getCategoryId());
@@ -996,32 +1051,101 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
 
     private void setalllist(){
-        {     AppExecutors.getInstance().diskIO().execute(new Runnable() {
+        try {
+            {     AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    categoryModelList = new ArrayList<>();
+
+                    for (int i = 0; i < categoryModel.size(); i++) {
+                        productModels = new ArrayList<>();
+                        productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
+                        categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
+                                categoryModel.get(i).getCategoryName(), productModels));
+                    }
+                }
+            });
+                try {
+                    for(int i=0;i<=categoryModelList.size()+1;i++){
+                        if(categoryModelList.get(i).getCategoryName().equalsIgnoreCase(categoryModelList.get(i+1).getCategoryName())){
+                            categoryModelList.remove(i);
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
+                list_category.setLayoutManager(mGridLayoutManager2);
+                categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
+                list_category.setAdapter(categoryListAdapter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+          //  shopData();
+            //getProducts(preference.getShopId());
+
+        }
+    }
+    private void getProducts(final String shopId) {
+        RetrofitClient api_manager = new RetrofitClient();
+        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
+
+        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(shopId);
+
+        call.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                try {
+                    Log.e("ProductResponse",response+"");
+                    Log.e("ProductResponse",response.code()+"");
+                    Log.e("ProductResponse",response.message()+"");
+                    if(response.code()==200){
+                        List<ProductEntity> productModels = response.body().getData().getProducts();
+                        DeleteAllDB();
+                        InsertAllDB(productModels);
+
+                        Loadall();
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                getProducts(shopId);
+                Log.e("ProductResponse",t.getLocalizedMessage()+"");
+            }
+        });
+    }
+
+    private void DeleteAllDB(){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                categoryModelList = new ArrayList<>();
-
-                for (int i = 0; i < categoryModel.size(); i++) {
-                    productModels = new ArrayList<>();
-                    productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
-                    categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
-                            categoryModel.get(i).getCategoryName(), productModels));
+                try {
+                    db.productDao().nukeTable();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
-            try {
-                for(int i=0;i<=categoryModelList.size()+1;i++){
-                    if(categoryModelList.get(i).getCategoryName().equalsIgnoreCase(categoryModelList.get(i+1).getCategoryName())){
-                        categoryModelList.remove(i);
-                    }
+    }
+
+    private void InsertAllDB(final List<ProductEntity> productEntities){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    db.productDao().insertAll(productEntities);
+                    Log.e("ProductResponse","DB INSERT");
+                    Log.e("SEARCHLIST","123  "+productEntities.toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-            list_category.setLayoutManager(mGridLayoutManager2);
-            categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-            list_category.setAdapter(categoryListAdapter);
-        }
+        });
     }
 }

@@ -122,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:visibility="gone"
+                    android:textColor="@color/colorWhite"
                     style="@style/TextViewStyleNormal"
                    android:padding="8dp"
                     android:text="Wallet"
@@ -130,31 +130,33 @@
                     android:layout_height="wrap_content">
                 </TextView>
                 <RadioButton
-                    android:visibility="gone"
+                    android:textColor="@color/colorWhite"
                     android:layout_margin="8dp"
                     android:background="@drawable/payment_outline"
                     android:padding="12dp"
                     style="@style/TextViewStyleNormal"
                     android:id="@+id/amazonPay"
+                    android:drawableTint="@color/colorWhite"
                     android:drawableLeft="@drawable/amazonpay"
                     android:drawablePadding="8dp"
                     android:text="Amazon pay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <RadioButton
-                    android:visibility="gone"
+                    android:textColor="@color/colorWhite"
                     style="@style/TextViewStyleNormal"
                     android:layout_margin="8dp"
                     android:background="@drawable/payment_outline"
                     android:padding="12dp"
                     android:id="@+id/applePay"
+                    android:drawableTint="@color/colorWhite"
                     android:drawableLeft="@drawable/applepay"
                     android:drawablePadding="8dp"
                     android:text="Apple pay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <RadioButton
-                    android:visibility="gone"
+                    android:textColor="@color/colorWhite"
                     style="@style/TextViewStyleNormal"
                     android:layout_margin="8dp"
                     android:padding="12dp"
@@ -162,11 +164,12 @@
                     android:drawableLeft="@drawable/paypal"
                     android:drawablePadding="8dp"
                     android:text="PayPal"
+                    android:drawableTint="@color/colorWhite"
                     android:background="@drawable/payment_outline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:visibility="gone"
+                    android:textColor="@color/colorWhite"
                     android:padding="8dp"
                     android:text="UPI"
                     style="@style/TextViewStyleNormal"
@@ -174,7 +177,7 @@
                     android:layout_height="wrap_content">
                 </TextView>
                 <RadioButton
-                    android:visibility="gone"
+                    android:textColor="@color/colorWhite"
                     android:layout_margin="8dp"
                     android:padding="12dp"
                     android:background="@drawable/payment_outline"
@@ -182,12 +185,13 @@
                     android:drawableLeft="@drawable/amazonpay"
                     android:drawablePadding="8dp"
                     android:text="Amazon pay UPI"
+                    android:drawableTint="@color/colorWhite"
                     style="@style/TextViewStyleNormal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <RadioButton
-                    android:visibility="gone"
+                    android:textColor="@color/colorWhite"
                     android:layout_margin="8dp"
                     android:background="@drawable/payment_outline"
                     android:padding="12dp"
@@ -195,6 +199,7 @@
                     android:drawableLeft="@drawable/googlepay"
                     android:drawablePadding="8dp"
                     android:text="Google pay"
+                    android:drawableTint="@color/colorWhite"
                     style="@style/TextViewStyleNormal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

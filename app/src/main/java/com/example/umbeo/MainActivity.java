@@ -31,7 +31,7 @@ import spencerstudios.com.bungeelib.Bungee;
 
 public class MainActivity extends AppCompatActivity {
     AppDatabase db;
-    private int SPLASH_TIME_OUT=2000;
+    private int SPLASH_TIME_OUT=10000;
     UserPreference preference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +42,13 @@ public class MainActivity extends AppCompatActivity {
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
-        shopData();
-
-        //DeleteAllDB();
-        /// DeleteAllDB();
-
+       // shopData();
+       // getProducts(preference.getShopId());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 getProducts(preference.getShopId());
+                shopData();
             }
         });
 
@@ -230,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
                 getProducts(shopId);
+                Log.e("ProductResponse",t.getLocalizedMessage()+"");
             }
         });
     }
