@@ -321,9 +321,11 @@ ImageView back_btn;
             return;
         }
 
-        if( !password.matches(PasswordPattern)){
+     /*   if( !password.matches(PasswordPattern)){
             passwordTv.setVisibility(View.VISIBLE);
         } else  passwordTv.setVisibility(View.GONE);
+
+      */passwordTv.setVisibility(View.GONE);
 
 
         // GPS API implementation is left...that's why taking pre-defined values of gps and latitude and longitude...

@@ -171,8 +171,13 @@ public class ProfileMainFragment extends Fragment {
         my_addresses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),MyAddresses.class));
+                if(preference.getAddresses().size()>0) {
+                    startActivity(new Intent(getActivity(), MyAddresses.class));
+                }else {
+                    startActivity(new Intent(getActivity(), MapActivity.class));
+                }
                 Bungee.fade(getContext());
+
             }
         });
 

@@ -49,8 +49,13 @@ public class UserPreference {
     }
 
     public String getCurrency() {
-         return pref.getString(Currency, "₹");
+         return pref.getString(Currency, "$");
     }
+    public void setCurrency(String currency) {
+        editor.putString(Currency, currency);
+        editor.apply();
+    }
+
     public String getShopId() {
 
         if(BuildConfig.USER_TYPE.equalsIgnoreCase("fashion")) {

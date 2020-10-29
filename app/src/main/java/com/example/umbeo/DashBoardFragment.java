@@ -216,7 +216,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
         //LoadAllDB();
 
-        // getCategory();
+       // getCategory();
 
         //Loadall();
 
@@ -910,6 +910,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             log.setGravity(END);
         }
 
+        Loadall();
     }
 
     public void getProfile(final String tokens){
@@ -1052,16 +1053,18 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
     private void setalllist(){
         try {
-            {     AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
                     categoryModelList = new ArrayList<>();
 
-                    for (int i = 0; i < categoryModel.size(); i++) {
-                        productModels = new ArrayList<>();
-                        productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
-                        categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
-                                categoryModel.get(i).getCategoryName(), productModels));
+                    if (categoryModel.size()>=1) {
+                        for (int i = 0; i < categoryModel.size(); i++) {
+                            productModels = new ArrayList<>();
+                            productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(), true);
+                            categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
+                                    categoryModel.get(i).getCategoryName(), productModels));
+                        }
                     }
                 }
             });
@@ -1078,74 +1081,9 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                 list_category.setLayoutManager(mGridLayoutManager2);
                 categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
                 list_category.setAdapter(categoryListAdapter);
-            }
-        } catch (Exception e) {
+                } catch (Exception e) {
             e.printStackTrace();
-          //  shopData();
-            //getProducts(preference.getShopId());
-
         }
     }
-    private void getProducts(final String shopId) {
-        RetrofitClient api_manager = new RetrofitClient();
-        UsersApi retrofit_interface =api_manager.usersClient().create(UsersApi.class);
 
-        Call<ProductResponse> call = retrofit_interface.fetchAllProducts(shopId);
-
-        call.enqueue(new Callback<ProductResponse>() {
-            @Override
-            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
-                try {
-                    Log.e("ProductResponse",response+"");
-                    Log.e("ProductResponse",response.code()+"");
-                    Log.e("ProductResponse",response.message()+"");
-                    if(response.code()==200){
-                        List<ProductEntity> productModels = response.body().getData().getProducts();
-                        DeleteAllDB();
-                        InsertAllDB(productModels);
-
-                        Loadall();
-
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductResponse> call, Throwable t) {
-                getProducts(shopId);
-                Log.e("ProductResponse",t.getLocalizedMessage()+"");
-            }
-        });
-    }
-
-    private void DeleteAllDB(){
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    db.productDao().nukeTable();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void InsertAllDB(final List<ProductEntity> productEntities){
-        AppExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    db.productDao().insertAll(productEntities);
-                    Log.e("ProductResponse","DB INSERT");
-                    Log.e("SEARCHLIST","123  "+productEntities.toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 }

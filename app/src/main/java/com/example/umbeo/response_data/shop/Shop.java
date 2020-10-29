@@ -30,6 +30,11 @@ public class Shop implements Serializable
     @SerializedName("phone")
     @Expose
     private String phone;
+
+    @SerializedName("currency")
+    @Expose
+    private String currency;
+
     @SerializedName("id")
     @Expose
     private String id;
@@ -41,6 +46,14 @@ public class Shop implements Serializable
 
     public void setCategories(List<String> categories) {
         this.categories = categories;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public List<Object> getSubCategories() {

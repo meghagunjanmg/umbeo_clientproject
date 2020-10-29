@@ -166,7 +166,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         my_addresses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), MyAddresses.class));
+                if(preference.getAddresses().size()>0) {
+                    startActivity(new Intent(getApplicationContext(), MyAddresses.class));
+                }else {
+                    startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                }
+
                 Bungee.fade(MapActivity.this);
                 finish();
             }
@@ -216,7 +221,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                             preference.getAddresses().clear();
                             preference.setAddresses(addresses);
                             updateAddress(addresses);
-                            startActivity(new Intent(getApplicationContext(), MyAddresses.class));
+                            if(preference.getAddresses().size()>0) {
+                                startActivity(new Intent(getApplicationContext(), MyAddresses.class));
+                            }else {
+                                startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                            }
+
                             Bungee.fade(MapActivity.this);
                             finish();
                         } else

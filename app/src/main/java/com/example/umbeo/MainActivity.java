@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -31,7 +32,7 @@ import spencerstudios.com.bungeelib.Bungee;
 
 public class MainActivity extends AppCompatActivity {
     AppDatabase db;
-    private int SPLASH_TIME_OUT=10000;
+    private int SPLASH_TIME_OUT=1000;
     UserPreference preference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +43,18 @@ public class MainActivity extends AppCompatActivity {
         if (db == null) {
             db = AppDatabase.getInstance(getApplicationContext());
         }
-       // shopData();
-       // getProducts(preference.getShopId());
+
+        shopData();
+        getProducts(preference.getShopId());
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                getProducts(preference.getShopId());
-                shopData();
+                //getProducts(preference.getShopId());
+                //shopData();
             }
         });
 
-        intent();
+       // intent();
     }
 
 
@@ -130,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
                     preference.setShopDeliveryCharges(response.body().getData().getDeliveryCharges());
                     preference.setShopPh(response.body().getData().getPhone());
                     preference.setShopCategory(response.body().getData().getCategories());
+                    preference.setCurrency(response.body().getData().getCurrency());
+
+
+
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
@@ -154,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ShopResponse> call, Throwable t) {
+                shopData();
                 Log.e("shopResponse",t.getLocalizedMessage()+"");
             }
         });
@@ -218,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
                         List<ProductEntity> productModels = response.body().getData().getProducts();
                         DeleteAllDB();
                         InsertAllDB(productModels);
+                        intent();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -227,8 +235,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-                getProducts(shopId);
                 Log.e("ProductResponse",t.getLocalizedMessage()+"");
+                Toast.makeText(getApplicationContext(),"Check your Internet connection and try again",Toast.LENGTH_LONG).show();
+                getProducts(shopId);
             }
         });
     }
