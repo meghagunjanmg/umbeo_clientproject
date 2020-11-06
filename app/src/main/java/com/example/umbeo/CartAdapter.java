@@ -54,6 +54,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
         return totalPrice;
     }
+
+    public int totalQuantity() {
+        int quantity = 0;
+        for (int i = 0; i < mItems.size(); i++) {
+            quantity += mItems.get(i).getQuantity();
+        }
+        return quantity;
+    }
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -78,7 +78,7 @@ public class CartMainFragment extends Fragment {
      TextView no_item;
       static LinearLayout main_scroll,no_item_linear;
     int count=0;
-
+    TextView item_quant;
    static List<Double> amounts = new ArrayList<Double>();
 
     CheckBox loyalty;
@@ -166,7 +166,7 @@ public class CartMainFragment extends Fragment {
         preference = new UserPreference(getContext());
 
         shopData();
-
+        item_quant = v.findViewById(R.id.item_quant);
         delivery_card = v.findViewById(R.id.delivery_card);
         instructionLayout = v.findViewById(R.id.instructionLayout);
         check = v.findViewById(R.id.check);
@@ -325,6 +325,9 @@ public class CartMainFragment extends Fragment {
                 subtotal.setText(preference.getCurrency()+" "+String.format("%.2f",sum));
                 Double d = sum+delivery;
                 total_amount.setText(preference.getCurrency()+" "+String.format("%.2f",d));
+
+                Log.e("Quantity", String.valueOf(cartAdapter.totalQuantity()));
+                item_quant.setText(cartAdapter.totalQuantity()+"");
             }
         });
 
