@@ -12,17 +12,29 @@
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="80dp">
+<RelativeLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/cart"
             android:layout_marginTop="8dp"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="18dp"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="Cart"
             android:textColor="@color/colorPrimaryText"
             style="@style/TextViewStyleHeading" />
-
+<include
+    android:layout_alignParentEnd="true"
+    android:layout_centerInParent="true"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    layout="@layout/cartitem"
+    android:layout_alignParentRight="true">
+</include>
+</RelativeLayout>
 
         <LinearLayout
             android:visibility="gone"

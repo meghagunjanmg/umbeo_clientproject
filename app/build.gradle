@@ -39,7 +39,7 @@ android {
         grocery {
             dimension "userType"
             buildConfigField "String", "USER_TYPE", '"grocery"'
-            resValue "string", "app_name", "Bakraw"
+            resValue "string", "app_name", "India Grocery"
 
             applicationId "com.example.umbeo.grocery"
             versionName "1.0"

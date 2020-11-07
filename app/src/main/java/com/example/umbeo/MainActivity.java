@@ -45,16 +45,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         shopData();
-        getProducts(preference.getShopId());
+
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
             public void run() {
                 //getProducts(preference.getShopId());
                 //shopData();
+                getProducts(preference.getShopId());
             }
         });
 
-       // intent();
+      //  intent();
     }
 
 
@@ -133,9 +134,6 @@ public class MainActivity extends AppCompatActivity {
                     preference.setShopPh(response.body().getData().getPhone());
                     preference.setShopCategory(response.body().getData().getCategories());
                     preference.setCurrency(response.body().getData().getCurrency());
-
-
-
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
@@ -153,6 +151,10 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+
+
+                    intent();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -225,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
                         List<ProductEntity> productModels = response.body().getData().getProducts();
                         DeleteAllDB();
                         InsertAllDB(productModels);
-                        intent();
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -236,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
                 Log.e("ProductResponse",t.getLocalizedMessage()+"");
-                Toast.makeText(getApplicationContext(),"Check your Internet connection and try again",Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(),"Check your Internet connection and try again",Toast.LENGTH_LONG).show();
                 getProducts(shopId);
             }
         });

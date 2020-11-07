@@ -269,12 +269,18 @@ public class CategoryActivity extends AppCompatActivity {
         for(ProductEntity p: productModels){
             //or use .equal(text) with you want equal match
             //use .toLowerCase() for better matches
-            if(p.getName().toLowerCase().contains(text.toLowerCase().replace(" ",""))){
+            Log.e("Search res  1", productModels + "");
+
+            if(p.getName().toLowerCase().replace(" ","").contains(text.toLowerCase().replace(" ",""))){
                 temp.add(p);
+                Log.e("Search res 2 ", p.getName() + "");
             }
         }
         //update recyclerview
+        Log.e("Search res 3 ", temp + "");
+
         updateList(temp);
+
     }
 
     public void updateList(List<ProductEntity> list){
@@ -284,6 +290,8 @@ public class CategoryActivity extends AppCompatActivity {
         item_recycler.setLayoutManager(gridLayoutManager);
         myAdapter = new ItemAdapter(productModels, CategoryActivity.this);
         item_recycler.setAdapter(myAdapter);
+
+        Log.e("Search res  ", productModels + "");
 
         myAdapter.notifyDataSetChanged();
     }

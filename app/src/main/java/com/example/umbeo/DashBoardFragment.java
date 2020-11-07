@@ -115,6 +115,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
     static List<com.example.umbeo.room.CategoryModel> categoryModel = new ArrayList<>();
     private float total = 0;
     List<CategoryModel> categoryModelList = new ArrayList<>();
+    List<CategoryModel> categoryModelArrayList = new ArrayList<>();
     CardView see_more;
     CategoryListAdapter categoryListAdapter, categoryListAdapter2;
 
@@ -173,7 +174,6 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             if (db == null) {
                 db = AppDatabase.getInstance(getContext());
             }
-            setalllist();
 
             //LoadAllDB();
         }
@@ -210,7 +210,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         //getProducts(preference.getShopId());
 
         Loadall();
-        setalllist();
+
 
         showProgress();
 
@@ -248,7 +248,11 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("SEARCHLIST","select: "+autoComplete.getText().toString());
-                filter(autoComplete.getText().toString());
+                try {
+                    filter(autoComplete.getText().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -411,9 +415,9 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             mViewPager.startAutoScroll(5000);
         } else {
             int[] mResources = {
-                    R.drawable.back_1,
-                    R.drawable.back_2,
-                    R.drawable.back_3
+                    R.drawable.banner1_1,
+                    R.drawable.banner2_1,
+                 //   R.drawable.back_3
             };
             CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
 
@@ -486,17 +490,16 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                         Log.e("ProductResponse", response.body().getStatus() + "");
                         if (response.code() == 200) {
                             productModels = new ArrayList<>();
-                            categoryModelList = new ArrayList<>();
-                            categoryModelList = new ArrayList<>();
 
                             productModels = response.body().getData().getProducts();
-
                             categoryModelList.add(new CategoryModel(categoryId, categoryName, productModels));
+                            Log.e("categoryData","--- "+categoryModelList.size());
 
                             GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
                             list_category.setLayoutManager(mGridLayoutManager2);
                             categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
                             list_category.setAdapter(categoryListAdapter);
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -508,10 +511,10 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
                 @Override
                 public void onFailure(Call<ProductResponse> call, Throwable t) {
-                    getCategoryProduct(categoryName, categoryId);
                 }
             });
         }
+
     }
 
   /*  private void getCategory(final List<String> categoryList) {
@@ -598,52 +601,37 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         productModels = new ArrayList<>();
         categoryModelList = new ArrayList<>();
 
-        db.productDao().liveLoadAllCategory()
-                .observe(DashBoardFragment.this, new Observer<List<com.example.umbeo.room.CategoryModel>>() {
-                    @Override
-                    public void onChanged(final List<com.example.umbeo.room.CategoryModel> categoryModels) {
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                        categoryModel = db.productDao().loadAllCategory();
+
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
                         linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-                        MainCategoriesAdapter adapter = new MainCategoriesAdapter(categoryModels, getContext());
+                        MainCategoriesAdapter adapter = new MainCategoriesAdapter(categoryModel, getContext());
                         category_list.setLayoutManager(linearLayoutManager);
                         category_list.setAdapter(adapter);
 
-                        {     AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                categoryModelList = new ArrayList<>();
 
                                 try {
-                                    for (int i = 0; i < categoryModel.size(); i++) {
-                                        productModels = new ArrayList<>();
-                                        productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(),true);
-                                        categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
-                                                categoryModel.get(i).getCategoryName(), productModels));
-                                    }
+                                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            Log.e("categoryData", String.valueOf(categoryModel.size()));
+                                            int i=categoryModel.size();
+                                            for (com.example.umbeo.room.CategoryModel c:categoryModel) {
+                                                Log.e("categoryData", c.getCategoryName().toString());
+                                                getCategoryProduct(c.getCategoryName(), c.getCategoryId());
+                                            }
+                                        }
+                                    });
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
                         });
-                            try {
-                                for(int i=0;i<=categoryModelList.size()+1;i++){
-                                    if(categoryModelList.get(i).getCategoryName().equalsIgnoreCase(categoryModelList.get(i+1).getCategoryName())){
-                                        categoryModelList.remove(i);
-                                    }
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-                            list_category.setLayoutManager(mGridLayoutManager2);
-                            categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-                            list_category.setAdapter(categoryListAdapter);
-                        }
-                    }
-                });
-
-
-
         setItemList();
     }
     private void shopData(){
@@ -910,7 +898,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             log.setGravity(END);
         }
 
-        Loadall();
+
     }
 
     public void getProfile(final String tokens){
@@ -964,17 +952,6 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
 
         for(CategoryModel d: categoryModelList) {
             if (d.getCategoryName().toLowerCase().equalsIgnoreCase(text.toLowerCase())) {
-
-                /*
-                temp.add(d);
-                categoryModelList = temp;
-                Log.e("SEARCHLIST", "4 " + categoryModelList.toString() + " " + temp.toString());
-                GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-                list_category.setLayoutManager(mGridLayoutManager2);
-                categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-                list_category.setAdapter(categoryListAdapter);
-                categoryListAdapter.notifyDataSetChanged();
-              */
                 Intent intent = new Intent(getContext(),CategoryActivity.class);
                 intent.putExtra("category_id",d.getCategoryId());
                 intent.putExtra("category_name",d.getCategoryName());
@@ -992,6 +969,20 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                         Log.e("SEARCHLIST", "511 " + p.getName());
                     }
                 }
+                if(product.size()>0){
+                    try {
+                        Log.e("SEARCH","prod:   "+product.toString());
+                        Intent intent = new Intent(getContext(),CategoryActivity.class);
+                        intent.putExtra("category_id","0");
+                        intent.putExtra("category_name",text);
+                        Gson gson = new Gson();
+                        String products = gson.toJson(product);
+                        intent.putExtra("category_prods",products);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
@@ -1004,7 +995,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        updateList(temp,product,text);
+       // updateList(temp,product,text);
     }
 
     public void updateList(List<CategoryModel> list,List<ProductEntity> product, String text){
@@ -1046,43 +1037,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
     @Override
     public void afterTextChanged(final Editable s) {
         if(s.toString().length()==0){
-            setalllist();
-        }
-    }
-
-
-    private void setalllist(){
-        try {
-            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    categoryModelList = new ArrayList<>();
-
-                    if (categoryModel.size()>=1) {
-                        for (int i = 0; i < categoryModel.size(); i++) {
-                            productModels = new ArrayList<>();
-                            productModels = db.productDao().findById(categoryModel.get(i).getCategoryId(), true);
-                            categoryModelList.add(new CategoryModel(categoryModel.get(i).getCategoryId(),
-                                    categoryModel.get(i).getCategoryName(), productModels));
-                        }
-                    }
-                }
-            });
-                try {
-                    for(int i=0;i<=categoryModelList.size()+1;i++){
-                        if(categoryModelList.get(i).getCategoryName().equalsIgnoreCase(categoryModelList.get(i+1).getCategoryName())){
-                            categoryModelList.remove(i);
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                GridLayoutManager mGridLayoutManager2 = new GridLayoutManager(getActivity(), 1, GridLayoutManager.VERTICAL, false);
-                list_category.setLayoutManager(mGridLayoutManager2);
-                categoryListAdapter = new CategoryListAdapter(categoryModelList, getContext());
-                list_category.setAdapter(categoryListAdapter);
-                } catch (Exception e) {
-            e.printStackTrace();
+          ///  Loadall();
         }
     }
 
