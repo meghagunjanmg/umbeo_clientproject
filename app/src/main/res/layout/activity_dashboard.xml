@@ -117,6 +117,20 @@
                             android:text="Recommended"
                             android:textSize="12sp"
                             android:textColor="@color/main"/>
+                        <TextView
+                            android:id="@+id/trending_txt"
+                            style="@style/TextViewStyleSubHeading"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_feature_card"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Trending"
+                            android:textSize="12sp"
+
+                            android:textColor="@color/main" />
 
                         <TextView
                             android:id="@+id/feature_txt"
@@ -133,20 +147,6 @@
                             android:text="Feature"
                             android:textColor="@color/main" />
 
-                        <TextView
-                            android:id="@+id/trending_txt"
-                            style="@style/TextViewStyleSubHeading"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_feature_card"
-                            android:gravity="center"
-                            android:padding="2dp"
-                            android:text="Trending"
-                            android:textSize="12sp"
-
-                            android:textColor="@color/main" />
 
                     </LinearLayout>
 
@@ -177,6 +177,19 @@
                         android:paddingRight="2dp"
                         tools:listitem="@layout/item_card">
                     </androidx.recyclerview.widget.RecyclerView>
+                            <TextView
+                                android:layout_gravity="center"
+                                android:visibility="gone"
+                                android:padding="8dp"
+                                android:id="@+id/noData"
+                                style="@style/TextViewStyleHeading"
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="No Data"
+                                android:textColor="@color/colorPrimaryText" />
+
 
                     <androidx.recyclerview.widget.RecyclerView
 

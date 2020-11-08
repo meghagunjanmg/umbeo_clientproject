@@ -93,13 +93,13 @@ public class MyOrderActivity extends AppCompatActivity {
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                current.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                current.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                 current.setBackgroundResource(R.drawable.bg_feature_card2);
 
                 history.setBackgroundResource(R.drawable.bg_feature_card);
                 history.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                history.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                all.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                history.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+                all.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                 all.setBackgroundResource(R.drawable.bg_feature_card2);
 
 
@@ -117,26 +117,26 @@ public class MyOrderActivity extends AppCompatActivity {
             }
         });
 
-        history.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+        history.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
         history.setBackgroundResource(R.drawable.bg_feature_card2);
 
         current.setBackgroundResource(R.drawable.bg_feature_card);
         current.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-        current.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-        all.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+        current.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+        all.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
         all.setBackgroundResource(R.drawable.bg_feature_card2);
 
         current.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                history.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                history.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                 history.setBackgroundResource(R.drawable.bg_feature_card2);
 
                 current.setBackgroundResource(R.drawable.bg_feature_card);
                 current.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                current.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                all.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                current.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+                all.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                 all.setBackgroundResource(R.drawable.bg_feature_card2);
 
                 // Create new fragment and transaction
@@ -155,13 +155,13 @@ public class MyOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                current.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                current.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                 current.setBackgroundResource(R.drawable.bg_feature_card2);
 
                 all.setBackgroundResource(R.drawable.bg_feature_card);
                 all.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                all.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                history.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                all.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+                history.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                 history.setBackgroundResource(R.drawable.bg_feature_card2);
 
 

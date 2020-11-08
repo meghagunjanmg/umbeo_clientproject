@@ -32,7 +32,7 @@ import spencerstudios.com.bungeelib.Bungee;
 
 public class MainActivity extends AppCompatActivity {
     AppDatabase db;
-    private int SPLASH_TIME_OUT=1000;
+    private int SPLASH_TIME_OUT=900;
     UserPreference preference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

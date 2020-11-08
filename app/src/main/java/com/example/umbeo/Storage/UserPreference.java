@@ -62,7 +62,7 @@ public class UserPreference {
             return pref.getString(ShopId, "5f33d77ee10e3a0017c72aea");
         }
         else {
-            return pref.getString(ShopId, "5fa5a6ce0a0bb3001719f551");
+            return pref.getString(ShopId, "5f71ea8d23ec4e001700563e");
         }
     }
 

@@ -99,7 +99,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
     TextView log, fruit;
     TextView address;
     CardView fruits;
-    TextView welcome, trending_txt, popular_txt, feature_txt;
+    TextView welcome, trending_txt, popular_txt, feature_txt,noData;
     List<com.example.umbeo.room.CategoryModel> categoryModels = new ArrayList<>();
 
     static AppDatabase db;
@@ -201,6 +201,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         list_category = v.findViewById(R.id.list_category);
         welcome = v.findViewById(R.id.welcome);
         simpleProgressBar = v.findViewById(R.id.simpleProgressBar);
+        noData = v.findViewById(R.id.noData);
 
 
         if (db == null) {
@@ -272,16 +273,21 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
         feature_txt = v.findViewById(R.id.feature_txt);
         popular_txt = v.findViewById(R.id.popular_txt);
 
+        popular_txt.setText("On Sale");
+        trending_txt.setText("Trending");
+        feature_txt.setText("Deal of the day");
 
-        getFeaturedProducts();
+        getTrendingProducts();
 
         if (preference.getTheme() == 1) {
-            trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-            trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
+            noData.setVisibility(View.GONE);
 
-            feature_txt.setBackgroundResource(R.drawable.bg_feature_card);
             feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-            feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+            feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
+
+            trending_txt.setBackgroundResource(R.drawable.bg_feature_card);
+            trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            trending_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
             popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
@@ -289,12 +295,14 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             trending_txt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    noData.setVisibility(View.GONE);
+
                     feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card);
                     trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                    trending_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    trending_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
@@ -306,56 +314,67 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             feature_txt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    noData.setVisibility(View.GONE);
+
                     trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card);
                     feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                    feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
-                    getFeaturedProducts();
+                    getRecommendedProducts();
                 }
             });
             popular_txt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    noData.setVisibility(View.GONE);
+
                     trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card);
                     popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                    popular_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    popular_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     if (preference.getEmail() != null) {
-                        getRecommendedProducts();
-                    } else getTrendingProducts();
+                        getFeaturedProducts();
+                    }// else getTrendingProducts();
+
+
+                    getFeaturedProducts();
                 }
             });
         } else {
-            trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-            trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
+            noData.setVisibility(View.GONE);
 
-            feature_txt.setBackgroundResource(R.drawable.bg_feature_card);
-            feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-            feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-            popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+            feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+            feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
+
+            trending_txt.setBackgroundResource(R.drawable.bg_feature_card);
+            trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
+            trending_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+            popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
             popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
 
             trending_txt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    noData.setVisibility(View.GONE);
+
+                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card);
                     trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                    trending_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    trending_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
 
@@ -366,33 +385,40 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             feature_txt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    noData.setVisibility(View.GONE);
+
+                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card);
                     feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                    feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    feature_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+                    popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
-                    getFeaturedProducts();
+                    getRecommendedProducts();
                 }
             });
             popular_txt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    noData.setVisibility(View.GONE);
+
+                    trending_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     trending_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     popular_txt.setBackgroundResource(R.drawable.bg_feature_card);
                     popular_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-                    popular_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#F84B18")));
-                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#F84B18")));
+                    popular_txt.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
+                    feature_txt.setTextColor(ColorStateList.valueOf(Color.parseColor("#7F8E24")));
                     feature_txt.setBackgroundResource(R.drawable.bg_feature_card2);
 
                     if (preference.getEmail() != null) {
-                        getRecommendedProducts();
-                    } else getTrendingProducts();
+                        getFeaturedProducts();
+                    } //else getTrendingProducts();
+
+
+                    getFeaturedProducts();
                 }
             });
         }
@@ -415,9 +441,9 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             mViewPager.startAutoScroll(5000);
         } else {
             int[] mResources = {
-                    R.drawable.banner1_1,
-                    R.drawable.banner2_1,
-                 //   R.drawable.back_3
+                    R.drawable.back_1,
+                    R.drawable.back_2,
+                     R.drawable.back_3
             };
             CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources);
 
@@ -690,6 +716,11 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                 productModels = db.productDao().findByFeature(true,true);
             }
         });
+        if(productModels.size()==0){
+            noData.setVisibility(VISIBLE);
+            noData.setText("No products on sale");
+        }
+        else noData.setVisibility(View.GONE);
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
 
         item_recycler.setLayoutManager(mGridLayoutManager);
@@ -714,6 +745,11 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                         Log.e("FeaturedProducts", response.message() + "");
                         if (response.code() == 200) {
                             List<ProductEntity> productModels = response.body().getData().getProducts();
+                            if(productModels.size()==0){
+                                noData.setVisibility(VISIBLE);
+                                noData.setText("No products on sale");
+                            }
+                            else noData.setVisibility(View.GONE);
                             Log.e("FeaturedProducts", productModels.get(0).getName() + "");
                             GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
 
@@ -748,6 +784,8 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                 productModels = db.productDao().findByTrending(true,true);
             }
         });
+
+
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
 
         item_recycler.setLayoutManager(mGridLayoutManager);
@@ -780,7 +818,6 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                             ItemAdapter myAdapter = new ItemAdapter(productModels, getContext());
                             item_recycler.setAdapter(myAdapter);
 
-
                             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                                 @Override
                                 public void run() {
@@ -789,6 +826,8 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                                     }
                                 }
                             });
+
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -813,8 +852,15 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             @Override
             public void run() {
                 productModels = db.productDao().findByRecommended(true,true);
+
             }
         });
+        if(productModels.size()<=0){
+            noData.setVisibility(VISIBLE);
+            noData.setText("No deals of the day");
+        }else noData.setVisibility(View.GONE);
+
+
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
 
         item_recycler.setLayoutManager(mGridLayoutManager);
@@ -840,6 +886,12 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
                         if (response.code() == 200) {
 
                             final List<ProductEntity> productModels = response.body().getData().getProducts();
+
+                            if(productModels.size()<=0){
+                                noData.setVisibility(VISIBLE);
+                                noData.setText("No deals of the day");
+                            }else noData.setVisibility(View.GONE);
+
                             Log.e("RecommendedProducts", productModels.get(0).getName() + "");
                             GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 1, LinearLayoutManager.HORIZONTAL, false);
 

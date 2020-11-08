@@ -35,7 +35,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Double total=0.0;
 
      UserPreference preference;
-    public CartAdapter(List<CartEntity> data, Context context,AppDatabase db) {
+
+
+    public CartAdapter(List<CartEntity> data, Context context, AppDatabase db) {
         this.data = data;
         this.context = context;
         this.db = db;
