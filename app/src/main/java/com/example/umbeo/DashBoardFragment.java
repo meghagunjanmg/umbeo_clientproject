@@ -432,6 +432,7 @@ public class DashBoardFragment extends Fragment implements TextWatcher{
             int[] mResources1 = {
                     R.drawable.banner1,
                     R.drawable.banner2,
+                   // R.drawable.banner2,
             };
             CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getContext(), mResources1);
 
